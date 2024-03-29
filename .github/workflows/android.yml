@@ -1,0 +1,39 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: MindWay Android CI success Discord Notification
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ success() }}
+        with:
+          title: 🎉 MindWay Android CI success 🎉
+          webhook: ${{ secrets.DISCORD_WEBHOOK_BOT }}
+          color: 00FF00
+
+      - name: MindWay Android CI failure Discord Notification
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ failure() }}
+        with:
+          title: ❌ MindWay Android CI failed ❌
+          webhook: ${{ secrets.DISCORD_WEBHOOK_BOT }}
+          color: FF0000
