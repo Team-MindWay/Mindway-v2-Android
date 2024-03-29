@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Mindway-v2-Android"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":presentation")
