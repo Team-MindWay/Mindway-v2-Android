@@ -8,7 +8,7 @@ import com.chobo.presentation.view.theme.color.MindWayColor
 @Composable
 fun MindWayAndroidTheme(
     colors: ColorTheme = MindWayColor,
-    typography: Typography = Typography,
+    typography: Typography = MindWayTypography,
     content: @Composable (colors: ColorTheme, typography: Typography) -> Unit
 ){
     content(colors, typography)
