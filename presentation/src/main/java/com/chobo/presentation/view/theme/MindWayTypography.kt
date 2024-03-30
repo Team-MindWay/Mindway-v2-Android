@@ -12,7 +12,7 @@ val pretendard = FontFamily(
     Font(R.font.pretendard_semi_bold)
 )
 
-val Typography = Typography(
+val MindWayTypography = Typography(
     headlineLarge = TextStyle( //h1
         fontSize = 32.sp,
         fontFamily = pretendard,
