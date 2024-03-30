@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.view.theme.color.MindWayColor
@@ -28,19 +29,16 @@ fun MindWayButton(
             modifier = modifier
                 .padding(10.dp)
                 .background(
-                color = buttonColor,
-                shape = RoundedCornerShape(size = 8.dp)
-            )
+                    color = buttonColor,
+                    shape = RoundedCornerShape(size = 8.dp)
+                )
         ) {
             Text(
                 text = text,
-                style = typography.bodyLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = colors.WHITE
-                )
                 style = typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.WHITE,
+                textAlign = TextAlign.Center,
             )
         }
     }

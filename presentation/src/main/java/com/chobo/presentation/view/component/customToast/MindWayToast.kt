@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.FailIcon
 import com.chobo.presentation.view.component.icon.SuccessIcon
@@ -40,13 +41,10 @@ fun MindWayToast(
             Text(
                 text = text,
 
-                style = typography.labelLarge.copy(
-                    fontWeight = FontWeight.Normal,
-                    color = colors.Black,
-                )
                 style = typography.labelLarge,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
+                textAlign = TextAlign.Center
             )
         }
     }
