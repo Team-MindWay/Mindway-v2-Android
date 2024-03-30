@@ -41,7 +41,7 @@ fun MindWayToast(
                 text = text,
 
                 style = typography.labelLarge.copy(
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.Black,
                 )
             )

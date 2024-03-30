@@ -36,7 +36,7 @@ fun MindWayTextField(
                 text = title,
 
                 style = typography.labelLarge.copy(
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
             )
@@ -71,7 +71,7 @@ fun MindWayTextField(
                     text = errorMessage,
 
                     style = typography.labelLarge.copy(
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight.Normal,
                         color = colors.SYSTEM
                     ),
                 )
