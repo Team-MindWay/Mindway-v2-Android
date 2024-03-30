@@ -1,9 +1,7 @@
 package com.chobo.presentation.view.component.icon
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -11,108 +9,110 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 
 @Composable
-fun LogoIcon(){
+fun LogoIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_mindway),
         contentDescription = "MindWay Main Icon",
-        modifier = Modifier.size(25.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun ChevronDownIcon(){
+fun ChevronDownIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_down),
         contentDescription = "MindWay Down Arrow",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun ChevronLeftIcon(){
+fun ChevronLeftIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_left),
         contentDescription = "MindWay Left Arrow",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
+
 @Composable
-fun ChevronRightIcon(){
+fun ChevronRightIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_right),
         contentDescription = "MindWay Right Arrow",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
+
 @Composable
-fun ChevronTopIcon(){
+fun ChevronTopIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_top),
         contentDescription = "MindWay Top Arrow",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun EditIcon(){
+fun EditIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_edit),
         contentDescription = "MindWay Edit Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun InfoIcon(){
+fun InfoIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_info),
         contentDescription = "MindWay Info Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun OptionIcon(){
+fun OptionIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_option),
         contentDescription = "MindWay Option Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun PlusIcon(){
+fun PlusIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_plus),
         contentDescription = "MindWay Add Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun SuccessIcon(){
+fun SuccessIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_success),
         contentDescription = "MindWay Success Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun FailIcon(){
+fun FailIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_fail),
         contentDescription = "MindWay Fail Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
 @Composable
-fun TrashCanIcon(){
+fun TrashCanIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_trash_can),
         contentDescription = "MindWay TrashCan Icon",
-        modifier = Modifier.size(24.dp),
+        modifier = modifier.size(24.dp)
     )
 }
 
@@ -120,11 +120,15 @@ fun TrashCanIcon(){
 fun HomeIcon(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false
-){
+) {
     Image(
-        painter = painterResource(id = if (isSelected) R.drawable.ic_home_selected else R.drawable.ic_home),
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_home_selected
+            else R.drawable.ic_home
+        ),
         contentDescription = "Show Home Icon",
-        modifier = modifier
+        modifier = modifier.size(24.dp)
     )
 }
 
@@ -132,11 +136,15 @@ fun HomeIcon(
 fun HeartIcon(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false
-){
+) {
     Image(
-        painter = painterResource(id = if (isSelected) R.drawable.ic_heart_selected else R.drawable.ic_heart),
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_heart_selected
+            else R.drawable.ic_heart
+        ),
         contentDescription = "Show Heart Icon",
-        modifier = modifier
+        modifier = modifier.size(24.dp)
     )
 }
 
@@ -144,11 +152,15 @@ fun HeartIcon(
 fun ProfileIcon(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false
-){
+) {
     Image(
-        painter = painterResource(id = if (isSelected) R.drawable.ic_profile_selected else R.drawable.ic_profile),
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_profile_selected
+            else R.drawable.ic_profile
+        ),
         contentDescription = "Show Profile Icon",
-        modifier = modifier
+        modifier = modifier.size(24.dp)
     )
 }
 
@@ -156,12 +168,14 @@ fun ProfileIcon(
 fun BookIcon(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false
-){
+) {
     Image(
-        painter = painterResource(id = if (isSelected) R.drawable.ic_book_selected else R.drawable.ic_book),
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_book_selected
+            else R.drawable.ic_book
+        ),
         contentDescription = "Show Book Icon",
-        modifier = modifier
-            .width(18.dp)
-            .height(14.dp)
+        modifier = modifier.size(24.dp)
     )
 }
