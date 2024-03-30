@@ -1,4 +1,4 @@
-package com.chobo.presentation.view.component
+package com.chobo.presentation.view.component.icon
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
