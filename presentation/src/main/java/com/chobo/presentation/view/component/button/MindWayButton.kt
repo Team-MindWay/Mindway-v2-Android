@@ -38,6 +38,9 @@ fun MindWayButton(
                     fontWeight = FontWeight.SemiBold,
                     color = colors.WHITE
                 )
+                style = typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = colors.WHITE,
             )
         }
     }

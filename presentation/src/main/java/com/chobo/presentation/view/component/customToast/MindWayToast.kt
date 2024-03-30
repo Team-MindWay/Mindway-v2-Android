@@ -44,6 +44,9 @@ fun MindWayToast(
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
                 )
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
+                color = colors.Black,
             )
         }
     }

@@ -35,10 +35,9 @@ fun MindWayTextField(
             Text(
                 text = title,
 
-                style = typography.labelLarge.copy(
-                    fontWeight = FontWeight.Normal,
-                    color = colors.GRAY400,
-                )
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
+                color = colors.GRAY400,
             )
             BasicTextField(
                 onValueChange = { newText -> textState.value = newText },
@@ -69,10 +68,9 @@ fun MindWayTextField(
                 Text(
                     text = errorMessage,
 
-                    style = typography.labelLarge.copy(
-                        fontWeight = FontWeight.Normal,
-                        color = colors.SYSTEM
-                    ),
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.SYSTEM
                 )
             }
         }
