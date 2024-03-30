@@ -2,7 +2,6 @@ package com.chobo.presentation.view.theme.color
 
 import androidx.compose.ui.graphics.Color
 
-
 object MindWayColor : ColorTheme() {
     override val MAIN = Color(0xFF7EAF72)
     override val Black = Color(0xFF333333)
