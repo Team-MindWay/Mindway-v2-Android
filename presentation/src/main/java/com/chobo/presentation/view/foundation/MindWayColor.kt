@@ -19,4 +19,7 @@ object MindWayColor {
     val GRAY100 = Color(0xFFF5F6F8)
 
     val SYSTEM = Color(0xFFE53A3A)
+
+    val CardShadow = Color(0x0D000000)
+    val StatusShadow = Color(0x1F000000)
 }
