@@ -33,7 +33,7 @@ fun MindWayToast(
                     ambientColor = colors.StatusShadow
                 )
                 .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
-                .padding(start = 16.dp, top = 20.dp, end = 16.dp, bottom = 20.dp)
+                .padding(vertical = 20.dp, horizontal = 16.dp)
         ) {
             if (isSuccess) SuccessIcon()
             else FailIcon()
@@ -41,7 +41,7 @@ fun MindWayToast(
                 text = text,
 
                 style = typography.labelLarge.copy(
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.Black,
                 )
             )

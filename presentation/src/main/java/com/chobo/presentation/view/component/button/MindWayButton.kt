@@ -35,7 +35,7 @@ fun MindWayButton(
             Text(
                 text = text,
                 style = typography.bodyLarge.copy(
-                    fontWeight = FontWeight(600),
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.WHITE
                 )
             )

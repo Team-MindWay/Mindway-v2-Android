@@ -36,7 +36,7 @@ fun MindWayTextField(
                 text = title,
 
                 style = typography.labelLarge.copy(
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
             )
@@ -48,7 +48,6 @@ fun MindWayTextField(
                         Text(
                             text = hint,
                             style = TextStyle(color = colors.GRAY500),
-                            modifier = Modifier.padding(start = 15.dp, top = 15.dp)
                         )
                     }
                 },
@@ -64,14 +63,14 @@ fun MindWayTextField(
                         color = colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
-                    .padding(start = 15.dp, top = 15.dp, end = 15.dp, bottom = 15.dp),
+                    .padding(15.dp),
             )
             if (isError) {
                 Text(
                     text = errorMessage,
 
                     style = typography.labelLarge.copy(
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight.Normal,
                         color = colors.SYSTEM
                     ),
                 )
