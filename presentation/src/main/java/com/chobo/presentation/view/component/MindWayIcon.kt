@@ -1,117 +1,167 @@
-package com.chobo.presentation.view.component
+package com.chobo.presentation.view.component.icon
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 
-
-
 @Composable
-fun MindWayLogoIcon(){
+fun LogoIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_mindway),
-        contentDescription = "Chevron Down Icon",
+        contentDescription = "MindWay Main Icon",
         modifier = Modifier.size(25.dp),
     )
 }
 
 @Composable
-fun MindWayChevronDownIcon(){
+fun ChevronDownIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_down),
-        contentDescription = "Chevron Down Icon",
+        contentDescription = "MindWay Down Arrow",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWayChevronLeftIcon(){
+fun ChevronLeftIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_left),
-        contentDescription = "Chevron Left Icon",
+        contentDescription = "MindWay Left Arrow",
         modifier = Modifier.size(24.dp),
     )
 }
 @Composable
-fun MindWayChevronRightIcon(){
+fun ChevronRightIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_right),
-        contentDescription = "Chevron Right Icon",
+        contentDescription = "MindWay Right Arrow",
         modifier = Modifier.size(24.dp),
     )
 }
 @Composable
-fun MindWayChevronTopIcon(){
+fun ChevronTopIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_top),
-        contentDescription = "Chevron Top Icon",
+        contentDescription = "MindWay Top Arrow",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWayEditIcon(){
+fun EditIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_edit),
-        contentDescription = "Edit Icon",
+        contentDescription = "MindWay Edit Icon",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWayFailIcon(){
-    Image(
-        painter = painterResource(id = R.drawable.ic_fail),
-        contentDescription = "More Info Icon",
-        modifier = Modifier.size(24.dp),
-    )
-}
-
-@Composable
-fun MindWayInfoIcon(){
+fun InfoIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_info),
-        contentDescription = "More Info Icon",
+        contentDescription = "MindWay Info Icon",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWayOptionIcon(){
+fun OptionIcon(){
     Image(
-        painter = painterResource(id = R.drawable.ic_info),
-        contentDescription = "Option Icon",
+        painter = painterResource(id = R.drawable.ic_option),
+        contentDescription = "MindWay Option Icon",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWayPlusIcon(){
+fun PlusIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_plus),
-        contentDescription = "Add Icon",
+        contentDescription = "MindWay Add Icon",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWaySuccessIcon(){
+fun SuccessIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_success),
-        contentDescription = "More Info Icon",
+        contentDescription = "MindWay Success Icon",
         modifier = Modifier.size(24.dp),
     )
 }
 
 @Composable
-fun MindWayTrashCanIcon(){
+fun FailIcon(){
+    Image(
+        painter = painterResource(id = R.drawable.ic_fail),
+        contentDescription = "MindWay Fail Icon",
+        modifier = Modifier.size(24.dp),
+    )
+}
+
+@Composable
+fun TrashCanIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_trash_can),
-        contentDescription = "More Info Icon",
+        contentDescription = "MindWay TrashCan Icon",
         modifier = Modifier.size(24.dp),
+    )
+}
+
+@Composable
+fun HomeIcon(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false
+){
+    Image(
+        painter = painterResource(id = if (isSelected) R.drawable.ic_home_selected else R.drawable.ic_home),
+        contentDescription = "Show Home Icon",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun HeartIcon(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false
+){
+    Image(
+        painter = painterResource(id = if (isSelected) R.drawable.ic_heart_selected else R.drawable.ic_heart),
+        contentDescription = "Show Heart Icon",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ProfileIcon(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false
+){
+    Image(
+        painter = painterResource(id = if (isSelected) R.drawable.ic_profile_selected else R.drawable.ic_profile),
+        contentDescription = "Show Profile Icon",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun BookIcon(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false
+){
+    Image(
+        painter = painterResource(id = if (isSelected) R.drawable.ic_book_selected else R.drawable.ic_book),
+        contentDescription = "Show Book Icon",
+        modifier = modifier
+            .width(18.dp)
+            .height(14.dp)
     )
 }
