@@ -34,7 +34,6 @@ fun MindWayTextField(
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
-
         ) {
         Text(
             text = title,
@@ -48,10 +47,17 @@ fun MindWayTextField(
             )
         )
         BasicTextField(
-            onValueChange = { newText ->
-                textState.value = newText
-            },
+            onValueChange = { newText -> textState.value = newText },
             value = textState.value,
+            decorationBox = {
+                if (textState.value == "") {
+                    Text(
+                        text = hint,
+                        style = TextStyle(color = MindWayColor.GRAY500),
+                        modifier = Modifier.padding(start = 15.dp, top = 15.dp)
+                    )
+                }
+            },
             modifier = modifier
                 .border(
                     width = 1.dp,
@@ -62,17 +68,7 @@ fun MindWayTextField(
                 .fillMaxSize()
                 .background(color = MindWayColor.GRAY100, shape = RoundedCornerShape(size = 8.dp))
                 .padding(start = 15.dp, top = 15.dp, end = 15.dp, bottom = 15.dp),
-            decorationBox = {
-                if (textState.value == "") {
-                    Text(
-                        text = hint,
-                        style = TextStyle(color = MindWayColor.GRAY500),
-                        modifier = Modifier.padding(start = 15.dp, top = 15.dp)
-                    )
-                }
-            },
         )
-
         if (isError) {
             Text(
                 text = errorMessage,

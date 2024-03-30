@@ -18,8 +18,8 @@ import com.chobo.presentation.view.foundation.MindWayColor
 @Composable
 fun MindWayButton(
     modifier: Modifier = Modifier,
-    text : String,
-){
+    text: String,
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
@@ -28,7 +28,6 @@ fun MindWayButton(
         Text(
             text = text,
 
-            // Mobile/m3(semi)
             style = TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
