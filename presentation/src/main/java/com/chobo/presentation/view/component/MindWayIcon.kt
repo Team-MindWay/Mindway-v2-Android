@@ -11,7 +11,7 @@ import com.chobo.presentation.R
 
 
 @Composable
-fun LogoIcon(){
+fun MindWayLogoIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_mindway),
         contentDescription = "Chevron Down Icon",
@@ -20,7 +20,7 @@ fun LogoIcon(){
 }
 
 @Composable
-fun ChevronDownIcon(){
+fun MindWayChevronDownIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_down),
         contentDescription = "Chevron Down Icon",
@@ -29,7 +29,7 @@ fun ChevronDownIcon(){
 }
 
 @Composable
-fun ChevronLeftIcon(){
+fun MindWayChevronLeftIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_left),
         contentDescription = "Chevron Left Icon",
@@ -37,7 +37,7 @@ fun ChevronLeftIcon(){
     )
 }
 @Composable
-fun ChevronRightIcon(){
+fun MindWayChevronRightIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_right),
         contentDescription = "Chevron Right Icon",
@@ -45,7 +45,7 @@ fun ChevronRightIcon(){
     )
 }
 @Composable
-fun ChevronTopIcon(){
+fun MindWayChevronTopIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_chevron_top),
         contentDescription = "Chevron Top Icon",
@@ -54,7 +54,7 @@ fun ChevronTopIcon(){
 }
 
 @Composable
-fun EditIcon(){
+fun MindWayEditIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_edit),
         contentDescription = "Edit Icon",
@@ -63,7 +63,7 @@ fun EditIcon(){
 }
 
 @Composable
-fun FailIcon(){
+fun MindWayFailIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_fail),
         contentDescription = "More Info Icon",
@@ -72,7 +72,7 @@ fun FailIcon(){
 }
 
 @Composable
-fun InfoIcon(){
+fun MindWayInfoIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_info),
         contentDescription = "More Info Icon",
@@ -81,7 +81,7 @@ fun InfoIcon(){
 }
 
 @Composable
-fun OptionIcon(){
+fun MindWayOptionIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_info),
         contentDescription = "Option Icon",
@@ -90,7 +90,7 @@ fun OptionIcon(){
 }
 
 @Composable
-fun PlusIcon(){
+fun MindWayPlusIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_plus),
         contentDescription = "Add Icon",
@@ -99,7 +99,7 @@ fun PlusIcon(){
 }
 
 @Composable
-fun SuccessIcon(){
+fun MindWaySuccessIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_success),
         contentDescription = "More Info Icon",
@@ -108,7 +108,7 @@ fun SuccessIcon(){
 }
 
 @Composable
-fun TrashCanIcon(){
+fun MindWayTrashCanIcon(){
     Image(
         painter = painterResource(id = R.drawable.ic_trash_can),
         contentDescription = "More Info Icon",
