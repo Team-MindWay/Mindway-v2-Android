@@ -14,8 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.FailIcon
 import com.chobo.presentation.view.component.icon.SuccessIcon
-import com.chobo.presentation.view.theme.MindWayTypography
-import com.chobo.presentation.view.theme.color.MindWayColor
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun MindWayToast(
@@ -23,27 +22,29 @@ fun MindWayToast(
     text: String,
     isSuccess: Boolean,
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .shadow(
-                elevation = 20.dp,
-                spotColor = MindWayColor.StatusShadow,
-                ambientColor = MindWayColor.StatusShadow
-            )
-            .background(color = MindWayColor.WHITE, shape = RoundedCornerShape(size = 8.dp))
-            .padding(start = 16.dp, top = 20.dp, end = 16.dp, bottom = 20.dp)
-    ) {
-        if (isSuccess) SuccessIcon()
-        else FailIcon()
-        Text(
-            text = text,
+    MindWayAndroidTheme { colors, typography ->
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .shadow(
+                    elevation = 20.dp,
+                    spotColor = colors.StatusShadow,
+                    ambientColor = colors.StatusShadow
+                )
+                .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
+                .padding(start = 16.dp, top = 20.dp, end = 16.dp, bottom = 20.dp)
+        ) {
+            if (isSuccess) SuccessIcon()
+            else FailIcon()
+            Text(
+                text = text,
 
-            style =  MindWayTypography.labelLarge.copy(
-                fontWeight = FontWeight(400),
-                color = MindWayColor.Black,
+                style = typography.labelLarge.copy(
+                    fontWeight = FontWeight(400),
+                    color = colors.Black,
+                )
             )
-        )
+        }
     }
 }

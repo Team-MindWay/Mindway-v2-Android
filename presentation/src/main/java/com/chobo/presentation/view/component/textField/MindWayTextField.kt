@@ -16,8 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.chobo.presentation.view.theme.MindWayTypography
-import com.chobo.presentation.view.theme.color.MindWayColor
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun MindWayTextField(
@@ -28,50 +27,55 @@ fun MindWayTextField(
     isError: Boolean,
     errorMessage: String,
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
-        horizontalAlignment = Alignment.Start,
+    MindWayAndroidTheme { colors, typography ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
+            horizontalAlignment = Alignment.Start,
         ) {
-        Text(
-            text = title,
-
-            style = MindWayTypography.labelLarge.copy(
-                fontWeight = FontWeight(400),
-                color = MindWayColor.GRAY400,
-            )
-        )
-        BasicTextField(
-            onValueChange = { newText -> textState.value = newText },
-            value = textState.value,
-            decorationBox = {
-                if (textState.value == "") {
-                    Text(
-                        text = hint,
-                        style = TextStyle(color = MindWayColor.GRAY500),
-                        modifier = Modifier.padding(start = 15.dp, top = 15.dp)
-                    )
-                }
-            },
-            modifier = modifier
-                .border(
-                    width = 1.dp,
-                    color = if (isError) MindWayColor.SYSTEM
-                    else MindWayColor.GRAY100,
-                    shape = RoundedCornerShape(size = 8.dp)
-                )
-                .fillMaxSize()
-                .background(color = MindWayColor.GRAY100, shape = RoundedCornerShape(size = 8.dp))
-                .padding(start = 15.dp, top = 15.dp, end = 15.dp, bottom = 15.dp),
-        )
-        if (isError) {
             Text(
-                text = errorMessage,
+                text = title,
 
-                style =  MindWayTypography.labelLarge.copy(
+                style = typography.labelLarge.copy(
                     fontWeight = FontWeight(400),
-                    color = MindWayColor.SYSTEM
-                ),
+                    color = colors.GRAY400,
+                )
             )
+            BasicTextField(
+                onValueChange = { newText -> textState.value = newText },
+                value = textState.value,
+                decorationBox = {
+                    if (textState.value == "") {
+                        Text(
+                            text = hint,
+                            style = TextStyle(color = colors.GRAY500),
+                            modifier = Modifier.padding(start = 15.dp, top = 15.dp)
+                        )
+                    }
+                },
+                modifier = modifier
+                    .border(
+                        width = 1.dp,
+                        color = if (isError) colors.SYSTEM
+                        else colors.GRAY100,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .fillMaxSize()
+                    .background(
+                        color = colors.GRAY100,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .padding(start = 15.dp, top = 15.dp, end = 15.dp, bottom = 15.dp),
+            )
+            if (isError) {
+                Text(
+                    text = errorMessage,
+
+                    style = typography.labelLarge.copy(
+                        fontWeight = FontWeight(400),
+                        color = colors.SYSTEM
+                    ),
+                )
+            }
         }
     }
 }
