@@ -9,14 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.chobo.presentation.R
-import com.chobo.presentation.view.foundation.MindWayColor
+import com.chobo.presentation.view.theme.MindWayTypography
+import com.chobo.presentation.view.theme.color.MindWayColor
 
 @Composable
 fun MindWayButton(
@@ -34,13 +30,9 @@ fun MindWayButton(
     ) {
         Text(
             text = text,
-
-            style = TextStyle(
-                fontSize = 16.sp,
-                lineHeight = 24.sp,
-                fontFamily = FontFamily(Font(R.font.pretendard)),
+            style = MindWayTypography.bodyLarge.copy(
                 fontWeight = FontWeight(600),
-                color = MindWayColor.WHITE,
+                color = MindWayColor.WHITE
             )
         )
     }

@@ -14,13 +14,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.chobo.presentation.R
-import com.chobo.presentation.view.foundation.MindWayColor
+import com.chobo.presentation.view.theme.MindWayTypography
+import com.chobo.presentation.view.theme.color.MindWayColor
 
 @Composable
 fun MindWayTextField(
@@ -38,10 +35,7 @@ fun MindWayTextField(
         Text(
             text = title,
 
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 21.sp,
-                fontFamily = FontFamily(Font(R.font.pretendard)),
+            style = MindWayTypography.labelLarge.copy(
                 fontWeight = FontWeight(400),
                 color = MindWayColor.GRAY400,
             )
@@ -73,10 +67,7 @@ fun MindWayTextField(
             Text(
                 text = errorMessage,
 
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    lineHeight = 21.sp,
-                    fontFamily = FontFamily(Font(R.font.pretendard)),
+                style =  MindWayTypography.labelLarge.copy(
                     fontWeight = FontWeight(400),
                     color = MindWayColor.SYSTEM
                 ),
