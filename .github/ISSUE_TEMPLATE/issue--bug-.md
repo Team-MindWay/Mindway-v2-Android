@@ -2,7 +2,8 @@
 name: ' Bug '
 about: 버그발생
 title: ''
-labels: 🐞 Type: Bug
+labels: 
+  - '🐞 Type: Bug'
 assignees: ''
 
 ---
