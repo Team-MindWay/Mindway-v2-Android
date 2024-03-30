@@ -161,7 +161,7 @@ fun BookIcon(
         painter = painterResource(id = if (isSelected) R.drawable.ic_book_selected else R.drawable.ic_book),
         contentDescription = "Show Book Icon",
         modifier = modifier
-            .width(18.dp)
-            .height(14.dp)
+            .width(24.dp)
+            .height(24.dp)
     )
 }
