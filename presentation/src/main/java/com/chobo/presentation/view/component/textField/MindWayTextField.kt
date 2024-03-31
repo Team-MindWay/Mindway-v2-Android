@@ -15,9 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
@@ -50,6 +50,7 @@ fun MindWayTextField(
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
                 ),
+                cursorBrush = SolidColor(colors.MAIN),
                 decorationBox = {
                     Row (
                         verticalAlignment = Alignment.CenterVertically,
