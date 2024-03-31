@@ -122,11 +122,7 @@ fun HomeIcon(
     isSelected: Boolean = false
 ) {
     Image(
-        painter = painterResource(
-            id =
-            if (isSelected) R.drawable.ic_home_selected
-            else R.drawable.ic_home
-        ),
+        painter = painterResource(id = if (isSelected) R.drawable.ic_home_selected else R.drawable.ic_home),
         contentDescription = "Show Home Icon",
         modifier = modifier.size(24.dp)
     )
@@ -138,11 +134,7 @@ fun HeartIcon(
     isSelected: Boolean = false
 ) {
     Image(
-        painter = painterResource(
-            id =
-            if (isSelected) R.drawable.ic_heart_selected
-            else R.drawable.ic_heart
-        ),
+        painter = painterResource(id = if (isSelected) R.drawable.ic_heart_selected else R.drawable.ic_heart),
         contentDescription = "Show Heart Icon",
         modifier = modifier.size(24.dp)
     )
@@ -154,11 +146,7 @@ fun ProfileIcon(
     isSelected: Boolean = false
 ) {
     Image(
-        painter = painterResource(
-            id =
-            if (isSelected) R.drawable.ic_profile_selected
-            else R.drawable.ic_profile
-        ),
+        painter = painterResource(id = if (isSelected) R.drawable.ic_profile_selected else R.drawable.ic_profile),
         contentDescription = "Show Profile Icon",
         modifier = modifier.size(24.dp)
     )
@@ -170,11 +158,7 @@ fun BookIcon(
     isSelected: Boolean = false
 ) {
     Image(
-        painter = painterResource(
-            id =
-            if (isSelected) R.drawable.ic_book_selected
-            else R.drawable.ic_book
-        ),
+        painter = painterResource(id = if (isSelected) R.drawable.ic_book_selected else R.drawable.ic_book),
         contentDescription = "Show Book Icon",
         modifier = modifier.size(24.dp)
     )
