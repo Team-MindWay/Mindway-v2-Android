@@ -40,7 +40,6 @@ fun MindWayToast(
             else FailIcon()
             Text(
                 text = text,
-
                 style = typography.labelLarge,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
