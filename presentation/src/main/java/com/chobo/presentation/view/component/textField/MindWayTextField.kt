@@ -16,6 +16,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,7 @@ fun MindWayTextField(
     modifier: Modifier = Modifier,
     title: String,
     textState: MutableState<String>,
-    hint: String,
+    placeholder: String,
     isError: Boolean,
     errorMessage: String,
 ) {
@@ -58,7 +59,7 @@ fun MindWayTextField(
                     ){
                         if (textState.value == "") {
                             Text(
-                                text = hint,
+                                text = placeholder,
                                 style = TextStyle(color = colors.GRAY500),
                             )
                         }
