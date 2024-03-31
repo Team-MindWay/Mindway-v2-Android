@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.component.button
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -21,9 +22,12 @@ fun MindWayButton(
     modifier: Modifier = Modifier,
     text: String,
     buttonColor: Color = MindWayColor.MAIN,
+    isClickable: Boolean = true,
     onClick: () -> Unit,
 ) {
+    val clickableModifier =
         if (isClickable) Modifier.clickable { onClick() }
+        else Modifier
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
@@ -34,6 +38,7 @@ fun MindWayButton(
                     color = buttonColor,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
+                .then(clickableModifier)
         ) {
             Text(
                 text = text,
