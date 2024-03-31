@@ -3,6 +3,7 @@ package com.chobo.presentation.view.component.textField
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+
 
 
 @Composable
@@ -44,41 +46,44 @@ fun MindWayTextField(
                 fontWeight = FontWeight.Normal,
                 color = colors.GRAY400,
             )
-            BasicTextField(
-                onValueChange = { newText -> textState.value = newText },
-                value = textState.value,
-                textStyle = typography.bodySmall.copy(
-                    fontWeight = FontWeight.Normal,
-                    color = colors.Black,
-                ),
-                cursorBrush = SolidColor(colors.MAIN),
-                decorationBox = {
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxHeight()
-                    ){
-                        if (textState.value == "") {
-                            Text(
-                                text = placeholder,
-                                style = TextStyle(color = colors.GRAY500),
-                            )
-                        }
+            Box(modifier = modifier) {
+                BasicTextField(
+                    onValueChange = { newText -> textState.value = newText },
+                    value = textState.value,
+                    textStyle = typography.bodySmall.copy(
+                        fontWeight = FontWeight.Normal,
+                        color = colors.Black,
+                    ),
+                    cursorBrush = SolidColor(colors.MAIN),
+                    modifier = modifier
+                        .border(
+                            width = 1.dp,
+                            color = if (isError) colors.SYSTEM
+                            else colors.GRAY100,
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .fillMaxSize()
+                        .background(
+                            color = colors.GRAY100,
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .padding(15.dp),
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxHeight()
+                ) {
+                    if (textState.value == "") {
+                        Text(
+                            modifier = Modifier.fillMaxHeight(),
+                            text = placeholder,
+                            style = TextStyle(color = colors.GRAY500),
+                        )
                     }
-                },
-                modifier = modifier
-                    .border(
-                        width = 1.dp,
-                        color = if (isError) colors.SYSTEM
-                        else colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .fillMaxSize()
-                    .background(
-                        color = colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .padding(15.dp),
-            )
+                }
+            }
             if (isError) {
                 Text(
                     text = errorMessage,
