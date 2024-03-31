@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
-
 @Composable
 fun MindWayTextField(
     modifier: Modifier = Modifier,
@@ -38,7 +37,6 @@ fun MindWayTextField(
         ) {
             Text(
                 text = title,
-
                 style = typography.labelLarge,
                 fontWeight = FontWeight.Normal,
                 color = colors.GRAY400,
@@ -81,7 +79,6 @@ fun MindWayTextField(
             if (isError) {
                 Text(
                     text = errorMessage,
-
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
                     color = colors.SYSTEM
