@@ -21,7 +21,9 @@ fun MindWayButton(
     modifier: Modifier = Modifier,
     text: String,
     buttonColor: Color = MindWayColor.MAIN,
+    onClick: () -> Unit,
 ) {
+        if (isClickable) Modifier.clickable { onClick() }
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
