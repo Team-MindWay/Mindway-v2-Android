@@ -46,6 +46,10 @@ fun MindWayTextField(
             BasicTextField(
                 onValueChange = { newText -> textState.value = newText },
                 value = textState.value,
+                textStyle = typography.bodySmall.copy(
+                    fontWeight = FontWeight.Normal,
+                    color = colors.Black,
+                ),
                 decorationBox = {
                     Row (
                         verticalAlignment = Alignment.CenterVertically,
