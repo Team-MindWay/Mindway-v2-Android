@@ -11,13 +11,13 @@ import androidx.navigation.compose.NavHost
 fun MindWayNavHost(
     navController: NavHostController,
     startDestination: String
-) {
+){
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
 
     NavHost(
         navController = navController,
         startDestination = startDestination
-    ) {
+    ){
 
     }
 }
