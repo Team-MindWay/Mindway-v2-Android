@@ -29,30 +29,36 @@ fun HomeGoalReadingGraph(
         val height = ((27 * numBooksRead) / maxBooksRead + 1).toFloat().dp
         val graphColor = if (!isCurrentDate) colors.GRAY200 else colors.MAIN
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Bottom),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                8.dp,
+                Alignment.Bottom
+            ),
             modifier = modifier,
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy(
+                    0.dp,
+                    Alignment.Top
+                ),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
                 Text(
                     text = numBooksRead.toString(),
+                    style = typography.labelLarge,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.GRAY800,
                     modifier = Modifier
                         .width(9.dp)
                         .height(21.dp),
-                    style = typography.labelLarge,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight(400),
-                    color = colors.GRAY800,
                 )
                 Spacer(
                     modifier = Modifier
-                        .fillMaxWidth(0.667f)
                         .height(height)
+                        .fillMaxWidth(0.667f)
                         .background(
                             color = graphColor,
                             shape = RoundedCornerShape(
@@ -64,13 +70,13 @@ fun HomeGoalReadingGraph(
             }
             Text(
                 text = today,
+                style = typography.labelLarge,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Normal,
+                color = colors.GRAY800,
                 modifier = Modifier
                     .width(9.dp)
                     .height(21.dp),
-                style = typography.labelLarge,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight(400),
-                color = colors.GRAY800,
             )
         }
     }
