@@ -40,17 +40,24 @@ fun HomeGoalReadingChart(
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    16.dp,
+                    Alignment.Top
+                ),
                 modifier = modifier
+                    .padding(24.dp)
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
                         ambientColor = colors.GRAY400
-                    )
-                    .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
-                    .padding(24.dp)
-            ) {
+                    ),
+
+                ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top,
@@ -58,7 +65,7 @@ fun HomeGoalReadingChart(
                     Text(
                         text = "목표 독서량",
                         style = typography.bodyMedium,
-                        fontWeight = FontWeight(600),
+                        fontWeight = FontWeight.SemiBold,
                         color = colors.Black,
                     )
                     ChevronRightIcon(modifier = Modifier.clickable { onClick() })
@@ -78,13 +85,13 @@ fun HomeGoalReadingChart(
                 ) {
                     readNumberList.forEach {
                         HomeGoalReadingGraph(
-                            modifier = Modifier
-                                .width(16.dp)
-                                .height(78.dp),
                             numBooksRead = it.numBooksRead,
                             maxBooksRead = it.maxBooksRead,
                             isCurrentDate = it.isCurrentDate,
                             today = it.today,
+                            modifier = Modifier
+                                .width(16.dp)
+                                .height(78.dp),
                         )
                     }
                 }
@@ -94,13 +101,16 @@ fun HomeGoalReadingChart(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier
+                    .padding(all = 24.dp)
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
                         ambientColor = colors.GRAY400
                     )
-                    .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
-                    .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 24.dp)
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(
@@ -112,7 +122,7 @@ fun HomeGoalReadingChart(
                     Text(
                         text = "목표 독서량",
                         style = typography.bodyMedium,
-                        fontWeight = FontWeight(600),
+                        fontWeight = FontWeight.SemiBold,
                         color = colors.Black,
                     )
                     ChevronRightIcon()
@@ -120,12 +130,11 @@ fun HomeGoalReadingChart(
                 Text(
                     text = "아직 목표 독서량을 설정하지 않았습니다.",
                     style = typography.bodySmall,
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
                 Spacer(
-                    modifier = Modifier
-                        .height(27.dp)
+                    modifier = Modifier.height(27.dp)
                 )
             }
         }
