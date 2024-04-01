@@ -26,30 +26,33 @@ fun HomeGoalReadingIndicator(
     val readProgress = if (numBooksRead < 30) numBooksRead else 30
     MindWayAndroidTheme { colors, typography ->
         Row(
-            modifier = modifier,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier,
         ) {
             LinearProgressIndicator(
                 progress = (readProgress) / 30f,
+                trackColor = colors.GRAY100,
+                color = colors.MAIN,
                 modifier = Modifier
                     .padding(1.dp)
                     .fillMaxWidth(0.7576f)
                     .fillMaxHeight(0.33f)
                     .clip(RoundedCornerShape(5.dp)),
-                trackColor = colors.GRAY100,
-                color = colors.MAIN
             )
             Row(
                 modifier = Modifier
                     .fillMaxHeight(),
-                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.spacedBy(
+                    4.dp,
+                    Alignment.CenterHorizontally
+                ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = numBooksRead.toString(),
                     style = typography.bodyLarge,
-                    fontWeight = FontWeight(600),
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
                     textAlign = TextAlign.Center,
                 )
@@ -65,14 +68,14 @@ fun HomeGoalReadingIndicator(
                     Text(
                         text = "/",
                         style = typography.bodyLarge,
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight.Normal,
                         color = colors.GRAY300,
                         textAlign = TextAlign.Center,
                     )
                     Text(
                         text = "30",
                         style = typography.bodySmall,
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight.Normal,
                         color = colors.MAIN,
                         textAlign = TextAlign.Center,
                     )
