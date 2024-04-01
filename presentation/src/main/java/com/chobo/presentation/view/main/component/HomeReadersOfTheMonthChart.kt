@@ -30,28 +30,31 @@ fun HomeReadersOfTheMonthChart(
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    20.dp,
+                    Alignment.Top
+                ),
                 modifier = modifier
+                    .padding(all = 24.dp)
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.WHITE,
                         ambientColor = colors.WHITE
                     )
-                    .background(
-                        color = colors.WHITE,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .padding(24.dp)
             ) {
                 Text(
                     text = "이달의 독서왕",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(27.dp),
                     style = typography.bodyMedium,
                     fontWeight = FontWeight(600),
                     color = colors.Black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(27.dp),
                 )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -68,26 +71,29 @@ fun HomeReadersOfTheMonthChart(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .height(239.dp)
+                    .padding(all = 24.dp)
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
                         ambientColor = colors.GRAY400
                     )
-                    .fillMaxWidth()
-                    .height(239.dp)
-                    .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
-                    .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 24.dp)
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
             ) {
                 Text(
                     text = "이달의 독서왕",
                     style = typography.bodyMedium,
-                    fontWeight = FontWeight(600),
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
                 )
                 Text(
                     text = "아직 이달의 독서왕이 없습니다.",
                     style = typography.bodySmall,
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
                 Spacer(modifier = Modifier.height(27.dp))
