@@ -76,7 +76,7 @@ fun HomeGoalReadingChart(
                         .height(78.dp)
                 ) {
                     readNumberList.forEach {
-                        HomeReadingGoalGraph(
+                        HomeGoalReadingGraph(
                             modifier = Modifier.width(16.dp).height(78.dp),
                             numBooksRead = it.numBooksRead,
                             maxBooksRead = it.maxBooksRead,
