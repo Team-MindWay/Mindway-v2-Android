@@ -31,27 +31,28 @@ data class HomeReadingGoalGraphData(
 
 @Composable
 fun HomeGoalReadingChart(
+    modifier: Modifier,
     isHasData: Boolean,
-    numBooksRead: Int,
-    readNumberList: List<HomeReadingGoalGraphData>,
+    numBooksRead: Int = 0,
+    readNumberList: List<HomeReadingGoalGraphData> = listOf(),
+    onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
+                modifier = modifier
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
                         ambientColor = colors.GRAY400
                     )
-                    .fillMaxWidth()
                     .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
                     .padding(24.dp)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.Start),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top,
                 ) {
                     Text(
@@ -60,7 +61,7 @@ fun HomeGoalReadingChart(
                         fontWeight = FontWeight(600),
                         color = colors.Black,
                     )
-                    ChevronRightIcon(modifier = Modifier.clickable { })
+                    ChevronRightIcon(modifier = Modifier.clickable { onClick() })
                 }
                 HomeGoalReadingIndicator(
                     numBooksRead = numBooksRead,
@@ -77,7 +78,9 @@ fun HomeGoalReadingChart(
                 ) {
                     readNumberList.forEach {
                         HomeGoalReadingGraph(
-                            modifier = Modifier.width(16.dp).height(78.dp),
+                            modifier = Modifier
+                                .width(16.dp)
+                                .height(78.dp),
                             numBooksRead = it.numBooksRead,
                             maxBooksRead = it.maxBooksRead,
                             isCurrentDate = it.isCurrentDate,
@@ -90,14 +93,12 @@ fun HomeGoalReadingChart(
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
+                modifier = modifier
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
                         ambientColor = colors.GRAY400
                     )
-                    .fillMaxWidth()
-                    .height(211.dp)
                     .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
                     .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 24.dp)
             ) {
