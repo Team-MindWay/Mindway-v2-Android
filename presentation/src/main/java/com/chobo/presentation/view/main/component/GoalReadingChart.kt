@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -24,7 +26,6 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun GoalReadingChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
-    numBooksRead: Int,
     readNumberList: List<ReadingGoalGraphData> = listOf(),
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -48,7 +49,7 @@ fun GoalReadingChart(
         ) {
             if (isHasData) {
                 GoalReadingIndicator(
-                    numBooksRead = numBooksRead,
+                    numBooksRead = readNumberList.sumOf { it.numBooksRead },
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.2419f)
@@ -67,7 +68,7 @@ fun GoalReadingChart(
                             isCurrentDate = it.isCurrentDate,
                             today = it.today,
                             modifier = Modifier
-                                .fillMaxWidth(0.0667f)
+                                .width(16.dp)
                                 .height(78.dp),
                         )
                     }
@@ -83,4 +84,24 @@ fun GoalReadingChart(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun GoalReadingChartPreview() {
+    GoalReadingChart(
+        modifier = Modifier
+            .width(312.dp)
+            .height(180.dp),
+        isHasData = true,
+        readNumberList = listOf(
+            ReadingGoalGraphData(1, 3, false, "오"),
+            ReadingGoalGraphData(2, 3, true, "늘"),
+            ReadingGoalGraphData(1, 3, false, "오"),
+            ReadingGoalGraphData(3, 3, false, "오"),
+            ReadingGoalGraphData(1, 3, false, "오"),
+            ReadingGoalGraphData(3, 3, false, "오"),
+            ReadingGoalGraphData(1, 3, false, "오"),
+        )
+    )
 }
