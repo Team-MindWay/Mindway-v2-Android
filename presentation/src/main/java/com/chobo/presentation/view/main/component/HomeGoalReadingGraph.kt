@@ -42,8 +42,7 @@ fun HomeGoalReadingGraph(
                     Alignment.Top
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = numBooksRead.toString(),
