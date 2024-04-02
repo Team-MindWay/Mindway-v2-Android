@@ -29,7 +29,7 @@ fun GoalReadingChart(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .shadow(
