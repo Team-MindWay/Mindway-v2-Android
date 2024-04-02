@@ -35,6 +35,7 @@ fun MindWayTextField(
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
+            modifier = outSideModifier
         ) {
             Text(
                 text = title,
@@ -62,6 +63,7 @@ fun MindWayTextField(
                         .background(
                             color = colors.GRAY100,
                             shape = RoundedCornerShape(size = 8.dp)
+                modifier = textFieldModifier
                         )
                         .padding(15.dp),
                 )
