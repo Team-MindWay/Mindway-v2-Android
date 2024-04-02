@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,12 +29,14 @@ fun GoalReadingListOfBooksRead(
     date: MonthDay,
     title: String,
     content: String,
+    onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
+                .clickable { onClick() }
                 .fillMaxWidth()
                 .shadow(
                     elevation = 20.dp,
