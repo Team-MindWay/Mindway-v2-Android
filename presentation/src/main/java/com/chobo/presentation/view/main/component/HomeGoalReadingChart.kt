@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -22,7 +21,7 @@ import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 
-data class HomeReadingGoalGraphData(
+data class ReadingGoalGraphData(
     val numBooksRead: Int,
     val maxBooksRead: Int,
     val isCurrentDate: Boolean,
@@ -34,7 +33,7 @@ fun HomeGoalReadingChart(
     modifier: Modifier,
     isHasData: Boolean,
     numBooksRead: Int = 0,
-    readNumberList: List<HomeReadingGoalGraphData> = listOf(),
+    readNumberList: List<ReadingGoalGraphData> = listOf(),
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -70,7 +69,7 @@ fun HomeGoalReadingChart(
                     )
                     ChevronRightIcon(modifier = Modifier.clickable { onClick() })
                 }
-                HomeGoalReadingIndicator(
+                GoalReadingIndicator(
                     numBooksRead = numBooksRead,
                     modifier = Modifier
                         .width(264.dp)
@@ -84,7 +83,7 @@ fun HomeGoalReadingChart(
                         .height(78.dp)
                 ) {
                     readNumberList.forEach {
-                        HomeGoalReadingGraph(
+                        GoalReadingGraph(
                             numBooksRead = it.numBooksRead,
                             maxBooksRead = it.maxBooksRead,
                             isCurrentDate = it.isCurrentDate,

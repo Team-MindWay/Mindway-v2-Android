@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun HomeGoalReadingGraph(
+fun GoalReadingGraph(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
     maxBooksRead: Int,
