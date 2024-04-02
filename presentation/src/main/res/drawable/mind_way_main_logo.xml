@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/mind_way_logo"
+    android:insetLeft="26.5dp"
+    android:insetRight="26.5dp"
+    android:insetTop="55dp"
+    android:insetBottom="55dp">
+</inset>
