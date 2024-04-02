@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -72,8 +74,8 @@ fun HomeGoalReadingChart(
                 GoalReadingIndicator(
                     numBooksRead = numBooksRead,
                     modifier = Modifier
-                        .width(264.dp)
-                        .height(30.dp)
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.1840f)
                 )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
