@@ -25,7 +25,7 @@ data class MonthDay(
     val day: Int,
 )
 @Composable
-fun GoalReadingListOfBooksRead(
+fun GoalReadingListOfBooksReadItem(
     date: MonthDay,
     title: String,
     content: String,
