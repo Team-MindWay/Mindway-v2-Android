@@ -41,8 +41,7 @@ fun HomeGoalReadingIndicator(
                     .clip(RoundedCornerShape(5.dp)),
             )
             Row(
-                modifier = Modifier
-                    .fillMaxHeight(),
+                modifier = Modifier.fillMaxHeight(),
                 horizontalArrangement = Arrangement.spacedBy(
                     4.dp,
                     Alignment.CenterHorizontally
@@ -57,8 +56,7 @@ fun HomeGoalReadingIndicator(
                     textAlign = TextAlign.Center,
                 )
                 Row(
-                    modifier = Modifier
-                        .height(30.dp),
+                    modifier = Modifier.height(30.dp),
                     horizontalArrangement = Arrangement.spacedBy(
                         2.dp,
                         Alignment.CenterHorizontally
