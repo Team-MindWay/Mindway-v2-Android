@@ -63,7 +63,7 @@ fun HomeNoticeCard(
                 Text(
                     text = titleText,
                     style = typography.bodyMedium,
-                    fontWeight = FontWeight(600),
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
                 )
                 Text(
@@ -72,7 +72,7 @@ fun HomeNoticeCard(
                         fontSize = 12.sp,
                         lineHeight = 18.sp,
                         fontFamily = FontFamily(Font(R.font.pretendard)),
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight.Normal,
                         color = colors.Black,
                     )
                 )
