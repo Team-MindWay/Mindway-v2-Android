@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -34,7 +35,6 @@ data class ReadingGoalGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier,
     isHasData: Boolean,
-    numBooksRead: Int = 0,
     readNumberList: List<ReadingGoalGraphData> = listOf(),
     onClick: () -> Unit,
 ) {
@@ -44,36 +44,41 @@ fun HomeGoalReadingChart(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                 modifier = modifier
-                    .padding(24.dp)
-                    .background(
-                        color = colors.WHITE,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
                         ambientColor = colors.GRAY400
-                    ),
-
-                ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Top,
-                ) {
-                    Text(
-                        text = "목표 독서량",
-                        style = typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.Black,
                     )
-                    ChevronRightIcon(modifier = Modifier.clickable { onClick() })
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .padding(24.dp),
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Top,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "목표 독서량",
+                            style = typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.Black,
+                        )
+                        ChevronRightIcon(modifier = Modifier.clickable { onClick() })
+                    }
+                    GoalReadingIndicator(
+                        numBooksRead = readNumberList.sumOf { it.numBooksRead },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(0.1840f)
+                    )
                 }
-                GoalReadingIndicator(
-                    numBooksRead = numBooksRead,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.1840f)
-                )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
@@ -133,5 +138,26 @@ fun HomeGoalReadingChart(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun HomeGoalReadingChartPreview() {
+    HomeGoalReadingChart(
+        modifier = Modifier
+            .width(312.dp)
+            .height(211.dp),
+        isHasData = true,
+        readNumberList = listOf(
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(3, 3, false, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(1, 3, true, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(1, 3, false, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+        )
+    ) {
     }
 }

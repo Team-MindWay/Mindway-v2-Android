@@ -3,6 +3,8 @@ package com.chobo.presentation.view.component.customToast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -12,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.FailIcon
 import com.chobo.presentation.view.component.icon.SuccessIcon
@@ -47,4 +50,16 @@ fun MindWayToast(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun MindWayToastPreview() {
+    MindWayToast(
+        text = "토스트 메시지",
+        isSuccess = false,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(57.dp)
+    )
 }
