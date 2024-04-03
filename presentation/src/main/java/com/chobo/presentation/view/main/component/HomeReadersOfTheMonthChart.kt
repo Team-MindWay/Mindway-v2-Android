@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
@@ -36,7 +38,6 @@ fun HomeReadersOfTheMonthChart(
                     Alignment.Top
                 ),
                 modifier = modifier
-                    .padding(all = 24.dp)
                     .background(
                         color = colors.WHITE,
                         shape = RoundedCornerShape(size = 8.dp)
@@ -46,6 +47,7 @@ fun HomeReadersOfTheMonthChart(
                         spotColor = colors.WHITE,
                         ambientColor = colors.WHITE
                     )
+                    .padding(all = 24.dp)
             ) {
                 Text(
                     text = "이달의 독서왕",
@@ -59,7 +61,7 @@ fun HomeReadersOfTheMonthChart(
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     bookKingOfTheMonthData.forEach {
                         HomeReadersOfTheMonthGraph(bookKingOfTheMonthData = it)
@@ -100,4 +102,19 @@ fun HomeReadersOfTheMonthChart(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun HomeReadersOfTheMonthChartPreview() {
+    HomeReadersOfTheMonthChart(
+        isHasData = true,
+        modifier = Modifier
+            .width(312.dp),
+        bookKingOfTheMonthData = listOf(
+            BookKingOfTheMonthData("나다", 12),
+            BookKingOfTheMonthData("나다", 2),
+            BookKingOfTheMonthData("나다", 30),
+        )
+    )
 }
