@@ -30,7 +30,8 @@ fun GoalReadingChart(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = if (isHasData) Arrangement.SpaceBetween
+            else Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .shadow(
@@ -76,7 +77,6 @@ fun GoalReadingChart(
             } else {
                 Text(
                     text = stringResource(R.string.goal_reading_error),
-
                     style = typography.bodySmall,
                     fontWeight = FontWeight(400),
                     color = colors.GRAY400,
