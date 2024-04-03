@@ -28,7 +28,7 @@ fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
                 text = "${bookKingOfTheMonthData.numOfBooks}권",
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
-                color = colors.MAIN,
+                color = colors.GRAY800,
                 textAlign = TextAlign.Center,
             )
             Spacer(
@@ -47,7 +47,7 @@ fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
                 text = bookKingOfTheMonthData.name,
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
-                color = colors.MAIN,
+                color = colors.GRAY800,
                 textAlign = TextAlign.Center,
             )
         }
