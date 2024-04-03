@@ -30,17 +30,11 @@ fun GoalReadingGraph(
         val graphColor = if (!isCurrentDate) colors.GRAY200 else colors.MAIN
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                8.dp,
-                Alignment.Bottom
-            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Bottom),
             modifier = modifier,
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(
-                    0.dp,
-                    Alignment.Top
-                ),
+                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {

@@ -53,8 +53,7 @@ fun GoalReadingBottomSheet(
             Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),

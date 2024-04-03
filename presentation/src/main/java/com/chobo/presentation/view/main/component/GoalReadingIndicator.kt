@@ -42,10 +42,7 @@ fun GoalReadingIndicator(
             )
             Row(
                 modifier = Modifier.fillMaxHeight(),
-                horizontalArrangement = Arrangement.spacedBy(
-                    4.dp,
-                    Alignment.CenterHorizontally
-                ),
+                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -57,10 +54,7 @@ fun GoalReadingIndicator(
                 )
                 Row(
                     modifier = Modifier.height(30.dp),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        2.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(

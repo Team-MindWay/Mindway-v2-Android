@@ -42,10 +42,7 @@ fun HomeGoalReadingChart(
         if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(
-                    16.dp,
-                    Alignment.Top
-                ),
+                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                 modifier = modifier
                     .padding(24.dp)
                     .background(
@@ -114,10 +111,7 @@ fun HomeGoalReadingChart(
                     )
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        12.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.Top,
                 ) {
                     Text(
