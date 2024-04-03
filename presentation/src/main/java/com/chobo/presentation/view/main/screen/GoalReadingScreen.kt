@@ -54,9 +54,7 @@ fun GoalReadingScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxSize()
         ) {
             GoalReadingPlusCard {}
             LazyColumn(
