@@ -28,10 +28,14 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(horizontal = 24.dp)
     ) {
-        HomeNoticeCard(titleText = "가을 독서 행사", content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.")
+        HomeNoticeCard(
+            titleText = "가을 독서 행사",
+            content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다."
+        )
         HomeGoalReadingChart(
-            modifier = Modifier.fillMaxWidth().height(211.dp)
-            ,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(211.dp),
             isHasData = true,
             readNumberList = listOf(
                 ReadingGoalGraphData(2, 3, false, "일"),
