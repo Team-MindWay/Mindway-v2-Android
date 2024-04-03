@@ -57,7 +57,7 @@ fun GoalReadingGraph(
                 Spacer(
                     modifier = Modifier
                         .height(height)
-                        .fillMaxWidth(0.667f)
+                        .fillMaxWidth()
                         .background(
                             color = graphColor,
                             shape = RoundedCornerShape(
