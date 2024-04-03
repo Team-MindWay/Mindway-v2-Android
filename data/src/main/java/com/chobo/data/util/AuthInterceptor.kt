@@ -9,6 +9,7 @@ class AuthInterceptor @Inject constructor(
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
+        val builder = request.newBuilder()
         val ignorePath = listOf("")
         val ignoreMethod = listOf("")
         // val currentTime = System.currentTimeMillis().
