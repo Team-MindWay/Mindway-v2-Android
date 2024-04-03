@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -41,6 +42,7 @@ fun ViewDetailTextCard(
                     Alignment.Start
                 ),
                 modifier = Modifier
+                    .fillMaxWidth()
                     .background(
                         color = colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
