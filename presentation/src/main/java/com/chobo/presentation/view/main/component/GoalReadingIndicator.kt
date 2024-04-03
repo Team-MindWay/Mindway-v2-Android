@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun HomeGoalReadingIndicator(
+fun GoalReadingIndicator(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
 ) {
