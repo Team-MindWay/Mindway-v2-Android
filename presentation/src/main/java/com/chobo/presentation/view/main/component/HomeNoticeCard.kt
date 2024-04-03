@@ -43,7 +43,7 @@ fun HomeNoticeCard(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .padding(vertical = 12.dp)
+                .padding(horizontal = 12.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic__notice),
