@@ -23,7 +23,7 @@ object Versions {
     const val ANDROID_JUNIT = "1.1.2"
     const val ESPRESSO = "3.5.1"
 
-    const val RETROFIT = "2.7.1"
+    const val RETROFIT = "2.9.0"
     const val OKHTTP = "4.10.0"
 
     const val COIL = "2.4.0"
@@ -31,4 +31,6 @@ object Versions {
     const val HILT = "2.47"
 
     const val GOOGLE_SERVICE_PLUGIN = "4.3.15"
+
+    const val PREFERENCES = "1.0.0"
 }
