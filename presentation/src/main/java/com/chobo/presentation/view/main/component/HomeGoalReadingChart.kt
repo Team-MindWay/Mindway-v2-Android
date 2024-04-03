@@ -34,7 +34,6 @@ data class ReadingGoalGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier,
     isHasData: Boolean,
-    numBooksRead: Int = 0,
     readNumberList: List<ReadingGoalGraphData> = listOf(),
     onClick: () -> Unit,
 ) {
@@ -77,6 +76,7 @@ fun HomeGoalReadingChart(
                         .fillMaxWidth()
                         .fillMaxHeight(0.1840f)
                 )
+                        numBooksRead = readNumberList.sumOf { it.numBooksRead },
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
