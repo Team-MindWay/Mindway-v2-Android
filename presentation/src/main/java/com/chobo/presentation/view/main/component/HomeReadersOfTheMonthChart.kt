@@ -31,10 +31,7 @@ fun HomeReadersOfTheMonthChart(
         if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(
-                    20.dp,
-                    Alignment.Top
-                ),
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 modifier = modifier
                     .padding(all = 24.dp)
                     .background(
@@ -50,7 +47,7 @@ fun HomeReadersOfTheMonthChart(
                 Text(
                     text = "이달의 독서왕",
                     style = typography.bodyMedium,
-                    fontWeight = FontWeight(600),
+                    fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
                     modifier = Modifier
                         .fillMaxWidth()
