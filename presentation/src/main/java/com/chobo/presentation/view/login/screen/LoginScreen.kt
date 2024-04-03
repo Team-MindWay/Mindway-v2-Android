@@ -29,7 +29,7 @@ import com.msg.gauthsignin.component.utils.Types
 fun LoginScreen(
     modifier: Modifier = Modifier,
     // todo : authViewModel
-    navigateToMain: () -> Unit
+    navigateToHome: () -> Unit
 ){
     var isClicked by remember { mutableStateOf(false) }
 
@@ -59,7 +59,7 @@ fun LoginScreen(
                 { isClicked = true }
                 Spacer(modifier = modifier.height(30.dp))
                 Button(
-                    onClick = { navigateToMain() }
+                    onClick = { navigateToHome() }
                 ) {
                     Text(text = "Button")
                 }
@@ -79,6 +79,6 @@ fun LoginScreen(
 @Composable
 fun PreviewLoginScreen(){
     LoginScreen(
-        navigateToMain = {}
+        navigateToHome = {}
     )
 }

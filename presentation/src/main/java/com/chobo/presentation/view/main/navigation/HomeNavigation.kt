@@ -7,11 +7,11 @@ import com.chobo.presentation.view.main.screen.HomeScreen
 
 const val homeRoute = "home_route"
 
-fun NavController.navigateToMain() {
+fun NavController.navigationToHome() {
     this.navigate(homeRoute)
 }
 
-fun NavGraphBuilder.mainScreen() {
+fun NavGraphBuilder.homeScreen() {
     composable(homeRoute) {
         HomeScreen()
     }
