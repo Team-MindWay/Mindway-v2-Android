@@ -21,15 +21,16 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 
-data class MonthDay(
+data class GoalReadingListOfBooksReadItemData(
     val month: Int,
     val day: Int,
+    val title: String,
+    val content: String,
 )
+
 @Composable
 fun GoalReadingListOfBooksReadItem(
-    date: MonthDay,
-    title: String,
-    content: String,
+    data: GoalReadingListOfBooksReadItemData,
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -56,7 +57,7 @@ fun GoalReadingListOfBooksReadItem(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = title,
+                    text = data.title,
                     style = typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
@@ -64,8 +65,8 @@ fun GoalReadingListOfBooksReadItem(
                 Text(
                     text = stringResource(
                         R.string.month_day,
-                        date.month,
-                        date.day
+                        data.month,
+                        data.day
                     ),
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
@@ -73,7 +74,7 @@ fun GoalReadingListOfBooksReadItem(
                 )
             }
             Text(
-                text = content,
+                text = data.content,
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
@@ -81,9 +82,17 @@ fun GoalReadingListOfBooksReadItem(
         }
     }
 }
+
 @Preview
 @Composable
 fun GoalReadingListOfBooksReadItemPreview() {
-    GoalReadingListOfBooksReadItem(date = MonthDay(1,12), title = "제목", content = "GoalReadingListOfBooksReadItem GoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItem") {
+    GoalReadingListOfBooksReadItem(
+        data = GoalReadingListOfBooksReadItemData(
+            month = 1,
+            day = 12,
+            title = "제목",
+            content = "GoalReadingListOfBooksReadItem GoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItemGoalReadingListOfBooksReadItem"
+        )
+    ) {
     }
 }
