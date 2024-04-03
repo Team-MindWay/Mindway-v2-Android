@@ -61,6 +61,10 @@ object Dependency {
         const val COMPOSE_MANIFEST = "androidx.compose.ui:ui-test-manifest:${Versions.COMPOSE}"
     }
 
+    object Gauth {
+        const val GAUTH = "com.github.GSM-MSG:GAuth-Signin-Android:${Versions.GAUTH}"
+    }
+
     object DataStore {
         const val PREFERENCES = "androidx.datastore:datastore-preferences:${Versions.PREFERENCES}"
     }
