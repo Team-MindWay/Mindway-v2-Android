@@ -45,6 +45,8 @@ dependencies {
 
     implementation(Dependency.AndroidX.CORE_KTX)
     implementation(Dependency.AndroidX.LIFECYCLE)
+    implementation(Dependency.AndroidX.SPLASH)
+
 
     implementation(Dependency.Compose.ACTIVITY_COMPOSE)
     implementation(platform(Dependency.Compose.COMPOSE_BOM))

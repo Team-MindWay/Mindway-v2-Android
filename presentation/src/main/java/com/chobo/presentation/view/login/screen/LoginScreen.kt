@@ -24,9 +24,10 @@ import com.msg.gauthsignin.component.GAuthButton
 import com.msg.gauthsignin.component.utils.Types
 
 @Composable
-private fun LoginScreen(
+fun LoginScreen(
     modifier: Modifier = Modifier,
     // todo : authViewModel
+    navigateToMain: () -> Unit
 ){
     var isClicked by remember { mutableStateOf(false) }
 
@@ -69,5 +70,7 @@ private fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen(){
-    LoginScreen()
+    LoginScreen(
+        navigateToMain = {}
+    )
 }
