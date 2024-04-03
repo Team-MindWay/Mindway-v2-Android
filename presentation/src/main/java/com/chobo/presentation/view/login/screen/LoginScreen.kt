@@ -59,7 +59,7 @@ fun LoginScreen(
                 { isClicked = true }
                 Spacer(modifier = modifier.height(30.dp))
                 Button(
-                    onClick = { navigateToMain }
+                    onClick = { navigateToMain() }
                 ) {
                     Text(text = "Button")
                 }

@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.chobo.presentation.view.login.navigation.loginScreen
 import com.chobo.presentation.view.login.navigation.navigationToLogin
+import com.chobo.presentation.view.main.navigation.mainScreen
+import com.chobo.presentation.view.main.navigation.navigateToMain
 
 @Composable
 fun MindWayNavHost(
@@ -19,7 +21,8 @@ fun MindWayNavHost(
         startDestination = startDestination
     ){
         loginScreen(
-            navigateToMain = { navController }
+            navigateToMain = { navController.navigateToMain() }
         )
+        mainScreen()
     }
 }
