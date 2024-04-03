@@ -36,10 +36,7 @@ fun HomeNoticeCard(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
-            horizontalArrangement = Arrangement.spacedBy(
-                20.dp,
-                Alignment.Start
-            ),
+            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .background(
@@ -54,10 +51,7 @@ fun HomeNoticeCard(
                 contentScale = ContentScale.None,
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(
-                    0.dp,
-                    Alignment.Top
-                ),
+                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
