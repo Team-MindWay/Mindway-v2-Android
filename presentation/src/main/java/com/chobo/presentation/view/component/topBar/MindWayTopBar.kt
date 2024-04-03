@@ -38,7 +38,7 @@ fun MindWayTopAppBar(
             Text(
                 text = midText,
                 style = typography.bodyMedium,
-                fontWeight = FontWeight(600),
+                fontWeight = FontWeight.SemiBold,
                 color = colors.Black,
             )
             endIcon()
