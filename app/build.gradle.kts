@@ -74,7 +74,10 @@ dependencies {
     implementation(Dependency.Hilt.HILT)
     ksp(Dependency.Hilt.HILT_COMPILER)
 
-    // network ...
+    implementation(Dependency.Retrofit.RETROFIT)
+    implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
+    implementation(Dependency.OkHttp.OKHTTP)
+    implementation(Dependency.OkHttp.OKHTTP_LOGGING_INTERCEPTOR)
 
     testImplementation(Dependency.Test.JUNIT)
     androidTestImplementation(Dependency.Test.ANDROID_JUNIT)

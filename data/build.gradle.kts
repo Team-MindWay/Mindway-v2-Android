@@ -46,6 +46,10 @@ dependencies {
     implementation(Dependency.Hilt.HILT)
     ksp(Dependency.Hilt.HILT_COMPILER)
 
-    // network ...
-    // local ...
+    implementation(Dependency.OkHttp.OKHTTP)
+    implementation(Dependency.OkHttp.OKHTTP_LOGGING_INTERCEPTOR)
+    implementation(Dependency.Retrofit.RETROFIT)
+    implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
+
+    implementation(Dependency.DataStore.PREFERENCES)
 }
