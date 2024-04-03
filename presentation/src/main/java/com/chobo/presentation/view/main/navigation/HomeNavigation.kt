@@ -5,14 +5,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.chobo.presentation.view.main.screen.HomeScreen
 
-const val mainRoute = "main_route"
+const val homeRoute = "home_route"
 
 fun NavController.navigateToMain() {
-    this.navigate(mainRoute)
+    this.navigate(homeRoute)
 }
 
 fun NavGraphBuilder.mainScreen() {
-    composable(mainRoute) {
+    composable(homeRoute) {
         HomeScreen()
     }
 }
