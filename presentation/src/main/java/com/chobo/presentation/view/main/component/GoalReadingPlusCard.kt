@@ -27,20 +27,19 @@ fun GoalReadingPlusCard(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .clickable { onClick() }
-                .padding(all = 24.dp)
-                .fillMaxWidth()
-                .background(
-                    color = colors.WHITE,
-                    shape = RoundedCornerShape(size = 8.dp)
-                )
                 .shadow(
                     elevation = 20.dp,
                     spotColor = colors.CardShadow,
                     ambientColor = colors.CardShadow
                 )
+                .background(
+                    color = colors.WHITE,
+                    shape = RoundedCornerShape(size = 8.dp)
+                )
+                .fillMaxWidth()
+                .height(60.dp)
+                .clickable { onClick() }
+                .padding(all = 24.dp)
         ) {
             PlusIcon()
         }
