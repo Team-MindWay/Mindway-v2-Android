@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.chobo.presentation.view.login.navigation.loginScreen
+import com.chobo.presentation.view.login.navigation.navigationToLogin
 
 @Composable
 fun MindWayNavHost(
