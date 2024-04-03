@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
@@ -81,4 +83,14 @@ fun GoalReadingIndicator(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun GoalReadingIndicatorPreview() {
+    GoalReadingIndicator(
+        numBooksRead = 12, modifier = Modifier
+            .width(264.dp)
+            .height(30.dp)
+    )
 }

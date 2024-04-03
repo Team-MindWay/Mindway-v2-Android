@@ -141,3 +141,24 @@ fun HomeGoalReadingChart(
         }
     }
 }
+
+@Preview
+@Composable
+fun HomeGoalReadingChartPreview() {
+    HomeGoalReadingChart(
+        modifier = Modifier
+            .width(312.dp)
+            .height(211.dp),
+        isHasData = true,
+        readNumberList = listOf(
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(3, 3, false, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(1, 3, true, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(1, 3, false, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+        )
+    ) {
+    }
+}
