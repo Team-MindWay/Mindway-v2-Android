@@ -5,16 +5,16 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.chobo.presentation.view.login.screen.LoginScreen
 
-const val NAVIGATION_LOGIN = "login_route"
+const val loginRoute = "login_route"
 
 fun NavController.navigationToLogin() {
-    this.navigate(NAVIGATION_LOGIN)
+    this.navigate(loginRoute)
 }
 
 fun NavGraphBuilder.loginScreen(
     navigateToMain: () -> Unit
 ) {
-    composable(NAVIGATION_LOGIN) {
+    composable(loginRoute) {
         LoginScreen(
             navigateToMain = navigateToMain
         )
