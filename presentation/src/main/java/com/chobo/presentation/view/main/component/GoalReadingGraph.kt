@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun HomeGoalReadingGraph(
+fun GoalReadingGraph(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
     maxBooksRead: Int,
@@ -30,17 +30,11 @@ fun HomeGoalReadingGraph(
         val graphColor = if (!isCurrentDate) colors.GRAY200 else colors.MAIN
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                8.dp,
-                Alignment.Bottom
-            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Bottom),
             modifier = modifier,
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(
-                    0.dp,
-                    Alignment.Top
-                ),
+                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {

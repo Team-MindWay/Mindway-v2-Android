@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun HomeGoalReadingIndicator(
+fun GoalReadingIndicator(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
 ) {
@@ -42,10 +42,7 @@ fun HomeGoalReadingIndicator(
             )
             Row(
                 modifier = Modifier.fillMaxHeight(),
-                horizontalArrangement = Arrangement.spacedBy(
-                    4.dp,
-                    Alignment.CenterHorizontally
-                ),
+                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -57,10 +54,7 @@ fun HomeGoalReadingIndicator(
                 )
                 Row(
                     modifier = Modifier.height(30.dp),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        2.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(

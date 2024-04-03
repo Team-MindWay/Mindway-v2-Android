@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,7 @@ import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 
-data class HomeReadingGoalGraphData(
+data class ReadingGoalGraphData(
     val numBooksRead: Int,
     val maxBooksRead: Int,
     val isCurrentDate: Boolean,
@@ -34,17 +35,14 @@ fun HomeGoalReadingChart(
     modifier: Modifier,
     isHasData: Boolean,
     numBooksRead: Int = 0,
-    readNumberList: List<HomeReadingGoalGraphData> = listOf(),
+    readNumberList: List<ReadingGoalGraphData> = listOf(),
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(
-                    16.dp,
-                    Alignment.Top
-                ),
+                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                 modifier = modifier
                     .padding(24.dp)
                     .background(
@@ -70,11 +68,11 @@ fun HomeGoalReadingChart(
                     )
                     ChevronRightIcon(modifier = Modifier.clickable { onClick() })
                 }
-                HomeGoalReadingIndicator(
+                GoalReadingIndicator(
                     numBooksRead = numBooksRead,
                     modifier = Modifier
-                        .width(264.dp)
-                        .height(30.dp)
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.1840f)
                 )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -84,7 +82,7 @@ fun HomeGoalReadingChart(
                         .height(78.dp)
                 ) {
                     readNumberList.forEach {
-                        HomeGoalReadingGraph(
+                        GoalReadingGraph(
                             numBooksRead = it.numBooksRead,
                             maxBooksRead = it.maxBooksRead,
                             isCurrentDate = it.isCurrentDate,
@@ -113,10 +111,7 @@ fun HomeGoalReadingChart(
                     )
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        12.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.Top,
                 ) {
                     Text(
