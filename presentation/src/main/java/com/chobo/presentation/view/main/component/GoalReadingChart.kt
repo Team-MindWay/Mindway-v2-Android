@@ -78,7 +78,7 @@ fun GoalReadingChart(
                 Text(
                     text = stringResource(R.string.goal_reading_error),
                     style = typography.bodySmall,
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
             }
