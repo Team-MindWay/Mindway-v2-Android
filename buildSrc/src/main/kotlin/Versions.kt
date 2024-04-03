@@ -31,4 +31,6 @@ object Versions {
     const val HILT = "2.47"
 
     const val GOOGLE_SERVICE_PLUGIN = "4.3.15"
+
+    const val GAUTH = "v1.0.7"
 }

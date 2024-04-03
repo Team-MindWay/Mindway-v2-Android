@@ -65,4 +65,6 @@ dependencies {
     androidTestImplementation(platform(Dependency.Compose.COMPOSE_BOM))
     androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
+
+    implementation(Dependency.Gauth.GAUTH)
 }
