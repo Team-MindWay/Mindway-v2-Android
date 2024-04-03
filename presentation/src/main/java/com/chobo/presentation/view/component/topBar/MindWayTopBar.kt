@@ -2,6 +2,7 @@ package com.chobo.presentation.view.component.topBar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,9 +17,9 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayTopAppBar(
     modifier: Modifier = Modifier,
-    startIcon: @Composable () -> Unit,
-    midText: String,
-    endIcon: @Composable () -> Unit,
+    startIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
+    midText: String = "",
+    endIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
@@ -44,4 +45,9 @@ fun MindWayTopAppBar(
             endIcon()
         }
     }
+}
+
+@Composable
+fun MindWaySpacer(modifier: Modifier) {
+    Spacer(modifier = modifier)
 }
