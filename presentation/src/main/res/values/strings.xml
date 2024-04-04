@@ -18,8 +18,7 @@
     <string name="add_book">독서 추가</string>
     <string name="please_enter_the_book_title">책 제목을 입력해주세요</string>
     <string name="please_enter_the_book_content">줄거리를 입력해주세요</string>
-    <string name="limit_300">%d/300</string>
-    <string name="limit_60">%d/60</string>
+    <string name="slash">/</string>
     <string name="error_title">책 제목을 입력해주세요</string>
     <string name="error_content">줄거리를 입력해주세요</string>
     <string name="goal_reading_success_toast">목표 독서량 설정이 완료되었어요!</string>
