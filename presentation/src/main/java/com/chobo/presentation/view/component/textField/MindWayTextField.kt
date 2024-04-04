@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +27,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun MindWayTextField(
-    outSideModifier: Modifier = Modifier,
+    outSideModifier: Modifier,
     textFieldModifier: Modifier = Modifier,
     title: String,
     textState: MutableState<String>,
@@ -74,7 +72,7 @@ fun MindWayTextField(
                     ),
                     cursorBrush = SolidColor(colors.MAIN),
                     modifier = Modifier
-                        .fillMaxSize(
+                        .fillMaxWidth(
                             if (isTextRight) 0.95f
                             else 1f
                         )
@@ -86,12 +84,10 @@ fun MindWayTextField(
                     else Arrangement.Start,
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxHeight()
                         .fillMaxWidth()
                 ) {
                     if (!isTextRight && (textState.value == "")) {
                         Text(
-                            modifier = Modifier.fillMaxHeight(),
                             text = placeholder,
                             style = typography.bodySmall,
                             fontWeight = FontWeight.Normal,
@@ -100,7 +96,6 @@ fun MindWayTextField(
                     }
                     if (isTextRight) {
                         Text(
-                            modifier = Modifier.fillMaxHeight(),
                             text = placeholder,
                             style = typography.bodySmall,
                             fontWeight = FontWeight.Normal,
