@@ -56,5 +56,4 @@ object NetworkModule {
         return GsonConverterFactory.create()
     }
 
-    // Todo : api
 }

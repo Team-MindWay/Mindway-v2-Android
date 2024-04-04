@@ -28,7 +28,6 @@ import com.msg.gauthsignin.component.utils.Types
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    // todo : authViewModel
     navigateToHome: () -> Unit
 ){
     var isClicked by remember { mutableStateOf(false) }
