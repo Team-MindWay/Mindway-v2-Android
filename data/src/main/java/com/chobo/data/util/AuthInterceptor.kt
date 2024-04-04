@@ -21,8 +21,6 @@ class AuthInterceptor @Inject constructor(
                 return chain.proceed(request)
         }
 
-        // todo
-
-        return chain.proceed(request) // todo
+        return chain.proceed(request)
     }
 }

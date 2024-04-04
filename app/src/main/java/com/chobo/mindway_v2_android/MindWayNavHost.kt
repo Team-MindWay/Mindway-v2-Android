@@ -5,7 +5,8 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.chobo.presentation.view.login.navigation.loginScreen
-import com.chobo.presentation.view.login.navigation.navigationToLogin
+import com.chobo.presentation.view.main.navigation.homeScreen
+import com.chobo.presentation.view.main.navigation.navigationToHome
 
 @Composable
 fun MindWayNavHost(
@@ -19,7 +20,8 @@ fun MindWayNavHost(
         startDestination = startDestination
     ){
         loginScreen(
-            navigateToMain = { navController }
+            navigateToHome = { navController.navigationToHome() }
         )
+        homeScreen()
     }
 }
