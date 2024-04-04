@@ -34,7 +34,7 @@ fun MindWayTextField(
     placeholder: String,
     isError: Boolean,
     errorMessage: String,
-    isTextRight: Boolean = true
+    isTextRight: Boolean = false
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
