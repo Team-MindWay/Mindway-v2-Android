@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -21,14 +18,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+// TODO:  MindWayTextField에서 엔터를 누르면 커서의 앞에있던 글자가 복사되어서 밑줄에 생기는 버그 수정
 @Composable
-fun MindWayTextField(
+fun MindWayTextField( 
     outSideModifier: Modifier = Modifier,
     textFieldModifier: Modifier = Modifier,
     title: String,
@@ -36,7 +36,8 @@ fun MindWayTextField(
     placeholder: String,
     isError: Boolean,
     errorMessage: String,
-    isTextRight: Boolean = true
+    limiteInt: Int = 0,
+    isTextRight: Boolean = false
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -44,12 +45,34 @@ fun MindWayTextField(
             horizontalAlignment = Alignment.Start,
             modifier = outSideModifier
         ) {
-            Text(
-                text = title,
-                style = typography.labelLarge,
-                fontWeight = FontWeight.Normal,
-                color = colors.GRAY400,
-            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = title,
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.GRAY400,
+                )
+                if (limiteInt != 0) {
+                    Row {
+                        Text(
+                            text = textState.value.length.toString(),
+                            style = typography.labelLarge,
+                            fontWeight = FontWeight.Normal,
+                            color = colors.MAIN,
+                        )
+                        Text(
+                            text = stringResource(R.string.slash) + limiteInt,
+                            style = typography.labelLarge,
+                            fontWeight = FontWeight.Normal,
+                            color = colors.GRAY400,
+                        )
+                    }
+                }
+            }
             Box(
                 modifier = textFieldModifier
                     .border(
@@ -74,7 +97,7 @@ fun MindWayTextField(
                     ),
                     cursorBrush = SolidColor(colors.MAIN),
                     modifier = Modifier
-                        .fillMaxSize(
+                        .fillMaxWidth(
                             if (isTextRight) 0.95f
                             else 1f
                         )
@@ -86,12 +109,10 @@ fun MindWayTextField(
                     else Arrangement.Start,
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxHeight()
                         .fillMaxWidth()
                 ) {
                     if (!isTextRight && (textState.value == "")) {
                         Text(
-                            modifier = Modifier.fillMaxHeight(),
                             text = placeholder,
                             style = typography.bodySmall,
                             fontWeight = FontWeight.Normal,
@@ -100,7 +121,6 @@ fun MindWayTextField(
                     }
                     if (isTextRight) {
                         Text(
-                            modifier = Modifier.fillMaxHeight(),
                             text = placeholder,
                             style = typography.bodySmall,
                             fontWeight = FontWeight.Normal,
@@ -131,10 +151,8 @@ fun Preview() {
         title = "제목이다",
         textState = textState,
         placeholder = "힌트다",
-        isError = true,
+        isError = false,
         errorMessage = "에러니까 고치셈",
-        isTextRight = true,
-        outSideModifier = Modifier.height(300.dp),
-        textFieldModifier = Modifier.height(80.dp)
+        isTextRight = false,
     )
 }
