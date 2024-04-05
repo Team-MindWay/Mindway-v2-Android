@@ -32,7 +32,7 @@ fun LoginScreen(
 ){
     var isClicked by remember { mutableStateOf(false) }
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
