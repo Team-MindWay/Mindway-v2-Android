@@ -72,7 +72,7 @@ fun GoalReadingScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun GoalReadingScreenView(
+fun GoalReadingScreenPreview(
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
