@@ -47,6 +47,7 @@ fun GoalReadingScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                item {
                     GoalReadingChart(
                         isHasData = true,
                         modifier = Modifier
@@ -61,7 +62,10 @@ fun GoalReadingScreen(
                             )
                         }
                     )
+                }
+                item {
                     GoalReadingPlusCard(onClick = { plusOnClick() })
+                }
                 items(goalReadingListOfBooksReadItemDataList) { item ->
                     GoalReadingListOfBooksReadItem(data = item) {
                     }
