@@ -21,6 +21,14 @@ import com.chobo.presentation.view.component.icon.TrashCanIcon
 import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+
+data class MyBookListItemData(
+    val title: String,
+    val writer: String,
+    val editOnclick: () -> Unit,
+    val trashCanOnclick: () -> Unit,
+)
+
 @Composable
 fun MyBookListItem(
     title: String,
