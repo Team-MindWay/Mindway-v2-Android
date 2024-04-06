@@ -42,7 +42,9 @@
     <string name="greeting">안녕하세요!</string>
     <string name="sir">님</string>
     <string name="book_request_list">도서 신청 목록</string>
-    <string name="book_request_delete">신청하신 도서를 삭제하시겠습니까?</string>
+    <string name="request_book">신청하신 도서를 </string>
+    <string name="delete">삭제</string>
+    <string name="pr">하시겠습니까?</string>
     <string name="cancel">취소</string>
     <string name="book_modify">도서 수정</string>
     <string name="logout">로그아웃</string>
@@ -51,4 +53,5 @@
     <string name="mindway_intro2">GSM 도서실 종합 서비스 입니다</string>
     <string name="mindway_intro3">도서부원이 추천하는 책과 도서실 이벤트를\\n 모두 한 페이지에서 확인할 수 있어요.\\n 도서부원이 추천하는 숨은 재미있는 책을\\n 빌려 볼 수 있습니다.\\n 친구들과 함께 독서에 관심을 가지고, \\n GSM 독서왕이 되어 보는 건 어떨까요?\\n 마인드웨이가 여러분의 건강한 독서습관을 응원합니다!</string>
     <string name="book_request">도서 신청</string>
+    <string name="copyright">© 2022. MINDWAY All rights reserved.</string>
 </resources>

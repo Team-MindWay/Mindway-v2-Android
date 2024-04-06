@@ -29,14 +29,13 @@ fun MindWayButton(
     onClick: () -> Unit,
 ) {
     val clickableModifier =
-        if (isClickable) Modifier.clickable { onClick() }
-        else Modifier
+        if (isClickable) modifier.clickable { onClick() }
+        else modifier
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier
-                .padding(10.dp)
+            modifier = Modifier
                 .background(
                     color = buttonColor,
                     shape = RoundedCornerShape(size = 8.dp)
@@ -59,9 +58,6 @@ fun MindWayButton(
 fun MindWayButtonPreview() {
     MindWayButton(
         text = "이것은 택스트 입니다",
-        modifier = Modifier
-            .height(50.dp)
-            .width(200.dp)
     ) {
 
     }
