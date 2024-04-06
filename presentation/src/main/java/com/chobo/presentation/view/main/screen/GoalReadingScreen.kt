@@ -25,6 +25,7 @@ import com.chobo.presentation.view.main.component.ReadingGoalGraphData
 fun GoalReadingScreen(
     readingGoalGraphData: List<ReadingGoalGraphData>,
     goalReadingListOfBooksReadItemDataList: List<GoalReadingListOfBooksReadItemData>,
+    plusOnClick: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -60,6 +61,7 @@ fun GoalReadingScreen(
                             )
                         }
                     )
+                    GoalReadingPlusCard(onClick = { plusOnClick() })
                 items(goalReadingListOfBooksReadItemDataList) { item ->
                     GoalReadingListOfBooksReadItem(data = item) {
                     }
