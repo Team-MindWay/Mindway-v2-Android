@@ -23,6 +23,7 @@ import com.chobo.presentation.view.main.component.ReadingGoalGraphData
 
 @Composable
 fun GoalReadingScreen(
+    readingGoalGraphData: List<ReadingGoalGraphData>,
     goalReadingListOfBooksReadItemDataList: List<GoalReadingListOfBooksReadItemData>,
 ) {
     Column(
@@ -36,31 +37,29 @@ fun GoalReadingScreen(
             )
             .fillMaxSize()
     ) {
-        GoalReadingChart(
-            isHasData = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp),
-            readNumberList = listOf(
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(2, 3, true, "늘"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(3, 3, false, "오"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(3, 3, false, "오"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-            )
-        )
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            GoalReadingPlusCard {}
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                    GoalReadingChart(
+                        isHasData = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp),
+                        readingGoalGraphData = readingGoalGraphData.map {
+                            ReadingGoalGraphData(
+                                numBooksRead = it.numBooksRead,
+                                maxBooksRead = it.maxBooksRead,
+                                isCurrentDate = it.isCurrentDate,
+                                today = it.today
+                            )
+                        }
+                    )
                 items(goalReadingListOfBooksReadItemDataList) { item ->
                     GoalReadingListOfBooksReadItem(data = item) {
                     }
@@ -77,6 +76,39 @@ fun GoalReadingScreenPreview(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        GoalReadingScreen(listOf(GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇ewjiofhowehfluieifnhcielhuferhwiegir습니다"),GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용renwcilntinhvgdnghrerns입니다 그렇습니다"),GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇습니다"),GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇습니다"),GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용fueiecgkenrgb hefvhjfrhfobhu a boifibdaf hfos hfoshfhdkldu PQWOPSJKFL;JASO UEFIPAJSOIFJ ;ASJF KDJA;FJP[iw jehfuahl;fj;lksjdpoaf jiojf'jwpeoirpanskj vjiocxjnv;jewlj fi0snlfj ajfnlk saklfnsa;lkj vpijcpxbf,wnlfndjakfpzujvo eaoji ofjeio fozisfoizs입니다 그렇습니다")))
+        GoalReadingScreen(
+            readingGoalGraphData = listOf(
+                ReadingGoalGraphData(1, 3, false, "오"),
+                ReadingGoalGraphData(2, 3, true, "늘"),
+                ReadingGoalGraphData(1, 3, false, "오"),
+                ReadingGoalGraphData(3, 3, false, "오"),
+                ReadingGoalGraphData(1, 3, false, "오"),
+                ReadingGoalGraphData(3, 3, false, "오"),
+                ReadingGoalGraphData(1, 3, false, "오"),
+            ),
+            goalReadingListOfBooksReadItemDataList = listOf(
+                GoalReadingListOfBooksReadItemData(
+                    12,
+                    12,
+                    "제목",
+                    "내용입니다 그렇ewjiofhowehfluieifnhcielhuferhwiegir습니다"
+                ),
+                GoalReadingListOfBooksReadItemData(
+                    12,
+                    12,
+                    "제목",
+                    "내용renwcilntinhvgdnghrerns입니다 그렇습니다"
+                ),
+                GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇습니다"),
+                GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇습니다"),
+                GoalReadingListOfBooksReadItemData(
+                    12,
+                    12,
+                    "제목",
+                    "내용fueiecgkenrgb hefvhjfrhfobhu a boifibdaf hfos hfoshfhdkldu PQWOPSJKFL;JASO UEFIPAJSOIFJ ;ASJF KDJA;FJP[iw jehfuahl;fj;lksjdpoaf jiojf'jwpeoirpanskj vjiocxjnv;jewlj fi0snlfj ajfnlk saklfnsa;lkj vpijcpxbf,wnlfndjakfpzujvo eaoji ofjeio fozisfoizs입니다 그렇습니다"
+                )
+            ),
+            plusOnClick = { MockOnClick() }
+        )
     }
 }
