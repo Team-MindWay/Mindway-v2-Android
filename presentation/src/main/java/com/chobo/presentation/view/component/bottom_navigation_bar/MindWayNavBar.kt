@@ -32,20 +32,15 @@ fun MindWayNavBar(
         MindWayNavBarItemType.MY
     )
 
-    MindWayAndroidTheme { colors, _ ->
+    MindWayAndroidTheme { colors, item ->
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .background(colors.WHITE)
-                .padding(
-                    start = 28.dp,
-                    end = 28.dp,
-                    top = 8.dp,
-                    bottom = 32.dp
-                ),
+                .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 32.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemList.forEachIndexed { index, _ ->
+            itemList.forEachIndexed { index, item ->
                 MindWayNavBarItem(
                     modifier = modifier
                         .clickable(
@@ -54,7 +49,7 @@ fun MindWayNavBar(
                             onClick = {
                                 if (navigationIndex != index) {
                                     navigationIndex = index
-                                    when (itemList[index]) {
+                                    when (item) {
                                         MindWayNavBarItemType.HOME -> navigateToHome()
                                         MindWayNavBarItemType.EVENT -> navigateToEvent()
                                         MindWayNavBarItemType.BOOKS -> navigateToBooks()
@@ -63,7 +58,7 @@ fun MindWayNavBar(
                                 }
                             }
                         ),
-                    type = itemList[index],
+                    type = item,
                     isSelected = navigationIndex == index
                 )
             }
