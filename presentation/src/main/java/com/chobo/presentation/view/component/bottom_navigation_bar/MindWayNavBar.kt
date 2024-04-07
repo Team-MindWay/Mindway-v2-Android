@@ -53,6 +53,7 @@ fun MindWayNavBar(
                             interactionSource = MutableInteractionSource(),
                             indication = null,
                             onClick = {
+                                if (isPressed != it)
                                 isPressed = it
                                 when(itemList[it]) {
                                     MindWayNavBarItemType.HOME -> navigateToHome()
