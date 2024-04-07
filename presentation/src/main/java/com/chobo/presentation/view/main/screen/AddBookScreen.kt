@@ -2,6 +2,7 @@ package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,13 +58,14 @@ fun AddBookScreen() {
                 errorMessage = stringResource(R.string.error_content),
                 limiteInt = 300,
             )
-        }
-        MindWayButton(
-            text = stringResource(R.string.check),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-        ) {
+            Spacer(modifier = Modifier.weight(1f))
+            MindWayButton(
+                text = stringResource(R.string.check),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            ) {
+            }
         }
     }
 }
