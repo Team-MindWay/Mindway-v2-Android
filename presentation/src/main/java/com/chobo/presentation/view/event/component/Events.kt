@@ -56,7 +56,7 @@ fun Events(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "$title",
+                        text = title,
                         style = typography.bodySmall,
                         color = colors.Black,
                         fontWeight = FontWeight.SemiBold
