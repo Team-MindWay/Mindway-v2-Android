@@ -2,18 +2,26 @@ package com.chobo.presentation.view.event.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.icon.BookIcon
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.event.component.Events
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -45,6 +53,7 @@ fun OngoingEvent(
     MindWayAndroidTheme { colors, _ ->
         LazyColumn(
             modifier = modifier
+                .fillMaxSize()
                 .background(color = colors.WHITE)
                 .padding(horizontal = 24.dp)
         ) {
@@ -65,7 +74,9 @@ fun PastEvent(
     MindWayAndroidTheme { colors, _ ->
         LazyColumn(
             modifier = modifier
+                .fillMaxSize()
                 .background(color = colors.WHITE)
+                .padding(horizontal = 24.dp)
         ) {
             items(10) {
                 Events(
@@ -79,9 +90,27 @@ fun PastEvent(
 
 @Composable
 fun NotEvent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    content: String
 ) {
-
+    MindWayAndroidTheme { colors, typography ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(colors.WHITE),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            BookImage()
+            Spacer(modifier = modifier.height(20.dp))
+            Text(
+                text = content,
+                style = typography.bodyMedium,
+                color = colors.GRAY500,
+                fontWeight = FontWeight.Normal
+            )
+        }
+    }
 }
 
 @Preview
