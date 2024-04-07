@@ -7,6 +7,8 @@ object MindWayColor : ColorTheme() {
     override val Black = Color(0xFF333333)
     override val WHITE = Color(0xFFFFFFFF)
 
+    override val NAVIGATION_STRING = Color(0xFFB4B5B7)
+
     override val GRAY900 = Color(0xFF4F4F51)
     override val GRAY800 = Color(0xFF666669)
     override val GRAY700 = Color(0xFF828387)
