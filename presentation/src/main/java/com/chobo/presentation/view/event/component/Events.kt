@@ -66,7 +66,7 @@ fun Events(
                 }
                 Spacer(modifier = modifier.height(8.dp))
                 Text(
-                    text = "$content",
+                    text = content,
                     style = typography.bodySmall,
                     color = colors.GRAY800,
                     fontWeight = FontWeight.Normal
