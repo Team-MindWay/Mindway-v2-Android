@@ -24,10 +24,7 @@ fun ViewDetailTextCard(
     MindWayAndroidTheme { colors, typography ->
         Column(
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(
-                4.dp,
-                Alignment.Top
-            ),
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
         ) {
             Text(
                 text = title,
