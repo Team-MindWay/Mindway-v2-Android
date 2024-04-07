@@ -7,7 +7,6 @@ abstract class ColorTheme {
     abstract val Black: Color
     abstract val WHITE: Color
 
-    abstract val NAVIGATION_STRING: Color
     abstract val GRAY900: Color
     abstract val GRAY800: Color
     abstract val GRAY700: Color

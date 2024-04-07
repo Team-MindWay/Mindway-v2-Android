@@ -41,7 +41,7 @@ fun MindWayNavBarItem(
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
+                        color = if (isPressed) colors.Black else colors.GRAY400
                     )
                 }
             }
@@ -57,7 +57,7 @@ fun MindWayNavBarItem(
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
+                        color = if (isPressed) colors.Black else colors.GRAY400
                     )
                 }
             }
@@ -73,7 +73,7 @@ fun MindWayNavBarItem(
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
+                        color = if (isPressed) colors.Black else colors.GRAY400
                     )
                 }
             }
@@ -89,7 +89,7 @@ fun MindWayNavBarItem(
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
+                        color = if (isPressed) colors.Black else colors.GRAY400
                     )
                 }
             }
