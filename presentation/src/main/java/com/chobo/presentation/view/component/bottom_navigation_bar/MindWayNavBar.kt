@@ -20,10 +20,10 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayNavBar(
     modifier: Modifier = Modifier,
-    navigateToHome:() -> Unit,
-    navigateToEvent:() -> Unit,
-    navigateToBooks:() -> Unit,
-    navigateToMy:() -> Unit
+    navigateToHome: () -> Unit,
+    navigateToEvent: () -> Unit,
+    navigateToBooks: () -> Unit,
+    navigateToMy: () -> Unit
 ) {
     var isPressed by remember { mutableStateOf(0) }
     val itemList = listOf(
@@ -53,13 +53,14 @@ fun MindWayNavBar(
                             interactionSource = MutableInteractionSource(),
                             indication = null,
                             onClick = {
-                                if (isPressed != it) 
-                                isPressed = it
-                                when(itemList[it]) {
-                                    MindWayNavBarItemType.HOME -> navigateToHome()
-                                    MindWayNavBarItemType.EVENT -> navigateToEvent()
-                                    MindWayNavBarItemType.BOOKS -> navigateToBooks()
-                                    MindWayNavBarItemType.MY -> navigateToMy()
+                                if (isPressed != it) {
+                                    isPressed = it
+                                    when (itemList[it]) {
+                                        MindWayNavBarItemType.HOME -> navigateToHome()
+                                        MindWayNavBarItemType.EVENT -> navigateToEvent()
+                                        MindWayNavBarItemType.BOOKS -> navigateToBooks()
+                                        MindWayNavBarItemType.MY -> navigateToMy()
+                                    }
                                 }
                             }
                         ),
