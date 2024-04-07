@@ -24,7 +24,7 @@ fun MindWayNavBar(
     navigateToBooks: () -> Unit,
     navigateToMy: () -> Unit
 ) {
-    var isPressed by remember { mutableStateOf(0) }
+    var navigationIndex by remember { mutableStateOf(0) }
     val itemList = listOf(
         MindWayNavBarItemType.HOME,
         MindWayNavBarItemType.EVENT,
@@ -45,16 +45,16 @@ fun MindWayNavBar(
                 ),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            repeat(itemList.size) {
+            itemList.forEachIndexed { index, it ->
                 MindWayNavBarItem(
                     modifier = modifier
                         .clickable(
                             interactionSource = MutableInteractionSource(),
                             indication = null,
                             onClick = {
-                                if (isPressed != it) {
-                                    isPressed = it
-                                    when (itemList[it]) {
+                                if (navigationIndex != index) {
+                                    navigationIndex = index
+                                    when (itemList[index]) {
                                         MindWayNavBarItemType.HOME -> navigateToHome()
                                         MindWayNavBarItemType.EVENT -> navigateToEvent()
                                         MindWayNavBarItemType.BOOKS -> navigateToBooks()
@@ -63,8 +63,8 @@ fun MindWayNavBar(
                                 }
                             }
                         ),
-                    type = itemList[it],
-                    isPressed = isPressed == it
+                    type = it,
+                    isSelected = navigationIndex == index
                 )
             }
         }
