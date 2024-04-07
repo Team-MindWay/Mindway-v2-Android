@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.component.bottom_navigation_bar
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun MindWayNavBar(
     modifier: Modifier = Modifier,
@@ -53,7 +55,7 @@ fun MindWayNavBar(
                             interactionSource = MutableInteractionSource(),
                             indication = null,
                             onClick = {
-                                if (isPressed != it) 
+                                if (isPressed != it)
                                 isPressed = it
                                 when(itemList[it]) {
                                     MindWayNavBarItemType.HOME -> navigateToHome()
