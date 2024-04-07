@@ -186,7 +186,8 @@ fun HomeIcon(
         painter = painterResource(id = R.drawable.ic_home),
         contentDescription = "Show Home Icon",
         modifier = modifier.size(24.dp),
-        tint = if (isSelected) MindWayColor.MAIN else MindWayColor.GRAY400
+        tint = if (isSelected) MindWayColor.MAIN
+        else MindWayColor.GRAY400
     )
 }
 
@@ -199,7 +200,8 @@ fun HeartIcon(
         painter = painterResource(id = R.drawable.ic_heart),
         contentDescription = "Show Heart Icon",
         modifier = modifier.size(24.dp),
-        tint = if (isSelected) MindWayColor.MAIN else MindWayColor.GRAY400
+        tint = if (isSelected) MindWayColor.MAIN
+        else MindWayColor.GRAY400
     )
 }
 
@@ -212,7 +214,8 @@ fun ProfileIcon(
         painter = painterResource(id = R.drawable.ic_profile),
         contentDescription = "Show Profile Icon",
         modifier = modifier.size(24.dp),
-        tint = if (isSelected) MindWayColor.MAIN else MindWayColor.GRAY400
+        tint = if (isSelected) MindWayColor.MAIN
+        else MindWayColor.GRAY400
     )
 }
 
@@ -225,6 +228,7 @@ fun BookIcon(
         painter = painterResource(id = R.drawable.ic_book),
         contentDescription = "Show Book Icon",
         modifier = modifier.size(24.dp),
-        tint = if (isSelected) MindWayColor.MAIN else MindWayColor.GRAY400
+        tint = if (isSelected) MindWayColor.MAIN
+        else MindWayColor.GRAY400
     )
 }

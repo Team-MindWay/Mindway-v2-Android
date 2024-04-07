@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.component.bottom_navigation_bar
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,24 +22,22 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayNavBarItem(
     modifier: Modifier = Modifier,
-    type: MindWayNavBarItemType,
-    isPressed: Boolean
+    type: MindWayNavBarItemType
 ) {
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { _, typography ->
         when(type) {
             MindWayNavBarItemType.HOME -> {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    HomeIcon(modifier = modifier, isSelected = isPressed)
+                    HomeIcon(modifier = modifier)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.home),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.GRAY400
+                        fontSize = 14.sp
                     )
                 }
             }
@@ -50,14 +46,13 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    HeartIcon(modifier = modifier, isSelected = isPressed)
+                    HeartIcon(modifier = modifier)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.event),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.GRAY400
+                        fontSize = 14.sp
                     )
                 }
             }
@@ -66,14 +61,13 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    BookIcon(modifier = modifier, isSelected = isPressed)
+                    BookIcon(modifier = modifier)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.books),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.GRAY400
+                        fontSize = 14.sp
                     )
                 }
             }
@@ -82,14 +76,13 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ProfileIcon(modifier = modifier, isSelected = isPressed)
+                    ProfileIcon(modifier = modifier)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.my),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        color = if (isPressed) colors.Black else colors.GRAY400
+                        fontSize = 14.sp
                     )
                 }
             }
