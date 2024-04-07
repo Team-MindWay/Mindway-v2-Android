@@ -1,9 +1,7 @@
 package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -13,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 
 @Composable
@@ -27,14 +24,18 @@ fun ViewDetailScreen(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = 24.dp,
-                top = 28.dp,
-                end = 24.dp,
-                bottom = 28.dp
+                vertical = 24.dp,
+                horizontal = 28.dp,
             )
     ) {
-        ViewDetailTextCard(title = stringResource(R.string.title), content = titleContent)
-        ViewDetailTextCard(title = stringResource(R.string.content), content = contentString)
+        ViewDetailTextCard(
+            title = stringResource(R.string.title),
+            content = titleContent,
+        )
+        ViewDetailTextCard(
+            title = stringResource(R.string.content),
+            content = contentString,
+        )
     }
 }
 
