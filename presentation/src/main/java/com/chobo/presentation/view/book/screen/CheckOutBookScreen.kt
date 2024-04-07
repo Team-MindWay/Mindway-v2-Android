@@ -52,7 +52,7 @@ fun CheckOutBookScreen(
                 horizontalAlignment = Alignment.Start,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp, top = 28.dp, bottom = 28.dp)
+                    .padding(horizontal = 24.dp, vertical = 28.dp)
             ) {
                 MindWayTextField(
                     title = stringResource(id = R.string.title),
