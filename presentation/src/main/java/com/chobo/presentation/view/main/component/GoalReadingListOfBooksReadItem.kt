@@ -2,6 +2,7 @@ package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,7 +39,10 @@ fun GoalReadingListOfBooksReadItem(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .clickable { onClick() }
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { onClick() }
                 .fillMaxWidth()
                 .shadow(
                     elevation = 20.dp,
