@@ -1,13 +1,21 @@
 package com.chobo.presentation.view.book.screen
 
+import android.view.Window
 import androidx.compose.foundation.background
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,13 +38,14 @@ fun CheckOutBookScreen(
     val writeTextState = remember { mutableStateOf("") }
     val linkTextState = remember { mutableStateOf("") }
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = modifier
                 .fillMaxSize()
                 .background(color = colors.WHITE)
+                .imePadding()
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
