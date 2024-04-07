@@ -45,7 +45,7 @@ fun MindWayNavBar(
                 ),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemList.forEachIndexed { index, it ->
+            itemList.forEachIndexed { index, _ ->
                 MindWayNavBarItem(
                     modifier = modifier
                         .clickable(
@@ -63,7 +63,7 @@ fun MindWayNavBar(
                                 }
                             }
                         ),
-                    type = it,
+                    type = itemList[index],ㅑㅅ
                     isSelected = navigationIndex == index
                 )
             }
