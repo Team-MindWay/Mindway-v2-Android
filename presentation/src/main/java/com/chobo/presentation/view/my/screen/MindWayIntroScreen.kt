@@ -72,7 +72,8 @@ fun MindWayIntroScreen() {
             Spacer(modifier = Modifier.weight(2f))
             Text(
                 text = stringResource(R.string.copyright),
-                style = typography.labelLarge, fontWeight = FontWeight(400),
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
                 color = colors.GRAY400,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
