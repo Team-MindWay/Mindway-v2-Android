@@ -2,6 +2,8 @@ package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
+import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -31,12 +34,17 @@ fun HomeNoticeCard(
     modifier: Modifier = Modifier,
     titleText: String,
     content: String,
+    onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { onClick() }
                 .background(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)
@@ -85,6 +93,7 @@ fun HomeNoticeCardPreview() {
         content = "정말 엄청난 알림",
         modifier = Modifier
             .width(312.dp)
-            .height(100.dp)
+            .height(100.dp),
+        onClick = { MockOnClick() }
     )
 }

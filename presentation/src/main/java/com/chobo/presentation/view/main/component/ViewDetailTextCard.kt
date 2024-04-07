@@ -24,11 +24,7 @@ fun ViewDetailTextCard(
     MindWayAndroidTheme { colors, typography ->
         Column(
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(
-                4.dp,
-                Alignment.Top
-            ),
-            modifier = Modifier.background(color = colors.GRAY100)
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
         ) {
             Text(
                 text = title,
@@ -63,8 +59,7 @@ fun ViewDetailTextCard(
 
 @Preview(showBackground = true)
 @Composable
-fun ViewDetailTextCard(
-) {
+fun ViewDetailTextCard() {
     ViewDetailTextCard(
         title = "제목",
         content = " 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하"

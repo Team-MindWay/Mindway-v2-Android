@@ -2,6 +2,7 @@ package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,8 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
+import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-
 
 data class ReadingGoalGraphData(
     val numBooksRead: Int,
@@ -70,7 +71,13 @@ fun HomeGoalReadingChart(
                             fontWeight = FontWeight.SemiBold,
                             color = colors.Black,
                         )
-                        ChevronRightIcon(modifier = Modifier.clickable { onClick() })
+                        ChevronRightIcon(
+                            modifier = Modifier
+                                .clickable(
+                                    interactionSource = MutableInteractionSource(),
+                                    indication = null
+                                ) { onClick() }
+                        )
                     }
                     GoalReadingIndicator(
                         numBooksRead = readNumberList.sumOf { it.numBooksRead },
@@ -157,7 +164,7 @@ fun HomeGoalReadingChartPreview() {
             ReadingGoalGraphData(2, 3, false, "일"),
             ReadingGoalGraphData(1, 3, false, "일"),
             ReadingGoalGraphData(2, 3, false, "일"),
-        )
-    ) {
-    }
+        ),
+        onClick = { MockOnClick() }
+    )
 }

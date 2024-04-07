@@ -19,7 +19,10 @@ import com.chobo.presentation.view.main.component.ReadingGoalGraphData
 
 @Composable
 fun HomeScreen(
-
+    homeNoticeCardOnClick: () -> Unit,
+    homeGoalReadingChart: () -> Unit,
+    readingGoalGraphDataList: List<ReadingGoalGraphData>,
+    bookKingOfTheMonthDataList: List<BookKingOfTheMonthData>,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
@@ -30,31 +33,20 @@ fun HomeScreen(
     ) {
         HomeNoticeCard(
             titleText = "가을 독서 행사",
-            content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다."
+            content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.",
+            onClick = { homeNoticeCardOnClick() }
         )
         HomeGoalReadingChart(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(211.dp),
             isHasData = true,
-            readNumberList = listOf(
-                ReadingGoalGraphData(2, 3, false, "일"),
-                ReadingGoalGraphData(3, 3, false, "일"),
-                ReadingGoalGraphData(2, 3, false, "일"),
-                ReadingGoalGraphData(1, 3, true, "일"),
-                ReadingGoalGraphData(2, 3, false, "일"),
-                ReadingGoalGraphData(1, 3, false, "일"),
-                ReadingGoalGraphData(2, 3, false, "일"),
-            ),
-            onClick = { MockOnClick() }
+            readNumberList = readingGoalGraphDataList,
+            onClick = { homeGoalReadingChart() }
         )
         HomeReadersOfTheMonthChart(
             isHasData = true,
-            bookKingOfTheMonthData = listOf(
-                BookKingOfTheMonthData("왕승황", 29),
-                BookKingOfTheMonthData("왕성찬", 15),
-                BookKingOfTheMonthData("왕지완", 1),
-            )
+            bookKingOfTheMonthData = bookKingOfTheMonthDataList
         )
     }
 }
@@ -64,5 +56,22 @@ fun MockOnClick() {}
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(
+        homeNoticeCardOnClick = { MockOnClick() },
+        homeGoalReadingChart = { MockOnClick() },
+        readingGoalGraphDataList = listOf(
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(3, 3, false, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(1, 3, true, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+            ReadingGoalGraphData(1, 3, false, "일"),
+            ReadingGoalGraphData(2, 3, false, "일"),
+        ),
+        bookKingOfTheMonthDataList = listOf(
+            BookKingOfTheMonthData("왕승황", 29),
+            BookKingOfTheMonthData("왕성찬", 15),
+            BookKingOfTheMonthData("왕지완", 1),
+        )
+    )
 }
