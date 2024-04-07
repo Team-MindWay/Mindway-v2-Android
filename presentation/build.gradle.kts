@@ -60,7 +60,9 @@ dependencies {
 
     implementation(Dependency.Hilt.HILT)
     ksp(Dependency.Hilt.HILT_COMPILER)
-
+    implementation ("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     testImplementation(Dependency.Test.JUNIT)
     androidTestImplementation(Dependency.Test.ANDROID_JUNIT)
     androidTestImplementation(Dependency.Test.ESPRESSO)
