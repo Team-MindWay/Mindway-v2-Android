@@ -28,7 +28,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun Events(
     modifier: Modifier = Modifier,
     title: String,
-    content: String
+    content: String,
+    date: String
 ) {
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(20.dp))
@@ -73,7 +74,7 @@ fun Events(
                 )
                 Spacer(modifier = modifier.height(8.dp))
                 Text(
-                    text = "2024년 04월 03일",
+                    text = date,
                     style = typography.labelLarge,
                     color = colors.GRAY400,
                     fontWeight = FontWeight.Normal
@@ -88,6 +89,7 @@ fun Events(
 fun EventsPre() {
     Events(
         title = "가을 독서 행사",
-        content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 "
+        content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 ",
+        date = "2024년 04월 08일"
     )
 }
