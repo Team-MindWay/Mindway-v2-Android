@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.component.bottom_navigation_bar
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +23,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayNavBarItem(
     modifier: Modifier = Modifier,
-    type: MindWayNavBarItemType
+    type: MindWayNavBarItemType,
+    isPressed: Boolean
 ) {
     MindWayAndroidTheme { _, typography ->
         when(type) {
@@ -31,7 +33,7 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    HomeIcon(modifier = modifier)
+                    HomeIcon(modifier = modifier, isSelected = isPressed)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.home),
@@ -46,7 +48,7 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    HeartIcon(modifier = modifier)
+                    HeartIcon(modifier = modifier, isSelected = isPressed)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.event),
@@ -61,7 +63,7 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    BookIcon(modifier = modifier)
+                    BookIcon(modifier = modifier, isSelected = isPressed)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.books),
@@ -76,7 +78,7 @@ fun MindWayNavBarItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ProfileIcon(modifier = modifier)
+                    ProfileIcon(modifier = modifier, isSelected = isPressed)
                     Spacer(modifier = modifier.height(4.dp))
                     Text(
                         text = stringResource(id = R.string.my),
