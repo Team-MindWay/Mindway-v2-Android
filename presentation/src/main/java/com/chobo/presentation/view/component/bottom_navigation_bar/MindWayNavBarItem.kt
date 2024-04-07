@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,7 @@ fun MindWayNavBarItem(
     type: MindWayNavBarItemType,
     isPressed: Boolean
 ) {
-    MindWayAndroidTheme { _, typography ->
+    MindWayAndroidTheme { colors, typography ->
         when(type) {
             MindWayNavBarItemType.HOME -> {
                 Column(
@@ -39,7 +40,8 @@ fun MindWayNavBarItem(
                         text = stringResource(id = R.string.home),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
                     )
                 }
             }
@@ -54,7 +56,8 @@ fun MindWayNavBarItem(
                         text = stringResource(id = R.string.event),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
                     )
                 }
             }
@@ -69,7 +72,8 @@ fun MindWayNavBarItem(
                         text = stringResource(id = R.string.books),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
                     )
                 }
             }
@@ -84,7 +88,8 @@ fun MindWayNavBarItem(
                         text = stringResource(id = R.string.my),
                         style = typography.labelLarge,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = if (isPressed) colors.Black else colors.NAVIGATION_STRING
                     )
                 }
             }
