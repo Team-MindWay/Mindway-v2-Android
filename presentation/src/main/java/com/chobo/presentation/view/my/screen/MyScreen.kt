@@ -2,7 +2,6 @@ package com.chobo.presentation.view.my.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,9 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.my.component.MyBookListItem
-import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.MyViewModel

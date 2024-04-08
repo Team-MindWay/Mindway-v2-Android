@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
-// TODO:  MindWayTextField에서 엔터를 누르면 커서의 앞에있던 글자가 복사되어서 밑줄에 생기는 버그 수정
 @Composable
 fun MindWayTextField(
     outSideModifier: Modifier = Modifier,

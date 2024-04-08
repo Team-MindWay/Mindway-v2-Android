@@ -24,7 +24,6 @@ import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
-
 @Composable
 fun GoalReadingBottomSheet(
     onclick: () -> Unit,

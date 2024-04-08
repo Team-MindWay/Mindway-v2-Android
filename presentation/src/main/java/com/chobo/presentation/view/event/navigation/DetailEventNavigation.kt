@@ -4,7 +4,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.chobo.presentation.view.event.screen.DetailEventScreen
-import com.chobo.presentation.view.event.screen.EventScreen
 
 const val detailEventRoute = "detail_event_route"
 
