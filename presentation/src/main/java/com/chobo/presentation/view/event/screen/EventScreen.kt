@@ -35,7 +35,11 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
+    navigateToEvent: () -> Unit,
+    navigateToBooks: () -> Unit,
+    navigateToMy: () -> Unit
 ) {
     val tabs = listOf(
         stringResource(id = R.string.ongoing_event),
@@ -58,10 +62,10 @@ fun EventScreen(
             )
             MindWayNavBar(
                 modifier = modifier.align(Alignment.BottomCenter),
-                navigateToHome = { /*TODO*/ },
-                navigateToEvent = { /*TODO*/ },
-                navigateToBooks = { /*TODO*/ },
-                navigateToMy = { /*TODO*/ }
+                navigateToHome = { navigateToHome() },
+                navigateToEvent = { navigateToEvent() },
+                navigateToBooks = { navigateToBooks() },
+                navigateToMy = { navigateToMy() }
             )
         }
     }
@@ -137,5 +141,10 @@ fun NotEvent(
 @Preview
 @Composable
 fun EventScreenPre() {
-    EventScreen()
+    EventScreen(
+        navigateToHome = { },
+        navigateToEvent = { },
+        navigateToBooks = { },
+        navigateToMy = { }
+    )
 }
