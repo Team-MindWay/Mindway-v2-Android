@@ -38,9 +38,9 @@ fun MyScreen(
         Scaffold(
             bottomBar = {
                 MindWayNavBar(
-                    navigateToHome = { /*TODO*/ },
-                    navigateToEvent = { /*TODO*/ },
-                    navigateToBooks = { /*TODO*/ }) {
+                    navigateToHome = {  },
+                    navigateToEvent = {  },
+                    navigateToBooks = {  }) {
 
                 }
             }

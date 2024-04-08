@@ -54,21 +54,27 @@ fun BookScreen(
         Scaffold(
             bottomBar = {
                 MindWayNavBar(
-                    navigateToHome = { /*TODO*/ },
-                    navigateToEvent = { /*TODO*/ },
-                    navigateToBooks = { /*TODO*/ }) {
+                    navigateToHome = {  },
+                    navigateToEvent = {  },
+                    navigateToBooks = {  }) {
                 }
             }
-        ) {paddingValues ->
+        ) { paddingValues ->
             Column(
-                modifier = Modifier.fillMaxSize().padding(paddingValues)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .padding(start = 24.dp, top = 20.dp, end = 24.dp)
                         .fillMaxWidth()
+                        .padding(
+                            start = 24.dp,
+                            top = 20.dp,
+                            end = 24.dp
+                        )
                 ) {
                     TabRow(
                         modifier = Modifier.width(166.dp),
@@ -107,13 +113,19 @@ fun BookScreen(
                         when (page) {
                             0 -> {
                                 items(novelDataList) {
-                                    BookListItem(data = it, onClick = novelOnClick)
+                                    BookListItem(
+                                        data = it,
+                                        onClick = novelOnClick
+                                    )
                                 }
                             }
 
                             1 -> {
                                 items(essayDataList) {
-                                    BookListItem(data = it, onClick = essayOnClick)
+                                    BookListItem(
+                                        data = it,
+                                        onClick = essayOnClick
+                                    )
                                 }
                             }
                         }
