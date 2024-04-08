@@ -12,20 +12,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.event.component.DetailEventTopBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.DetailEventViewModel
 
 @Composable
 fun DetailEventScreen(
     modifier: Modifier = Modifier,
-    navigateToEvent: () -> Unit
+    detailEventViewModel: DetailEventViewModel = viewModel(),
+    navigateToEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -40,7 +42,7 @@ fun DetailEventScreen(
             )
             Spacer(modifier = modifier.height(20.dp))
             Image(
-                painter = painterResource(id = R.drawable.mind_way_logo),
+                painter = painterResource(detailEventViewModel.returnImageResId()),
                 contentDescription = "Event Image",
                 modifier = modifier
                     .fillMaxWidth()
@@ -48,11 +50,9 @@ fun DetailEventScreen(
                     .clip(shape = RoundedCornerShape(8.dp))
             )
             DetailEventContent(
-                title = "가을 독서 행사",
-                content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를 준비했습니다. " +
-                        "랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 책을 찾아오면 푸짐한 선물뽑기를 할 수 있습니다. " +
-                        "점심시간마다 진행할 예정이니 많은 관심 바랍니다.",
-                date = "2023년 06월 20일 ~ 2023년 07월 08일"
+                title = detailEventViewModel.returnTitle(),
+                content = detailEventViewModel.returnContent(),
+                date = detailEventViewModel.returnDate()
             )
         }
     }
