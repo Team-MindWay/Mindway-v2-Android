@@ -35,10 +35,10 @@ fun Events(
         Spacer(modifier = modifier.height(20.dp))
         Surface(
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .shadow(elevation = 20.dp, spotColor = colors.CardShadow),
             color = colors.WHITE,
-            shape = RoundedCornerShape(16.dp),
-            elevation = 20.dp
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = modifier
