@@ -70,7 +70,7 @@ class MyViewModel @Inject constructor() : ViewModel() {
     private val _myName = "내이름"
 
     fun returnMyName(): String {
-        return "내이름입니다"
+        return _myName
     }
 
     fun optionOnClick() {
