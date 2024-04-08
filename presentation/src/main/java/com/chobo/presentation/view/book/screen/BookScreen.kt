@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.Scaffold
 import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,6 +28,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookListItemData
 import com.chobo.presentation.view.book.component.BookTabRowItem
+import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -48,53 +51,70 @@ fun BookScreen(
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(color = colors.WHITE)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(start = 24.dp, top = 20.dp, end = 24.dp)
-                    .fillMaxWidth()
-            ) {
-                TabRow(
-                    modifier = Modifier.width(166.dp),
-                    selectedTabIndex = pagerState.currentPage,
-                    backgroundColor = colors.WHITE,
-                    contentColor = colors.MAIN,
-                ) {
-                    tabNames.forEachIndexed { index, tabName ->
-                        BookTabRowItem(
-                            indexState = pagerState.currentPage,
-                            index = index,
-                            tabName = tabName,
-                            onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } }
-                        )
-                    }
+        Scaffold(
+            bottomBar = {
+                MindWayNavBar(
+                    navigateToHome = { /*TODO*/ },
+                    navigateToEvent = { /*TODO*/ },
+                    navigateToBooks = { /*TODO*/ }) {
                 }
-                PlusIcon(modifier = Modifier.clickable { plusIconOnClick() }, tint = colors.Black)
             }
-            HorizontalPager(state = pagerState) { page ->
-
-                LazyColumn(
-                    horizontalAlignment = Alignment.Start,
+        ) {paddingValues ->
+            Column(
+                modifier = Modifier.fillMaxSize().padding(paddingValues)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .background(color = colors.WHITE)
-                        .padding(horizontal = 24.dp)
-                        .fillMaxSize()
+                        .padding(start = 24.dp, top = 20.dp, end = 24.dp)
+                        .fillMaxWidth()
                 ) {
-                    when (page) {
-                        0 -> {
-                            items(novelDataList) {
-                                BookListItem(data = it, onClick = novelOnClick)
-                            }
+                    TabRow(
+                        modifier = Modifier.width(166.dp),
+                        selectedTabIndex = pagerState.currentPage,
+                        backgroundColor = colors.WHITE,
+                        contentColor = colors.MAIN,
+                    ) {
+                        tabNames.forEachIndexed { index, tabName ->
+                            BookTabRowItem(
+                                indexState = pagerState.currentPage,
+                                index = index,
+                                tabName = tabName,
+                                onClick = {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(
+                                            index
+                                        )
+                                    }
+                                }
+                            )
                         }
+                    }
+                    PlusIcon(
+                        modifier = Modifier.clickable { plusIconOnClick() },
+                        tint = colors.Black
+                    )
+                }
+                HorizontalPager(state = pagerState) { page ->
+                    LazyColumn(
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .background(color = colors.WHITE)
+                            .padding(horizontal = 24.dp)
+                            .fillMaxSize()
+                    ) {
+                        when (page) {
+                            0 -> {
+                                items(novelDataList) {
+                                    BookListItem(data = it, onClick = novelOnClick)
+                                }
+                            }
 
-                        1 -> {
-                            items(essayDataList) {
-                                BookListItem(data = it, onClick = essayOnClick)
+                            1 -> {
+                                items(essayDataList) {
+                                    BookListItem(data = it, onClick = essayOnClick)
+                                }
                             }
                         }
                     }
