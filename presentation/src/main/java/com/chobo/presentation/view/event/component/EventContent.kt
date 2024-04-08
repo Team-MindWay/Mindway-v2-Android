@@ -24,6 +24,7 @@ fun EventContent(
     content: String,
     eventDataList: List<EventsData> = listOf(),
     onIconClick: (Int) -> Unit,
+    navigateToDetailEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (eventDataList.isNotEmpty()) {
@@ -35,7 +36,9 @@ fun EventContent(
                 itemsIndexed(eventDataList) { index, item ->
                     Events(
                         eventsData = item,
-                        onClick = { onIconClick(index) })
+                        onClick = { onIconClick(index) },
+                        navigateToDetailEvent = { navigateToDetailEvent() })
+
                 }
             }
         } else {
