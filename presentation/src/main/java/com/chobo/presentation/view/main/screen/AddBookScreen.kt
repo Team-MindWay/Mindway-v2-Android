@@ -16,17 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.viewModel.AddBookViewModel
 
 @Composable
-fun AddBookScreen() {
+fun AddBookScreen(addBookViewModel: AddBookViewModel = viewModel()) {
     val titleTextState = remember {
-        mutableStateOf("")
+        mutableStateOf(addBookViewModel.titleTextState.value)
     }
     val contentTextState = remember {
-        mutableStateOf("")
+        mutableStateOf(addBookViewModel.contentTextState.value)
     }
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -39,33 +41,34 @@ fun AddBookScreen() {
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .padding(start = 24.dp, top = 28.dp, end = 24.dp, bottom = 28.dp)
+                .padding(
+                    horizontal = 24.dp,
+                    vertical = 28.dp
+                )
                 .fillMaxWidth()
         ) {
             MindWayTextField(
                 title = stringResource(R.string.title),
                 textState = titleTextState,
                 placeholder = stringResource(R.string.please_enter_the_book_title),
-                isError = false,
                 errorMessage = stringResource(R.string.error_title),
-                limiteInt = 60,
+                lengthLimit = addBookViewModel.titleTextMaxLength,
             )
             MindWayTextField(
                 title = stringResource(R.string.content),
                 textState = contentTextState,
                 placeholder = stringResource(R.string.please_enter_the_book_content),
-                isError = false,
                 errorMessage = stringResource(R.string.error_content),
-                limiteInt = 300,
+                lengthLimit = addBookViewModel.contentTextMaxLength,
             )
             Spacer(modifier = Modifier.weight(1f))
             MindWayButton(
                 text = stringResource(R.string.check),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
-            ) {
-            }
+                    .height(60.dp),
+                onClick = { addBookViewModel.checkButton() }
+            )
         }
     }
 }
