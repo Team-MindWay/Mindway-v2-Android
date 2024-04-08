@@ -50,21 +50,18 @@ fun CheckOutBookScreen(
                     title = stringResource(id = R.string.title),
                     textState = titleTextState,
                     placeholder = stringResource(R.string.please_enter_the_book_title),
-                    isError = false,
                     errorMessage = stringResource(R.string.please_enter_the_book_title)
                 )
                 MindWayTextField(
                     title = stringResource(id = R.string.writer),
                     textState = writeTextState,
                     placeholder = stringResource(id = R.string.please_enter_the_book_writer),
-                    isError = false,
                     errorMessage = stringResource(id = R.string.please_enter_the_book_writer)
                 )
                 MindWayTextField(
                     title = stringResource(id = R.string.link),
                     textState = linkTextState,
                     placeholder = stringResource(id = R.string.please_enter_the_link),
-                    isError = false,
                     errorMessage = stringResource(id = R.string.please_enter_the_link)
                 )
                 Spacer(modifier = modifier.weight(1f))

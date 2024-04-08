@@ -38,21 +38,18 @@ fun MyBookEditScreen(
             title = stringResource(R.string.title),
             textState = titleState,
             placeholder = stringResource(R.string.please_enter_the_book_title),
-            isError = false,
             errorMessage = stringResource(R.string.please_enter_the_book_title)
         )
         MindWayTextField(
             title = stringResource(R.string.writer),
             textState = writerState,
             placeholder = stringResource(R.string.please_enter_the_book_writer),
-            isError = false,
             errorMessage = stringResource(R.string.please_enter_the_book_writer)
         )
         MindWayTextField(
             title = stringResource(R.string.link),
             textState = linkState,
             placeholder = stringResource(R.string.please_enter_the_link),
-            isError = false,
             errorMessage = stringResource(R.string.please_enter_the_link)
         )
     }
