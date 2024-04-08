@@ -17,24 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.CheckOutBookViewModel
 
 @Composable
-fun CheckOutBookScreen(
-    modifier: Modifier = Modifier
-) {
-    val titleTextState = remember { mutableStateOf("") }
-    val writeTextState = remember { mutableStateOf("") }
-    val linkTextState = remember { mutableStateOf("") }
+fun CheckOutBookScreen(checkOutBookViewModel: CheckOutBookViewModel = viewModel()) {
+    val titleTextState = remember { mutableStateOf(checkOutBookViewModel.titleTextState.value) }
+    val writeTextState = remember { mutableStateOf(checkOutBookViewModel.writeTextState.value) }
+    val linkTextState = remember { mutableStateOf(checkOutBookViewModel.linkTextState.value) }
 
     MindWayAndroidTheme { colors, _ ->
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(color = colors.WHITE)
                 .imePadding()
@@ -42,9 +42,12 @@ fun CheckOutBookScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 28.dp)
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
             ) {
                 MindWayTextField(
                     title = stringResource(id = R.string.title),
@@ -64,14 +67,14 @@ fun CheckOutBookScreen(
                     placeholder = stringResource(id = R.string.please_enter_the_link),
                     errorMessage = stringResource(id = R.string.please_enter_the_link)
                 )
-                Spacer(modifier = modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
                     text = stringResource(id = R.string.apply),
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
-                ) {
-                }
+                        .height(48.dp),
+                    onClick = { checkOutBookViewModel.checkButton() }
+                )
             }
         }
     }

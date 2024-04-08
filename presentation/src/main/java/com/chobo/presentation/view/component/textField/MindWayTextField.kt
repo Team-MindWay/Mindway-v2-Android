@@ -38,7 +38,12 @@ fun MindWayTextField(
     lengthLimit: Int = 0,
     isTextRight: Boolean = false,
 ) {
-    val lengthCheck = lengthLimit <= textState.value.length
+
+    val lengthCheck = if (lengthLimit != 0) {
+        textState.value.length >= lengthLimit
+    } else {
+        false
+    }
     val isError = lengthCheck
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -89,8 +94,12 @@ fun MindWayTextField(
             ) {
                 BasicTextField(
                     onValueChange = { newText ->
-                        if (newText.length <= lengthLimit) { // 길이 제한을 확인합니다.
-                            textState.value = newText // 이 조건을 만족할 때만 값을 변경합니다.
+                        if (lengthLimit != 0) {
+                            if (newText.length <= lengthLimit) {
+                                textState.value = newText
+                            }
+                        } else {
+                            textState.value = newText
                         }
                     },
                     value = textState.value,

@@ -1,10 +1,8 @@
 package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Scaffold
@@ -24,25 +22,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
-import com.chobo.presentation.view.book.component.BookListItemData
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.icon.PlusIcon
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.BookScreenViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookScreen(
-    plusIconOnClick: () -> Unit,
-    novelDataList: List<BookListItemData> = listOf(),
-    essayDataList: List<BookListItemData> = listOf(),
-    novelOnClick: () -> Unit,
-    essayOnClick: () -> Unit,
-) {
+fun BookScreen(bookScreenViewModel: BookScreenViewModel = viewModel()) {
     val pagerState = rememberPagerState(pageCount = { 2 })
     val tabNames = listOf(
         stringResource(R.string.novel),
@@ -54,9 +46,9 @@ fun BookScreen(
         Scaffold(
             bottomBar = {
                 MindWayNavBar(
-                    navigateToHome = {  },
-                    navigateToEvent = {  },
-                    navigateToBooks = {  }) {
+                    navigateToHome = { },
+                    navigateToEvent = { },
+                    navigateToBooks = { }) {
                 }
             }
         ) { paddingValues ->
@@ -69,12 +61,12 @@ fun BookScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(
                             start = 24.dp,
                             top = 20.dp,
                             end = 24.dp
                         )
+                        .fillMaxWidth()
                 ) {
                     TabRow(
                         modifier = Modifier.width(166.dp),
@@ -98,34 +90,34 @@ fun BookScreen(
                         }
                     }
                     PlusIcon(
-                        modifier = Modifier.clickable { plusIconOnClick() },
+                        modifier = Modifier.clickable { bookScreenViewModel.plusIconOnClick() },
                         tint = colors.Black
                     )
                 }
                 HorizontalPager(state = pagerState) { page ->
                     LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
                         modifier = Modifier
-                            .background(color = colors.WHITE)
-                            .padding(horizontal = 24.dp)
+                            .padding(
+                                horizontal = 24.dp,
+                                vertical = 28.dp,
+                            )
                             .fillMaxSize()
                     ) {
                         when (page) {
                             0 -> {
-                                items(novelDataList) {
-                                    BookListItem(
-                                        data = it,
-                                        onClick = novelOnClick
-                                    )
+                                itemsIndexed(bookScreenViewModel.novelDataList) { index, item ->
+                                    BookListItem(data = item,
+                                        onClick = { bookScreenViewModel.novelOnClick(index) })
                                 }
                             }
 
                             1 -> {
-                                items(essayDataList) {
+                                itemsIndexed(bookScreenViewModel.essayDataList) { index, item ->
                                     BookListItem(
-                                        data = it,
-                                        onClick = essayOnClick
-                                    )
+                                        data = item,
+                                        onClick = { bookScreenViewModel.essayOnClick(index) })
                                 }
                             }
                         }
@@ -140,27 +132,5 @@ fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookScreen(
-        novelDataList = listOf(
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-        ),
-        essayDataList = listOf(
-            BookListItemData(writer = "ds", title = "제옴ㄹ","dsadsadsasad"),
-            BookListItemData(writer = "a", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "cx", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),BookListItemData(writer = "작가이름", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "v", title = "제옴ㄹ","dasdasd"),
-            BookListItemData(writer = "vza", title = "제옴ㄹ","fdsfds"),
-            BookListItemData(writer = "dsa", title = "제옴ㄹ","내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"),
-            BookListItemData(writer = "gw", title = "제옴ㄹ","czxczxc"),
-        ),
-        plusIconOnClick = { MockOnClick() },
-        novelOnClick = { MockOnClick() },
-        essayOnClick = { MockOnClick() },
-    )
+    BookScreen()
 }
