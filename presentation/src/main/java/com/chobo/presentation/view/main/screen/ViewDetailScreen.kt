@@ -10,14 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
+import com.chobo.presentation.viewModel.ViewDetailViewModel
 
 @Composable
-fun ViewDetailScreen(
-    titleContent: String,
-    contentString: String,
-) {
+fun ViewDetailScreen(viewDetailViewModel: ViewDetailViewModel = viewModel()) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
@@ -30,11 +29,11 @@ fun ViewDetailScreen(
     ) {
         ViewDetailTextCard(
             title = stringResource(R.string.title),
-            content = titleContent,
+            content = viewDetailViewModel.title,
         )
         ViewDetailTextCard(
             title = stringResource(R.string.content),
-            content = contentString,
+            content = viewDetailViewModel.content,
         )
     }
 }
@@ -42,8 +41,5 @@ fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    ViewDetailScreen(
-        titleContent = "fgyiuhoijpkxrtcytvuybxdfcghvjbkn",
-        contentString = "xdtcfvgbhjknlmnbfvsdcastfcyvgubhnjmkrbevrwcsxdvhbjncfgvhjb\nfcghgvjbkjcfhgvjb\nfcghvjbfchgvjb\n\nfcgvhbfchgvjbgv",
-    )
+    ViewDetailScreen()
 }
