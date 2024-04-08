@@ -2,13 +2,12 @@ package com.chobo.presentation.view.event.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import com.chobo.presentation.view.main.screen.MockOnClick
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,12 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+data class EventsData(val title: String, val content: String, val date: String)
+
 @Composable
 fun Events(
     modifier: Modifier = Modifier,
-    title: String,
-    content: String,
-    date: String,
+    eventsData: EventsData,
+    onClick: () -> Unit,
     navigateToDetailEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -59,27 +59,32 @@ fun Events(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = title,
+                        text = eventsData.title,
                         style = typography.bodySmall,
                         color = colors.Black,
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = modifier.weight(1f))
                     ChevronRightIcon(
-                        modifier = modifier
-                            .clickable { navigateToDetailEvent() }
+                        modifier = Modifier.clickable(
+                            interactionSource = MutableInteractionSource(),
+                            indication = null
+                        ) {
+                            onClick()
+                            navigateToDetailEvent()
+                        }
                     )
                 }
                 Spacer(modifier = modifier.height(8.dp))
                 Text(
-                    text = content,
+                    text = eventsData.content,
                     style = typography.bodySmall,
                     color = colors.GRAY800,
                     fontWeight = FontWeight.Normal
                 )
                 Spacer(modifier = modifier.height(8.dp))
                 Text(
-                    text = date,
+                    text = eventsData.date,
                     style = typography.labelLarge,
                     color = colors.GRAY400,
                     fontWeight = FontWeight.Normal
@@ -93,9 +98,12 @@ fun Events(
 @Composable
 fun EventsPre() {
     Events(
-        title = "가을 독서 행사",
-        content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 ",
-        date = "2024년 04월 08일",
-        navigateToDetailEvent = { }
+        eventsData = EventsData(
+            title = "가을 독서 행사",
+            content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 ",
+            date = "2024년 04월 08일"
+        ),
+        onClick = { MockOnClick() },
+        navigateToDetailEvent = { },
     )
 }
