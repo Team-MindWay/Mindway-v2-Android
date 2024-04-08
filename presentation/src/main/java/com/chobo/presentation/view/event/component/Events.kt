@@ -38,7 +38,7 @@ fun Events(
                 .fillMaxWidth()
                 .shadow(elevation = 20.dp, spotColor = colors.CardShadow),
             color = colors.WHITE,
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(8.dp)
         ) {
             Column(
                 modifier = modifier

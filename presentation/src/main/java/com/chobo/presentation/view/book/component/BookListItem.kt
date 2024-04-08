@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ fun BookListItem(
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
+        Spacer(modifier = Modifier.height(20.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
@@ -40,7 +43,6 @@ fun BookListItem(
                 .shadow(
                     elevation = 20.dp,
                     spotColor = colors.CardShadow,
-                    ambientColor = colors.CardShadow,
                 )
                 .background(
                     color = colors.WHITE,
