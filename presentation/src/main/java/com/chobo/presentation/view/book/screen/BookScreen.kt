@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,7 +48,10 @@ fun BookScreen(
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(color = colors.WHITE)
+        ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -75,13 +79,10 @@ fun BookScreen(
             HorizontalPager(state = pagerState) { page ->
 
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp,
-                        )
+                        .background(color = colors.WHITE)
+                        .padding(horizontal = 24.dp)
                         .fillMaxSize()
                 ) {
                     when (page) {
