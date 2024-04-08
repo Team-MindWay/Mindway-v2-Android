@@ -29,8 +29,8 @@ data class EventsData(val title: String, val content: String, val date: String)
 @Composable
 fun Events(
     modifier: Modifier = Modifier,
-    date: String
     eventsData: EventsData,
+    onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(20.dp))
@@ -64,7 +64,11 @@ fun Events(
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = modifier.weight(1f))
-                    ChevronRightIcon()
+                    ChevronRightIcon(modifier = Modifier.clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null
+                    ) { onClick() }
+                    )
                 }
                 Spacer(modifier = modifier.height(8.dp))
                 Text(
