@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
@@ -18,7 +19,7 @@ import com.chobo.presentation.viewModel.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel = viewModel()
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
@@ -52,5 +53,5 @@ fun MockOnClick() {}
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(homeViewModel = HomeViewModel())
+    HomeScreen()
 }
