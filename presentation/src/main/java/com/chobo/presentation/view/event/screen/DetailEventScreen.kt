@@ -24,7 +24,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun DetailEventScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -33,7 +34,10 @@ fun DetailEventScreen(
                 .background(color = colors.WHITE)
                 .padding(horizontal = 24.dp)
         ) {
-            DetailEventTopBar(title = stringResource(id = R.string.ongoing_event))
+            DetailEventTopBar(
+                title = stringResource(id = R.string.ongoing_event),
+                navigateToEvent = navigateToEvent
+            )
             Spacer(modifier = modifier.height(20.dp))
             Image(
                 painter = painterResource(id = R.drawable.mind_way_logo),
@@ -57,5 +61,7 @@ fun DetailEventScreen(
 @Preview
 @Composable
 fun DetailEventScreenPre() {
-    DetailEventScreen()
+    DetailEventScreen(
+        navigateToEvent = { }
+    )
 }

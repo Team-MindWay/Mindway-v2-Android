@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.event.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +20,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun DetailEventTopBar(
     modifier: Modifier = Modifier,
-    title: String
+    title: String,
+    navigateToEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
@@ -31,7 +33,10 @@ fun DetailEventTopBar(
                     bottom = 4.dp
                 )
         ) {
-            ChevronLeftIcon()
+            ChevronLeftIcon(
+                modifier = modifier
+                    .clickable { navigateToEvent() }
+            )
             Spacer(modifier = modifier.weight(1f))
             Text(
                 text = title,
@@ -53,6 +58,7 @@ fun DetailEventTopBar(
 @Composable
 fun DetailEventTopBarPre() {
     DetailEventTopBar(
-        title = "진행 중인 이벤트"
+        title = "진행 중인 이벤트",
+        navigateToEvent = {  }
     )
 }
