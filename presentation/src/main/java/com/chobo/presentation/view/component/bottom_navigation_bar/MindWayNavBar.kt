@@ -24,7 +24,7 @@ fun MindWayNavBar(
     navigateToBooks: () -> Unit,
     navigateToMy: () -> Unit
 ) {
-    var navigationIndex by remember { mutableStateOf(0) }
+    var navigationIndex by remember { mutableStateOf(-1) }
     val itemList = listOf(
         MindWayNavBarItemType.HOME,
         MindWayNavBarItemType.EVENT,
