@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun EventDetailContent(
+fun DetailEventContent(
     modifier: Modifier = Modifier,
     title: String,
     content: String,
@@ -56,8 +55,8 @@ fun EventDetailContent(
 
 @Preview
 @Composable
-fun EventDetailContentPre() {
-    EventDetailContent(
+fun DetailEventContentPre() {
+    DetailEventContent(
         title = "가을 독서 행사",
         content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를 준비했습니다. " +
                 "랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 책을 찾아오면 푸짐한 선물뽑기를 할 수 있습니다. " +
