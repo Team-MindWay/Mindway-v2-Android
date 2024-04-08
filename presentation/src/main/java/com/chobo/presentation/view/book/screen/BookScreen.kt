@@ -64,10 +64,12 @@ fun BookScreen(bookScreenViewModel: BookScreenViewModel = viewModel()) {
                         )
                     }
                 }
-                PlusIcon(modifier = Modifier.clickable { bookScreenViewModel.plusIconOnClick() }, tint = colors.Black)
+                PlusIcon(
+                    modifier = Modifier.clickable { bookScreenViewModel.plusIconOnClick() },
+                    tint = colors.Black
+                )
             }
             HorizontalPager(state = pagerState) { page ->
-
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
@@ -81,13 +83,16 @@ fun BookScreen(bookScreenViewModel: BookScreenViewModel = viewModel()) {
                     when (page) {
                         0 -> {
                             itemsIndexed(bookScreenViewModel.novelDataList) { index, item ->
-                                BookListItem(data = item, onClick = { bookScreenViewModel.novelOnClick(index) })
+                                BookListItem(data = item,
+                                    onClick = { bookScreenViewModel.novelOnClick(index) })
                             }
                         }
 
                         1 -> {
                             itemsIndexed(bookScreenViewModel.essayDataList) { index, item ->
-                                BookListItem(data = item, onClick = { bookScreenViewModel.essayOnClick(index) })
+                                BookListItem(
+                                    data = item,
+                                    onClick = { bookScreenViewModel.essayOnClick(index) })
                             }
                         }
                     }
