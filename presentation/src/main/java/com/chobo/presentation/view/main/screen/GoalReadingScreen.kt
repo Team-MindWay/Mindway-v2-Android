@@ -51,12 +51,12 @@ fun GoalReadingScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp),
-                        readingGoalGraphData = goalReadingViewModel.goalReadingGraphDataList.map { data ->
+                        readingGoalGraphData = goalReadingViewModel.goalReadingGraphDataList.map {
                             ReadingGoalGraphData(
-                                numBooksRead = data.numBooksRead,
-                                maxBooksRead = data.maxBooksRead,
-                                isCurrentDate = data.isCurrentDate,
-                                today = data.today
+                                numBooksRead = it.numBooksRead,
+                                maxBooksRead = it.maxBooksRead,
+                                isCurrentDate = it.isCurrentDate,
+                                today = it.today
                             )
                         }
                     )
