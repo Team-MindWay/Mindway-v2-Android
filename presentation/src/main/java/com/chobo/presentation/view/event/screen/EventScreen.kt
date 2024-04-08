@@ -1,20 +1,31 @@
 package com.chobo.presentation.view.event.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.presentation.view.event.component.EventContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
-import com.chobo.presentation.view.event.component.EventContent
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.event.component.EventPager
+import com.chobo.presentation.view.event.component.Events
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.EventViewModel
 
@@ -26,7 +37,8 @@ fun EventScreen(
     navigateToEvent: () -> Unit,
     navigateToBooks: () -> Unit,
     navigateToMy: () -> Unit,
-    eventViewModel: EventViewModel = viewModel()
+    navigateToDetailEvent: () -> Unit,
+    eventViewModel: EventViewModel = viewModel(),
 ) {
     val tabs = listOf(
         stringResource(id = R.string.ongoing_event),
@@ -48,14 +60,16 @@ fun EventScreen(
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
                         eventDataList = eventViewModel.currentEventsDataList,
-                        onIconClick = eventViewModel::onCurrentIconClick
+                        onIconClick = eventViewModel::onCurrentIconClick,
+                        navigateToDetailEvent = navigateToDetailEvent
                     )
                 },
                 pastEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
                         eventDataList = eventViewModel.pastEventsDataList,
-                        onIconClick = eventViewModel::onPastIconClick
+                        onIconClick = eventViewModel::onPastIconClick,
+                        navigateToDetailEvent = navigateToDetailEvent
                     )
                 }
             )
@@ -77,6 +91,7 @@ fun EventScreenPre() {
         navigateToHome = { },
         navigateToEvent = { },
         navigateToBooks = { },
-        navigateToMy = { }
+        navigateToMy = { },
+        navigateToDetailEvent = { }
     )
 }

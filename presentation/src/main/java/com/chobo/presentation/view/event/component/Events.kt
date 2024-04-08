@@ -3,6 +3,7 @@ package com.chobo.presentation.view.event.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import com.chobo.presentation.view.main.screen.MockOnClick
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 data class EventsData(val title: String, val content: String, val date: String)
@@ -31,6 +31,7 @@ fun Events(
     modifier: Modifier = Modifier,
     eventsData: EventsData,
     onClick: () -> Unit,
+    navigateToDetailEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(20.dp))
@@ -64,10 +65,14 @@ fun Events(
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = modifier.weight(1f))
-                    ChevronRightIcon(modifier = Modifier.clickable(
-                        interactionSource = MutableInteractionSource(),
-                        indication = null
-                    ) { onClick() }
+                    ChevronRightIcon(
+                        modifier = Modifier.clickable(
+                            interactionSource = MutableInteractionSource(),
+                            indication = null
+                        ) {
+                            onClick()
+                            navigateToDetailEvent()
+                        }
                     )
                 }
                 Spacer(modifier = modifier.height(8.dp))
@@ -98,6 +103,7 @@ fun EventsPre() {
             content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 ",
             date = "2024년 04월 08일"
         ),
-        onClick = { MockOnClick() }
+        onClick = { MockOnClick() },
+        navigateToDetailEvent = { },
     )
 }
