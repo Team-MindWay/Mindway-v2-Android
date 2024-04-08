@@ -60,6 +60,8 @@ dependencies {
 
     implementation(Dependency.Hilt.HILT)
     ksp(Dependency.Hilt.HILT_COMPILER)
+    implementation (Dependency.Hilt.HILT_NAVIGATION_FRAGMENT)
+    implementation (Dependency.Hilt.HILT_NAVIGATION_COMPOSE)
 
     testImplementation(Dependency.Test.JUNIT)
     androidTestImplementation(Dependency.Test.ANDROID_JUNIT)

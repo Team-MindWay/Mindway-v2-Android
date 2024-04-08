@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
@@ -38,8 +39,8 @@ fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
                     .background(
                         color = colors.MAIN,
                         shape = RoundedCornerShape(
-                            topStart = 4.dp,
-                            topEnd = 4.dp,
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
                         )
                     )
             )
@@ -52,4 +53,9 @@ fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
             )
         }
     }
+}
+@Preview
+@Composable
+fun HomeReadersOfTheMonthGraphPreview() {
+    HomeReadersOfTheMonthGraph(bookKingOfTheMonthData = BookKingOfTheMonthData(name = "이름", numOfBooks = 12))
 }

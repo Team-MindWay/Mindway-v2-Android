@@ -96,7 +96,6 @@ fun GoalReadingBottomSheet(
                     title = stringResource(id = R.string.goal_reading),
                     textState = textState,
                     placeholder = "권",
-                    isError = false,
                     isTextRight = true,
                     errorMessage = stringResource(id = R.string.goal_reading_error),
                 )

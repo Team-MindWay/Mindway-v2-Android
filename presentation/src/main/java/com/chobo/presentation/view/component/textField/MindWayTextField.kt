@@ -28,17 +28,18 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 // TODO:  MindWayTextField에서 엔터를 누르면 커서의 앞에있던 글자가 복사되어서 밑줄에 생기는 버그 수정
 @Composable
-fun MindWayTextField( 
+fun MindWayTextField(
     outSideModifier: Modifier = Modifier,
     textFieldModifier: Modifier = Modifier,
     title: String,
     textState: MutableState<String>,
     placeholder: String,
-    isError: Boolean,
     errorMessage: String,
-    limiteInt: Int = 0,
-    isTextRight: Boolean = false
+    lengthLimit: Int = 0,
+    isTextRight: Boolean = false,
 ) {
+    val lengthCheck = lengthLimit <= textState.value.length
+    val isError = lengthCheck
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -56,7 +57,7 @@ fun MindWayTextField(
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
-                if (limiteInt != 0) {
+                if (lengthLimit != 0) {
                     Row {
                         Text(
                             text = textState.value.length.toString(),
@@ -65,7 +66,7 @@ fun MindWayTextField(
                             color = colors.MAIN,
                         )
                         Text(
-                            text = stringResource(R.string.slash) + limiteInt,
+                            text = stringResource(R.string.slash) + lengthLimit,
                             style = typography.labelLarge,
                             fontWeight = FontWeight.Normal,
                             color = colors.GRAY400,
@@ -87,7 +88,11 @@ fun MindWayTextField(
                     )
             ) {
                 BasicTextField(
-                    onValueChange = { newText -> textState.value = newText },
+                    onValueChange = { newText ->
+                        if (newText.length <= lengthLimit) { // 길이 제한을 확인합니다.
+                            textState.value = newText // 이 조건을 만족할 때만 값을 변경합니다.
+                        }
+                    },
                     value = textState.value,
                     textStyle = typography.bodySmall.copy(
                         fontWeight = FontWeight.Normal,
@@ -151,8 +156,7 @@ fun Preview() {
         title = "제목이다",
         textState = textState,
         placeholder = "힌트다",
-        isError = false,
-        errorMessage = "에러니까 고치셈",
         isTextRight = false,
+        errorMessage = "에러니까 고치셈",
     )
 }

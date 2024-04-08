@@ -29,6 +29,7 @@ object Versions {
     const val COIL = "2.4.0"
 
     const val HILT = "2.47"
+    const val HILT_NAVIGATION = "1.2.0"
 
     const val GOOGLE_SERVICE_PLUGIN = "4.3.15"
 
