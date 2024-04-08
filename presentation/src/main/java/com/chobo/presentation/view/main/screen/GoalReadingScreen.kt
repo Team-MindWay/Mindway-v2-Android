@@ -3,7 +3,6 @@ package com.chobo.presentation.view.main.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,17 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.ReadingGoalGraphData
+import com.chobo.presentation.viewModel.GoalReadingViewModel
 
 @Composable
 fun GoalReadingScreen(
-    readingGoalGraphData: List<ReadingGoalGraphData>,
-    goalReadingListOfBooksReadItemDataList: List<GoalReadingListOfBooksReadItemData>,
-    plusOnClick: () -> Unit,
+    goalReadingViewModel: GoalReadingViewModel = viewModel()
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -53,7 +51,7 @@ fun GoalReadingScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp),
-                        readingGoalGraphData = readingGoalGraphData.map {
+                        readingGoalGraphData = goalReadingViewModel.goalReadingGraphDataList.map {
                             ReadingGoalGraphData(
                                 numBooksRead = it.numBooksRead,
                                 maxBooksRead = it.maxBooksRead,
@@ -64,9 +62,9 @@ fun GoalReadingScreen(
                     )
                 }
                 item {
-                    GoalReadingPlusCard(onClick = { plusOnClick() })
+                    GoalReadingPlusCard(onClick = { goalReadingViewModel.plusOnClick() })
                 }
-                items(goalReadingListOfBooksReadItemDataList) { item ->
+                items(goalReadingViewModel.goalReadingListOfBooksReadItemDataList) { item ->
                     GoalReadingListOfBooksReadItem(data = item) {
                     }
                 }
@@ -82,39 +80,6 @@ fun GoalReadingScreenPreview(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        GoalReadingScreen(
-            readingGoalGraphData = listOf(
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(2, 3, true, "늘"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(3, 3, false, "오"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(3, 3, false, "오"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-            ),
-            goalReadingListOfBooksReadItemDataList = listOf(
-                GoalReadingListOfBooksReadItemData(
-                    12,
-                    12,
-                    "제목",
-                    "내용입니다 그렇ewjiofhowehfluieifnhcielhuferhwiegir습니다"
-                ),
-                GoalReadingListOfBooksReadItemData(
-                    12,
-                    12,
-                    "제목",
-                    "내용renwcilntinhvgdnghrerns입니다 그렇습니다"
-                ),
-                GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇습니다"),
-                GoalReadingListOfBooksReadItemData(12, 12, "제목", "내용입니다 그렇습니다"),
-                GoalReadingListOfBooksReadItemData(
-                    12,
-                    12,
-                    "제목",
-                    "내용fueiecgkenrgb hefvhjfrhfobhu a boifibdaf hfos hfoshfhdkldu PQWOPSJKFL;JASO UEFIPAJSOIFJ ;ASJF KDJA;FJP[iw jehfuahl;fj;lksjdpoaf jiojf'jwpeoirpanskj vjiocxjnv;jewlj fi0snlfj ajfnlk saklfnsa;lkj vpijcpxbf,wnlfndjakfpzujvo eaoji ofjeio fozisfoizs입니다 그렇습니다"
-                )
-            ),
-            plusOnClick = { MockOnClick() }
-        )
+        GoalReadingScreen()
     }
 }
