@@ -39,7 +39,8 @@ fun EventScreen(
     navigateToHome: () -> Unit,
     navigateToEvent: () -> Unit,
     navigateToBooks: () -> Unit,
-    navigateToMy: () -> Unit
+    navigateToMy: () -> Unit,
+    navigateToDetailEvent: () -> Unit
 ) {
     val tabs = listOf(
         stringResource(id = R.string.ongoing_event),
@@ -57,8 +58,12 @@ fun EventScreen(
             EventPager(
                 pagerState = pagerState,
                 tabs = tabs,
-                onGoingEvent = { OngoingEvent() },
-                pastEvent = { PastEvent() }
+                onGoingEvent = { OngoingEvent(
+                    navigateToDetailEvent = navigateToDetailEvent
+                ) },
+                pastEvent = { PastEvent(
+                    navigateToDetailEvent = navigateToDetailEvent
+                ) }
             )
             MindWayNavBar(
                 modifier = modifier.align(Alignment.BottomCenter),
@@ -73,7 +78,8 @@ fun EventScreen(
 
 @Composable
 fun OngoingEvent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetailEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, _ ->
         LazyColumn(
@@ -85,7 +91,8 @@ fun OngoingEvent(
                 Events(
                     title = "가을 독서 행사",
                     content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는",
-                    date = "2024년 04월 08일"
+                    date = "2024년 04월 08일",
+                    navigateToDetailEvent = { navigateToDetailEvent() }
                 )
             }
         }
@@ -94,7 +101,8 @@ fun OngoingEvent(
 
 @Composable
 fun PastEvent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetailEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, _ ->
         LazyColumn(
@@ -106,7 +114,8 @@ fun PastEvent(
                 Events(
                     title = "가을 독서 행사",
                     content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는",
-                    date = "2024년 04월 08일"
+                    date = "2024년 04월 08일",
+                    navigateToDetailEvent = { navigateToDetailEvent() }
                 )
             }
         }
@@ -145,6 +154,7 @@ fun EventScreenPre() {
         navigateToHome = { },
         navigateToEvent = { },
         navigateToBooks = { },
-        navigateToMy = { }
+        navigateToMy = { },
+        navigateToDetailEvent = { }
     )
 }
