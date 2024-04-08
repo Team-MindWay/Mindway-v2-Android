@@ -12,18 +12,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.viewModel.MyBookEditViewModel
 
 @Composable
 fun MyBookEditScreen(
-    title: String,
-    writer: String,
-    link: String,
+    myBookEditViewModel: MyBookEditViewModel = viewModel()
 ) {
-    val titleState = remember { mutableStateOf(title) }
-    val writerState = remember { mutableStateOf(writer) }
-    val linkState = remember { mutableStateOf(link) }
+    val titleState = remember { mutableStateOf(myBookEditViewModel.titleTextState.value) }
+    val writerState = remember { mutableStateOf(myBookEditViewModel.writeTextState.value) }
+    val linkState = remember { mutableStateOf(myBookEditViewModel.linkTextState.value) }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
@@ -57,5 +58,5 @@ fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditScreen(title = "제가그랬습니다", writer = "너가그랬습니다(저자)", link = "https://github.com/answad")
+    MyBookEditScreen()
 }
