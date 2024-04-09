@@ -22,13 +22,13 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.CheckOutBookViewModel
+import com.chobo.presentation.viewModel.BookAddBookViewModel
 
 @Composable
-fun CheckOutBookScreen(checkOutBookViewModel: CheckOutBookViewModel = viewModel()) {
-    val titleTextState = remember { mutableStateOf(checkOutBookViewModel.titleTextState.value) }
-    val writeTextState = remember { mutableStateOf(checkOutBookViewModel.writeTextState.value) }
-    val linkTextState = remember { mutableStateOf(checkOutBookViewModel.linkTextState.value) }
+fun BookAddBookScreen(bookAddBookViewModel: BookAddBookViewModel = viewModel()) {
+    val titleTextState = remember { mutableStateOf(bookAddBookViewModel.titleTextState.value) }
+    val writeTextState = remember { mutableStateOf(bookAddBookViewModel.writeTextState.value) }
+    val linkTextState = remember { mutableStateOf(bookAddBookViewModel.linkTextState.value) }
 
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -73,7 +73,7 @@ fun CheckOutBookScreen(checkOutBookViewModel: CheckOutBookViewModel = viewModel(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    onClick = { checkOutBookViewModel.checkButton() }
+                    onClick = { bookAddBookViewModel.checkButton() }
                 )
             }
         }
@@ -82,6 +82,6 @@ fun CheckOutBookScreen(checkOutBookViewModel: CheckOutBookViewModel = viewModel(
 
 @Preview
 @Composable
-fun PreviewCheckOutBookScreen() {
-    CheckOutBookScreen()
+fun PreviewAddBookScreen() {
+    BookAddBookScreen()
 }

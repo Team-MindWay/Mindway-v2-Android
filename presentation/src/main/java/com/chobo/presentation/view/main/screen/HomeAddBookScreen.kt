@@ -20,15 +20,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
-import com.chobo.presentation.viewModel.AddBookViewModel
+import com.chobo.presentation.viewModel.HomeAddBookViewModel
 
 @Composable
-fun AddBookScreen(addBookViewModel: AddBookViewModel = viewModel()) {
+fun HomeAddBookScreen(homeAddBookViewModel: HomeAddBookViewModel = viewModel()) {
     val titleTextState = remember {
-        mutableStateOf(addBookViewModel.titleTextState.value)
+        mutableStateOf(homeAddBookViewModel.titleTextState.value)
     }
     val contentTextState = remember {
-        mutableStateOf(addBookViewModel.contentTextState.value)
+        mutableStateOf(homeAddBookViewModel.contentTextState.value)
     }
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -52,14 +52,14 @@ fun AddBookScreen(addBookViewModel: AddBookViewModel = viewModel()) {
                 textState = titleTextState,
                 placeholder = stringResource(R.string.please_enter_the_book_title),
                 errorMessage = stringResource(R.string.error_title),
-                lengthLimit = addBookViewModel.titleTextMaxLength,
+                lengthLimit = homeAddBookViewModel.titleTextMaxLength,
             )
             MindWayTextField(
                 title = stringResource(R.string.content),
                 textState = contentTextState,
                 placeholder = stringResource(R.string.please_enter_the_book_content),
                 errorMessage = stringResource(R.string.error_content),
-                lengthLimit = addBookViewModel.contentTextMaxLength,
+                lengthLimit = homeAddBookViewModel.contentTextMaxLength,
             )
             Spacer(modifier = Modifier.weight(1f))
             MindWayButton(
@@ -67,7 +67,7 @@ fun AddBookScreen(addBookViewModel: AddBookViewModel = viewModel()) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
-                onClick = { addBookViewModel.checkButton() }
+                onClick = { homeAddBookViewModel.checkButton() }
             )
         }
     }
@@ -76,5 +76,5 @@ fun AddBookScreen(addBookViewModel: AddBookViewModel = viewModel()) {
 @Preview(showBackground = true)
 @Composable
 fun AddBookScreenPreview() {
-    AddBookScreen()
+    HomeAddBookScreen()
 }
