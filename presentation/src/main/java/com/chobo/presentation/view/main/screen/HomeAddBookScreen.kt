@@ -17,13 +17,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.viewModel.HomeAddBookViewModel
 
 @Composable
-fun HomeAddBookScreen(homeAddBookViewModel: HomeAddBookViewModel = viewModel()) {
+fun HomeAddBookScreen(
+    homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
+    navigateToBack: () -> Boolean
+) {
     val titleTextState = remember {
         mutableStateOf(homeAddBookViewModel.titleTextState.value)
     }
@@ -76,5 +80,6 @@ fun HomeAddBookScreen(homeAddBookViewModel: HomeAddBookViewModel = viewModel()) 
 @Preview(showBackground = true)
 @Composable
 fun AddBookScreenPreview() {
-    HomeAddBookScreen()
+    val navController = rememberNavController()
+    HomeAddBookScreen(navigateToBack = navController::popBackStack)
 }

@@ -15,15 +15,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.ReadingGoalGraphData
+import com.chobo.presentation.view.main.navigation.navigationToHomeAddBook
+import com.chobo.presentation.view.main.navigation.navigationToViewDetail
 import com.chobo.presentation.viewModel.GoalReadingViewModel
 
 @Composable
 fun GoalReadingScreen(
-    goalReadingViewModel: GoalReadingViewModel = viewModel()
+    goalReadingViewModel: GoalReadingViewModel = viewModel(),
+    navigateToBack: () -> Boolean,
+    navigateToHomeAddBook: () -> Unit,
+    navigateToHomeViewDetail: () -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -62,11 +68,13 @@ fun GoalReadingScreen(
                     )
                 }
                 item {
-                    GoalReadingPlusCard(onClick = { goalReadingViewModel.plusOnClick() })
+                    GoalReadingPlusCard(onClick = navigateToHomeAddBook)
                 }
                 items(goalReadingViewModel.goalReadingListOfBooksReadItemDataList) { item ->
-                    GoalReadingListOfBooksReadItem(data = item) {
-                    }
+                    GoalReadingListOfBooksReadItem(
+                        data = item,
+                        onClick = navigateToHomeViewDetail
+                    )
                 }
             }
         }
@@ -77,9 +85,14 @@ fun GoalReadingScreen(
 @Composable
 fun GoalReadingScreenPreview(
 ) {
+    val navController = rememberNavController()
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        GoalReadingScreen()
+        GoalReadingScreen(
+            navigateToBack = navController::popBackStack,
+            navigateToHomeAddBook = navController::navigationToHomeAddBook,
+            navigateToHomeViewDetail = navController::navigationToViewDetail,
+        )
     }
 }
