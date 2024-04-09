@@ -18,13 +18,13 @@ fun NavController.navigationToBook() {
 }
 
 
-fun NavGraphBuilder.bookAddBook() {
+fun NavGraphBuilder.bookAddBook(navigateToBack: () -> Boolean) {
     composable(BookAddBookRoute) {
         BookAddBookScreen()
     }
 }
 
-fun NavGraphBuilder.book() {
+fun NavGraphBuilder.book(navigateToBookAddBook: () -> Unit, navigateToHomeViewDetail: () -> Unit) {
     composable(BookRoute) {
         BookScreen()
     }

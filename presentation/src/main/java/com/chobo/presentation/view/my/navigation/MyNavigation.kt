@@ -25,19 +25,25 @@ fun NavController.navigationToMyBookEdit() {
 }
 
 
-fun NavGraphBuilder.introScreen() {
+fun NavGraphBuilder.introScreen(navigateToBack: () -> Boolean) {
     composable(introRoute) {
         MindWayIntroScreen()
     }
 }
 
-fun NavGraphBuilder.myScreen() {
+fun NavGraphBuilder.myScreen(
+    navigateToMyBookEdit: () -> Unit,
+    navigateToIntro: () -> Unit
+) {
     composable(myRoute) {
         MyScreen()
     }
 }
 
-fun NavGraphBuilder.myBookEditScreen() {
+fun NavGraphBuilder.myBookEditScreen(
+    navigateToBack: () -> Boolean,
+    navigateToIntro: () -> Unit
+) {
     composable(myBookEditRoute) {
         MyBookEditScreen()
     }

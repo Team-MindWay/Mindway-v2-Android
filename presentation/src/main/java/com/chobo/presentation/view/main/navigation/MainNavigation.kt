@@ -24,34 +24,37 @@ fun NavController.navigationToViewDetail() {
     this.navigate(viewDetailRoute)
 }
 
-fun NavController.navigationToAddBook() {
-    this.navigate(addBookRoute)
 fun NavController.navigationToHomeAddBook() {
     this.navigate(HomeAddBookRoute)
 }
 
 
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(
+    navigateToGoalReading: () -> Unit,
+    navigateToDetailEvent: () -> Unit
+) {
     composable(homeRoute) {
         HomeScreen()
     }
 }
 
-fun NavGraphBuilder.goalReading() {
+fun NavGraphBuilder.goalReading(
+    navigateToBack: () -> Boolean,
+    navigateToHomeAddBook: () -> Unit,
+    navigateToHomeViewDetail: () -> Unit
+) {
     composable(goalReadingRoute) {
         GoalReadingScreen()
     }
 }
 
-fun NavGraphBuilder.viewDetail() {
+fun NavGraphBuilder.viewDetail(navigateToBack: () -> Boolean) {
     composable(viewDetailRoute) {
         ViewDetailScreen()
     }
 }
 
-fun NavGraphBuilder.addBook() {
-    composable(addBookRoute) {
-fun NavGraphBuilder.homeAddBook(
+fun NavGraphBuilder.homeAddBook(navigateToBack: () -> Boolean) {
     composable(HomeAddBookRoute) {
         ViewDetailScreen()
     }
