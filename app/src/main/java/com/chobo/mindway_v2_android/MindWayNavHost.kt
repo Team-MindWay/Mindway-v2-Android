@@ -37,44 +37,44 @@ fun MindWayNavHost(
         startDestination = startDestination
     ) {
 
-        loginScreen(navigateToHome = { navController.navigationToHome() })
+        loginScreen(navigateToHome = navController::navigationToHome)
 
         homeScreen(
-            navigateToGoalReading = { navController.navigationToGoalReading() },
-            navigateToDetailEvent = { navController.navigationToDetailEvent() }
+            navigateToGoalReading = navController::navigationToGoalReading,
+            navigateToDetailEvent = navController::navigationToDetailEvent
         )
 
         goalReading(
-            navigateToBack = { navController.popBackStack() },
-            navigateToHomeAddBook = { navController.navigationToHomeAddBook() },
-            navigateToHomeViewDetail = { navController.navigationToViewDetail() },
+            navigateToBack = navController::popBackStack,
+            navigateToHomeAddBook = navController::navigationToHomeAddBook,
+            navigateToHomeViewDetail = navController::navigationToViewDetail,
         )
 
-        viewDetail(navigateToBack = { navController.popBackStack() })
+        viewDetail(navigateToBack = navController::popBackStack)
 
-        homeAddBook(navigateToBack = { navController.popBackStack() })
+        homeAddBook(navigateToBack = navController::popBackStack)
 
-        eventScreen(navigateToDetailEvent = { navController.navigationToDetailEvent() })
+        eventScreen(navigateToDetailEvent = navController::navigationToDetailEvent)
 
-        detailEventScreen(navigateToEvent = { navController.popBackStack() })
+        detailEventScreen(navigateToEvent = navController::popBackStack)
 
         book(
-            navigateToBookAddBook = { navController.navigationToBookAddBook() },
-            navigateToHomeViewDetail = { navController.navigationToViewDetail() },
+            navigateToBookAddBook = navController::navigationToBookAddBook,
+            navigateToHomeViewDetail = navController::navigationToViewDetail,
         )
 
-        bookAddBook(navigateToBack = { navController.popBackStack() })
+        bookAddBook(navigateToBack = navController::popBackStack)
 
         myScreen(
-            navigateToMyBookEdit = { navController.navigationToMyBookEdit() },
-            navigateToIntro = { navController.navigationToIntro() },
+            navigateToMyBookEdit = navController::navigationToMyBookEdit,
+            navigateToIntro = navController::navigationToIntro,
         )
 
         myBookEditScreen(
-            navigateToBack = { navController.popBackStack() },
-            navigateToIntro = { navController.navigationToIntro() }
+            navigateToBack = navController::popBackStack,
+            navigateToIntro = navController::navigationToIntro
         )
 
-        introScreen(navigateToBack = { navController.popBackStack() })
+        introScreen(navigateToBack = navController::popBackStack)
     }
 }
