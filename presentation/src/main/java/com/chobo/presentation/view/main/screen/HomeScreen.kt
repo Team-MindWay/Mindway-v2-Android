@@ -36,8 +36,8 @@ fun HomeScreen(
                 .padding(horizontal = 24.dp)
         ) {
             HomeNoticeCard(
-                titleText = "가을 독서 행사",
-                content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.",
+                titleText = homeViewModel.returnTitleText(),
+                content = homeViewModel.returnContentText(),
                 onClick = navigateToDetailEvent
             )
             HomeGoalReadingChart(
