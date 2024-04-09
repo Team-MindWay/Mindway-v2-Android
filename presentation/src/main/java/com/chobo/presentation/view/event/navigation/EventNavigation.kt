@@ -12,18 +12,10 @@ fun NavController.navigationToEvent() {
 }
 
 fun NavGraphBuilder.eventScreen(
-    navigateToHome: () -> Unit,
-    navigateToEvent: () -> Unit,
-    navigateToBooks: () -> Unit,
-    navigateToMy: () -> Unit,
     navigateToDetailEvent: () -> Unit
 ) {
     composable(eventRoute) {
         EventScreen(
-            navigateToHome = navigateToHome,
-            navigateToEvent = navigateToEvent,
-            navigateToBooks = navigateToBooks,
-            navigateToMy = navigateToMy,
             navigateToDetailEvent = navigateToDetailEvent
         )
     }
