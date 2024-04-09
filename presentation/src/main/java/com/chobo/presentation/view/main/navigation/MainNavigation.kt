@@ -8,7 +8,7 @@ import com.chobo.presentation.view.main.screen.HomeScreen
 import com.chobo.presentation.view.main.screen.ViewDetailScreen
 
 const val homeRoute = "home_route"
-const val addBookRoute = "add_book_route"
+const val HomeAddBookRoute = "home_add_book_route"
 const val viewDetailRoute = "view_detail_route"
 const val goalReadingRoute = "goal_reading_route"
 
@@ -26,6 +26,8 @@ fun NavController.navigationToViewDetail() {
 
 fun NavController.navigationToAddBook() {
     this.navigate(addBookRoute)
+fun NavController.navigationToHomeAddBook() {
+    this.navigate(HomeAddBookRoute)
 }
 
 
@@ -49,6 +51,8 @@ fun NavGraphBuilder.viewDetail() {
 
 fun NavGraphBuilder.addBook() {
     composable(addBookRoute) {
+fun NavGraphBuilder.homeAddBook(
+    composable(HomeAddBookRoute) {
         ViewDetailScreen()
     }
 }

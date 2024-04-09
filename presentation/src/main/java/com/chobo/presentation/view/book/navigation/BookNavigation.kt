@@ -9,7 +9,7 @@ import com.chobo.presentation.view.book.screen.BookScreen
 const val BookAddBookRoute = "book_add_book_route"
 const val BookRoute = "book_route"
 
-fun NavController.navigationToAddBook() {
+fun NavController.navigationToBookAddBook() {
     this.navigate(BookAddBookRoute)
 }
 
