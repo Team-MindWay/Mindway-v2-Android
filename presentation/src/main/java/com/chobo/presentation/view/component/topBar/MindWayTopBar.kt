@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +20,7 @@ fun MindWayTopAppBar(
     modifier: Modifier = Modifier,
     startIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
     midText: String = "",
-    endIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
+    endIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier.size(24.dp)) },
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
@@ -29,9 +30,7 @@ fun MindWayTopAppBar(
                 .fillMaxWidth()
                 .height(59.dp)
                 .padding(
-                    start = 24.dp,
                     top = 20.dp,
-                    end = 24.dp,
                     bottom = 12.dp
                 )
         ) {
