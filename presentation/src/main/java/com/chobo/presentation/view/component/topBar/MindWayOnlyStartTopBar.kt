@@ -18,8 +18,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayOnlyStartTopAppBar(
     modifier: Modifier = Modifier,
-    startIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
     midText: String = "",
+    startIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
