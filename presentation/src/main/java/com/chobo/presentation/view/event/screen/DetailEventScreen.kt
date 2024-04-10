@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.event.component.DetailEventTopBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -25,7 +26,7 @@ import com.chobo.presentation.viewModel.DetailEventViewModel
 fun DetailEventScreen(
     modifier: Modifier = Modifier,
     detailEventViewModel: DetailEventViewModel = viewModel(),
-    navigateToEvent: () -> Unit,
+    navigateToBack: () -> Boolean,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -58,7 +59,8 @@ fun DetailEventScreen(
 @Preview
 @Composable
 fun DetailEventScreenPre() {
+    val navController = rememberNavController()
     DetailEventScreen(
-        navigateToEvent = { }
+        navigateToBack = navController::popBackStack
     )
 }
