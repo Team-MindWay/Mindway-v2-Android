@@ -29,9 +29,7 @@ fun MindWayTopAppBar(
                 .fillMaxWidth()
                 .height(59.dp)
                 .padding(
-                    start = 24.dp,
                     top = 20.dp,
-                    end = 24.dp,
                     bottom = 12.dp
                 )
         ) {
