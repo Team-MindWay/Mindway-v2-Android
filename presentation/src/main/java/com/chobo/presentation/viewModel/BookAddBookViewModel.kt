@@ -6,9 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-
 @HiltViewModel
-class CheckOutBookViewModel @Inject constructor() : ViewModel() {
+class BookAddBookViewModel @Inject constructor() : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String>
         get() = _titleTextState

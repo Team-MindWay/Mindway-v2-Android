@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookScreen(bookScreenViewModel: BookScreenViewModel = viewModel()) {
+fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
     val pagerState = rememberPagerState(pageCount = { 2 })
     val tabNames = listOf(
         stringResource(R.string.novel),
@@ -90,7 +90,7 @@ fun BookScreen(bookScreenViewModel: BookScreenViewModel = viewModel()) {
                         }
                     }
                     PlusIcon(
-                        modifier = Modifier.clickable { bookScreenViewModel.plusIconOnClick() },
+                        modifier = Modifier.clickable { bookViewModel.plusIconOnClick() },
                         tint = colors.Black
                     )
                 }
@@ -107,17 +107,17 @@ fun BookScreen(bookScreenViewModel: BookScreenViewModel = viewModel()) {
                     ) {
                         when (page) {
                             0 -> {
-                                itemsIndexed(bookScreenViewModel.novelDataList) { index, item ->
+                                itemsIndexed(bookViewModel.novelDataList) { index, item ->
                                     BookListItem(data = item,
-                                        onClick = { bookScreenViewModel.novelOnClick(index) })
+                                        onClick = { bookViewModel.novelOnClick(index) })
                                 }
                             }
 
                             1 -> {
-                                itemsIndexed(bookScreenViewModel.essayDataList) { index, item ->
+                                itemsIndexed(bookViewModel.essayDataList) { index, item ->
                                     BookListItem(
                                         data = item,
-                                        onClick = { bookScreenViewModel.essayOnClick(index) })
+                                        onClick = { bookViewModel.essayOnClick(index) })
                                 }
                             }
                         }

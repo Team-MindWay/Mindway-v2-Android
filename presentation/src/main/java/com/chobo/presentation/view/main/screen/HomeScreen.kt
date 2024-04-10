@@ -13,15 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
+import androidx.navigation.compose.rememberNavController
+import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
+import com.chobo.presentation.view.main.navigation.navigationToGoalReading
 import com.chobo.presentation.viewModel.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel(),
+    navigateToGoalReading: () -> Unit,
+    navigateToDetailEvent: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -32,9 +36,9 @@ fun HomeScreen(
                 .padding(horizontal = 24.dp)
         ) {
             HomeNoticeCard(
-                titleText = "가을 독서 행사",
-                content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.",
-                onClick = { homeViewModel.homeNoticeCardOnClick() }
+                titleText = homeViewModel.returnTitleText(),
+                content = homeViewModel.returnContentText(),
+                onClick = navigateToDetailEvent
             )
             HomeGoalReadingChart(
                 modifier = Modifier
@@ -42,19 +46,12 @@ fun HomeScreen(
                     .height(211.dp),
                 isHasData = true,
                 readNumberList = homeViewModel.readingGoalGraphDataList,
-                onClick = { homeViewModel.homeGoalReadingChartOnClick(1) }
+                onClick = navigateToGoalReading
             )
             HomeReadersOfTheMonthChart(
                 isHasData = true,
                 bookKingOfTheMonthData = homeViewModel.bookKingOfTheMonthDataList
             )
-        }
-        MindWayNavBar(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            navigateToHome = { /*TODO*/ },
-            navigateToEvent = { /*TODO*/ },
-            navigateToBooks = { /*TODO*/ }
-        ) {
         }
     }
 }
@@ -64,5 +61,9 @@ fun MockOnClick() {}
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    val navController = rememberNavController()
+    HomeScreen(
+        navigateToGoalReading = navController::navigationToGoalReading,
+        navigateToDetailEvent = navController::navigationToDetailEvent
+    )
 }

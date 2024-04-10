@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
 import com.chobo.presentation.view.main.component.ReadingGoalGraphData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +30,17 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             )
     )
     val bookKingOfTheMonthDataList = _bookKingOfTheMonthDataList
+
+    private val _titleState = MutableStateFlow("가을 독서 행사")
+
+    private val _contentState = MutableStateFlow("독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.")
+
+    fun returnTitleText():String{
+        return _titleState.value
+    }
+    fun returnContentText():String{
+        return _contentState.value
+    }
 
     fun homeNoticeCardOnClick() {
 
