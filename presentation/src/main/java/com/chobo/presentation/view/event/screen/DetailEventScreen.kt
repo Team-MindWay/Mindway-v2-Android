@@ -35,9 +35,8 @@ fun DetailEventScreen(
                 .background(color = colors.WHITE)
                 .padding(horizontal = 24.dp)
         ) {
-            DetailEventTopBar {
-
-            }
+            Spacer(modifier = modifier.height(20.dp))
+            DetailEventTopBar{}
             Spacer(modifier = modifier.height(20.dp))
             Image(
                 painter = painterResource(detailEventViewModel.returnImageResId()),
