@@ -36,7 +36,12 @@ fun MyBottomSheet(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 12.dp)
                 )
-                .padding(start = 24.dp, top = 28.dp, end = 24.dp, bottom = 48.dp)
+                .padding(
+                    start = 24.dp,
+                    top = 28.dp,
+                    end = 24.dp,
+                    bottom = 48.dp
+                )
         ) {
             Text(
                 text = stringResource(R.string.mindway_intro),

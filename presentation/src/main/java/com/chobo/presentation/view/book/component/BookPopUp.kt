@@ -52,7 +52,9 @@ fun BookPopUp(
                 textAlign = TextAlign.Center,
             )
             MindWayButton(
-                modifier = Modifier.fillMaxWidth().padding(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
                 text = stringResource(R.string.check),
                 onClick = { onClick() }
             )

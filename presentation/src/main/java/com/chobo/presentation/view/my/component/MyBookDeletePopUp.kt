@@ -36,7 +36,12 @@ fun MyBookDeletePopUp(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 20.dp)
+                .padding(
+                    start = 24.dp,
+                    top = 24.dp,
+                    end = 24.dp,
+                    bottom = 20.dp
+                )
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
@@ -63,10 +68,7 @@ fun MyBookDeletePopUp(
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        10.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()

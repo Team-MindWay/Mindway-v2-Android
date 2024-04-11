@@ -34,10 +34,7 @@ fun ViewDetailTextCard(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(
-                    10.dp,
-                    Alignment.Start
-                ),
+                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
