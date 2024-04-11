@@ -90,7 +90,7 @@ fun HomeGoalReadingChart(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier
-                        .width(240.dp)
+                        .fillMaxWidth(0.909f)
                         .height(78.dp)
                 ) {
                     readNumberList.forEach {

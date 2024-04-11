@@ -27,34 +27,33 @@ fun HomeScreen(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
-            horizontalAlignment = Alignment.CenterHorizontally,
+    Column(
+        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp)
+    ) {
+        HomeNoticeCard(
+            titleText = homeViewModel.returnTitleText(),
+            content = homeViewModel.returnContentText(),
+            onClick = navigateToDetailEvent
+        )
+        HomeGoalReadingChart(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp)
-        ) {
-            HomeNoticeCard(
-                titleText = homeViewModel.returnTitleText(),
-                content = homeViewModel.returnContentText(),
-                onClick = navigateToDetailEvent
-            )
-            HomeGoalReadingChart(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(211.dp),
-                isHasData = true,
-                readNumberList = homeViewModel.readingGoalGraphDataList,
-                onClick = navigateToGoalReading
-            )
-            HomeReadersOfTheMonthChart(
-                isHasData = true,
-                bookKingOfTheMonthData = homeViewModel.bookKingOfTheMonthDataList
-            )
-        }
+                .fillMaxWidth()
+                .height(211.dp),
+            isHasData = true,
+            readNumberList = homeViewModel.readingGoalGraphDataList,
+            onClick = navigateToGoalReading
+        )
+        HomeReadersOfTheMonthChart(
+            isHasData = true,
+            bookKingOfTheMonthData = homeViewModel.bookKingOfTheMonthDataList
+        )
     }
 }
+
 
 fun MockOnClick() {}
 
