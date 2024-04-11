@@ -56,7 +56,7 @@ fun MindWayNavHost(
 
         eventScreen(navigateToDetailEvent = navController::navigationToDetailEvent)
 
-        detailEventScreen(navigateToEvent = navController::popBackStack)
+        detailEventScreen(navigateToBack = navController::popBackStack)
 
         book(
             navigateToBookAddBook = navController::navigationToBookAddBook,
