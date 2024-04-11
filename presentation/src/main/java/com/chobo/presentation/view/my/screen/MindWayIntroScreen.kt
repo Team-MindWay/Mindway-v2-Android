@@ -60,10 +60,7 @@ fun MindWayIntroScreen() {
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        10.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
