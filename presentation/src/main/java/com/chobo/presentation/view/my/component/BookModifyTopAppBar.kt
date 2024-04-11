@@ -16,12 +16,22 @@ fun BookModifyTopAppBar(
     endIconOnClick: () -> Unit,
 ) {
     MindWayTopAppBar(
-        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(
-            interactionSource = MutableInteractionSource(),
-            indication = null
-        ) { startIconOnClick() }
-        ) },
+        startIcon = {
+            ChevronLeftIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { startIconOnClick() }
+            )
+        },
         midText = stringResource(R.string.book_modify),
-        endIcon = { InfoIcon(modifier = Modifier.clickable(interactionSource = MutableInteractionSource(), indication = null) { endIconOnClick() }) }
+        endIcon = {
+            InfoIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { endIconOnClick() }
+            )
+        }
     )
 }

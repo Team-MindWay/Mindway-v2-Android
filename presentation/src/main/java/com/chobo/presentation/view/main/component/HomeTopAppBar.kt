@@ -10,10 +10,13 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 @Composable
 fun HomeTopAppBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
-        startIcon = { LogoIcon(modifier = Modifier.clickable(
-            interactionSource = MutableInteractionSource(),
-            indication = null
-        ) { startIconOnClick() }
-        ) },
+        startIcon = {
+            LogoIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { startIconOnClick() }
+            )
+        },
     )
 }

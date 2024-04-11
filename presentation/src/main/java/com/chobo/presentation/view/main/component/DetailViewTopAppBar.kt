@@ -12,11 +12,14 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 @Composable
 fun DetailViewTopAppBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
-        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(
-            interactionSource = MutableInteractionSource(),
-            indication = null
-        ) { startIconOnClick() }
-        ) },
+        startIcon = {
+            ChevronLeftIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { startIconOnClick() }
+            )
+        },
         midText = stringResource(R.string.view_detail),
     )
 }

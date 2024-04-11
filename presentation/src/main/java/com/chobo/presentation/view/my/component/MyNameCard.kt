@@ -61,10 +61,11 @@ fun MyNameCard(
                     )
                 }
             }
-            OptionIcon(modifier = Modifier.clickable(
-                interactionSource = MutableInteractionSource(),
-                indication = null
-            ) { onClick() }
+            OptionIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { onClick() }
             )
         }
     }

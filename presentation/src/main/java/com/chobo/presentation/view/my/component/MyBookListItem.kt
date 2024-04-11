@@ -78,15 +78,17 @@ fun MyBookListItem(
                 horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.Start),
                 verticalAlignment = Alignment.Top,
             ) {
-                EditIcon(modifier = Modifier.clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = null)
-                { editOnclick() }
+                EditIcon(
+                    modifier = Modifier.clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null
+                    ) { editOnclick() }
                 )
-                TrashCanIcon(modifier = Modifier.clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = null)
-                { trashCanOnclick() }
+                TrashCanIcon(
+                    modifier = Modifier.clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null
+                    ) { trashCanOnclick() }
                 )
             }
         }

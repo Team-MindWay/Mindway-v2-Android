@@ -123,7 +123,10 @@ fun HomeGoalReadingChart(
                     )
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        12.dp,
+                        Alignment.CenterHorizontally
+                    ),
                     verticalAlignment = Alignment.Top,
                 ) {
                     Text(

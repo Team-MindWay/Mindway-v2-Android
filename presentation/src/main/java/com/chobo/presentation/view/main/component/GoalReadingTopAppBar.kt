@@ -17,11 +17,14 @@ fun GoalReadingTopAppBar(
     endIconOnClick: () -> Unit,
 ) {
     MindWayTopAppBar(
-        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(
-            interactionSource = MutableInteractionSource(),
-            indication = null
-        ) { startIconOnClick() }
-        ) },
+        startIcon = {
+            ChevronLeftIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { startIconOnClick() }
+            )
+        },
         midText = stringResource(R.string.goal_reading),
         endIcon = {
             PlusIcon(
