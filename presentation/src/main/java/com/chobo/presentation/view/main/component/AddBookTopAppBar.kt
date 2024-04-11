@@ -12,7 +12,11 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 @Composable
 fun AddBookTopAppBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
-        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(interactionSource = MutableInteractionSource(), indication = null) { startIconOnClick() }) },
+        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(
+            interactionSource = MutableInteractionSource(),
+            indication = null
+        ) { startIconOnClick() }
+        ) },
         midText = stringResource(R.string.add_book),
     )
 }

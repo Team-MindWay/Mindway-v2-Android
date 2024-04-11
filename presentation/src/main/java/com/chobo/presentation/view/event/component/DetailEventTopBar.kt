@@ -14,7 +14,11 @@ fun DetailEventTopBar(
     startIconClick: () -> Unit
 ){
     MindWayTopAppBar(
-        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(interactionSource = MutableInteractionSource(), indication = null) { startIconClick() }) },
+        startIcon = { ChevronLeftIcon(modifier = Modifier.clickable(
+            interactionSource = MutableInteractionSource(),
+            indication = null
+        ) { startIconClick() }
+        ) },
         midText = stringResource(id = R.string.ongoing_event)
     )
 }
