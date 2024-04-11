@@ -39,10 +39,10 @@ fun MindWayScaffold(
         },
         bottomBar = {
             MindWayNavBar(
-                navigateToHome = { bottomNavFun.navigateToHome },
-                navigateToEvent = { bottomNavFun.navigateToEvent },
-                navigateToBooks = { bottomNavFun.navigateToBooks },
-                navigateToMy = { bottomNavFun.navigateToMy }
+                navigateToHome = { bottomNavFun.navigateToHome() },
+                navigateToEvent = { bottomNavFun.navigateToEvent() },
+                navigateToBooks = { bottomNavFun.navigateToBooks() },
+                navigateToMy = { bottomNavFun.navigateToMy() }
             )
         }
     ) { PaddingValues ->
