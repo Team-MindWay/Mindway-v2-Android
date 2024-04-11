@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.my.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -60,7 +61,12 @@ fun MyNameCard(
                     )
                 }
             }
-            OptionIcon(modifier = Modifier.clickable { onClick() })
+            OptionIcon(
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { onClick() }
+            )
         }
     }
 }

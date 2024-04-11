@@ -30,8 +30,7 @@ fun GoalReadingChart(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
-            verticalArrangement = if (isHasData) Arrangement.SpaceBetween
-            else Arrangement.SpaceAround,
+            verticalArrangement = if (isHasData) Arrangement.SpaceBetween else Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .shadow(
