@@ -82,8 +82,7 @@ fun MindWayTextField(
                 modifier = textFieldModifier
                     .border(
                         width = 1.dp,
-                        color = if (isError) colors.SYSTEM
-                        else colors.GRAY100,
+                        color = if (isError) colors.SYSTEM else colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .background(
@@ -105,21 +104,16 @@ fun MindWayTextField(
                     textStyle = typography.bodySmall.copy(
                         fontWeight = FontWeight.Normal,
                         color = colors.Black,
-                        textAlign = if (isTextRight) TextAlign.End
-                        else TextAlign.Start,
+                        textAlign = if (isTextRight) TextAlign.End else TextAlign.Start,
                     ),
                     cursorBrush = SolidColor(colors.MAIN),
                     modifier = Modifier
-                        .fillMaxWidth(
-                            if (isTextRight) 0.95f
-                            else 1f
-                        )
+                        .fillMaxWidth(if (isTextRight) 0.95f else 1f)
                         .padding(15.dp),
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = if (isTextRight) Arrangement.End
-                    else Arrangement.Start,
+                    horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.R
+import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.msg.gauthsignin.GAuthSigninWebView
 import com.msg.gauthsignin.component.GAuthButton
 import com.msg.gauthsignin.component.utils.Types
@@ -46,15 +48,12 @@ fun LoginScreen(
             )
             Spacer(modifier = modifier.height(302.dp))
             Column(
-                modifier = modifier.fillMaxWidth(),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                GAuthButton(
-                    style = Types.Style.DEFAULT,
-                    actionType = Types.ActionType.SIGNIN,
-                    colors = Types.Colors.OUTLINE,
-                    horizontalPaddingValue = 85.16.dp,
-                )
+                MindWayGAuthButton(modifier = modifier.height(48.dp))
                 { isClicked = true }
                 Spacer(modifier = modifier.height(30.dp))
                 Button(

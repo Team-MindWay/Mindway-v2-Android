@@ -25,9 +25,8 @@ fun MindWayButton(
     isClickable: Boolean = true,
     onClick: () -> Unit,
 ) {
-    val clickableModifier =
-        if (isClickable) modifier.clickable { onClick() }
-        else modifier
+    val clickableModifier = if (isClickable) modifier.clickable { onClick() } else modifier
+
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),

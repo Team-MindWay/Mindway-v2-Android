@@ -36,11 +36,16 @@ fun MindWayToast(
                     spotColor = colors.StatusShadow,
                     ambientColor = colors.StatusShadow
                 )
-                .background(color = colors.WHITE, shape = RoundedCornerShape(size = 8.dp))
-                .padding(vertical = 20.dp, horizontal = 16.dp)
+                .background(
+                    color = colors.WHITE,
+                    shape = RoundedCornerShape(size = 8.dp)
+                )
+                .padding(
+                    vertical = 20.dp,
+                    horizontal = 16.dp
+                )
         ) {
-            if (isSuccess) SuccessIcon()
-            else FailIcon()
+            if (isSuccess) SuccessIcon() else FailIcon()
             Text(
                 text = text,
                 style = typography.labelLarge,

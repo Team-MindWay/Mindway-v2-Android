@@ -18,8 +18,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayTopAppBar(
     modifier: Modifier = Modifier,
-    startIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier) },
     midText: String = "",
+    startIcon: @Composable () -> Unit,
     endIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier.size(24.dp)) },
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -30,6 +30,8 @@ fun MindWayTopAppBar(
                 .fillMaxWidth()
                 .height(59.dp)
                 .padding(
+                    start = 24.dp,
+                    end = 24.dp,
                     top = 20.dp,
                     bottom = 12.dp
                 )
