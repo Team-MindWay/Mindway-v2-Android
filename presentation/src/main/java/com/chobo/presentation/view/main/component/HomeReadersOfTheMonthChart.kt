@@ -59,8 +59,11 @@ fun HomeReadersOfTheMonthChart(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    bookKingOfTheMonthData.forEach {
-                        HomeReadersOfTheMonthGraph(bookKingOfTheMonthData = it)
+                    bookKingOfTheMonthData.forEachIndexed { index, it->
+                        HomeReadersOfTheMonthGraph(bookKingOfTheMonthData = it,modifier = Modifier.weight(72f))
+                        if (index < bookKingOfTheMonthData.size - 1) {
+                            Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
+                        }
                     }
                 }
             }
