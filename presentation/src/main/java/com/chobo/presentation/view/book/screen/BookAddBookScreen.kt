@@ -72,7 +72,7 @@ fun BookAddBookScreen(bookAddBookViewModel: BookAddBookViewModel = viewModel()) 
                     text = stringResource(id = R.string.apply),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp),
+                        .height(56.dp),
                     onClick = { bookAddBookViewModel.checkButton() }
                 )
             }
