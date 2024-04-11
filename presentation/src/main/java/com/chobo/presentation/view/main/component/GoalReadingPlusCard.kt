@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,9 +44,9 @@ fun GoalReadingPlusCard(
                     interactionSource = MutableInteractionSource(),
                     indication = null
                 ) { onClick() }
-                .padding(all = 24.dp)
+                .padding(16.dp)
         ) {
-            PlusIcon()
+            PlusIcon(modifier = Modifier.fillMaxSize())
         }
     }
 }
