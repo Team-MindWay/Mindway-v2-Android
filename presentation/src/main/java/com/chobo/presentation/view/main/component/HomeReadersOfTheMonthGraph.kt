@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,12 +18,16 @@ import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
+fun HomeReadersOfTheMonthGraph(
+    bookKingOfTheMonthData: BookKingOfTheMonthData,
+    modifier: Modifier
+) {
     val height = ((80 * bookKingOfTheMonthData.numOfBooks) / 30).toFloat().dp
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
         ) {
             Text(
                 text = "${bookKingOfTheMonthData.numOfBooks}권",
@@ -34,7 +38,7 @@ fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
             )
             Spacer(
                 modifier = Modifier
-                    .width(72.dp)
+                    .fillMaxWidth()
                     .height(height.value.dp)
                     .background(
                         color = colors.MAIN,
@@ -54,8 +58,14 @@ fun HomeReadersOfTheMonthGraph(bookKingOfTheMonthData: BookKingOfTheMonthData) {
         }
     }
 }
+
 @Preview
 @Composable
 fun HomeReadersOfTheMonthGraphPreview() {
-    HomeReadersOfTheMonthGraph(bookKingOfTheMonthData = BookKingOfTheMonthData(name = "이름", numOfBooks = 12))
+    HomeReadersOfTheMonthGraph(
+        bookKingOfTheMonthData = BookKingOfTheMonthData(
+            name = "이름",
+            numOfBooks = 12
+        ), modifier = Modifier
+    )
 }
