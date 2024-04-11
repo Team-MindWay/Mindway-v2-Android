@@ -81,11 +81,13 @@ fun MyBookListItem(
                 EditIcon(modifier = Modifier.clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null)
-                { editOnclick() })
+                { editOnclick() }
+                )
                 TrashCanIcon(modifier = Modifier.clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null)
-                { trashCanOnclick })
+                { trashCanOnclick() }
+                )
             }
         }
     }
