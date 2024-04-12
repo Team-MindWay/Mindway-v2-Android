@@ -21,10 +21,12 @@ fun MindWayScaffold(
     bottomNavFun: BottomNavFun,
     isTopAppBar: Boolean = true,
     midText:String = "",
+    midText: String = "",
+    currentDestination: MutableState<MindWayNavBarItemType>,
     startIcon: @Composable () -> Unit = {},
     endIcon: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
-    ) {
+) {
     Scaffold(
         topBar = {
             if (isTopAppBar) {
@@ -39,10 +41,10 @@ fun MindWayScaffold(
         },
         bottomBar = {
             MindWayNavBar(
-                navigateToHome = { bottomNavFun.navigateToHome() },
-                navigateToEvent = { bottomNavFun.navigateToEvent() },
-                navigateToBooks = { bottomNavFun.navigateToBooks() },
-                navigateToMy = { bottomNavFun.navigateToMy() }
+                navigateToHome = { currentDestination.value = MindWayNavBarItemType.HOME },
+                navigateToEvent = { currentDestination.value = MindWayNavBarItemType.EVENT },
+                navigateToBooks = { currentDestination.value = MindWayNavBarItemType.BOOKS },
+                navigateToMy = { currentDestination.value = MindWayNavBarItemType.MY }
             )
         }
     ) { PaddingValues ->
