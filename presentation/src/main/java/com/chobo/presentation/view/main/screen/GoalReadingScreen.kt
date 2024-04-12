@@ -3,6 +3,7 @@ package com.chobo.presentation.view.main.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
+import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.main.component.ReadingGoalGraphData
 import com.chobo.presentation.view.main.navigation.navigationToHomeAddBook
 import com.chobo.presentation.view.main.navigation.navigationToViewDetail
@@ -31,50 +33,57 @@ fun GoalReadingScreen(
     navigateToHomeAddBook: () -> Unit,
     navigateToHomeViewDetail: () -> Unit
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(
-                start = 24.dp,
-                end = 24.dp,
-                top = 12.dp,
-            )
-            .fillMaxSize()
-    ) {
+    Column {
+        Spacer(modifier = Modifier.height(20.dp))
+        GoalReadingTopAppBar(
+            startIconOnClick = { navigateToBack() },
+            endIconOnClick = { }
+        )
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .padding(
+                    start = 24.dp,
+                    end = 24.dp,
+                    top = 12.dp,
+                )
+                .fillMaxSize()
         ) {
-            LazyColumn(
+            Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
             ) {
-                item {
-                    GoalReadingChart(
-                        isHasData = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp),
-                        readingGoalGraphData = goalReadingViewModel.goalReadingGraphDataList.map {
-                            ReadingGoalGraphData(
-                                numBooksRead = it.numBooksRead,
-                                maxBooksRead = it.maxBooksRead,
-                                isCurrentDate = it.isCurrentDate,
-                                today = it.today
-                            )
-                        }
-                    )
-                }
-                item {
-                    GoalReadingPlusCard(onClick = navigateToHomeAddBook)
-                }
-                items(goalReadingViewModel.goalReadingListOfBooksReadItemDataList) { item ->
-                    GoalReadingListOfBooksReadItem(
-                        data = item,
-                        onClick = navigateToHomeViewDetail
-                    )
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    item {
+                        GoalReadingChart(
+                            isHasData = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(180.dp),
+                            readingGoalGraphData = goalReadingViewModel.goalReadingGraphDataList.map {
+                                ReadingGoalGraphData(
+                                    numBooksRead = it.numBooksRead,
+                                    maxBooksRead = it.maxBooksRead,
+                                    isCurrentDate = it.isCurrentDate,
+                                    today = it.today
+                                )
+                            }
+                        )
+                    }
+                    item {
+                        GoalReadingPlusCard(onClick = navigateToHomeAddBook)
+                    }
+                    items(goalReadingViewModel.goalReadingListOfBooksReadItemDataList) { item ->
+                        GoalReadingListOfBooksReadItem(
+                            data = item,
+                            onClick = navigateToHomeViewDetail
+                        )
+                    }
                 }
             }
         }

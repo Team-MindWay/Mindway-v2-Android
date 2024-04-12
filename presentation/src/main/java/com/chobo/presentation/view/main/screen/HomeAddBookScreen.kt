@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.main.component.AddBookTopAppBar
 import com.chobo.presentation.viewModel.HomeAddBookViewModel
 
 @Composable
@@ -34,45 +35,49 @@ fun HomeAddBookScreen(
     val contentTextState = remember {
         mutableStateOf(homeAddBookViewModel.contentTextState.value)
     }
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.Start,
-        modifier = Modifier
-            .fillMaxSize()
-            .imePadding()
-    ) {
+    Column {
+        Spacer(modifier = Modifier.height(20.dp))
+        AddBookTopAppBar(startIconOnClick = { navigateToBack() })
         Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .padding(
-                    horizontal = 24.dp,
-                    vertical = 28.dp
-                )
-                .fillMaxWidth()
+                .fillMaxSize()
+                .imePadding()
         ) {
-            MindWayTextField(
-                title = stringResource(R.string.title),
-                textState = titleTextState,
-                placeholder = stringResource(R.string.please_enter_the_book_title),
-                errorMessage = stringResource(R.string.error_title),
-                lengthLimit = homeAddBookViewModel.titleTextMaxLength,
-            )
-            MindWayTextField(
-                title = stringResource(R.string.content),
-                textState = contentTextState,
-                placeholder = stringResource(R.string.please_enter_the_book_content),
-                errorMessage = stringResource(R.string.error_content),
-                lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            MindWayButton(
-                text = stringResource(R.string.check),
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
                 modifier = Modifier
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
                     .fillMaxWidth()
-                    .height(60.dp),
-                onClick = { homeAddBookViewModel.checkButton() }
-            )
+            ) {
+                MindWayTextField(
+                    title = stringResource(R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    errorMessage = stringResource(R.string.error_title),
+                    lengthLimit = homeAddBookViewModel.titleTextMaxLength,
+                )
+                MindWayTextField(
+                    title = stringResource(R.string.content),
+                    textState = contentTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_content),
+                    errorMessage = stringResource(R.string.error_content),
+                    lengthLimit = homeAddBookViewModel.contentTextMaxLength,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(R.string.check),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    onClick = { homeAddBookViewModel.checkButton() }
+                )
+            }
         }
     }
 }
