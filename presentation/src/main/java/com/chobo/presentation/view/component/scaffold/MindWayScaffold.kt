@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.structuralEqualityPolicy
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
+import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 data class BottomNavFun(
@@ -18,9 +19,7 @@ data class BottomNavFun(
 
 @Composable
 fun MindWayScaffold(
-    bottomNavFun: BottomNavFun,
     isTopAppBar: Boolean = true,
-    midText:String = "",
     midText: String = "",
     currentDestination: MutableState<MindWayNavBarItemType>,
     startIcon: @Composable () -> Unit = {},
