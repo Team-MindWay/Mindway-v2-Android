@@ -12,7 +12,7 @@ import com.chobo.presentation.view.component.icon.InfoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 @Composable
-fun BookModifyTopAppBar(
+fun BookEditTopAppBar(
     startIconOnClick: () -> Unit,
     endIconOnClick: () -> Unit,
 ) {
