@@ -27,7 +27,7 @@ import com.chobo.presentation.viewModel.HomeAddBookViewModel
 @Composable
 fun HomeAddBookScreen(
     homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
-    navigateToBack: () -> Boolean
+    navigateToBack: () -> Unit
 ) {
     val titleTextState = remember {
         mutableStateOf(homeAddBookViewModel.titleTextState.value)
@@ -85,6 +85,5 @@ fun HomeAddBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun AddBookScreenPreview() {
-    val navController = rememberNavController()
-    HomeAddBookScreen(navigateToBack = navController::popBackStack)
+    HomeAddBookScreen(navigateToBack = { })
 }

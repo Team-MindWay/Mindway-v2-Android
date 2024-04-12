@@ -52,6 +52,5 @@ fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    val navController = rememberNavController()
-    ViewDetailScreen(navigateToBack = navController::popBackStack)
+    ViewDetailScreen(navigateToBack = { })
 }

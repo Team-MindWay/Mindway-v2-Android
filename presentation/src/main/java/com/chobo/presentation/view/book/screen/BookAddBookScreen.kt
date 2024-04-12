@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -95,6 +94,5 @@ fun BookAddBookScreen(
 @Preview
 @Composable
 fun PreviewAddBookScreen() {
-    val navController = rememberNavController()
-    BookAddBookScreen(navigateToBack = navController::popBackStack)
+    BookAddBookScreen(navigateToBack = { })
 }

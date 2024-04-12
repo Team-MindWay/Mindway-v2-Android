@@ -31,7 +31,7 @@ fun DetailEventScreen(
     MindWayAndroidTheme { _, _ ->
         Column {
             Spacer(modifier = modifier.height(20.dp))
-            DetailEventTopBar (startIconOnClick = { navigateToBack() })
+            DetailEventTopBar(startIconOnClick = { navigateToBack() })
             Column(
                 modifier = modifier
                     .fillMaxSize()
@@ -59,8 +59,5 @@ fun DetailEventScreen(
 @Preview(showBackground = true)
 @Composable
 fun DetailEventScreenPre() {
-    val navController = rememberNavController()
-    DetailEventScreen(
-        navigateToBack = navController::popBackStack
-    )
+    DetailEventScreen(navigateToBack = { })
 }

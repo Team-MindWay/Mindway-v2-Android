@@ -60,9 +60,8 @@ fun MockOnClick() {}
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    val navController = rememberNavController()
     HomeScreen(
-        navigateToGoalReading = navController::navigationToGoalReading,
-        navigateToDetailEvent = navController::navigationToDetailEvent
+        navigateToGoalReading = { },
+        navigateToDetailEvent = { }
     )
 }
