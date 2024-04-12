@@ -17,11 +17,7 @@ android {
         testInstrumentationRunner = ProjectProperties.Test.TEST_RUNNER
         consumerProguardFiles(ProjectProperties.Files.CONSUMER_PROGUARD_FILES)
 
-        buildConfigField(
-            "String",
-            "BASE_URL",
-            getApiKey("BASE_URL")
-        )
+        buildConfigField("String", "BASE_URL", getApiKey("BASE_URL"))
     }
 
     buildTypes {
@@ -33,9 +29,7 @@ android {
             )
         }
     }
-    buildFeatures {
-        buildConfig = true
-    }
+
     compileOptions {
         sourceCompatibility = ProjectProperties.Versions.JAVA_VERSION
         targetCompatibility = ProjectProperties.Versions.JAVA_VERSION
