@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id(Dependency.Gradle.APPLICATION)
     id(Dependency.Gradle.KOTLIN)
@@ -20,6 +23,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "BASE_URL", getApiKey("BASE_URL")
+
+        )
     }
 
     buildTypes {
@@ -40,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE
@@ -84,4 +92,11 @@ dependencies {
     androidTestImplementation(Dependency.Test.ESPRESSO)
     androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
+}
+
+fun getApiKey(propertyKey: String): String {
+    val propFile = rootProject.file("./local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(propFile))
+    return properties.getProperty(propertyKey)
 }

@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id(Dependency.Gradle.LIBRARY)
     id(Dependency.Gradle.KOTLIN)
@@ -13,6 +16,12 @@ android {
 
         testInstrumentationRunner = ProjectProperties.Test.TEST_RUNNER
         consumerProguardFiles(ProjectProperties.Files.CONSUMER_PROGUARD_FILES)
+
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            getApiKey("BASE_URL")
+        )
     }
 
     buildTypes {
@@ -23,6 +32,9 @@ android {
                 ProjectProperties.Files.PROGUARD_FILES
             )
         }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = ProjectProperties.Versions.JAVA_VERSION
@@ -52,4 +64,11 @@ dependencies {
     implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
 
     implementation(Dependency.DataStore.PREFERENCES)
+}
+
+fun getApiKey(propertyKey: String): String {
+    val propFile = rootProject.file("./local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(propFile))
+    return properties.getProperty(propertyKey)
 }
