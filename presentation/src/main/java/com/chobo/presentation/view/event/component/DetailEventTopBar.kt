@@ -25,3 +25,8 @@ fun DetailEventTopBar(
         midText = stringResource(id = R.string.ongoing_event)
     )
 }
+@Preview(showBackground = true)
+@Composable
+fun DetailEventTopBarPreview(){
+    DetailEventTopBar(startIconOnClick = { })
+}
