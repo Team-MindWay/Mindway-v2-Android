@@ -16,7 +16,6 @@ fun MindWayScaffold(
     midText: String = "",
     currentDestination: MutableState<MindWayNavBarItemType>,
     startIcon: @Composable () -> Unit = {},
-    endIcon: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     Scaffold(
@@ -25,7 +24,7 @@ fun MindWayScaffold(
                 MindWayTopAppBar(
                     startIcon = { startIcon() },
                     midText = midText,
-                    endIcon = { endIcon() },
+                    endIcon = { },
                 )
             } else {
                 null
