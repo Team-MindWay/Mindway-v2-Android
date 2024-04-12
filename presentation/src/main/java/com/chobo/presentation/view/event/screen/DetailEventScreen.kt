@@ -26,7 +26,7 @@ import com.chobo.presentation.viewModel.DetailEventViewModel
 fun DetailEventScreen(
     modifier: Modifier = Modifier,
     detailEventViewModel: DetailEventViewModel = viewModel(),
-    navigateToBack: () -> Boolean,
+    navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { _, _ ->
         Column {
