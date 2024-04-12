@@ -23,71 +23,79 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.R
+import com.chobo.presentation.view.my.component.MindWayIntroTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun MindWayIntroScreen() {
+fun MindWayIntroScreen(navigateToBack: () -> Unit) {
     MindWayAndroidTheme { colors, typography ->
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.image_book),
-                contentDescription = "MindWay_book",
-                modifier = Modifier.align(Alignment.Center)
-            )
-            Column {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 48.dp,
-                            bottom = 28.dp
-                        )
-                ) {
-                    Text(
-                        text = stringResource(R.string.mindway_intro1),
-                        style = typography.bodySmall,
-                        fontWeight = FontWeight.Normal,
-                        color = colors.Black,
-                    )
-                    Text(
-                        text = stringResource(R.string.mindway_intro2),
-                        style = typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.Black,
-                    )
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 20.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.mindway_intro3),
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            lineHeight = 32.sp,
-                            fontFamily = FontFamily(Font(R.font.pretendard)),
+        Column {
+            MindWayIntroTopAppBar(startIconOnClick = { navigateToBack() })
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.image_book),
+                    contentDescription = "MindWay_book",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                Column {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = 48.dp,
+                                bottom = 28.dp
+                            )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.mindway_intro1),
+                            style = typography.bodySmall,
                             fontWeight = FontWeight.Normal,
                             color = colors.Black,
-                            textAlign = TextAlign.Center,
                         )
+                        Text(
+                            text = stringResource(R.string.mindway_intro2),
+                            style = typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.Black,
+                        )
+                    }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(
+                            10.dp,
+                            Alignment.CenterHorizontally
+                        ),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 20.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.mindway_intro3),
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                lineHeight = 32.sp,
+                                fontFamily = FontFamily(Font(R.font.pretendard)),
+                                fontWeight = FontWeight.Normal,
+                                color = colors.Black,
+                                textAlign = TextAlign.Center,
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(2f))
+                    Text(
+                        text = stringResource(R.string.copyright),
+                        style = typography.labelLarge,
+                        fontWeight = FontWeight.Normal,
+                        color = colors.GRAY400,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
                     )
+                    Spacer(modifier = Modifier.weight(0.3f))
                 }
-                Spacer(modifier = Modifier.weight(2f))
-                Text(
-                    text = stringResource(R.string.copyright),
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.GRAY400,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.weight(0.3f))
             }
         }
     }
@@ -96,5 +104,6 @@ fun MindWayIntroScreen() {
 @Preview(showBackground = true)
 @Composable
 fun MindWayIntroScreenPreview() {
-    MindWayIntroScreen()
+    val navController  = rememberNavController()
+    MindWayIntroScreen(navigateToBack = navController::popBackStack)
 }
