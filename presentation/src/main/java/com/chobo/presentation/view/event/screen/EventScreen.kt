@@ -63,7 +63,5 @@ fun EventScreen(
 @Preview
 @Composable
 fun EventScreenPre() {
-    EventScreen(
-        navigateToDetailEvent = { }
-    )
+    EventScreen(navigateToDetailEvent = { })
 }

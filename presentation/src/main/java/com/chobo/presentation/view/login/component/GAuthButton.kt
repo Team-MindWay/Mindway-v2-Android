@@ -64,7 +64,5 @@ fun MindWayGAuthButton(
 @Preview
 @Composable
 fun MindWayGAuthButtonPreview() {
-    MindWayGAuthButton(
-    ){
-    }
+    MindWayGAuthButton{}
 }

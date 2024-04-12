@@ -28,7 +28,7 @@ fun NavGraphBuilder.eventScreen(
 }
 
 fun NavGraphBuilder.detailEventScreen(
-    navigateToBack: () -> Boolean
+    navigateToBack: () -> Unit
 ) {
     composable(detailEventRoute) {
         DetailEventScreen(navigateToBack = navigateToBack)

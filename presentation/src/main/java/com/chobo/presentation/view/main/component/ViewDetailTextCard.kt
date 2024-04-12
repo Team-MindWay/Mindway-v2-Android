@@ -56,7 +56,7 @@ fun ViewDetailTextCard(
 
 @Preview(showBackground = true)
 @Composable
-fun ViewDetailTextCard() {
+fun ViewDetailTextCardPreView() {
     ViewDetailTextCard(
         title = "제목",
         content = " 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하 가나다라마바사아자차카타파하"

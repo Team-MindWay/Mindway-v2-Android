@@ -25,9 +25,7 @@ import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun GoalReadingBottomSheet(
-    onclick: () -> Unit,
-) {
+fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
     val textState = remember { mutableStateOf("") }
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -112,7 +110,5 @@ fun GoalReadingBottomSheet(
 @Preview
 @Composable
 fun GoalReadingBottomSheetPreview(){
-    GoalReadingBottomSheet {
-
-    }
+    GoalReadingBottomSheet { }
 }

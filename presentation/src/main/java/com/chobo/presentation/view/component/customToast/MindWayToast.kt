@@ -59,10 +59,21 @@ fun MindWayToast(
 
 @Preview
 @Composable
-fun MindWayToastPreview() {
+fun MindWayToastFailPreview() {
     MindWayToast(
         text = "토스트 메시지",
         isSuccess = false,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(57.dp)
+    )
+}
+@Preview
+@Composable
+fun MindWayToastSuccessPreview() {
+    MindWayToast(
+        text = "토스트 메시지",
+        isSuccess = true,
         modifier = Modifier
             .fillMaxWidth()
             .height(57.dp)

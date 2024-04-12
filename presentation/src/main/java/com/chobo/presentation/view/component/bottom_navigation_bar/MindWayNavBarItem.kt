@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
@@ -26,7 +27,7 @@ fun MindWayNavBarItem(
     isSelected: Boolean
 ) {
     MindWayAndroidTheme { colors, typography ->
-        when(type) {
+        when (type) {
             MindWayNavBarItemType.HOME -> {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -43,6 +44,7 @@ fun MindWayNavBarItem(
                     )
                 }
             }
+
             MindWayNavBarItemType.EVENT -> {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -59,6 +61,7 @@ fun MindWayNavBarItem(
                     )
                 }
             }
+
             MindWayNavBarItemType.BOOKS -> {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -75,6 +78,7 @@ fun MindWayNavBarItem(
                     )
                 }
             }
+
             MindWayNavBarItemType.MY -> {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -93,4 +97,13 @@ fun MindWayNavBarItem(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun MindWayNavBarItemPreview() {
+    MindWayNavBarItem(
+        type = MindWayNavBarItemType.HOME,
+        isSelected = true
+    )
 }

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -59,4 +60,14 @@ fun EventContent(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun EventContentPreview() {
+    EventContent(
+        content = "리뷰 정말 감사합니다 임시 데이터 입니다",
+        onIconClick = {},
+        navigateToDetailEvent = {},
+    )
 }

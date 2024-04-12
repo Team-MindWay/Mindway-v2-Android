@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +20,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun HomeReadersOfTheMonthGraph(
+    modifier: Modifier,
     bookKingOfTheMonthData: BookKingOfTheMonthData,
-    modifier: Modifier
 ) {
     val height = ((80 * bookKingOfTheMonthData.numOfBooks) / 30).toFloat().dp
     MindWayAndroidTheme { colors, typography ->
@@ -66,6 +67,7 @@ fun HomeReadersOfTheMonthGraphPreview() {
         bookKingOfTheMonthData = BookKingOfTheMonthData(
             name = "이름",
             numOfBooks = 12
-        ), modifier = Modifier
+        ),
+        modifier = Modifier.width(50.dp)
     )
 }

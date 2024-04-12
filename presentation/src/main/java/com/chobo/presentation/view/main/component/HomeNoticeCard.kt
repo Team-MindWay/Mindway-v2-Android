@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -94,6 +93,6 @@ fun HomeNoticeCardPreview() {
         modifier = Modifier
             .width(312.dp)
             .height(100.dp),
-        onClick = { MockOnClick() }
+        onClick = {  }
     )
 }

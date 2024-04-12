@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 data class BookListItemData(
@@ -87,6 +86,6 @@ fun BookListItemPreview() {
             title = "제목",
             content = "ㅇㄴ머왲ㅂ옱ㄹ촣퍼ㅗㅠㅏㅓㅟㅡㅌㅇㄹㅎ촣퍼ㅗㅠㅏㅓㅟㅏㅡㅓㅜㅠㅏㅗ펗촗ㅌㅇㄹㅊㅎ퍼ㅗㅠㅓㅏㅜㅏㅣ"
         ),
-        onClick = { MockOnClick() }
+        onClick = { }
     )
 }

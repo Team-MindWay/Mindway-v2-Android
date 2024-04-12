@@ -2,6 +2,9 @@ package com.chobo.presentation.view.component.compostionView
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.view.book.screen.BookScreen
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.*
@@ -33,9 +36,23 @@ fun MindWayCombinationView(
                 navigateToGoalReading = { navigateToGoalReading() },
                 navigateToDetailEvent = { navigateToDetailEvent() },
             )
+
             EVENT -> EventScreen(navigateToDetailEvent = { navigateToDetailEvent() })
             BOOKS -> BookScreen()
             MY -> MyScreen()
         }
     }
+}
+
+@Preview
+@Composable
+fun MindWayCombinationViewPreview() {
+    val topDestination = remember {
+        mutableStateOf(MindWayNavBarItemType.HOME)
+    }
+    MindWayCombinationView(
+        topDestination = topDestination,
+        navigateToDetailEvent = { },
+        navigateToGoalReading = {}
+    )
 }

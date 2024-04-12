@@ -5,13 +5,14 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 @Composable
 fun DetailEventTopBar(
-    startIconClick: () -> Unit
+    startIconOnClick: () -> Unit
 ) {
     MindWayTopAppBar(
         startIcon = {
@@ -19,9 +20,14 @@ fun DetailEventTopBar(
                 modifier = Modifier.clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null
-                ) { startIconClick() }
+                ) { startIconOnClick() }
             )
         },
         midText = stringResource(id = R.string.ongoing_event)
     )
+}
+@Preview(showBackground = true)
+@Composable
+fun DetailEventTopBarPreview(){
+    DetailEventTopBar(startIconOnClick = { })
 }

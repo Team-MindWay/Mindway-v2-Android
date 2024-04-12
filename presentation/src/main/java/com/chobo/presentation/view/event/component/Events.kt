@@ -3,7 +3,6 @@ package com.chobo.presentation.view.event.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import com.chobo.presentation.view.main.screen.MockOnClick
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -103,7 +102,7 @@ fun EventsPre() {
             content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 ",
             date = "2024년 04월 08일"
         ),
-        onClick = { MockOnClick() },
+        onClick = { },
         navigateToDetailEvent = { },
     )
 }

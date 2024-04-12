@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 data class ReadingGoalGraphData(
@@ -168,6 +167,6 @@ fun HomeGoalReadingChartPreview() {
             ReadingGoalGraphData(1, 3, false, "일"),
             ReadingGoalGraphData(2, 3, false, "일"),
         ),
-        onClick = { MockOnClick() }
+        onClick = { }
     )
 }

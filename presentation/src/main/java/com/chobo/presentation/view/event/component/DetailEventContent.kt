@@ -1,11 +1,11 @@
 package com.chobo.presentation.view.event.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,33 +21,31 @@ fun DetailEventContent(
     content: String,
     date: String
 ) {
-    MindWayAndroidTheme { colors, typography ->  
+    MindWayAndroidTheme { colors, typography ->
         Column(
             modifier = modifier
-                .fillMaxWidth()
-                .background(color = colors.WHITE),
-            verticalArrangement = Arrangement.SpaceBetween
+                .background(color = colors.WHITE)
+                .fillMaxWidth(),
         ) {
-            Spacer(modifier = modifier.height(20.dp))
             Text(
                 text = title,
                 style = typography.bodyLarge,
                 color = colors.Black,
                 fontWeight = FontWeight.SemiBold
             )
-            Spacer(modifier = modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = content,
                 style = typography.bodySmall,
                 color = colors.Black,
                 fontWeight = FontWeight.Normal
             )
-            Spacer(modifier = modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(14.dp))
             Text(
                 text = date,
                 style = typography.labelLarge,
                 color = colors.GRAY400,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
             )
         }
     }
