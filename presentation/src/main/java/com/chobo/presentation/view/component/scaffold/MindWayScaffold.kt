@@ -10,13 +10,6 @@ import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
-data class BottomNavFun(
-    val navigateToHome: () -> Unit,
-    val navigateToEvent: () -> Unit,
-    val navigateToBooks: () -> Unit,
-    val navigateToMy: () -> Unit,
-)
-
 @Composable
 fun MindWayScaffold(
     isTopAppBar: Boolean = true,
