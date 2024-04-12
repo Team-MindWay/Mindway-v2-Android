@@ -10,7 +10,7 @@ import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 @Composable
-fun DetailViewTopAppBar(startIconOnClick: () -> Unit) {
+fun ViewDetailTopAppBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
