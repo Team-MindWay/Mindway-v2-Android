@@ -31,7 +31,7 @@ fun DetailEventScreen(
     MindWayAndroidTheme { _, _ ->
         Column {
             Spacer(modifier = modifier.height(20.dp))
-            DetailEventTopBar (startIconClick = { navigateToBack() })
+            DetailEventTopBar (startIconOnClick = { navigateToBack() })
             Column(
                 modifier = modifier
                     .fillMaxSize()
