@@ -27,6 +27,7 @@ import com.chobo.presentation.viewModel.BookAddBookViewModel
 
 @Composable
 fun BookAddBookScreen(
+    modifier: Modifier = Modifier,
     bookAddBookViewModel: BookAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
 ) {
@@ -35,7 +36,7 @@ fun BookAddBookScreen(
     val linkTextState = remember { mutableStateOf(bookAddBookViewModel.linkTextState.value) }
 
     MindWayAndroidTheme { colors, _ ->
-        Column {
+        Column (modifier = modifier){
             Spacer(modifier = Modifier.height(20.dp))
             BookRequestTopAppBar(
                 startIconOnClick = { navigateToBack() },
