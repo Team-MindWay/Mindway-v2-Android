@@ -8,23 +8,23 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+
 @Composable
 fun MindWayNavBar(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
     navigateToEvent: () -> Unit,
     navigateToBooks: () -> Unit,
-    navigateToMy: () -> Unit
+    navigateToMy: () -> Unit,
+    currentDestination: MutableState<MindWayNavBarItemType>,
 ) {
-    var navigationIndex by remember { mutableStateOf(-1) }
     val itemList = listOf(
         MindWayNavBarItemType.HOME,
         MindWayNavBarItemType.EVENT,
@@ -32,7 +32,7 @@ fun MindWayNavBar(
         MindWayNavBarItemType.MY
     )
 
-    MindWayAndroidTheme { colors, item ->
+    MindWayAndroidTheme { colors, _ ->
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -40,15 +40,15 @@ fun MindWayNavBar(
                 .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 32.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemList.forEachIndexed { index, item ->
+            itemList.forEach { item ->
                 MindWayNavBarItem(
                     modifier = modifier
                         .clickable(
                             interactionSource = MutableInteractionSource(),
                             indication = null,
                             onClick = {
-                                if (navigationIndex != index) {
-                                    navigationIndex = index
+                                if (currentDestination.value != item) {
+                                    currentDestination.value = item
                                     when (item) {
                                         MindWayNavBarItemType.HOME -> navigateToHome()
                                         MindWayNavBarItemType.EVENT -> navigateToEvent()
@@ -59,7 +59,7 @@ fun MindWayNavBar(
                             }
                         ),
                     type = item,
-                    isSelected = navigationIndex == index
+                    isSelected = currentDestination.value == item
                 )
             }
         }
@@ -69,10 +69,14 @@ fun MindWayNavBar(
 @Preview
 @Composable
 fun MindWayNavBarPre() {
+    val topDestination = remember {
+        mutableStateOf(MindWayNavBarItemType.HOME)
+    }
     MindWayNavBar(
         navigateToHome = {},
         navigateToEvent = {},
         navigateToBooks = {},
-        navigateToMy = {}
+        navigateToMy = {},
+        currentDestination = topDestination
     )
 }
