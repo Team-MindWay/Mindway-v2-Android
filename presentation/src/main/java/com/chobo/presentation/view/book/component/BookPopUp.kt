@@ -22,9 +22,7 @@ import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun BookPopUp(
-    onClick: () -> Unit,
-) {
+fun BookPopUp(onClick: () -> Unit) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),

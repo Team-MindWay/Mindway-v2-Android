@@ -83,7 +83,8 @@ fun GoalReadingIndicator(
 @Composable
 fun GoalReadingIndicatorPreview() {
     GoalReadingIndicator(
-        numBooksRead = 12, modifier = Modifier
+        numBooksRead = 12,
+        modifier = Modifier
             .width(264.dp)
             .height(30.dp)
     )

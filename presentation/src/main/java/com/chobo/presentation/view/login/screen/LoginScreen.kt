@@ -31,7 +31,7 @@ import com.msg.gauthsignin.component.utils.Types
 fun LoginScreen(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit
-){
+) {
     var isClicked by remember { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
@@ -75,8 +75,6 @@ fun LoginScreen(
 
 @Preview
 @Composable
-fun PreviewLoginScreen(){
-    LoginScreen(
-        navigateToHome = {}
-    )
+fun PreviewLoginScreen() {
+    LoginScreen(navigateToHome = { })
 }

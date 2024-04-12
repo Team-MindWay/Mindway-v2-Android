@@ -74,5 +74,8 @@ fun MyNameCard(
 @Preview(showBackground = true)
 @Composable
 fun MyNameCardPreview() {
-    MyNameCard(name = "함제형", onClick = { MockOnClick() })
+    MyNameCard(
+        name = "함제형",
+        onClick = { }
+    )
 }

@@ -16,20 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.main.component.ReadingGoalGraphData
-import com.chobo.presentation.view.main.navigation.navigationToHomeAddBook
-import com.chobo.presentation.view.main.navigation.navigationToViewDetail
 import com.chobo.presentation.viewModel.GoalReadingViewModel
 
 @Composable
 fun GoalReadingScreen(
     goalReadingViewModel: GoalReadingViewModel = viewModel(),
-    navigateToBack: () -> Boolean,
+    navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
     navigateToHomeViewDetail: () -> Unit
 ) {
@@ -94,14 +91,13 @@ fun GoalReadingScreen(
 @Composable
 fun GoalReadingScreenPreview(
 ) {
-    val navController = rememberNavController()
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         GoalReadingScreen(
-            navigateToBack = navController::popBackStack,
-            navigateToHomeAddBook = navController::navigationToHomeAddBook,
-            navigateToHomeViewDetail = navController::navigationToViewDetail,
+            navigateToBack = { },
+            navigateToHomeAddBook = { },
+            navigateToHomeViewDetail = { },
         )
     }
 }
