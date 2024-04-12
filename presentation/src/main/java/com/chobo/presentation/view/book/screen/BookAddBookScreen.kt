@@ -36,7 +36,7 @@ fun BookAddBookScreen(
     val linkTextState = remember { mutableStateOf(bookAddBookViewModel.linkTextState.value) }
 
     MindWayAndroidTheme { colors, _ ->
-        Column (modifier = modifier){
+        Column (modifier = modifier.background(color = colors.WHITE)){
             Spacer(modifier = Modifier.height(20.dp))
             BookRequestTopAppBar(
                 startIconOnClick = { navigateToBack() },

@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.my.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,10 +30,11 @@ import com.chobo.presentation.viewModel.MyViewModel
 
 @Composable
 fun MyScreen(
-    myViewModel: MyViewModel = viewModel()
+    modifier: Modifier = Modifier,
+    myViewModel: MyViewModel = viewModel(),
 ) {
     MindWayAndroidTheme { colors, typography ->
-        Column {
+        Column (modifier = modifier.background(color = colors.WHITE)){
             Spacer(modifier = Modifier.height(43.dp))
             MyNameCard(
                 name = myViewModel.returnMyName(),

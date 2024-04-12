@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.my.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,14 +27,15 @@ import com.chobo.presentation.viewModel.MyBookEditViewModel
 
 @Composable
 fun MyBookEditScreen(
+    modifier: Modifier = Modifier,
     myBookEditViewModel: MyBookEditViewModel = viewModel(),
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
 ) {
     val titleState = remember { mutableStateOf(myBookEditViewModel.titleTextState.value) }
     val writerState = remember { mutableStateOf(myBookEditViewModel.writeTextState.value) }
     val linkState = remember { mutableStateOf(myBookEditViewModel.linkTextState.value) }
-    MindWayAndroidTheme { _, _ ->
-        Column {
+    MindWayAndroidTheme { colors, _ ->
+        Column (modifier = modifier.background(colors.WHITE)){
             BookEditTopAppBar(
                 startIconOnClick = { navigateToBack() },
                 endIconOnClick = {}

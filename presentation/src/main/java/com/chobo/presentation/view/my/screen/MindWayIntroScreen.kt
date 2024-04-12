@@ -28,9 +28,12 @@ import com.chobo.presentation.view.my.component.MindWayIntroTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun MindWayIntroScreen(navigateToBack: () -> Unit) {
+fun MindWayIntroScreen(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit
+) {
     MindWayAndroidTheme { colors, typography ->
-        Column {
+        Column(modifier = modifier) {
             MindWayIntroTopAppBar(startIconOnClick = { navigateToBack() })
             Box(modifier = Modifier.fillMaxSize()) {
                 Image(

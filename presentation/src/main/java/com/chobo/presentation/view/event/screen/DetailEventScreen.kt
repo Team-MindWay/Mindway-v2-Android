@@ -28,19 +28,19 @@ fun DetailEventScreen(
     detailEventViewModel: DetailEventViewModel = viewModel(),
     navigateToBack: () -> Unit,
 ) {
-    MindWayAndroidTheme { _, _ ->
-        Column {
-            Spacer(modifier = modifier.height(20.dp))
+    MindWayAndroidTheme { colors, _ ->
+        Column(modifier = modifier.background(color = colors.WHITE)) {
+            Spacer(modifier = Modifier.height(20.dp))
             DetailEventTopBar(startIconOnClick = { navigateToBack() })
             Column(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 24.dp)
             ) {
                 Image(
                     painter = painterResource(detailEventViewModel.returnImageResId()),
                     contentDescription = "Event Image",
-                    modifier = modifier
+                    modifier = Modifier
                         .padding(vertical = 20.dp)
                         .fillMaxWidth()
                         .height(264.dp)
