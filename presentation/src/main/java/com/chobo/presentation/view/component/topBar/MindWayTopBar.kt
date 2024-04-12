@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -20,7 +22,7 @@ fun MindWayTopAppBar(
     modifier: Modifier = Modifier,
     midText: String = "",
     startIcon: @Composable () -> Unit,
-    endIcon: @Composable () -> Unit = { MindWaySpacer(modifier = Modifier.size(24.dp)) },
+    endIcon: @Composable () -> Unit = { Spacer(modifier = Modifier.size(24.dp)) },
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
@@ -47,8 +49,8 @@ fun MindWayTopAppBar(
         }
     }
 }
-
+@Preview(showBackground = true)
 @Composable
-fun MindWaySpacer(modifier: Modifier) {
-    Spacer(modifier = modifier)
+fun MindWayTopAppBarPreview(){
+    MindWayTopAppBar(startIcon = { LogoIcon()})
 }

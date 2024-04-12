@@ -66,7 +66,7 @@ fun MindWayNavBar(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun MindWayNavBarPre() {
     val topDestination = remember {
