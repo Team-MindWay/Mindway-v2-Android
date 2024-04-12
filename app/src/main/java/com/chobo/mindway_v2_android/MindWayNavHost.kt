@@ -24,7 +24,9 @@ fun MindWayNavHost(
     startDestination: String
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-
+    val topDestination = remember {
+        mutableStateOf(MindWayNavBarItemType.HOME)
+    }
     NavHost(
         navController = navController,
         startDestination = startDestination

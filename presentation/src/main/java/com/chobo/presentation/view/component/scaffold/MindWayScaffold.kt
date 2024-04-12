@@ -32,6 +32,7 @@ fun MindWayScaffold(
         },
         bottomBar = {
             MindWayNavBar(
+                currentDestination = currentDestination,
                 navigateToHome = { currentDestination.value = MindWayNavBarItemType.HOME },
                 navigateToEvent = { currentDestination.value = MindWayNavBarItemType.EVENT },
                 navigateToBooks = { currentDestination.value = MindWayNavBarItemType.BOOKS },
