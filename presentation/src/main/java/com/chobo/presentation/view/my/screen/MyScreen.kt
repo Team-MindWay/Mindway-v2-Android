@@ -32,55 +32,42 @@ fun MyScreen(
     myViewModel: MyViewModel = viewModel()
 ) {
     MindWayAndroidTheme { colors, typography ->
-        Scaffold(
-            bottomBar = {
-                MindWayNavBar(
-                    navigateToHome = { },
-                    navigateToEvent = { },
-                    navigateToBooks = { },
-                    navigateToMy = { }
+        Column {
+            Spacer(modifier = Modifier.height(43.dp))
+            MyNameCard(
+                name = myViewModel.returnMyName(),
+                onClick = { myViewModel.optionOnClick() },
+            )
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.book_request_list),
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.GRAY400,
                 )
             }
-        ) { PaddingValues ->
-            Column(
-                modifier = Modifier.padding(PaddingValues)
-            ) {
-                Spacer(modifier = Modifier.height(43.dp))
-                MyNameCard(
-                    name = myViewModel.returnMyName(),
-                    onClick = { myViewModel.optionOnClick() },
-                )
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.book_request_list),
-                        style = typography.labelLarge,
-                        fontWeight = FontWeight.Normal,
-                        color = colors.GRAY400,
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 16.dp
                     )
-                }
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 16.dp
-                        )
-                ) {
-                    items(myViewModel.myBookListItemDataList) {
-                        MyBookListItem(
-                            title = it.title,
-                            writer = it.writer,
-                            editOnclick = { it.editOnclick },
-                            trashCanOnclick = { it.trashCanOnclick }
-                        )
-                    }
+            ) {
+                items(myViewModel.myBookListItemDataList) {
+                    MyBookListItem(
+                        title = it.title,
+                        writer = it.writer,
+                        editOnclick = { it.editOnclick },
+                        trashCanOnclick = { it.trashCanOnclick }
+                    )
                 }
             }
         }
