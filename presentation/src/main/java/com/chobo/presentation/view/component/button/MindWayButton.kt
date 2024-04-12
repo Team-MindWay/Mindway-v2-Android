@@ -54,7 +54,5 @@ fun MindWayButton(
 fun MindWayButtonPreview() {
     MindWayButton(
         text = "이것은 택스트 입니다",
-    ) {
-
-    }
+    ) {}
 }
