@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -63,5 +62,5 @@ fun BookPopUp(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun BookPopUpPreview() {
-    BookPopUp(onClick = { MockOnClick() })
+    BookPopUp(onClick = { })
 }

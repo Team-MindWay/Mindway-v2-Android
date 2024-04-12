@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -71,5 +70,5 @@ fun MyBottomSheet(
 @Preview(showBackground = true)
 @Composable
 fun MyBottomSheetPreview() {
-    MyBottomSheet(logoutOnClick = { MockOnClick() })
+    MyBottomSheet(logoutOnClick = { })
 }

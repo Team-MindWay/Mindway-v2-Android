@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -119,6 +118,6 @@ fun MyBookDeletePopUp(
 fun MyBookDeletePopUpPreview() {
     MyBookDeletePopUp(
         title = "책의 제목입니다",
-        cancelOnclick = { MockOnClick() },
-        checkOnclick = { MockOnClick() })
+        cancelOnclick = { },
+        checkOnclick = { })
 }

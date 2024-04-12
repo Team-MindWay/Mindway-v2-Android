@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.EditIcon
 import com.chobo.presentation.view.component.icon.TrashCanIcon
-import com.chobo.presentation.view.main.screen.MockOnClick
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 
@@ -101,6 +100,6 @@ fun MyBookListItemPreview() {
     MyBookListItem(
         title = "제목",
         writer = "저자",
-        editOnclick = { MockOnClick() },
-        trashCanOnclick = { MockOnClick() })
+        editOnclick = { },
+        trashCanOnclick = { })
 }

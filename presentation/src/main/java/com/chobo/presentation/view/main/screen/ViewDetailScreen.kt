@@ -13,16 +13,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.R
-import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
+import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
 import com.chobo.presentation.viewModel.ViewDetailViewModel
 
 @Composable
 fun ViewDetailScreen(
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
-    navigateToBack: () -> Boolean
+    navigateToBack: () -> Unit
 ) {
     Column {
         Spacer(modifier = Modifier.height(20.dp))

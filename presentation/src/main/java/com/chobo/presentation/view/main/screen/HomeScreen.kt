@@ -53,10 +53,6 @@ fun HomeScreen(
         )
     }
 }
-
-
-fun MockOnClick() {}
-
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
