@@ -2,6 +2,7 @@ package com.chobo.mindway_v2_android.Module
 
 import android.util.Log
 import com.chobo.data.util.AuthInterceptor
+import com.chobo.mindway_v2_android.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,7 +45,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("") // todo : BuildConfig
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
