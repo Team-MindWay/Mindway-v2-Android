@@ -41,21 +41,21 @@ fun LoginScreen(
                 .fillMaxSize()
                 .background(color = colors.WHITE)
         ) {
-            Spacer(modifier = modifier.height(220.dp))
+            Spacer(modifier = Modifier.height(220.dp))
             Image(
                 painter = painterResource(id = R.drawable.mind_way_logo),
                 contentDescription = "MindWay Main logo",
             )
-            Spacer(modifier = modifier.height(302.dp))
+            Spacer(modifier = Modifier.height(302.dp))
             Column(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                MindWayGAuthButton(modifier = modifier.height(48.dp))
+                MindWayGAuthButton(modifier = Modifier.height(48.dp))
                 { isClicked = true }
-                Spacer(modifier = modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 Button(
                     onClick = { navigateToHome() }
                 ) {
