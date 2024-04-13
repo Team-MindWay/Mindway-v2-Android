@@ -27,17 +27,13 @@ data class BookListItemData(
 )
 
 @Composable
-fun BookListItem(
-    data: BookListItemData,
-    onClick: () -> Unit,
-) {
+fun BookListItem(data: BookListItemData) {
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = Modifier.height(20.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .clickable { onClick() }
                 .fillMaxWidth()
                 .shadow(
                     elevation = 20.dp,
@@ -85,7 +81,6 @@ fun BookListItemPreview() {
             writer = "저자",
             title = "제목",
             content = "ㅇㄴ머왲ㅂ옱ㄹ촣퍼ㅗㅠㅏㅓㅟㅡㅌㅇㄹㅎ촣퍼ㅗㅠㅏㅓㅟㅏㅡㅓㅜㅠㅏㅗ펗촗ㅌㅇㄹㅊㅎ퍼ㅗㅠㅓㅏㅜㅏㅣ"
-        ),
-        onClick = { }
+        )
     )
 }

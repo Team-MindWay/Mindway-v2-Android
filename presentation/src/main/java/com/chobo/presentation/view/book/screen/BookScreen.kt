@@ -2,6 +2,7 @@ package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Scaffold
 import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
-import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.BookScreenViewModel
@@ -79,7 +78,10 @@ fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
                     }
                 }
                 PlusIcon(
-                    modifier = Modifier.clickable { bookViewModel.plusIconOnClick() },
+                    modifier = Modifier.clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null
+                    ) { bookViewModel.plusIconOnClick() },
                     tint = colors.Black
                 )
             }
@@ -97,16 +99,13 @@ fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
                     when (page) {
                         0 -> {
                             itemsIndexed(bookViewModel.novelDataList) { index, item ->
-                                BookListItem(data = item,
-                                    onClick = { bookViewModel.novelOnClick(index) })
+                                BookListItem(data = item)
                             }
                         }
 
                         1 -> {
                             itemsIndexed(bookViewModel.essayDataList) { index, item ->
-                                BookListItem(
-                                    data = item,
-                                    onClick = { bookViewModel.essayOnClick(index) })
+                                BookListItem(data = item)
                             }
                         }
                     }
