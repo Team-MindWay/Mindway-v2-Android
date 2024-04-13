@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.my.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,9 +29,12 @@ import com.chobo.presentation.view.my.component.MindWayIntroTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun MindWayIntroScreen(navigateToBack: () -> Unit) {
+fun MindWayIntroScreen(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit
+) {
     MindWayAndroidTheme { colors, typography ->
-        Column {
+        Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayIntroTopAppBar(startIconOnClick = { navigateToBack() })
             Box(modifier = Modifier.fillMaxSize()) {
                 Image(

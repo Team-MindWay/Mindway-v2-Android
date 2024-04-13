@@ -1,8 +1,10 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,34 +18,41 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.ViewDetailViewModel
 
 @Composable
 fun ViewDetailScreen(
+    modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
     navigateToBack: () -> Unit
 ) {
-    Column {
-        Spacer(modifier = Modifier.height(20.dp))
-        ViewDetailTopAppBar(startIconOnClick = { navigateToBack() })
-        Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = 24.dp,
-                    horizontal = 28.dp,
-                )
+    MindWayAndroidTheme { colors, typography ->
+        Column(modifier = modifier
+            .fillMaxSize()
+            .background(color = colors.WHITE)
         ) {
-            ViewDetailTextCard(
-                title = stringResource(R.string.title),
-                content = viewDetailViewModel.title,
-            )
-            ViewDetailTextCard(
-                title = stringResource(R.string.content),
-                content = viewDetailViewModel.content,
-            )
+            Spacer(modifier = Modifier.height(20.dp))
+            ViewDetailTopAppBar(startIconOnClick = { navigateToBack() })
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        vertical = 24.dp,
+                        horizontal = 28.dp,
+                    )
+            ) {
+                ViewDetailTextCard(
+                    title = stringResource(R.string.title),
+                    content = viewDetailViewModel.title,
+                )
+                ViewDetailTextCard(
+                    title = stringResource(R.string.content),
+                    content = viewDetailViewModel.content,
+                )
+            }
         }
     }
 }

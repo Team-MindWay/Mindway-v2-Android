@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +34,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
+fun BookScreen(
+    modifier: Modifier = Modifier,
+    bookViewModel: BookScreenViewModel = viewModel(),
+) {
     val pagerState = rememberPagerState(pageCount = { 2 })
     val tabNames = listOf(
         stringResource(R.string.novel),
@@ -42,9 +46,7 @@ fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
+        Column(modifier = modifier.background(color = colors.WHITE)) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -59,8 +61,8 @@ fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
                 TabRow(
                     modifier = Modifier.width(166.dp),
                     selectedTabIndex = pagerState.currentPage,
-                    backgroundColor = colors.WHITE,
                     contentColor = colors.MAIN,
+                    backgroundColor = colors.WHITE
                 ) {
                     tabNames.forEachIndexed { index, tabName ->
                         BookTabRowItem(

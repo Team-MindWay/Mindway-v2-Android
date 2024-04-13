@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.main.navigation.navigationToGoalReading
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.HomeViewModel
 
 @Composable
@@ -27,32 +29,35 @@ fun HomeScreen(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp)
-    ) {
-        HomeNoticeCard(
-            titleText = homeViewModel.returnTitleText(),
-            content = homeViewModel.returnContentText(),
-            onClick = navigateToDetailEvent
-        )
-        HomeGoalReadingChart(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(211.dp),
-            isHasData = true,
-            readNumberList = homeViewModel.readingGoalGraphDataList,
-            onClick = navigateToGoalReading
-        )
-        HomeReadersOfTheMonthChart(
-            isHasData = true,
-            bookKingOfTheMonthData = homeViewModel.bookKingOfTheMonthDataList
-        )
+    MindWayAndroidTheme { colors, typography ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.background(color = colors.WHITE)
+                .fillMaxSize()
+                .padding(horizontal = 24.dp)
+        ) {
+            HomeNoticeCard(
+                titleText = homeViewModel.returnTitleText(),
+                content = homeViewModel.returnContentText(),
+                onClick = navigateToDetailEvent
+            )
+            HomeGoalReadingChart(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(211.dp),
+                isHasData = true,
+                readNumberList = homeViewModel.readingGoalGraphDataList,
+                onClick = navigateToGoalReading
+            )
+            HomeReadersOfTheMonthChart(
+                isHasData = true,
+                bookKingOfTheMonthData = homeViewModel.bookKingOfTheMonthDataList
+            )
+        }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
