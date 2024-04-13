@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.book.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -30,7 +31,10 @@ fun BookTabRowItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(8.dp)
-                .clickable { onClick() }
+                .clickable (
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ){ onClick() }
         ) {
             if (indexState == index) {
                 Text(
