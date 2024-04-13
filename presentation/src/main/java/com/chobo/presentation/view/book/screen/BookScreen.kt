@@ -97,16 +97,13 @@ fun BookScreen(bookViewModel: BookScreenViewModel = viewModel()) {
                     when (page) {
                         0 -> {
                             itemsIndexed(bookViewModel.novelDataList) { index, item ->
-                                BookListItem(data = item,
-                                    onClick = { bookViewModel.novelOnClick(index) })
+                                BookListItem(data = item)
                             }
                         }
 
                         1 -> {
                             itemsIndexed(bookViewModel.essayDataList) { index, item ->
-                                BookListItem(
-                                    data = item,
-                                    onClick = { bookViewModel.essayOnClick(index) })
+                                BookListItem(data = item)
                             }
                         }
                     }
