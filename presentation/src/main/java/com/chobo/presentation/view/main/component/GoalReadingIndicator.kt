@@ -24,6 +24,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun GoalReadingIndicator(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
+    goalBookRead:Int
 ) {
     val readProgress = if (numBooksRead < 30) numBooksRead else 30
     MindWayAndroidTheme { colors, typography ->
@@ -33,7 +34,7 @@ fun GoalReadingIndicator(
             modifier = modifier,
         ) {
             LinearProgressIndicator(
-                progress = (readProgress) / 30f,
+                progress = (readProgress) / goalBookRead.toFloat(),
                 trackColor = colors.GRAY100,
                 color = colors.MAIN,
                 modifier = Modifier
@@ -67,7 +68,7 @@ fun GoalReadingIndicator(
                         textAlign = TextAlign.Center,
                     )
                     Text(
-                        text = "30",
+                        text = goalBookRead.toString(),
                         style = typography.bodySmall,
                         fontWeight = FontWeight.Normal,
                         color = colors.MAIN,
@@ -86,6 +87,7 @@ fun GoalReadingIndicatorPreview() {
         numBooksRead = 12,
         modifier = Modifier
             .width(264.dp)
-            .height(30.dp)
+            .height(30.dp),
+        goalBookRead = 20
     )
 }

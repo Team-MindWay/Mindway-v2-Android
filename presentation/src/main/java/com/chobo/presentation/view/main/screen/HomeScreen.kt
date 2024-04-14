@@ -2,7 +2,6 @@ package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
-import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
-import com.chobo.presentation.view.main.navigation.navigationToGoalReading
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.HomeViewModel
 
@@ -48,7 +44,8 @@ fun HomeScreen(
                     .height(211.dp),
                 isHasData = true,
                 readNumberList = homeViewModel.readingGoalGraphDataList,
-                onClick = navigateToGoalReading
+                onClick = navigateToGoalReading,
+                goalBookRead = homeViewModel.goalBookRead
             )
             HomeReadersOfTheMonthChart(
                 isHasData = true,
