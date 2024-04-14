@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +25,9 @@ fun EventScreen(
     navigateToDetailEvent: () -> Unit,
     eventViewModel: EventViewModel = viewModel(),
 ) {
+    val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsState()
+    val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsState()
+
     val tabs = listOf(
         stringResource(id = R.string.ongoing_event),
         stringResource(id = R.string.past_event)
@@ -30,6 +35,7 @@ fun EventScreen(
     val pagerState = rememberPagerState {
         tabs.size
     }
+
     MindWayAndroidTheme { colors, _ ->
         Box(
             modifier = modifier
@@ -42,7 +48,7 @@ fun EventScreen(
                 onGoingEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
-                        eventDataList = eventViewModel.currentEventsDataList,
+                        eventDataList = currentEventsDataList,
                         onIconClick = eventViewModel::onCurrentIconClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
@@ -50,7 +56,7 @@ fun EventScreen(
                 pastEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
-                        eventDataList = eventViewModel.pastEventsDataList,
+                        eventDataList = pastEventsDataList,
                         onIconClick = eventViewModel::onPastIconClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
