@@ -92,10 +92,10 @@ fun MindWayTextField(
                     onValueChange = { newText ->
                         if (lengthLimit != 0) {
                             if (newText.length <= lengthLimit) {
-                                textState.value = newText
+                                updateTextValue(newText)
                             }
                         } else {
-                            textState.value = newText
+                            updateTextValue(newText)
                         }
                     },
                     value = textState,
