@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +20,8 @@ import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.HomeViewModel
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
 fun HomeScreen(
@@ -25,17 +29,23 @@ fun HomeScreen(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
+    val titleTextState by homeViewModel.titleTextState.collectAsState()
+    val contentTextState by homeViewModel.contentTextState.collectAsState()
+    val readingGoalGraphDataList by homeViewModel.readingGoalGraphDataList.collectAsState()
+    val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsState()
+
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.background(color = colors.WHITE)
+            modifier = Modifier
+                .background(color = colors.WHITE)
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
         ) {
             HomeNoticeCard(
-                titleText = homeViewModel.returnTitleText(),
-                content = homeViewModel.returnContentText(),
+                titleText = titleTextState,
+                content = contentTextState,
                 onClick = navigateToDetailEvent
             )
             HomeGoalReadingChart(
@@ -43,13 +53,13 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .height(211.dp),
                 isHasData = true,
-                readNumberList = homeViewModel.readingGoalGraphDataList,
+                readNumberList = readingGoalGraphDataList,
                 onClick = navigateToGoalReading,
                 goalBookRead = homeViewModel.goalBookRead
             )
             HomeReadersOfTheMonthChart(
                 isHasData = true,
-                bookKingOfTheMonthData = homeViewModel.bookKingOfTheMonthDataList
+                bookKingOfTheMonthData = bookKingOfTheMonthDataList
             )
         }
     }
