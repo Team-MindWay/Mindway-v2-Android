@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,9 +31,9 @@ fun BookAddBookScreen(
     bookAddBookViewModel: BookAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
 ) {
-    val titleTextState = remember { mutableStateOf(bookAddBookViewModel.titleTextState.value) }
-    val writeTextState = remember { mutableStateOf(bookAddBookViewModel.writeTextState.value) }
-    val linkTextState = remember { mutableStateOf(bookAddBookViewModel.linkTextState.value) }
+    val titleTextState by bookAddBookViewModel.titleTextState.collectAsState()
+    val writeTextState by bookAddBookViewModel.writeTextState.collectAsState()
+    val linkTextState by bookAddBookViewModel.linkTextState.collectAsState()
 
     MindWayAndroidTheme { colors, _ ->
         Column (modifier = modifier.background(color = colors.WHITE)){

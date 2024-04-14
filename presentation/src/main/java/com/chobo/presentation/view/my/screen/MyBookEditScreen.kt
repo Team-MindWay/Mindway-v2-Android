@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,9 +31,9 @@ fun MyBookEditScreen(
     myBookEditViewModel: MyBookEditViewModel = viewModel(),
     navigateToBack: () -> Unit,
 ) {
-    val titleState = remember { mutableStateOf(myBookEditViewModel.titleTextState.value) }
-    val writerState = remember { mutableStateOf(myBookEditViewModel.writeTextState.value) }
-    val linkState = remember { mutableStateOf(myBookEditViewModel.linkTextState.value) }
+    val titleTextState by myBookEditViewModel.titleTextState.collectAsState()
+    val writeTextState by myBookEditViewModel.writeTextState.collectAsState()
+    val linkTextState by myBookEditViewModel.linkTextState.collectAsState()
     MindWayAndroidTheme { colors, _ ->
         Column (modifier = modifier.background(colors.WHITE)){
             BookEditTopAppBar(
@@ -53,19 +53,19 @@ fun MyBookEditScreen(
             ) {
                 MindWayTextField(
                     title = stringResource(R.string.title),
-                    textState = titleState,
+                    textState = titleTextState,
                     placeholder = stringResource(R.string.please_enter_the_book_title),
                     errorMessage = stringResource(R.string.please_enter_the_book_title)
                 )
                 MindWayTextField(
                     title = stringResource(R.string.writer),
-                    textState = writerState,
+                    textState = writeTextState,
                     placeholder = stringResource(R.string.please_enter_the_book_writer),
                     errorMessage = stringResource(R.string.please_enter_the_book_writer)
                 )
                 MindWayTextField(
                     title = stringResource(R.string.link),
-                    textState = linkState,
+                    textState = linkTextState,
                     placeholder = stringResource(R.string.please_enter_the_link),
                     errorMessage = stringResource(R.string.please_enter_the_link)
                 )
