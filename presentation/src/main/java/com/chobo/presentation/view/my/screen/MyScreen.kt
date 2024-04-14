@@ -69,11 +69,6 @@ fun MyScreen(
             ) {
                 items(myBookListItemDataList) {
                     MyBookListItem(
-                        modifier = Modifier.shadow(
-                            elevation = 20.dp,
-                            spotColor = colors.CardShadow,
-                            ambientColor = colors.CardShadow,
-                        ),
                         title = it.title,
                         writer = it.writer,
                         editOnclick = { it.editOnclick },
