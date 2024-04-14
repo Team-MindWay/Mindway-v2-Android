@@ -26,6 +26,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun GoalReadingChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
+    goalBookRead:Int,
     readingGoalGraphData: List<ReadingGoalGraphData> = listOf(),
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -49,10 +50,11 @@ fun GoalReadingChart(
         ) {
             if (isHasData) {
                 GoalReadingIndicator(
+                    goalBookRead = goalBookRead,
                     numBooksRead = readingGoalGraphData.sumOf { it.numBooksRead },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.2419f)
+                        .fillMaxHeight(0.2419f),
                 )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -101,6 +103,7 @@ fun GoalReadingChartPreview() {
             ReadingGoalGraphData(1, 3, false, "오"),
             ReadingGoalGraphData(3, 3, false, "오"),
             ReadingGoalGraphData(1, 3, false, "오"),
-        )
+        ),
+        goalBookRead = 12
     )
 }

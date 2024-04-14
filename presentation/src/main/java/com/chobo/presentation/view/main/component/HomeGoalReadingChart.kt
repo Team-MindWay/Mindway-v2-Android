@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -23,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 data class ReadingGoalGraphData(
     val numBooksRead: Int,
@@ -37,6 +40,7 @@ fun HomeGoalReadingChart(
     isHasData: Boolean,
     readNumberList: List<ReadingGoalGraphData> = listOf(),
     onClick: () -> Unit,
+    goalBookRead: StateFlow<Int>,
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
@@ -80,6 +84,7 @@ fun HomeGoalReadingChart(
                     }
                     GoalReadingIndicator(
                         numBooksRead = readNumberList.sumOf { it.numBooksRead },
+                        goalBookRead = goalBookRead.collectAsState().value,
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.1840f)
@@ -153,6 +158,8 @@ fun HomeGoalReadingChart(
 @Preview
 @Composable
 fun HomeGoalReadingChartPreview() {
+    val _goalBookRead = MutableStateFlow(15)
+
     HomeGoalReadingChart(
         modifier = Modifier
             .width(312.dp)
@@ -167,6 +174,7 @@ fun HomeGoalReadingChartPreview() {
             ReadingGoalGraphData(1, 3, false, "일"),
             ReadingGoalGraphData(2, 3, false, "일"),
         ),
-        onClick = { }
+        onClick = { },
+        goalBookRead =_goalBookRead
     )
 }
