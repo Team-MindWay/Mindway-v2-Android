@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
@@ -85,6 +87,38 @@ fun GoalReadingScreen(
                                 onClick = navigateToHomeViewDetail
                             )
                         }
+                    }
+                }
+            Box(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(
+                            start = 24.dp,
+                            end = 24.dp,
+                            top = 12.dp,
+                        )
+                        .fillMaxSize()
+                ) {
+                    item {
+                        GoalReadingChart(
+                            isHasData = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(180.dp),
+                            goalBookRead = goalBookRead,
+                            goalReadingGraphData = goalReadingGraphDataList
+                        )
+                    }
+                    item {
+                        GoalReadingPlusCard(onClick = navigateToHomeAddBook)
+                    }
+                    items(goalReadingListOfBooksReadItemDataList) { item ->
+                        GoalReadingListOfBooksReadItem(
+                            data = item,
+                            onClick = navigateToHomeViewDetail
+                        )
                     }
                 }
             }
