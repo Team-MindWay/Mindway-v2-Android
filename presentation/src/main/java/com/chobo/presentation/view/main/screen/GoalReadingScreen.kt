@@ -48,47 +48,6 @@ fun GoalReadingScreen(
                 endIconOnClick = { },
                 isData = goalBookRead == 0
             )
-            Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(
-                        start = 24.dp,
-                        end = 24.dp,
-                        top = 12.dp,
-                    )
-                    .fillMaxSize()
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        item {
-                            GoalReadingChart(
-                                isHasData = true,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(180.dp),
-                                goalBookRead = goalBookRead,
-                                goalReadingGraphData = goalReadingGraphDataList
-                            )
-                        }
-                        item {
-                            GoalReadingPlusCard(onClick = navigateToHomeAddBook)
-                        }
-                        items(goalReadingListOfBooksReadItemDataList) { item ->
-                            GoalReadingListOfBooksReadItem(
-                                data = item,
-                                onClick = navigateToHomeViewDetail
-                            )
-                        }
-                    }
-                }
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
