@@ -16,7 +16,7 @@ class ViewDetailViewModel @Inject constructor() : ViewModel() {
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
 
     init {
-        title = "dqwdftuygibhnoimxtrcyvgbhj"
-        content = "dwqvbhjknlzrxdtcfvgbjh"
+        _titleTextState.value = "임시데이터 임시데이터 임시데이터"
+        _contentTextState.value = "임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터"
     }
 }
