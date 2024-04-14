@@ -61,6 +61,7 @@ fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         errorMessage = stringResource(R.string.error_title),
                         lengthLimit = homeAddBookViewModel.titleTextMaxLength,
+                        updateTextValue = homeAddBookViewModel::updateTitleTextState
                     )
                     MindWayTextField(
                         title = stringResource(R.string.content),
@@ -68,6 +69,7 @@ fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_content),
                         errorMessage = stringResource(R.string.error_content),
                         lengthLimit = homeAddBookViewModel.contentTextMaxLength,
+                        updateTextValue = homeAddBookViewModel::updateContentTextState
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(

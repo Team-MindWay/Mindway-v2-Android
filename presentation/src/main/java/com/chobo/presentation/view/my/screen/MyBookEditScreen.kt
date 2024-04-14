@@ -55,19 +55,22 @@ fun MyBookEditScreen(
                     title = stringResource(R.string.title),
                     textState = titleTextState,
                     placeholder = stringResource(R.string.please_enter_the_book_title),
-                    errorMessage = stringResource(R.string.please_enter_the_book_title)
+                    errorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = myBookEditViewModel::updateTitleTextState
                 )
                 MindWayTextField(
                     title = stringResource(R.string.writer),
                     textState = writeTextState,
                     placeholder = stringResource(R.string.please_enter_the_book_writer),
-                    errorMessage = stringResource(R.string.please_enter_the_book_writer)
+                    errorMessage = stringResource(R.string.please_enter_the_book_writer),
+                    updateTextValue = myBookEditViewModel::updateWriteTextState
                 )
                 MindWayTextField(
                     title = stringResource(R.string.link),
                     textState = linkTextState,
                     placeholder = stringResource(R.string.please_enter_the_link),
-                    errorMessage = stringResource(R.string.please_enter_the_link)
+                    errorMessage = stringResource(R.string.please_enter_the_link),
+                    updateTextValue = myBookEditViewModel::updateLinkTextState
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
