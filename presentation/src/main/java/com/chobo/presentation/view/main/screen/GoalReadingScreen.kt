@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,7 +39,8 @@ fun GoalReadingScreen(
             Spacer(modifier = Modifier.height(20.dp))
             GoalReadingTopAppBar(
                 startIconOnClick = { navigateToBack() },
-                endIconOnClick = { }
+                endIconOnClick = { },
+                isData = goalReadingViewModel.goalBookRead.collectAsState().value == 0
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -66,6 +68,7 @@ fun GoalReadingScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(180.dp),
+                                goalBookRead = goalReadingViewModel.goalBookRead.collectAsState().value,
                                 readingGoalGraphData = goalReadingViewModel.goalReadingGraphDataList.map {
                                     ReadingGoalGraphData(
                                         numBooksRead = it.numBooksRead,
