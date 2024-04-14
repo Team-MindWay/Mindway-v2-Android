@@ -80,6 +80,14 @@ fun GoalReadingScreen(
                         )
                     }
                 }
+                MindWayToast(
+                    text = "dwadawdwada",
+                    isSuccess = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .offset(y = 64.dp),
+                )
             }
         }
     }
