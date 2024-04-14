@@ -5,10 +5,18 @@ import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
 import com.chobo.presentation.view.main.component.ReadingGoalGraphData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor() : ViewModel() {
+    private val _goalBookRead = MutableStateFlow(0)
+    init {
+        _goalBookRead.value = 15
+    }
+    val goalBookRead: StateFlow<Int>
+        get() = _goalBookRead
+
     private val _readingGoalGraphDataList = (
             listOf(
                 ReadingGoalGraphData(2, 3, false, "일"),
