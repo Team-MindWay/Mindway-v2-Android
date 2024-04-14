@@ -10,96 +10,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor() : ViewModel() {
-    private val _myBookListItemDataList = MutableStateFlow(
-        listOf(
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입dqwd니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwdqw니다",
-                writer = "작가dqwdqw입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwd니다",
-                writer = "작가입dqwdwq다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입dqwd니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwdqw니다",
-                writer = "작가dqwdqw입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwd니다",
-                writer = "작가입dqwdwq다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입dqwd니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwdqw니다",
-                writer = "작가dqwdqw입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwd니다",
-                writer = "작가입dqwdwq다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입dqwd니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입니다",
-                writer = "작가입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwdqw니다",
-                writer = "작가dqwdqw입니다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-            MyBookListItemData(
-                title = "제목입dqwd니다",
-                writer = "작가입dqwdwq다",
-                editOnclick = { },
-                trashCanOnclick = { }),
-        )
-    )
-    val myBookListItemDataList : StateFlow<List<MyBookListItemData>> = _myBookListItemDataList.asStateFlow()
+    private val _myBookListItemDataList = MutableStateFlow<List<MyBookListItemData>>(listOf())
+    val myBookListItemDataList: StateFlow<List<MyBookListItemData>> =
+        _myBookListItemDataList.asStateFlow()
 
-    private val _myName = MutableStateFlow("내이름")
-    val myName :StateFlow<String> = _myName.asStateFlow()
+    private val _myName = MutableStateFlow("")
+    val myName: StateFlow<String> = _myName.asStateFlow()
 
     fun optionOnClick() {
 
+    }
+    init {
+        _myName.value = "내이름"
+        _myBookListItemDataList.value =
+            listOf<MyBookListItemData>().apply {
+                repeat(30) {
+                    MyBookListItemData(
+                        title = "제목입니다",
+                        writer = "작가입니다",
+                        editOnclick = { },
+                        trashCanOnclick = { }
+                    )
+                }
+            }
     }
 }
