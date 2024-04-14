@@ -10,80 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookScreenViewModel @Inject constructor() : ViewModel() {
-    private val _novelDataList = MutableStateFlow(
-        listOf(
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-        )
-    )
+    private val _novelDataList = MutableStateFlow<List<BookListItemData>>(listOf())
     val novelDataList: StateFlow<List<BookListItemData>> = _novelDataList.asStateFlow()
 
-    private val _essayDataList = MutableStateFlow(
-        listOf(
-            BookListItemData(writer = "ds", title = "제옴ㄹ", "dsadsadsasad"),
-            BookListItemData(
-                writer = "a",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "cx",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(writer = "v", title = "제옴ㄹ", "dasdasd"),
-            BookListItemData(writer = "vza", title = "제옴ㄹ", "fdsfds"),
-            BookListItemData(
-                writer = "dsa",
-                title = "제옴ㄹ",
-                "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            ),
-            BookListItemData(writer = "gw", title = "제옴ㄹ", "czxczxc"),
-        )
-    )
+    private val _essayDataList = MutableStateFlow<List<BookListItemData>>(listOf())
     val essayDataList: StateFlow<List<BookListItemData>> = _essayDataList.asStateFlow()
 
     fun plusIconOnClick() {
@@ -98,4 +28,24 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
 
     }
 
+    init {
+        _novelDataList.value = listOf<BookListItemData>().apply {
+            repeat(30) {
+                BookListItemData(
+                    writer = "작가이름",
+                    title = "제옴ㄹ",
+                    content = "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
+                )
+            }
+        }
+        _novelDataList.value = listOf<BookListItemData>().apply {
+            repeat(30) {
+                BookListItemData(
+                    writer = "gw",
+                    title = "제옴ㄹ",
+                    content = "czxczxc"
+                )
+            }
+        }
+    }
 }
