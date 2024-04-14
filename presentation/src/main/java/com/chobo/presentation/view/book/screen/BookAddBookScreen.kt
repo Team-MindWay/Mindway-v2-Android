@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
+import com.chobo.presentation.view.book.component.BookPopUp
 import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
@@ -34,6 +40,7 @@ fun BookAddBookScreen(
     val titleTextState by bookAddBookViewModel.titleTextState.collectAsState()
     val writeTextState by bookAddBookViewModel.writeTextState.collectAsState()
     val linkTextState by bookAddBookViewModel.linkTextState.collectAsState()
+    var checkBookDialog by remember { mutableStateOf(true) }
 
     MindWayAndroidTheme { colors, _ ->
         Column (modifier = modifier.background(color = colors.WHITE)){
@@ -60,6 +67,13 @@ fun BookAddBookScreen(
                             vertical = 28.dp
                         )
                 ) {
+                    if (checkBookDialog) {
+                        Dialog(onDismissRequest = { checkBookDialog = false }) {
+                            BookPopUp(
+                                onDismiss = { checkBookDialog = false }
+                            )
+                        }
+                    }
                     MindWayTextField(
                         title = stringResource(id = R.string.title),
                         textState = titleTextState,
