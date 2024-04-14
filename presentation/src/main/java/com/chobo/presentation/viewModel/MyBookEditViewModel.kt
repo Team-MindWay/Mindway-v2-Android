@@ -4,22 +4,29 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class MyBookEditViewModel @Inject constructor():ViewModel() {
     private val _titleTextState = MutableStateFlow("임시 데이터입니당")
-    val titleTextState: StateFlow<String>
-        get() = _titleTextState
+    val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
 
     private val _writeTextState = MutableStateFlow("임시 데이터입니당임시 데이터입니당임시 데이터입니당")
-    val writeTextState: StateFlow<String>
-        get() = _writeTextState
+    val writeTextState: StateFlow<String> = _writeTextState.asStateFlow()
 
     private val _linkTextState = MutableStateFlow("임시 데이터입니당임시 데이터입니당임시 데이터입니당")
-    val linkTextState: StateFlow<String>
-        get() = _linkTextState
+    val linkTextState: StateFlow<String> = _linkTextState.asStateFlow()
 
+    fun updateTitleTextState(input:String){
+        _titleTextState.value = input
+    }
+    fun updateWriteTextState(input:String){
+        _writeTextState.value = input
+    }
+    fun updateLinkTextState(input:String){
+        _linkTextState.value = input
+    }
     fun checkButton() {
 
     }
