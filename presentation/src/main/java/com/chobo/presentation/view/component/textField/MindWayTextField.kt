@@ -12,9 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
@@ -31,15 +28,16 @@ fun MindWayTextField(
     outSideModifier: Modifier = Modifier,
     textFieldModifier: Modifier = Modifier,
     title: String,
-    textState: MutableState<String>,
+    textState: String,
     placeholder: String,
     errorMessage: String,
+    updateTextValue: (String) -> Unit,
     lengthLimit: Int = 0,
     isTextRight: Boolean = false,
 ) {
 
     val lengthCheck = if (lengthLimit != 0) {
-        textState.value.length >= lengthLimit
+        textState.length >= lengthLimit
     } else {
         false
     }
@@ -64,7 +62,7 @@ fun MindWayTextField(
                 if (lengthLimit != 0) {
                     Row {
                         Text(
-                            text = textState.value.length.toString(),
+                            text = textState.length.toString(),
                             style = typography.labelLarge,
                             fontWeight = FontWeight.Normal,
                             color = colors.MAIN,
@@ -100,7 +98,7 @@ fun MindWayTextField(
                             textState.value = newText
                         }
                     },
-                    value = textState.value,
+                    value = textState,
                     textStyle = typography.bodySmall.copy(
                         fontWeight = FontWeight.Normal,
                         color = colors.Black,
@@ -118,7 +116,7 @@ fun MindWayTextField(
                         .padding(16.dp)
                         .fillMaxWidth()
                 ) {
-                    if (!isTextRight && (textState.value == "")) {
+                    if (!isTextRight && (textState == "")) {
                         Text(
                             text = placeholder,
                             style = typography.bodySmall,
@@ -151,14 +149,12 @@ fun MindWayTextField(
 @Preview
 @Composable
 fun Preview() {
-    val textState = remember {
-        mutableStateOf("")
-    }
     MindWayTextField(
         title = "제목이다",
-        textState = textState,
+        textState = "가나다라",
         placeholder = "힌트다",
         isTextRight = false,
         errorMessage = "에러니까 고치셈",
+        updateTextValue = {}
     )
 }
