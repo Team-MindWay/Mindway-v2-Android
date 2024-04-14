@@ -25,8 +25,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun MindWayTextField(
-    outSideModifier: Modifier = Modifier,
-    textFieldModifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
     title: String,
     textState: String,
     placeholder: String,
@@ -35,18 +34,16 @@ fun MindWayTextField(
     lengthLimit: Int = 0,
     isTextRight: Boolean = false,
 ) {
-
     val lengthCheck = if (lengthLimit != 0) {
         textState.length >= lengthLimit
     } else {
         false
     }
-    val isError = lengthCheck
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
-            modifier = outSideModifier
+            modifier = modifier.background(color = colors.WHITE)
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -77,10 +74,10 @@ fun MindWayTextField(
                 }
             }
             Box(
-                modifier = textFieldModifier
+                modifier = Modifier
                     .border(
                         width = 1.dp,
-                        color = if (isError) colors.SYSTEM else colors.GRAY100,
+                        color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .background(
@@ -134,7 +131,7 @@ fun MindWayTextField(
                     }
                 }
             }
-            if (isError) {
+            if (lengthCheck) {
                 Text(
                     text = errorMessage,
                     style = typography.labelLarge,

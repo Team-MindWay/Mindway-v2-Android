@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +38,7 @@ fun MyScreen(
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
 
     MindWayAndroidTheme { colors, typography ->
-        Column (modifier = modifier.background(color = colors.WHITE)){
+        Column(modifier = modifier.background(color = colors.WHITE)) {
             Spacer(modifier = Modifier.height(43.dp))
             MyNameCard(
                 name = myName,
