@@ -41,12 +41,7 @@ fun MyBookListItem(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .shadow(
-                    elevation = 20.dp,
-                    spotColor = colors.CardShadow,
-                    ambientColor = colors.CardShadow
-                )
+            modifier = modifier
                 .fillMaxWidth()
                 .background(
                     color = colors.WHITE,
