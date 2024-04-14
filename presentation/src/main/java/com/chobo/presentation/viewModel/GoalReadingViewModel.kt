@@ -17,18 +17,19 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     val goalBookRead: StateFlow<Int>
         get() = _goalBookRead
 
-    private val _goalReadingGraphDataList = (
-            listOf(
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(2, 3, true, "늘"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(3, 3, false, "오"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-                ReadingGoalGraphData(3, 3, false, "오"),
-                ReadingGoalGraphData(1, 3, false, "오"),
-            )
-            )
-    val goalReadingGraphDataList = _goalReadingGraphDataList
+    private val _goalReadingGraphDataList = MutableStateFlow(
+        listOf(
+            GoalReadingGraphData(1, 3, false, "오"),
+            GoalReadingGraphData(2, 3, true, "늘"),
+            GoalReadingGraphData(1, 3, false, "오"),
+            GoalReadingGraphData(3, 3, false, "오"),
+            GoalReadingGraphData(1, 3, false, "오"),
+            GoalReadingGraphData(3, 3, false, "오"),
+            GoalReadingGraphData(1, 3, false, "오"),
+        )
+    )
+    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> =
+        _goalReadingGraphDataList.asStateFlow()
 
     private val _goalReadingListOfBooksReadItemDataList = (
             listOf(

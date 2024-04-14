@@ -20,8 +20,6 @@ import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.HomeViewModel
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
 fun HomeScreen(
@@ -31,7 +29,7 @@ fun HomeScreen(
 ) {
     val titleTextState by homeViewModel.titleTextState.collectAsState()
     val contentTextState by homeViewModel.contentTextState.collectAsState()
-    val readingGoalGraphDataList by homeViewModel.readingGoalGraphDataList.collectAsState()
+    val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsState()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsState()
 
     MindWayAndroidTheme { colors, typography ->

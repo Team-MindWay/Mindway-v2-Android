@@ -2,7 +2,7 @@ package com.chobo.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
-import com.chobo.presentation.view.main.component.ReadingGoalGraphData
+import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,18 +14,18 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _goalBookRead = MutableStateFlow(0)
     val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
 
-    private val _readingGoalGraphDataList = MutableStateFlow(
+    private val _GoalReadingGraphDataList = MutableStateFlow(
             listOf(
-                ReadingGoalGraphData(2, 3, false, "일"),
-                ReadingGoalGraphData(3, 3, false, "일"),
-                ReadingGoalGraphData(2, 3, false, "일"),
-                ReadingGoalGraphData(1, 3, true, "일"),
-                ReadingGoalGraphData(2, 3, false, "일"),
-                ReadingGoalGraphData(1, 3, false, "일"),
-                ReadingGoalGraphData(2, 3, false, "일"),
+                GoalReadingGraphData(2, 3, false, "일"),
+                GoalReadingGraphData(3, 3, false, "일"),
+                GoalReadingGraphData(2, 3, false, "일"),
+                GoalReadingGraphData(1, 3, true, "일"),
+                GoalReadingGraphData(2, 3, false, "일"),
+                GoalReadingGraphData(1, 3, false, "일"),
+                GoalReadingGraphData(2, 3, false, "일"),
             )
             )
-    val readingGoalGraphDataList:StateFlow<List<ReadingGoalGraphData>> = _readingGoalGraphDataList.asStateFlow()
+    val goalReadingGraphDataList:StateFlow<List<GoalReadingGraphData>> = _GoalReadingGraphDataList.asStateFlow()
 
     private val _bookKingOfTheMonthDataList = MutableStateFlow(
             listOf(

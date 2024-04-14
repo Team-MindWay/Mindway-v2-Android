@@ -27,7 +27,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-data class ReadingGoalGraphData(
+data class GoalReadingGraphData(
     val numBooksRead: Int,
     val maxBooksRead: Int,
     val isCurrentDate: Boolean,
@@ -38,7 +38,7 @@ data class ReadingGoalGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier,
     isHasData: Boolean,
-    readNumberList: List<ReadingGoalGraphData> = listOf(),
+    readNumberList: List<GoalReadingGraphData> = listOf(),
     onClick: () -> Unit,
     goalBookRead: StateFlow<Int>,
 ) {
@@ -166,13 +166,13 @@ fun HomeGoalReadingChartPreview() {
             .height(211.dp),
         isHasData = true,
         readNumberList = listOf(
-            ReadingGoalGraphData(2, 3, false, "일"),
-            ReadingGoalGraphData(3, 3, false, "일"),
-            ReadingGoalGraphData(2, 3, false, "일"),
-            ReadingGoalGraphData(1, 3, true, "일"),
-            ReadingGoalGraphData(2, 3, false, "일"),
-            ReadingGoalGraphData(1, 3, false, "일"),
-            ReadingGoalGraphData(2, 3, false, "일"),
+            GoalReadingGraphData(2, 3, false, "일"),
+            GoalReadingGraphData(3, 3, false, "일"),
+            GoalReadingGraphData(2, 3, false, "일"),
+            GoalReadingGraphData(1, 3, true, "일"),
+            GoalReadingGraphData(2, 3, false, "일"),
+            GoalReadingGraphData(1, 3, false, "일"),
+            GoalReadingGraphData(2, 3, false, "일"),
         ),
         onClick = { },
         goalBookRead =_goalBookRead
