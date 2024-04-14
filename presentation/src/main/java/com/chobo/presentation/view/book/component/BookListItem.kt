@@ -1,7 +1,7 @@
 package com.chobo.presentation.view.book.component
 
+import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,7 +29,6 @@ data class BookListItemData(
 @Composable
 fun BookListItem(data: BookListItemData) {
     MindWayAndroidTheme { colors, typography ->
-        Spacer(modifier = Modifier.height(20.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
