@@ -18,6 +18,12 @@ class HomeAddBookViewModel @Inject constructor() : ViewModel() {
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
     val contentTextMaxLength
         get() = 300
+    fun updateTitleTextState(input:String){
+        _titleTextState.value = input
+    }
+    fun updateContentTextState(input:String){
+        _contentTextState.value = input
+    }
     fun checkButton() {
 
     }
