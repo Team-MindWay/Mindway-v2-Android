@@ -10,15 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
@@ -32,12 +31,9 @@ fun HomeAddBookScreen(
     homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
 ) {
-    val titleTextState = remember {
-        mutableStateOf(homeAddBookViewModel.titleTextState.value)
-    }
-    val contentTextState = remember {
-        mutableStateOf(homeAddBookViewModel.contentTextState.value)
-    }
+    val titleTextState by homeAddBookViewModel.titleTextState.collectAsState()
+    val contentTextState by homeAddBookViewModel.contentTextState.collectAsState()
+
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             Spacer(modifier = Modifier.height(20.dp))
@@ -65,6 +61,7 @@ fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         errorMessage = stringResource(R.string.error_title),
                         lengthLimit = homeAddBookViewModel.titleTextMaxLength,
+                        updateTextValue = homeAddBookViewModel::updateTitleTextState
                     )
                     MindWayTextField(
                         title = stringResource(R.string.content),
@@ -72,6 +69,7 @@ fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_content),
                         errorMessage = stringResource(R.string.error_content),
                         lengthLimit = homeAddBookViewModel.contentTextMaxLength,
+                        updateTextValue = homeAddBookViewModel::updateContentTextState
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(

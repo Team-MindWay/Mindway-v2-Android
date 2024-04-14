@@ -27,7 +27,7 @@ fun GoalReadingChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
     goalBookRead:Int,
-    readingGoalGraphData: List<ReadingGoalGraphData> = listOf(),
+    goalReadingGraphData: List<GoalReadingGraphData> = listOf(),
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -51,7 +51,7 @@ fun GoalReadingChart(
             if (isHasData) {
                 GoalReadingIndicator(
                     goalBookRead = goalBookRead,
-                    numBooksRead = readingGoalGraphData.sumOf { it.numBooksRead },
+                    numBooksRead = goalReadingGraphData.sumOf { it.numBooksRead },
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.2419f),
@@ -63,7 +63,7 @@ fun GoalReadingChart(
                         .fillMaxWidth(0.9091f)
                         .height(78.dp)
                 ) {
-                    readingGoalGraphData.forEach {
+                    goalReadingGraphData.forEach {
                         GoalReadingGraph(
                             numBooksRead = it.numBooksRead,
                             maxBooksRead = it.maxBooksRead,
@@ -95,14 +95,14 @@ fun GoalReadingChartPreview() {
             .width(312.dp)
             .height(180.dp),
         isHasData = true,
-        readingGoalGraphData = listOf(
-            ReadingGoalGraphData(1, 3, false, "오"),
-            ReadingGoalGraphData(2, 3, true, "늘"),
-            ReadingGoalGraphData(1, 3, false, "오"),
-            ReadingGoalGraphData(3, 3, false, "오"),
-            ReadingGoalGraphData(1, 3, false, "오"),
-            ReadingGoalGraphData(3, 3, false, "오"),
-            ReadingGoalGraphData(1, 3, false, "오"),
+        goalReadingGraphData = listOf(
+            GoalReadingGraphData(1, 3, false, "오"),
+            GoalReadingGraphData(2, 3, true, "늘"),
+            GoalReadingGraphData(1, 3, false, "오"),
+            GoalReadingGraphData(3, 3, false, "오"),
+            GoalReadingGraphData(1, 3, false, "오"),
+            GoalReadingGraphData(3, 3, false, "오"),
+            GoalReadingGraphData(1, 3, false, "오"),
         ),
         goalBookRead = 12
     )

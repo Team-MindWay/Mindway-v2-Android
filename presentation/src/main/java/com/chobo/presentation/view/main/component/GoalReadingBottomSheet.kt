@@ -83,7 +83,7 @@ fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
                         }
                     }
                 }
-                MindWayTextField(
+/*                MindWayTextField(
                     outSideModifier = Modifier
                         .fillMaxWidth()
                         .height(119.dp),
@@ -95,7 +95,7 @@ fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
                     placeholder = "권",
                     isTextRight = true,
                     errorMessage = stringResource(id = R.string.goal_reading_error),
-                )
+                )*/
             }
             MindWayButton(
                 modifier = Modifier

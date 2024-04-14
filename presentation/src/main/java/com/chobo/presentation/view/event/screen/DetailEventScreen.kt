@@ -10,13 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.event.component.DetailEventTopBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -28,6 +29,11 @@ fun DetailEventScreen(
     detailEventViewModel: DetailEventViewModel = viewModel(),
     navigateToBack: () -> Unit,
 ) {
+    val title by detailEventViewModel.title.collectAsState()
+    val content by detailEventViewModel.content.collectAsState()
+    val date by detailEventViewModel.date.collectAsState()
+    val imageResId by detailEventViewModel.imageResId.collectAsState()
+
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             Spacer(modifier = Modifier.height(20.dp))
@@ -38,7 +44,7 @@ fun DetailEventScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 Image(
-                    painter = painterResource(detailEventViewModel.returnImageResId()),
+                    painter = painterResource(imageResId),
                     contentDescription = "Event Image",
                     modifier = Modifier
                         .padding(vertical = 20.dp)
@@ -47,9 +53,9 @@ fun DetailEventScreen(
                         .clip(shape = RoundedCornerShape(8.dp))
                 )
                 DetailEventContent(
-                    title = detailEventViewModel.returnTitle(),
-                    content = detailEventViewModel.returnContent(),
-                    date = detailEventViewModel.returnDate()
+                    title = title,
+                    content = content,
+                    date = date,
                 )
             }
         }
