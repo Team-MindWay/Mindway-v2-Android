@@ -19,6 +19,7 @@ fun MindWayCombinationView(
     topDestination: MutableState<MindWayNavBarItemType>,
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
+    navigateToBookAddBook: () -> Unit,
 ) {
     MindWayScaffold(
         currentDestination = topDestination,
@@ -35,7 +36,7 @@ fun MindWayCombinationView(
                 navigateToDetailEvent = { navigateToDetailEvent() },
             )
             EVENT -> EventScreen(navigateToDetailEvent = { navigateToDetailEvent() })
-            BOOKS -> BookScreen()
+            BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
             MY -> MyScreen()
         }
     }
@@ -50,6 +51,7 @@ fun MindWayCombinationViewPreview() {
     MindWayCombinationView(
         topDestination = topDestination,
         navigateToDetailEvent = { },
-        navigateToGoalReading = {}
+        navigateToGoalReading = {},
+        navigateToBookAddBook = {}
     )
 }
