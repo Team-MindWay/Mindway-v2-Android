@@ -36,15 +36,13 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
             GoalReadingGraphData(2, 3, false, "일"),
         )
         _goalReadingListOfBooksReadItemDataList.value =
-            listOf<GoalReadingListOfBooksReadItemData>().apply {
-                repeat(30) {
-                    GoalReadingListOfBooksReadItemData(
-                        12,
-                        12,
-                        "제목",
-                        "내용입니다 그렇ewjiofhowehfluieifnhcielhuferhwiegir습니다"
-                    )
-                }
+            MutableList(30) {
+                GoalReadingListOfBooksReadItemData(
+                    12,
+                    12,
+                    "제목",
+                    "내용입니다 그렇ewjiofhowehfluieifnhcielhuferhwiegir습니다"
+                )
             }
     }
 
