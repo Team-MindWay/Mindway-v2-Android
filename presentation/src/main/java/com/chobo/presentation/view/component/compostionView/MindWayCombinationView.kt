@@ -24,9 +24,7 @@ fun MindWayCombinationView(
         currentDestination = topDestination,
         isTopAppBar = topDestination.value == HOME,
         startIcon = {
-            if (topDestination.value != HOME) {
-                null
-            } else {
+            if (topDestination.value == HOME) {
                 LogoIcon()
             }
         }
@@ -36,7 +34,6 @@ fun MindWayCombinationView(
                 navigateToGoalReading = { navigateToGoalReading() },
                 navigateToDetailEvent = { navigateToDetailEvent() },
             )
-
             EVENT -> EventScreen(navigateToDetailEvent = { navigateToDetailEvent() })
             BOOKS -> BookScreen()
             MY -> MyScreen()
@@ -48,7 +45,7 @@ fun MindWayCombinationView(
 @Composable
 fun MindWayCombinationViewPreview() {
     val topDestination = remember {
-        mutableStateOf(MindWayNavBarItemType.HOME)
+        mutableStateOf(HOME)
     }
     MindWayCombinationView(
         topDestination = topDestination,
