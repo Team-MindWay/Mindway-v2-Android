@@ -68,14 +68,7 @@ fun GoalReadingScreen(
                                     .fillMaxWidth()
                                     .height(180.dp),
                                 goalBookRead = goalReadingViewModel.goalBookRead.collectAsState().value,
-                                goalReadingGraphData = goalReadingViewModel.goalReadingGraphDataList.map {
-                                    GoalReadingGraphData(
-                                        numBooksRead = it.numBooksRead,
-                                        maxBooksRead = it.maxBooksRead,
-                                        isCurrentDate = it.isCurrentDate,
-                                        today = it.today
-                                    )
-                                }
+                                goalReadingGraphData = goalReadingGraphDataList
                             )
                         }
                         item {
