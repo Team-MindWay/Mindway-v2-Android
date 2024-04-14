@@ -20,18 +20,17 @@ class MyViewModel @Inject constructor() : ViewModel() {
     fun optionOnClick() {
 
     }
+
     init {
         _myName.value = "내이름"
         _myBookListItemDataList.value =
-            listOf<MyBookListItemData>().apply {
-                repeat(30) {
-                    MyBookListItemData(
-                        title = "제목입니다",
-                        writer = "작가입니다",
-                        editOnclick = { },
-                        trashCanOnclick = { }
-                    )
-                }
+            MutableList(30) {
+                MyBookListItemData(
+                    title = "제목입니다",
+                    writer = "작가입니다",
+                    editOnclick = { },
+                    trashCanOnclick = { }
+                )
             }
     }
 }

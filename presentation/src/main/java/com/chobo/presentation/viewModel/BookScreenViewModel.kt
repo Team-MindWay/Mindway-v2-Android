@@ -29,23 +29,19 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
     }
 
     init {
-        _novelDataList.value = listOf<BookListItemData>().apply {
-            repeat(30) {
-                BookListItemData(
-                    writer = "작가이름",
-                    title = "제옴ㄹ",
-                    content = "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-                )
-            }
+        _novelDataList.value = MutableList(30) { _ ->
+            BookListItemData(
+                writer = "작가이름",
+                title = "제옴ㄹ",
+                content = "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
+            )
         }
-        _novelDataList.value = listOf<BookListItemData>().apply {
-            repeat(30) {
-                BookListItemData(
-                    writer = "gw",
-                    title = "제옴ㄹ",
-                    content = "czxczxc"
-                )
-            }
+        _essayDataList.value = MutableList(30) { _ ->
+            BookListItemData(
+                writer = "gw",
+                title = "제옴ㄹ",
+                content = "czxczxc"
+            )
         }
     }
 }
