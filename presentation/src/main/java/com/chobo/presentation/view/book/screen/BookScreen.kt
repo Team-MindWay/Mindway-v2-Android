@@ -7,8 +7,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -97,20 +99,19 @@ fun BookScreen(
                     verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp,
-                        )
+                        .padding(horizontal = 24.dp)
                         .fillMaxSize()
                 ) {
                     when (page) {
                         0 -> {
+                            item { Spacer(modifier = Modifier.height(28.dp)) }
                             itemsIndexed(novelDataList) { index, item ->
                                 BookListItem(data = item)
                             }
                         }
 
                         1 -> {
+                            item { Spacer(modifier = Modifier.height(28.dp))}
                             itemsIndexed(essayDataList) { index, item ->
                                 BookListItem(data = item)
                             }
