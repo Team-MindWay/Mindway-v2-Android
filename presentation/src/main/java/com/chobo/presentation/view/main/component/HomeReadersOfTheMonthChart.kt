@@ -34,14 +34,14 @@ fun HomeReadersOfTheMonthChart(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 modifier = modifier
+                    .shadow(
+                        elevation = 20.dp,
+                        spotColor = colors.CardShadow,
+                        ambientColor = colors.CardShadow,
+                    )
                     .background(
                         color = colors.WHITE,
                         shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .shadow(
-                        elevation = 20.dp,
-                        spotColor = colors.WHITE,
-                        ambientColor = colors.WHITE
                     )
                     .padding(all = 24.dp)
             ) {
