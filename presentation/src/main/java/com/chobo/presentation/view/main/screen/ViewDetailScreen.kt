@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,6 +29,9 @@ fun ViewDetailScreen(
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
     navigateToBack: () -> Unit
 ) {
+    val titleTextState by viewDetailViewModel.titleTextState.collectAsState()
+    val contentTextState by viewDetailViewModel.contentTextState.collectAsState()
+
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier
             .fillMaxSize()
@@ -46,11 +51,11 @@ fun ViewDetailScreen(
             ) {
                 ViewDetailTextCard(
                     title = stringResource(R.string.title),
-                    content = viewDetailViewModel.title,
+                    content = titleTextState,
                 )
                 ViewDetailTextCard(
                     title = stringResource(R.string.content),
-                    content = viewDetailViewModel.content,
+                    content = contentTextState,
                 )
             }
         }
