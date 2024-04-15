@@ -38,6 +38,10 @@ fun MindWayCombinationView(
             EVENT -> EventScreen(navigateToDetailEvent = { navigateToDetailEvent() })
             BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
             MY -> MyScreen()
+                MY -> MyScreen(onClick = {
+                    coroutineScope.launch {
+                        sheetState.show()
+                    }
         }
     }
 }
