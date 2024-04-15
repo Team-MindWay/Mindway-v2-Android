@@ -53,11 +53,13 @@ fun MyScreen(
                         title = selectedBookTitle,
                         cancelOnclick = {
                             bookDeleteDialog = false
-                            selectedBookTitle = "" },
+                            selectedBookTitle = ""
+                        },
                         checkOnclick = {
                             if(selectedIndex != -1) {
                                 myViewModel.removeBookItem(selectedIndex)
-                                selectedIndex = -1 }
+                                selectedIndex = -1
+                            }
                             bookDeleteDialog = false
                             selectedBookTitle = ""
                         }
