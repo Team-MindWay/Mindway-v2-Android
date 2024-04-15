@@ -44,11 +44,7 @@ fun BookListItem(data: BookListItemData) {
                 )
                 .padding(all = 24.dp),
         ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            Column {
                 Text(
                     text = data.title,
                     style = typography.bodyLarge,
@@ -56,17 +52,17 @@ fun BookListItem(data: BookListItemData) {
                     color = colors.Black,
                 )
                 Text(
-                    text = data.writer,
-                    style = typography.labelLarge,
+                    text = data.content,
+                    style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
-                    color = colors.GRAY400,
+                    color = colors.Black,
                 )
             }
             Text(
-                text = data.content,
-                style = typography.bodySmall,
+                text = data.writer,
+                style = typography.labelLarge,
                 fontWeight = FontWeight.Normal,
-                color = colors.Black,
+                color = colors.GRAY400,
             )
         }
     }

@@ -41,7 +41,8 @@ import kotlinx.coroutines.launch
 fun BookScreen(
     modifier: Modifier = Modifier,
     bookViewModel: BookScreenViewModel = viewModel(),
-) {
+    navigateToBookAddBook: () -> Unit,
+    ) {
     val novelDataList by bookViewModel.novelDataList.collectAsState()
     val essayDataList by bookViewModel.essayDataList.collectAsState()
 
@@ -90,7 +91,7 @@ fun BookScreen(
                     modifier = Modifier.clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null
-                    ) { bookViewModel.plusIconOnClick() },
+                    ) { navigateToBookAddBook() },
                     tint = colors.Black
                 )
             }
@@ -126,5 +127,5 @@ fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookScreen()
+    BookScreen(navigateToBookAddBook = {  })
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.chobo.presentation.view.book.navigation.bookAddBook
+import com.chobo.presentation.view.book.navigation.navigationToBookAddBook
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
 import com.chobo.presentation.view.component.compostionView.CompostionView
 import com.chobo.presentation.view.component.compostionView.navigationToCompostionView
@@ -41,6 +42,7 @@ fun MindWayNavHost(
             topDestination = topDestination,
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
+            navigateToBookAddBook = navController::navigationToBookAddBook,
         )
 
         goalReading(

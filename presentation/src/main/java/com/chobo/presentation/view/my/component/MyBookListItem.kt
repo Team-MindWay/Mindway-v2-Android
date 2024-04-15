@@ -31,6 +31,7 @@ data class MyBookListItemData(
 
 @Composable
 fun MyBookListItem(
+    modifier: Modifier = Modifier,
     title: String,
     writer: String,
     editOnclick: () -> Unit,
@@ -40,11 +41,11 @@ fun MyBookListItem(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
+            modifier = modifier
                 .shadow(
                     elevation = 20.dp,
-                    spotColor = colors.CardShadow,
-                    ambientColor = colors.CardShadow
+                    spotColor = colors.WHITE,
+                    ambientColor = colors.WHITE
                 )
                 .fillMaxWidth()
                 .background(
