@@ -32,6 +32,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.icon.PlusIcon
+import com.chobo.presentation.view.component.spacer.MindWayListSpacerM
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.BookScreenViewModel
 import kotlinx.coroutines.launch
@@ -79,9 +80,7 @@ fun BookScreen(
                             tabName = tabName,
                             onClick = {
                                 coroutineScope.launch {
-                                    pagerState.animateScrollToPage(
-                                        index
-                                    )
+                                    pagerState.animateScrollToPage(index)
                                 }
                             }
                         )
@@ -105,14 +104,14 @@ fun BookScreen(
                 ) {
                     when (page) {
                         0 -> {
-                            item { Spacer(modifier = Modifier.height(28.dp)) }
+                            item { MindWayListSpacerM() }
                             itemsIndexed(novelDataList) { index, item ->
                                 BookListItem(data = item)
                             }
                         }
 
                         1 -> {
-                            item { Spacer(modifier = Modifier.height(28.dp))}
+                            item { MindWayListSpacerM() }
                             itemsIndexed(essayDataList) { index, item ->
                                 BookListItem(data = item)
                             }
