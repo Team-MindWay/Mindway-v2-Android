@@ -24,13 +24,21 @@ class MyViewModel @Inject constructor() : ViewModel() {
     init {
         _myName.value = "내이름"
         _myBookListItemDataList.value =
-            MutableList(30) {
+            MutableList(5) { index ->
                 MyBookListItemData(
                     title = "제목입니다",
                     writer = "작가입니다",
                     editOnclick = { },
-                    trashCanOnclick = { }
+                    trashCanOnclick = { removeBookItem(index) }
                 )
             }
+    }
+
+    fun removeBookItem(position: Int) {
+        val currentList = _myBookListItemDataList.value.toMutableList()
+        if (position in currentList.indices) {
+            currentList.removeAt(position)
+            _myBookListItemDataList.value = currentList
+        }
     }
 }

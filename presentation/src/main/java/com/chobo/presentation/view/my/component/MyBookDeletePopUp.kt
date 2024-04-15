@@ -99,7 +99,7 @@ fun MyBookDeletePopUp(
                         .weight(1f)
                         .padding(vertical = 12.dp),
                     text = stringResource(R.string.cancel),
-                    onClick = { cancelOnclick() },
+                    onClick = cancelOnclick,
                     buttonColor = colors.GRAY600
                 )
                 MindWayButton(
@@ -107,7 +107,8 @@ fun MyBookDeletePopUp(
                         .weight(1f)
                         .padding(vertical = 12.dp),
                     text = stringResource(R.string.check),
-                    onClick = { checkOnclick() })
+                    onClick = checkOnclick
+                )
             }
         }
     }
