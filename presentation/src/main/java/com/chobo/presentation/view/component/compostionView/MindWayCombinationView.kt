@@ -49,11 +49,11 @@ fun MindWayCombinationView(
         ) {
             when (topDestination.value) {
                 HOME -> HomeScreen(
-                    navigateToGoalReading = { navigateToGoalReading() },
-                    navigateToDetailEvent = { navigateToDetailEvent() },
+                    navigateToGoalReading = navigateToGoalReading,
+                    navigateToDetailEvent = navigateToDetailEvent,
                 )
 
-                EVENT -> EventScreen(navigateToDetailEvent = { navigateToDetailEvent() })
+                EVENT -> EventScreen(navigateToDetailEvent = navigateToDetailEvent)
                 BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
                 MY -> MyScreen(
                     navigateToMyBookEdit = navigateToMyBookEdit,
