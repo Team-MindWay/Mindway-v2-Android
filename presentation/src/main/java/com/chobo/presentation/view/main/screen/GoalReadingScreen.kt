@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -44,20 +43,25 @@ fun GoalReadingScreen(
     navigateToHomeViewDetail: () -> Unit,
 ) {
     val goalBookRead by goalReadingViewModel.goalBookRead.collectAsState()
+    val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsState()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsState()
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     MindWayBottomSheetDialog(
         sheetContent = {
-            GoalReadingBottomSheet(onclick = {  })
+            GoalReadingBottomSheet(
+                textState = goalBookReadSetting,
+                onclick = goalReadingViewModel::goalBookReadSettingOnClick,
+                updateTextValue = goalReadingViewModel::updateGoalBookReadSetting
+            )
         }
     ) { sheetState ->
         MindWayAndroidTheme { colors, _ ->
             Column(modifier = modifier.background(color = colors.WHITE)) {
                 Spacer(modifier = Modifier.height(20.dp))
                 GoalReadingTopAppBar(
-                    startIconOnClick =  navigateToBack ,
+                    startIconOnClick = navigateToBack,
                     endIconOnClick = {
                         coroutineScope.launch { sheetState.show() }
                     },
