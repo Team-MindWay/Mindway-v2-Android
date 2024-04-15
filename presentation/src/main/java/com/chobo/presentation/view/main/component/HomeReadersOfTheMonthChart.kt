@@ -25,11 +25,10 @@ data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean,
     bookKingOfTheMonthData: List<BookKingOfTheMonthData>
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (isHasData) {
+        if (bookKingOfTheMonthData.isNotEmpty()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),

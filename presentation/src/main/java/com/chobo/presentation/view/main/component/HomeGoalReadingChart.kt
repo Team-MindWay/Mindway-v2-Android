@@ -37,13 +37,12 @@ data class GoalReadingGraphData(
 @Composable
 fun HomeGoalReadingChart(
     modifier: Modifier,
-    isHasData: Boolean,
     readNumberList: List<GoalReadingGraphData> = listOf(),
     onClick: () -> Unit,
     goalBookRead: StateFlow<Int>,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (isHasData) {
+        if (readNumberList.isNotEmpty()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
