@@ -17,7 +17,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +32,7 @@ import com.chobo.presentation.viewModel.MyViewModel
 fun MyScreen(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = viewModel(),
+    onClick: () -> Unit,
 ) {
     val myName by myViewModel.myName.collectAsState()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
@@ -42,7 +42,7 @@ fun MyScreen(
             Spacer(modifier = Modifier.height(43.dp))
             MyNameCard(
                 name = myName,
-                onClick = { myViewModel.optionOnClick() },
+                onClick = { onClick() },
             )
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -83,5 +83,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen()
+    MyScreen {}
 }
