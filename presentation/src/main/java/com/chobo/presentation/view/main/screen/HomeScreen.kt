@@ -30,10 +30,11 @@ fun HomeScreen(
 ) {
     val titleTextState by homeViewModel.titleTextState.collectAsState()
     val contentTextState by homeViewModel.contentTextState.collectAsState()
+    val goalBookRead by homeViewModel.goalBookRead.collectAsState()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsState()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsState()
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,20 +46,24 @@ fun HomeScreen(
             HomeNoticeCard(
                 titleText = titleTextState,
                 content = contentTextState,
-                onClick = navigateToDetailEvent
+                onClick = navigateToDetailEvent,
+                modifier = Modifier
+                    .height(100.dp)
+                    .fillMaxWidth(),
             )
             HomeGoalReadingChart(
+                readNumberList = readingGoalGraphDataList,
+                onClick = navigateToGoalReading,
+                goalBookRead = goalBookRead,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(211.dp),
-                isHasData = true,
-                readNumberList = readingGoalGraphDataList,
-                onClick = navigateToGoalReading,
-                goalBookRead = homeViewModel.goalBookRead
             )
             HomeReadersOfTheMonthChart(
-                isHasData = true,
-                bookKingOfTheMonthData = bookKingOfTheMonthDataList
+                bookKingOfTheMonthData = bookKingOfTheMonthDataList,
+                modifier = Modifier
+                    .height(239.dp)
+                    .fillMaxWidth(),
             )
         }
     }
