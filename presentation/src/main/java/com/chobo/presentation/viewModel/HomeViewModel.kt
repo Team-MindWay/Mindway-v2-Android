@@ -27,13 +27,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _contentTextState = MutableStateFlow("")
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
-    fun homeNoticeCardOnClick() {
 
-    }
-
-    fun homeGoalReadingChartOnClick(index: Int) {
-
-    }
     init {
         _goalBookRead.value = 15
         _goalReadingGraphDataList.value = listOf(
