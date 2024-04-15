@@ -25,7 +25,6 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 data class MyBookListItemData(
     val title: String,
     val writer: String,
-    val editOnclick: () -> Unit,
     val trashCanOnclick: () -> Unit,
 )
 

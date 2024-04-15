@@ -32,13 +32,16 @@ import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.MyBookEditViewModel
 import com.chobo.presentation.viewModel.MyViewModel
 
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = viewModel(),
+    myBookEditViewModel: MyBookEditViewModel = viewModel(),
     onClick: () -> Unit,
+    navigateToMyBookEdit: () -> Unit,
 ) {
     val myName by myViewModel.myName.collectAsState()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
@@ -99,7 +102,10 @@ fun MyScreen(
                     MyBookListItem(
                         title = item.title,
                         writer = item.writer,
-                        editOnclick = { item.editOnclick },
+                        editOnclick = {
+                            myBookEditViewModel.initValue(index = index)
+                            navigateToMyBookEdit()
+                        },
                         trashCanOnclick = {
                             item.trashCanOnclick
                             bookDeleteDialog = true
@@ -116,5 +122,8 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen {}
+    MyScreen(
+        onClick = { },
+        navigateToMyBookEdit = { }
+    )
 }
