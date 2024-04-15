@@ -60,7 +60,7 @@ fun GoalReadingScreen(
             Column(modifier = modifier.background(color = colors.WHITE)) {
                 Spacer(modifier = Modifier.height(20.dp))
                 GoalReadingTopAppBar(
-                    startIconOnClick = { navigateToBack() },
+                    startIconOnClick =  navigateToBack ,
                     endIconOnClick = {
                         coroutineScope.launch {
                             sheetState.show()
