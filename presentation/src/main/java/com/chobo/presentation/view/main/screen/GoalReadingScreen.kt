@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -75,6 +76,11 @@ fun GoalReadingScreen(
                     }
                     items(goalReadingListOfBooksReadItemDataList) { item ->
                         GoalReadingListOfBooksReadItem(
+                            modifier = Modifier .shadow(
+                                elevation = 20.dp,
+                                spotColor = colors.CardShadow,
+                                ambientColor = colors.CardShadow,
+                            ),
                             data = item,
                             onClick = navigateToHomeViewDetail
                         )
