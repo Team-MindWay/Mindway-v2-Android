@@ -48,6 +48,10 @@ fun MyBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { navigateToIntro() }
             )
             Spacer(
                 modifier = Modifier
