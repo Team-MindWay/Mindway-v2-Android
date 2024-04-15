@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.my.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,10 +11,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,52 +38,63 @@ fun MyBookEditScreen(
     val titleTextState by myBookEditViewModel.titleTextState.collectAsState()
     val writeTextState by myBookEditViewModel.writeTextState.collectAsState()
     val linkTextState by myBookEditViewModel.linkTextState.collectAsState()
+    val focusManager = LocalFocusManager.current
+
     MindWayAndroidTheme { colors, _ ->
-        Column (modifier = modifier.background(colors.WHITE)){
-            BookEditTopAppBar(
-                startIconOnClick = { navigateToBack() },
-                endIconOnClick = {}
-            )
-            Column(
-                verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 28.dp
-                    )
-                    .imePadding()
+        CompositionLocalProvider(LocalFocusManager provides focusManager) {
+            Column(modifier = modifier
+                .background(colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures{
+                        focusManager.clearFocus()
+                    }
+                }
             ) {
-                MindWayTextField(
-                    title = stringResource(R.string.title),
-                    textState = titleTextState,
-                    placeholder = stringResource(R.string.please_enter_the_book_title),
-                    errorMessage = stringResource(R.string.please_enter_the_book_title),
-                    updateTextValue = myBookEditViewModel::updateTitleTextState
+                BookEditTopAppBar(
+                    startIconOnClick = { navigateToBack() },
+                    endIconOnClick = {}
                 )
-                MindWayTextField(
-                    title = stringResource(R.string.writer),
-                    textState = writeTextState,
-                    placeholder = stringResource(R.string.please_enter_the_book_writer),
-                    errorMessage = stringResource(R.string.please_enter_the_book_writer),
-                    updateTextValue = myBookEditViewModel::updateWriteTextState
-                )
-                MindWayTextField(
-                    title = stringResource(R.string.link),
-                    textState = linkTextState,
-                    placeholder = stringResource(R.string.please_enter_the_link),
-                    errorMessage = stringResource(R.string.please_enter_the_link),
-                    updateTextValue = myBookEditViewModel::updateLinkTextState
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                MindWayButton(
-                    text = stringResource(id = R.string.apply),
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
+                    horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    onClick = { myBookEditViewModel.checkButton() }
-                )
+                        .fillMaxSize()
+                        .padding(
+                            horizontal = 24.dp,
+                            vertical = 28.dp
+                        )
+                        .imePadding()
+                ) {
+                    MindWayTextField(
+                        title = stringResource(R.string.title),
+                        textState = titleTextState,
+                        placeholder = stringResource(R.string.please_enter_the_book_title),
+                        errorMessage = stringResource(R.string.please_enter_the_book_title),
+                        updateTextValue = myBookEditViewModel::updateTitleTextState
+                    )
+                    MindWayTextField(
+                        title = stringResource(R.string.writer),
+                        textState = writeTextState,
+                        placeholder = stringResource(R.string.please_enter_the_book_writer),
+                        errorMessage = stringResource(R.string.please_enter_the_book_writer),
+                        updateTextValue = myBookEditViewModel::updateWriteTextState
+                    )
+                    MindWayTextField(
+                        title = stringResource(R.string.link),
+                        textState = linkTextState,
+                        placeholder = stringResource(R.string.please_enter_the_link),
+                        errorMessage = stringResource(R.string.please_enter_the_link),
+                        updateTextValue = myBookEditViewModel::updateLinkTextState
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    MindWayButton(
+                        text = stringResource(id = R.string.apply),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        onClick = { myBookEditViewModel.checkButton() }
+                    )
+                }
             }
         }
     }

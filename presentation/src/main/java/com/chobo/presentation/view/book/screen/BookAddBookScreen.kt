@@ -1,23 +1,32 @@
 package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,75 +49,85 @@ fun BookAddBookScreen(
     val titleTextState by bookAddBookViewModel.titleTextState.collectAsState()
     val writeTextState by bookAddBookViewModel.writeTextState.collectAsState()
     val linkTextState by bookAddBookViewModel.linkTextState.collectAsState()
-    var checkBookDialog by remember { mutableStateOf(true) }
+    var checkBookDialog by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
 
     MindWayAndroidTheme { colors, _ ->
-        Column (modifier = modifier.background(color = colors.WHITE)){
-            Spacer(modifier = Modifier.height(20.dp))
-            BookRequestTopAppBar(
-                startIconOnClick = { navigateToBack() },
-                endIconOnClick = {}
-            )
-            Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = colors.WHITE)
-                    .imePadding()
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                ) {
-                    if (checkBookDialog) {
-                        Dialog(onDismissRequest = { checkBookDialog = false }) {
-                            BookPopUp(
-                                onDismiss = { checkBookDialog = false }
-                            )
-                        }
+        CompositionLocalProvider(LocalFocusManager provides focusManager) {
+            Column(modifier = modifier
+                .fillMaxSize()
+                .background(color = colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        focusManager.clearFocus()
                     }
-                    MindWayTextField(
-                        title = stringResource(id = R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        errorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue =  bookAddBookViewModel::updateTitleTextState,
-                    )
-                    MindWayTextField(
-                        title = stringResource(id = R.string.writer),
-                        textState = writeTextState,
-                        placeholder = stringResource(id = R.string.please_enter_the_book_writer),
-                        errorMessage = stringResource(id = R.string.please_enter_the_book_writer),
-                        updateTextValue =  bookAddBookViewModel::updateWriteTextState,
-                    )
-                    MindWayTextField(
-                        title = stringResource(id = R.string.link),
-                        textState = linkTextState,
-                        placeholder = stringResource(id = R.string.please_enter_the_link),
-                        errorMessage = stringResource(id = R.string.please_enter_the_link),
-                        updateTextValue =  bookAddBookViewModel::updateLinkTextState,
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(id = R.string.apply),
-                        modifier = Modifier
+                }
+                /*.windowInsetsPadding(
+                WindowInsets.ime.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+            )*/
+            ) {
+                Spacer(modifier = Modifier.height(20.dp))
+                BookRequestTopAppBar(
+                    startIconOnClick = { navigateToBack() },
+                    endIconOnClick = { checkBookDialog = true }
+                )
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    modifier = modifier.fillMaxSize()
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
+                        horizontalAlignment = Alignment.Start,
+                        modifier = modifier
                             .fillMaxWidth()
-                            .height(56.dp),
-                        onClick = { bookAddBookViewModel.checkButton() }
-                    )
+                            .padding(
+                                horizontal = 24.dp,
+                                vertical = 28.dp
+                            )
+                    ) {
+                        if (checkBookDialog) {
+                            Dialog(onDismissRequest = { checkBookDialog = false }) {
+                                BookPopUp(
+                                    onDismiss = { checkBookDialog = false }
+                                )
+                            }
+                        }
+                        MindWayTextField(
+                            title = stringResource(id = R.string.title),
+                            textState = titleTextState,
+                            placeholder = stringResource(R.string.please_enter_the_book_title),
+                            errorMessage = stringResource(R.string.please_enter_the_book_title),
+                            updateTextValue = bookAddBookViewModel::updateTitleTextState,
+                        )
+                        MindWayTextField(
+                            title = stringResource(id = R.string.writer),
+                            textState = writeTextState,
+                            placeholder = stringResource(id = R.string.please_enter_the_book_writer),
+                            errorMessage = stringResource(id = R.string.please_enter_the_book_writer),
+                            updateTextValue = bookAddBookViewModel::updateWriteTextState,
+                        )
+                        MindWayTextField(
+                            title = stringResource(id = R.string.link),
+                            textState = linkTextState,
+                            placeholder = stringResource(id = R.string.please_enter_the_link),
+                            errorMessage = stringResource(id = R.string.please_enter_the_link),
+                            updateTextValue = bookAddBookViewModel::updateLinkTextState,
+                        )
+                        Spacer(modifier = modifier.weight(1f))
+                        MindWayButton(
+                            text = stringResource(id = R.string.apply),
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
+                            onClick = { bookAddBookViewModel.checkButton() }
+                        )
+                    }
                 }
             }
         }
     }
 }
-
 @Preview
 @Composable
 fun PreviewAddBookScreen() {
