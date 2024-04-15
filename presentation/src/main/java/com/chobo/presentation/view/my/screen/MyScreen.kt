@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,13 +43,13 @@ fun MyScreen(
     val myName by myViewModel.myName.collectAsState()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
     var bookDeleteDialog by remember { mutableStateOf(false) }
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by remember { mutableIntStateOf(-1) }
     var selectedBookTitle by remember { mutableStateOf("") }
 
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             if (bookDeleteDialog) {
-                Dialog(onDismissRequest = { bookDeleteDialog = false },) {
+                Dialog(onDismissRequest = { bookDeleteDialog = false }) {
                     MyBookDeletePopUp(
                         title = selectedBookTitle,
                         cancelOnclick = {
@@ -56,7 +57,7 @@ fun MyScreen(
                             selectedBookTitle = ""
                         },
                         checkOnclick = {
-                            if(selectedIndex != -1) {
+                            if (selectedIndex != -1) {
                                 myViewModel.removeBookItem(selectedIndex)
                                 selectedIndex = -1
                             }
@@ -65,6 +66,7 @@ fun MyScreen(
                         }
                     )
                 }
+            }
             Spacer(modifier = Modifier.height(43.dp))
             MyNameCard(
                 name = myName,
