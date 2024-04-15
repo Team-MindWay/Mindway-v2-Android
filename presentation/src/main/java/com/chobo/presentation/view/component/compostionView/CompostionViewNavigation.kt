@@ -17,6 +17,7 @@ fun NavGraphBuilder.CompostionView(
     navigateToGoalReading: () -> Unit,
     topDestination: MutableState<MindWayNavBarItemType>,
     navigateToBookAddBook: () -> Unit,
+    navigateToIntro: () -> Unit,
 ) {
     composable(CompostionViewRoute) {
         MindWayCombinationView(
@@ -24,6 +25,7 @@ fun NavGraphBuilder.CompostionView(
             navigateToDetailEvent = navigateToDetailEvent,
             navigateToGoalReading = navigateToGoalReading,
             navigateToBookAddBook = navigateToBookAddBook,
+            navigateToIntro = navigateToIntro,
         )
     }
 }

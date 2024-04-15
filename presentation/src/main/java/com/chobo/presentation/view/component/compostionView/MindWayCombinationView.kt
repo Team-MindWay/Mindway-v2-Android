@@ -26,11 +26,15 @@ fun MindWayCombinationView(
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
+    navigateToIntro: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     MindWayBottomSheetDialog(
         sheetContent = {
-            MyBottomSheet {}
+            MyBottomSheet(
+                navigateToIntro = navigateToIntro,
+                logoutOnClick = { }
+            )
         }
     ) { sheetState ->
         MindWayScaffold(
@@ -71,7 +75,8 @@ fun MindWayCombinationViewPreview() {
     MindWayCombinationView(
         topDestination = topDestination,
         navigateToDetailEvent = { },
-        navigateToGoalReading = {},
-        navigateToBookAddBook = {}
+        navigateToGoalReading = { },
+        navigateToBookAddBook = { },
+        navigateToIntro = { }
     )
 }

@@ -23,7 +23,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun MyBottomSheet(
-    logoutOnClick: () -> Unit
+    logoutOnClick: () -> Unit,
+    navigateToIntro: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -47,6 +48,10 @@ fun MyBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { navigateToIntro() }
             )
             Spacer(
                 modifier = Modifier
@@ -67,8 +72,12 @@ fun MyBottomSheet(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun MyBottomSheetPreview() {
-    MyBottomSheet(logoutOnClick = { })
+    MyBottomSheet(
+        logoutOnClick = { },
+        navigateToIntro = { },
+    )
 }
