@@ -84,12 +84,14 @@ fun HomeReadersOfTheMonthChart(
                         color = colors.WHITE,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
+                    .padding(all = 24.dp)
             ) {
                 Text(
                     text = "이달의 독서왕",
                     style = typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = "아직 이달의 독서왕이 없습니다.",
@@ -107,7 +109,6 @@ fun HomeReadersOfTheMonthChart(
 @Composable
 fun HomeReadersOfTheMonthChartPreview() {
     HomeReadersOfTheMonthChart(
-        isHasData = true,
         modifier = Modifier
             .width(312.dp),
         bookKingOfTheMonthData = listOf(

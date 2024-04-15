@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -24,8 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 data class GoalReadingGraphData(
     val numBooksRead: Int,
@@ -83,7 +80,7 @@ fun HomeGoalReadingChart(
                     }
                     GoalReadingIndicator(
                         numBooksRead = readNumberList.sumOf { it.numBooksRead },
-                        goalBookRead = goalBookRead.collectAsState().value,
+                        goalBookRead = goalBookRead,
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.1840f)
@@ -114,7 +111,6 @@ fun HomeGoalReadingChart(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier
-                    .padding(all = 24.dp)
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,
@@ -124,13 +120,12 @@ fun HomeGoalReadingChart(
                         color = colors.WHITE,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
+                    .padding(all = 24.dp)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        12.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = "목표 독서량",
