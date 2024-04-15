@@ -22,7 +22,9 @@ import com.chobo.presentation.view.main.navigation.navigationToHomeAddBook
 import com.chobo.presentation.view.main.navigation.navigationToViewDetail
 import com.chobo.presentation.view.main.navigation.viewDetail
 import com.chobo.presentation.view.my.navigation.introScreen
+import com.chobo.presentation.view.my.navigation.myBookEditScreen
 import com.chobo.presentation.view.my.navigation.navigationToIntro
+import com.chobo.presentation.view.my.navigation.navigationToMyBookEdit
 
 @Composable
 fun MindWayNavHost(
@@ -45,6 +47,7 @@ fun MindWayNavHost(
             navigateToDetailEvent = navController::navigationToDetailEvent,
             navigateToBookAddBook = navController::navigationToBookAddBook,
             navigateToIntro = navController::navigationToIntro,
+            navigateToMyBookEdit = navController::navigationToMyBookEdit,
         )
 
         goalReading(
@@ -61,8 +64,9 @@ fun MindWayNavHost(
 
         detailEventScreen(navigateToBack = navController::popBackStack)
 
-
         bookAddBook(navigateToBack = navController::popBackStack)
+
+        myBookEditScreen(navigateToBack = navController::popBackStack)
 
         introScreen(navigateToBack = navController::popBackStack)
     }
