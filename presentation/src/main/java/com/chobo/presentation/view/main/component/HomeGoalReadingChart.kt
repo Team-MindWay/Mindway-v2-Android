@@ -49,8 +49,8 @@ fun HomeGoalReadingChart(
                 modifier = modifier
                     .shadow(
                         elevation = 20.dp,
-                        spotColor = colors.GRAY400,
-                        ambientColor = colors.GRAY400
+                        spotColor = colors.CardShadow,
+                        ambientColor = colors.CardShadow
                     )
                     .background(
                         color = colors.WHITE,
