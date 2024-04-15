@@ -28,8 +28,7 @@ class MyViewModel @Inject constructor() : ViewModel() {
                 MyBookListItemData(
                     title = "제목입니다",
                     writer = "작가입니다",
-                    editOnclick = { },
-                    trashCanOnclick = { removeBookItem(index) }
+                    trashCanOnclick = { removeBookItem(index) },
                 )
             }
     }
