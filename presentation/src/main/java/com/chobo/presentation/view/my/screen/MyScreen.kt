@@ -33,6 +33,7 @@ fun MyScreen(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = viewModel(),
     onClick: () -> Unit,
+    navigateToMyBookEdit: () -> Unit,
 ) {
     val myName by myViewModel.myName.collectAsState()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
@@ -71,7 +72,7 @@ fun MyScreen(
                     MyBookListItem(
                         title = it.title,
                         writer = it.writer,
-                        editOnclick = { it.editOnclick },
+                        editOnclick = { navigateToMyBookEdit() },
                         trashCanOnclick = { it.trashCanOnclick }
                     )
                 }
@@ -83,5 +84,8 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen {}
+    MyScreen(
+        onClick = { },
+        navigateToMyBookEdit = { }
+    )
 }
