@@ -17,14 +17,10 @@ class MyViewModel @Inject constructor() : ViewModel() {
     private val _myName = MutableStateFlow("")
     val myName: StateFlow<String> = _myName.asStateFlow()
 
-    fun optionOnClick() {
-
-    }
-
     init {
         _myName.value = "내이름"
         _myBookListItemDataList.value =
-            MutableList(5) { index ->
+            MutableList(10) { index ->
                 MyBookListItemData(
                     title = "제목입니다",
                     writer = "작가입니다",
