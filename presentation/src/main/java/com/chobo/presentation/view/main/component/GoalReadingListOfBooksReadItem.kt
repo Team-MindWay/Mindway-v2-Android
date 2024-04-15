@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,11 +40,15 @@ fun GoalReadingListOfBooksReadItem(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
             modifier = modifier
+                .shadow(
+                    elevation = 20.dp,
+                    spotColor = colors.CardShadow,
+                    ambientColor = colors.CardShadow,
+                )
                 .clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null
                 ) { onClick() }
-                .fillMaxWidth()
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)

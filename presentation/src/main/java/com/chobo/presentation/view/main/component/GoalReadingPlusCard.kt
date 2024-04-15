@@ -38,8 +38,6 @@ fun GoalReadingPlusCard(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .fillMaxWidth()
-                .height(60.dp)
                 .clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null
