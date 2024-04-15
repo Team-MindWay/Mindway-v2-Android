@@ -74,10 +74,7 @@ fun HomeReadersOfTheMonthChart(
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(239.dp)
-                    .padding(all = 24.dp)
+                modifier = modifier
                     .shadow(
                         elevation = 20.dp,
                         spotColor = colors.GRAY400,

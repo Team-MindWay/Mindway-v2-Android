@@ -36,7 +36,7 @@ data class GoalReadingGraphData(
 
 @Composable
 fun HomeGoalReadingChart(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     readNumberList: List<GoalReadingGraphData> = listOf(),
     onClick: () -> Unit,
     goalBookRead: StateFlow<Int>,

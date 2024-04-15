@@ -23,6 +23,7 @@ import com.chobo.presentation.viewModel.HomeViewModel
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(),
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
@@ -36,7 +37,7 @@ fun HomeScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
+            modifier = modifier
                 .background(color = colors.WHITE)
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
