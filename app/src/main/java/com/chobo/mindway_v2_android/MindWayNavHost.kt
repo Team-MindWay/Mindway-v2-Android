@@ -22,6 +22,7 @@ import com.chobo.presentation.view.main.navigation.navigationToHomeAddBook
 import com.chobo.presentation.view.main.navigation.navigationToViewDetail
 import com.chobo.presentation.view.main.navigation.viewDetail
 import com.chobo.presentation.view.my.navigation.introScreen
+import com.chobo.presentation.view.my.navigation.navigationToIntro
 
 @Composable
 fun MindWayNavHost(
@@ -43,6 +44,7 @@ fun MindWayNavHost(
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
             navigateToBookAddBook = navController::navigationToBookAddBook,
+            navigateToIntro = navController::navigationToIntro,
         )
 
         goalReading(
