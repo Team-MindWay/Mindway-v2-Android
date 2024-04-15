@@ -42,7 +42,7 @@ fun MyScreen(
             Spacer(modifier = Modifier.height(43.dp))
             MyNameCard(
                 name = myName,
-                onClick = { onClick() },
+                onClick = onClick,
             )
             Row(
                 horizontalArrangement = Arrangement.Start,

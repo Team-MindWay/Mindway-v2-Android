@@ -44,17 +44,19 @@ fun MindWayCombinationView(
         ) {
             when (topDestination.value) {
                 HOME -> HomeScreen(
-                    navigateToGoalReading = { navigateToGoalReading() },
-                    navigateToDetailEvent = { navigateToDetailEvent() },
+                    navigateToGoalReading = navigateToGoalReading,
+                    navigateToDetailEvent = navigateToDetailEvent,
                 )
 
-                EVENT -> EventScreen(navigateToDetailEvent = { navigateToDetailEvent() })
+                EVENT -> EventScreen(navigateToDetailEvent = navigateToDetailEvent)
                 BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
-                MY -> MyScreen(onClick = {
-                    coroutineScope.launch {
-                        sheetState.show()
+                MY -> MyScreen(
+                    onClick = {
+                        coroutineScope.launch {
+                            sheetState.show()
+                        }
                     }
-                })
+                )
             }
         }
     }
