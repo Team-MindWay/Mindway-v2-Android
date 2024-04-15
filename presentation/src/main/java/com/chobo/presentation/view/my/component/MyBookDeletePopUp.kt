@@ -107,7 +107,8 @@ fun MyBookDeletePopUp(
                         .weight(1f)
                         .padding(vertical = 12.dp),
                     text = stringResource(R.string.check),
-                    onClick = { checkOnclick() })
+                    onClick = { checkOnclick() }
+                )
             }
         }
     }
