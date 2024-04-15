@@ -37,9 +37,9 @@ data class GoalReadingGraphData(
 @Composable
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
+    goalBookRead: Int,
     readNumberList: List<GoalReadingGraphData> = listOf(),
     onClick: () -> Unit,
-    goalBookRead: StateFlow<Int>,
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (readNumberList.isNotEmpty()) {
@@ -157,13 +157,11 @@ fun HomeGoalReadingChart(
 @Preview
 @Composable
 fun HomeGoalReadingChartPreview() {
-    val _goalBookRead = MutableStateFlow(15)
 
     HomeGoalReadingChart(
         modifier = Modifier
             .width(312.dp)
             .height(211.dp),
-        isHasData = true,
         readNumberList = listOf(
             GoalReadingGraphData(2, 3, false, "일"),
             GoalReadingGraphData(3, 3, false, "일"),
@@ -174,6 +172,6 @@ fun HomeGoalReadingChartPreview() {
             GoalReadingGraphData(2, 3, false, "일"),
         ),
         onClick = { },
-        goalBookRead =_goalBookRead
+        goalBookRead = 14
     )
 }
