@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,18 +38,18 @@ import com.chobo.presentation.viewModel.MyViewModel
 fun MyScreen(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = viewModel(),
+    onClick: () -> Unit,
 ) {
     val myName by myViewModel.myName.collectAsState()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
     var bookDeleteDialog by remember { mutableStateOf(false) }
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by remember { mutableIntStateOf(-1) }
     var selectedBookTitle by remember { mutableStateOf("") }
 
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-
             if (bookDeleteDialog) {
-                Dialog(onDismissRequest = { bookDeleteDialog = false },) {
+                Dialog(onDismissRequest = { bookDeleteDialog = false }) {
                     MyBookDeletePopUp(
                         title = selectedBookTitle,
                         cancelOnclick = {
@@ -56,7 +57,7 @@ fun MyScreen(
                             selectedBookTitle = ""
                         },
                         checkOnclick = {
-                            if(selectedIndex != -1) {
+                            if (selectedIndex != -1) {
                                 myViewModel.removeBookItem(selectedIndex)
                                 selectedIndex = -1
                             }
@@ -66,46 +67,46 @@ fun MyScreen(
                     )
                 }
             }
-
-            Column(modifier = modifier.background(color = colors.WHITE)) {
-                Spacer(modifier = Modifier.height(43.dp))
-                MyNameCard(
-                    name = myName,
-                    onClick = { myViewModel.optionOnClick() },
+            Spacer(modifier = Modifier.height(43.dp))
+            MyNameCard(
+                name = myName,
+                onClick = onClick,
+            )
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.book_request_list),
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.GRAY400,
                 )
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.book_request_list),
-                        style = typography.labelLarge,
-                        fontWeight = FontWeight.Normal,
-                        color = colors.GRAY400,
+            }
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 16.dp
                     )
-                }
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp)
-                ) {
-                    itemsIndexed(myBookListItemDataList) { index, item ->
-                        MyBookListItem(
-                            title = item.title,
-                            writer = item.writer,
-                            editOnclick = { item.editOnclick },
-                            trashCanOnclick = {
-                                item.trashCanOnclick
-                                bookDeleteDialog = true
-                                selectedIndex = index
-                                selectedBookTitle = item.title
-                            }
-                        )
-                    }
+            ) {
+                itemsIndexed(myBookListItemDataList) { index, item ->
+                    MyBookListItem(
+                        title = item.title,
+                        writer = item.writer,
+                        editOnclick = { item.editOnclick },
+                        trashCanOnclick = {
+                            item.trashCanOnclick
+                            bookDeleteDialog = true
+                            selectedIndex = index
+                            selectedBookTitle = item.title
+                        }
+                    )
                 }
             }
         }
@@ -115,5 +116,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen()
+    MyScreen {}
 }
