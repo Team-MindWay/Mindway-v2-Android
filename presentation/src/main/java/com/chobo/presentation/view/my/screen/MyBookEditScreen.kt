@@ -49,6 +49,7 @@ fun MyBookEditScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .imePadding()
             ) {
                 BookEditTopAppBar(
                     startIconOnClick = { navigateToBack() },
@@ -63,7 +64,6 @@ fun MyBookEditScreen(
                             horizontal = 24.dp,
                             vertical = 28.dp
                         )
-                        .imePadding()
                 ) {
                     MindWayTextField(
                         title = stringResource(R.string.title),

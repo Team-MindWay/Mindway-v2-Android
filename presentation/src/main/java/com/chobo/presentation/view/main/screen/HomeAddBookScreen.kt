@@ -48,13 +48,15 @@ fun HomeAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .imePadding()
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 AddBookTopAppBar(startIconOnClick = { navigateToBack() })
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.fillMaxSize()) {
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
