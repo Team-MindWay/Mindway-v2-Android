@@ -25,8 +25,11 @@ import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
-    val textState = remember { mutableStateOf("") }
+fun GoalReadingBottomSheet(
+    textState: String,
+    updateTextValue: (String) -> Unit,
+    onclick: () -> Unit,
+) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
@@ -83,19 +86,17 @@ fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
                         }
                     }
                 }
-/*                MindWayTextField(
-                    outSideModifier = Modifier
+                MindWayTextField(
+                    modifier = Modifier
                         .fillMaxWidth()
                         .height(119.dp),
-                    textFieldModifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
                     title = stringResource(id = R.string.goal_reading),
                     textState = textState,
                     placeholder = "권",
                     isTextRight = true,
                     errorMessage = stringResource(id = R.string.goal_reading_error),
-                )*/
+                    updateTextValue = updateTextValue
+                )
             }
             MindWayButton(
                 modifier = Modifier
@@ -109,6 +110,6 @@ fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
 }
 @Preview
 @Composable
-fun GoalReadingBottomSheetPreview(){
-    GoalReadingBottomSheet { }
+fun GoalReadingBottomSheetPreview() {
+    GoalReadingBottomSheet(textState = "dwq", updateTextValue = {}) { }
 }

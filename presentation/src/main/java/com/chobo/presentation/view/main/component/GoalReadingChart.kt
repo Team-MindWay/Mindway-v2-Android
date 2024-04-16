@@ -34,11 +34,6 @@ fun GoalReadingChart(
             verticalArrangement = if (isHasData) Arrangement.SpaceBetween else Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .shadow(
-                    elevation = 20.dp,
-                    spotColor = colors.CardShadow,
-                    ambientColor = colors.CardShadow,
-                )
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
