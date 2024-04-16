@@ -25,11 +25,10 @@ data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean,
     bookKingOfTheMonthData: List<BookKingOfTheMonthData>
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (isHasData) {
+        if (bookKingOfTheMonthData.isNotEmpty()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -75,25 +74,24 @@ fun HomeReadersOfTheMonthChart(
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(239.dp)
-                    .padding(all = 24.dp)
+                modifier = modifier
                     .shadow(
                         elevation = 20.dp,
-                        spotColor = colors.GRAY400,
-                        ambientColor = colors.GRAY400
+                        spotColor = colors.CardShadow,
+                        ambientColor = colors.CardShadow,
                     )
                     .background(
                         color = colors.WHITE,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
+                    .padding(all = 24.dp)
             ) {
                 Text(
                     text = "이달의 독서왕",
                     style = typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = "아직 이달의 독서왕이 없습니다.",
@@ -111,7 +109,6 @@ fun HomeReadersOfTheMonthChart(
 @Composable
 fun HomeReadersOfTheMonthChartPreview() {
     HomeReadersOfTheMonthChart(
-        isHasData = true,
         modifier = Modifier
             .width(312.dp),
         bookKingOfTheMonthData = listOf(

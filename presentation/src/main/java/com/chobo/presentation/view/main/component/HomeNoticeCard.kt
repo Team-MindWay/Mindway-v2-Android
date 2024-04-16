@@ -48,11 +48,7 @@ fun HomeNoticeCard(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .fillMaxWidth()
-                .padding(
-                    horizontal = 12.dp,
-                    vertical = 18.5.dp
-                )
+                .padding(horizontal = 12.dp,)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic__notice),
@@ -60,7 +56,7 @@ fun HomeNoticeCard(
                 contentScale = ContentScale.None,
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+                verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
