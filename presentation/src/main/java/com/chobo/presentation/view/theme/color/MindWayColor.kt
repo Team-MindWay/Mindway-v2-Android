@@ -19,6 +19,6 @@ object MindWayColor : ColorTheme() {
 
     override val SYSTEM = Color(0xFFE53A3A)
 
-    override val CardShadow = Color(0x0D000000)
+    override val CardShadow = Color(0x4F000000)
     override val StatusShadow = Color(0x1F000000)
 }
