@@ -1,8 +1,8 @@
-package com.chobo.data.dto
+package com.chobo.data.remote.dto.response.auth
 
 import com.google.gson.annotations.SerializedName
 
-data class AuthResponse(
+data class GAuthResponse(
     @SerializedName("accessToken")
     val accessToken: String,
     @SerializedName("refreshToken")
