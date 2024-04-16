@@ -11,18 +11,18 @@ import retrofit2.http.POST
 
 interface AuthAPI {
     @POST("/api/v2/auth")
-    fun gAuthPost(
+    suspend fun gAuthPost(
         @Header("Authorization") authorization: String,
         @Body body: GAuthPostRequestBody
     ): Call<GAuthResponse>
 
     @PATCH("/api/v2/auth")
-    fun gAuthPatch(
+    suspend fun gAuthPatch(
         @Header("refreshToken") refreshToken: String,
     ): Call<GAuthResponse>
 
     @DELETE("/api/v2/auth")
-    fun gAuthDelete(
+    suspend fun gAuthDelete(
         @Header("refreshToken") refreshToken: String,
     )
 }

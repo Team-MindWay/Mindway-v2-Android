@@ -6,12 +6,12 @@ import retrofit2.http.Header
 
 interface MyAPI {
     @GET("/api/v2/my")
-    fun myInformationGet(
+    suspend fun myInformationGet(
         @Header("Authorization") authorization: String
     ): MyResponse
 
-    @GET("/api/v2/my")
-    fun myBookListGet(
+    @GET("/api/v2/my/book")
+    suspend fun myBookListGet(
         @Header("Authorization") authorization: String
     ): MyResponse
 }
