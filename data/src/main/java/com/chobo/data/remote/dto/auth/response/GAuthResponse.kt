@@ -1,4 +1,4 @@
-package com.chobo.data.remote.dto.response.auth
+package com.chobo.data.remote.dto.auth.response
 
 import com.google.gson.annotations.SerializedName
 

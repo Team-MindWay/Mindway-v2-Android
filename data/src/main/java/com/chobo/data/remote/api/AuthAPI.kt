@@ -1,7 +1,7 @@
 package com.chobo.data.remote.api
 
-import com.chobo.data.remote.dto.request.auth.GAuthPostRequestBody
-import com.chobo.data.remote.dto.response.auth.GAuthResponse
+import com.chobo.data.remote.dto.auth.request.GAuthPostRequestBody
+import com.chobo.data.remote.dto.auth.response.GAuthResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE

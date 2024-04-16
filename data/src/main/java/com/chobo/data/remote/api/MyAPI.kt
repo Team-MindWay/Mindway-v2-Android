@@ -1,6 +1,6 @@
 package com.chobo.data.remote.api
 
-import com.chobo.data.remote.dto.response.my.MyResponse
+import com.chobo.data.remote.dto.my_response.MyResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 
