@@ -1,4 +1,4 @@
-package com.chobo.data.util
+package com.chobo.data.util.excption
 
 class BadRequestException( // 400: 올바르지 않은 요청
     override val message: String?
@@ -36,6 +36,6 @@ class OtherHttpException( // 정의되지 않은 HTTP 상태 코드나 사용자
     override val message: String?
 ) : RuntimeException()
 
-class UnKnownException( // 예상하지 못한 에러
+class UnKnownException( // 알려지지 않은 에러
     override val message: String?
 ) : RuntimeException()
