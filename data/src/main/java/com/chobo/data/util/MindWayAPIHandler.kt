@@ -1,7 +1,7 @@
 package com.chobo.data.util
 
 import android.util.Log
-import com.chobo.data.util.excption.*
+import com.chobo.domain.excption.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -44,8 +44,8 @@ class MindWayAPIHandler<T> {
             throw TimeOutException(message = e.message)
         } catch (e: UnknownHostException) { // 클라이언트 인터넷 없음 에러
             throw NoInternetException()
-        } catch (e: TokenExpirationException) { // 토큰 만료
-            throw TokenExpirationException()
+        } catch (e: NeedLoginException) { // 토큰 만료
+            throw NeedLoginException()
         } catch (e: Exception) {  // 알려지지 않은 에러
             throw UnKnownException(message = e.message)
         }
