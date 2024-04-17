@@ -4,7 +4,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-/*class AuthInterceptor @Inject constructor(
+class AuthInterceptor @Inject constructor(
     // todo : UserDataStorage
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -22,16 +22,5 @@ import javax.inject.Inject
         }
 
         return chain.proceed(request)
-    }
-}*/
-class AuthInterceptor @Inject constructor(
-    private val authToken: String // todo : UserDataStorage
-) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val modifiedRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer $authToken")
-            .build()
-        return chain.proceed(modifiedRequest)
     }
 }
