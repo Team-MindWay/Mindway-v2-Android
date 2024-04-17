@@ -17,6 +17,7 @@ interface GoalAPI {
     fun goalPost(
         @Header("Authorization") authorization: String,
     )
+
     @PATCH("/api/v2/goal/{order_id}")
     fun goalPatch(
         @Header("Authorization") authorization: String,
@@ -24,14 +25,16 @@ interface GoalAPI {
         @Path("order_id") orderId: String,
         @Query("type") type: OrderRequestBookType
     )
+
     @GET("/api/v2/goal/{order_id}")
     fun goalDelete(
         @Header("Authorization") authorization: String,
         @Path("order_id") orderId: String
     )
+
     @GET("/api/v2/goal")
-    fun goalGet(
+    suspend fun goalGet(
         @Header("RefreshToken") refreshToken: String,
         @Body body: GoalGetRequestBodyGet,
-    ): Call<GoalResponse>
+    ): GoalResponse
 }

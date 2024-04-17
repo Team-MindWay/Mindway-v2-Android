@@ -14,15 +14,15 @@ interface AuthAPI {
     suspend fun gAuthPost(
         @Header("Authorization") authorization: String,
         @Body body: GAuthPostRequestBody
-    ): Call<GAuthResponse>
+    ):GAuthResponse
 
     @PATCH("/api/v2/auth")
     suspend fun gAuthPatch(
         @Header("refreshToken") refreshToken: String,
-    ): Call<GAuthResponse>
+    ):GAuthResponse
 
     @DELETE("/api/v2/auth")
-    suspend fun gAuthDelete(
+    fun gAuthDelete(
         @Header("refreshToken") refreshToken: String,
     )
 }
