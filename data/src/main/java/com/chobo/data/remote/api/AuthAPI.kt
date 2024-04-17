@@ -21,7 +21,7 @@ interface AuthAPI {
     ): GAuthResponse
 
     @DELETE("/api/v2/auth")
-    suspend fun gAuthDelete(
+    fun gAuthDelete(
         @Header("refreshToken") refreshToken: String,
     )
 }
