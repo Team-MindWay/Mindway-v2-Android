@@ -1,6 +1,7 @@
 package com.chobo.data.util
 
 import android.annotation.SuppressLint
+import com.chobo.domain.excption.NeedLoginException
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -11,7 +12,7 @@ fun String.toDate(): Date{
     }.onSuccess {
         return it
     }
-    throw RequestLoginException()
+    throw NeedLoginException()
 }
 
 @SuppressLint("SimpleDateFormat")
