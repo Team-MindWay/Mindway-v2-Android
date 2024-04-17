@@ -1,4 +1,4 @@
-package com.chobo.data.remote.dto.request.goal
+package com.chobo.data.remote.dto.goal.request
 
 import com.google.gson.annotations.SerializedName
 
