@@ -1,6 +1,9 @@
 package com.chobo.mindway_v2_android.Module
 
 import android.util.Log
+import com.chobo.data.remote.api.AuthAPI
+import com.chobo.data.remote.api.GoalAPI
+import com.chobo.data.remote.api.MyAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
 import dagger.Module
@@ -56,5 +59,19 @@ object NetworkModule {
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
-
+    @Provides
+    @Singleton
+    fun provideAuthAPI(retrofit: Retrofit): AuthAPI {
+        return retrofit.create(AuthAPI::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideGoalAPI(retrofit: Retrofit): GoalAPI {
+        return retrofit.create(GoalAPI::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideMyAPI(retrofit: Retrofit): MyAPI {
+        return retrofit.create(MyAPI::class.java)
+    }
 }
