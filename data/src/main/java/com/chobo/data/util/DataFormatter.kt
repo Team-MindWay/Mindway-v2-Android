@@ -1,7 +1,6 @@
 package com.chobo.data.util
 
 import android.annotation.SuppressLint
-import com.chobo.domain.exception.RequestLoginException
 import java.text.SimpleDateFormat
 import java.util.Date
 
