@@ -13,13 +13,10 @@ import retrofit2.http.Query
 
 interface GoalAPI {
     @POST("/api/v2/goal")
-    fun goalPost(
-        @Header("Authorization") authorization: String,
-    )
+    fun goalPost()
 
     @PATCH("/api/v2/goal/{order_id}")
     fun goalPatch(
-        @Header("Authorization") authorization: String,
         @Body body: GoalGetRequestBodyGet,
         @Path("order_id") orderId: String,
         @Query("type") type: OrderRequestBookType
@@ -27,7 +24,6 @@ interface GoalAPI {
 
     @GET("/api/v2/goal/{order_id}")
     fun goalDelete(
-        @Header("Authorization") authorization: String,
         @Path("order_id") orderId: String
     )
 
