@@ -1,4 +1,4 @@
-package com.chobo.data.remote.dto.order_request
+package com.chobo.data.remote.enumtype
 
 enum class OrderRequestBookType {
     NOVEL, ESSAY
