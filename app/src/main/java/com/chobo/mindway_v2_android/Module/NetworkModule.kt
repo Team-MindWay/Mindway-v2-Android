@@ -5,6 +5,7 @@ import com.chobo.data.remote.api.AuthAPI
 import com.chobo.data.remote.api.BookAPI
 import com.chobo.data.remote.api.GoalAPI
 import com.chobo.data.remote.api.MyAPI
+import com.chobo.data.remote.api.NoticeAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
 import dagger.Module
@@ -80,5 +81,11 @@ object NetworkModule {
     @Singleton
     fun provideBookAPI(retrofit: Retrofit): BookAPI {
         return retrofit.create(BookAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNoticeAPI(retrofit: Retrofit): NoticeAPI {
+        return retrofit.create(NoticeAPI::class.java)
     }
 }
