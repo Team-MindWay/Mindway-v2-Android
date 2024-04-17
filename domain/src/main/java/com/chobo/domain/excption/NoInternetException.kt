@@ -1,4 +1,4 @@
-package com.chobo.data.util.excption
+package com.chobo.domain.excption
 
 class NoInternetException : RuntimeException() {
     override val message: String

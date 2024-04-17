@@ -1,4 +1,4 @@
-package com.chobo.data.util.excption
+package com.chobo.domain.excption
 fun Throwable.errorHandler(
     badRequestAction: () -> Unit = {},
     forbiddenAction: () -> Unit = {},

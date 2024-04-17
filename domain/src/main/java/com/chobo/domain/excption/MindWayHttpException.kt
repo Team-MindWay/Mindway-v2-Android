@@ -1,4 +1,4 @@
-package com.chobo.data.util.excption
+package com.chobo.domain.excption
 
 class BadRequestException( // 400: 올바르지 않은 요청
     override val message: String?
