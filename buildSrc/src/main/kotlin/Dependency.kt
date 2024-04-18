@@ -64,7 +64,7 @@ object Dependency {
     }
 
     object Gauth {
-        //const val GAUTH = "com.github.GSM-MSG:GAuth-Signin-Android:${Versions.GAUTH}"
+        const val GAUTH = "com.github.GSM-MSG:GAuth-Signin-Android:${Versions.GAUTH}"
     }
 
     object DataStore {
