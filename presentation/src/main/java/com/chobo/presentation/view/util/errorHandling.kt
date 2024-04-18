@@ -1,4 +1,13 @@
-package com.chobo.domain.excption
+package com.chobo.presentation.view.util
+
+import com.chobo.domain.excption.BadRequestException
+import com.chobo.domain.excption.ConflictException
+import com.chobo.domain.excption.ForBiddenException
+import com.chobo.domain.excption.NotFoundException
+import com.chobo.domain.excption.OtherHttpException
+import com.chobo.domain.excption.ServerException
+import com.chobo.domain.excption.TimeOutException
+
 fun Throwable.errorHandler(
     badRequestAction: () -> Unit = {},
     forbiddenAction: () -> Unit = {},
