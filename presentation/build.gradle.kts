@@ -70,5 +70,5 @@ dependencies {
     androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
 
-    implementation(Dependency.Gauth.GAUTH)
+    //implementation(Dependency.Gauth.GAUTH)
 }
