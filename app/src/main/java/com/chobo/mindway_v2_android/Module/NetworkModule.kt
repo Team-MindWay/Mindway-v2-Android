@@ -4,6 +4,7 @@ import android.util.Log
 import com.chobo.data.remote.api.AuthAPI
 import com.chobo.data.remote.api.BookAPI
 import com.chobo.data.remote.api.GoalAPI
+import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.MyAPI
 import com.chobo.data.remote.api.NoticeAPI
 import com.chobo.data.util.AuthInterceptor
@@ -61,20 +62,29 @@ object NetworkModule {
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
+
     @Provides
     @Singleton
     fun provideAuthAPI(retrofit: Retrofit): AuthAPI {
         return retrofit.create(AuthAPI::class.java)
     }
+
     @Provides
     @Singleton
-    fun provideGoalAPI(retrofit: Retrofit): GoalAPI {
-        return retrofit.create(GoalAPI::class.java)
+    fun provideOrderAPI(retrofit: Retrofit): OrderAPI {
+        return retrofit.create(OrderAPI::class.java)
     }
+
     @Provides
     @Singleton
     fun provideMyAPI(retrofit: Retrofit): MyAPI {
         return retrofit.create(MyAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGoalAPI(retrofit: Retrofit): GoalAPI {
+        return retrofit.create(GoalAPI::class.java)
     }
 
     @Provides
