@@ -34,6 +34,7 @@ fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
     navigateToBack: () -> Unit,
+    navigateToHomeEditBook: () -> Unit,
 ) {
     val titleTextState by viewDetailViewModel.titleTextState.collectAsState()
     val contentTextState by viewDetailViewModel.contentTextState.collectAsState()
@@ -43,7 +44,7 @@ fun ViewDetailScreen(
         MindWayBottomSheetDialog(
             sheetContent = {
                 HomeBottomSheet(
-                    navigateToBookEdit = { },
+                    navigateToBookEdit = navigateToHomeEditBook,
                     bookDeleteOnClick = { },
                 )
             }
@@ -87,5 +88,8 @@ fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    ViewDetailScreen(navigateToBack = { })
+    ViewDetailScreen(
+        navigateToBack = { },
+        navigateToHomeEditBook = { }
+    )
 }
