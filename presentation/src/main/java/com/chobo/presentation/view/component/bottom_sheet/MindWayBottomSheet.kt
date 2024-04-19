@@ -54,7 +54,7 @@ fun MindWayBottomSheet(
                 modifier = Modifier.clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null
-                ) { bottomOnCLick() }
+                ) { topOnClick() }
             )
             Spacer(
                 modifier = Modifier
@@ -70,7 +70,7 @@ fun MindWayBottomSheet(
                 modifier = Modifier.clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null
-                ) { topOnClick() }
+                ) { bottomOnCLick() }
             )
         }
     }
