@@ -25,7 +25,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.HomeAddBookViewModel
 
 @Composable
-fun HomeBookEditScreen(
+fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
     homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
@@ -85,5 +85,5 @@ fun HomeBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeBookEditScreenPreview() {
-    HomeBookEditScreen(navigateToBack = { })
+    HomeEditBookScreen(navigateToBack = { })
 }
