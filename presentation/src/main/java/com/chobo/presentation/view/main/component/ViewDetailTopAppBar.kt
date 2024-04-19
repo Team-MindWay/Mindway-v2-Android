@@ -8,10 +8,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.OptionIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 @Composable
-fun ViewDetailTopAppBar(startIconOnClick: () -> Unit) {
+fun ViewDetailTopAppBar(
+    startIconOnClick: () -> Unit,
+    endIconOnClick: () -> Unit,
+) {
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
@@ -21,12 +25,20 @@ fun ViewDetailTopAppBar(startIconOnClick: () -> Unit) {
                 ) { startIconOnClick() }
             )
         },
+        endIcon = {
+                  OptionIcon(
+                      modifier = Modifier.clickable(
+                          interactionSource = MutableInteractionSource(),
+                          indication = null
+                      ) { endIconOnClick() }
+                  )
+        },
         midText = stringResource(R.string.view_detail),
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ViewDetailTopAppBarPreview(){
-    ViewDetailTopAppBar { }
+fun ViewDetailTopAppBarPreview() {
+    ViewDetailTopAppBar(startIconOnClick = { }, endIconOnClick = { })
 }
