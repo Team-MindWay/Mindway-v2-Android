@@ -20,6 +20,8 @@ dependencyResolutionManagement {
     }
 }
 
+gradle.startParameter.excludedTaskNames.addAll(listOf(":buildSrc:testClasses"))
+
 rootProject.name = "Mindway-v2-Android"
 include(":app")
 include(":domain")

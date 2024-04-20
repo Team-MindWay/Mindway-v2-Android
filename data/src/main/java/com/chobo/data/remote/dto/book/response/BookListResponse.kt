@@ -2,7 +2,7 @@ package com.chobo.data.remote.dto.book.response
 
 import com.google.gson.annotations.SerializedName
 
-data class BookResponseListItem(
+data class BookListResponse(
     @SerializedName("title")
     val title: String,
     @SerializedName("plot")
