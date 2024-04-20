@@ -7,7 +7,6 @@ import com.chobo.data.remote.api.GoalAPI
 import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.MyAPI
 import com.chobo.data.remote.api.NoticeAPI
-import com.chobo.data.remote.api.RankAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
 import dagger.Module
@@ -18,7 +17,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -99,11 +97,5 @@ object NetworkModule {
     @Singleton
     fun provideNoticeAPI(retrofit: Retrofit): NoticeAPI {
         return retrofit.create(NoticeAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRankAPI(retrofit: Retrofit): RankAPI {
-        return retrofit.create(RankAPI::class.java)
     }
 }
