@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,45 +20,66 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
+import com.chobo.presentation.view.main.component.HomeBottomSheet
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.ViewDetailViewModel
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
+    navigateToHomeEditBook: () -> Unit,
 ) {
     val titleTextState by viewDetailViewModel.titleTextState.collectAsState()
     val contentTextState by viewDetailViewModel.contentTextState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
-    MindWayAndroidTheme { colors, typography ->
-        Column(modifier = modifier
-            .fillMaxSize()
-            .background(color = colors.WHITE)
-        ) {
-            Spacer(modifier = Modifier.height(20.dp))
-            ViewDetailTopAppBar(startIconOnClick = { navigateToBack() })
+    MindWayAndroidTheme { colors, _ ->
+        MindWayBottomSheetDialog(
+            sheetContent = {
+                HomeBottomSheet(
+                    navigateToBookEdit = navigateToHomeEditBook,
+                    bookDeleteOnClick = { },
+                )
+            }
+        ) { sheetState ->
             Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        vertical = 24.dp,
-                        horizontal = 28.dp,
-                    )
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(color = colors.WHITE)
             ) {
-                ViewDetailTextCard(
-                    title = stringResource(R.string.title),
-                    content = titleTextState,
+                Spacer(modifier = Modifier.height(20.dp))
+                ViewDetailTopAppBar(
+                    startIconOnClick = { navigateToBack() },
+                    endIconOnClick = {
+                        coroutineScope.launch { sheetState.show() }
+                    }
                 )
-                ViewDetailTextCard(
-                    title = stringResource(R.string.content),
-                    content = contentTextState,
-                )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            vertical = 24.dp,
+                            horizontal = 28.dp,
+                        )
+                ) {
+                    ViewDetailTextCard(
+                        title = stringResource(R.string.title),
+                        content = titleTextState,
+                    )
+                    ViewDetailTextCard(
+                        title = stringResource(R.string.content),
+                        content = contentTextState,
+                    )
+                }
             }
         }
     }
@@ -65,5 +88,8 @@ fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    ViewDetailScreen(navigateToBack = { })
+    ViewDetailScreen(
+        navigateToBack = { },
+        navigateToHomeEditBook = { }
+    )
 }

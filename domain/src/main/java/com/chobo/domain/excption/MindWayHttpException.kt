@@ -4,16 +4,13 @@ class BadRequestException( // 400: 올바르지 않은 요청
     override val message: String?
 ) : RuntimeException()
 
-
 class UnauthorizedException( // 401: 비인증 상태
     override val message: String?
 ) : RuntimeException()
 
-
 class ForBiddenException( // 403: 권한이 없음
     override val message: String?
 ) : RuntimeException()
-
 
 class NotFoundException( // 404: 요청한 리소스를 찾을 수 없음
     override val message: String?

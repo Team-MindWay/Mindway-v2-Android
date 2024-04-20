@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -39,7 +38,7 @@ fun HomeAddBookScreen(
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
             Column(modifier = modifier
                 .background(color = colors.WHITE)
@@ -54,7 +53,8 @@ fun HomeAddBookScreen(
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.fillMaxSize()) {
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
