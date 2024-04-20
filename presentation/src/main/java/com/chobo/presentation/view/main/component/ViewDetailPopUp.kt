@@ -4,8 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -43,15 +45,16 @@ fun ViewDetailPopUp(
         ) {
             Row {
                 Text(
-                    text = "독서를",
+                    text = stringResource(R.string.book),
 
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
                     modifier = Modifier.height(24.dp),
                 )
+                Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = " 삭제",
+                    text = stringResource(R.string.delete),
 
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
@@ -59,7 +62,7 @@ fun ViewDetailPopUp(
                     modifier = Modifier.height(24.dp),
                 )
                 Text(
-                    text = "하시겠습니까?",
+                    text = stringResource(R.string.pr),
 
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
