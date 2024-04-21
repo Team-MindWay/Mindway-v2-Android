@@ -10,12 +10,12 @@ import retrofit2.http.POST
 
 interface AuthAPI {
     @POST("/api/v2/auth")
-    suspend fun gAuthPost(
+    suspend fun gAuthLogin(
         @Body body: GAuthPostRequestBody
     ): GAuthResponse
 
     @PATCH("/api/v2/auth")
-    suspend fun gAuthPatch(): GAuthResponse
+    suspend fun gAuthAccess(): GAuthResponse
 
     @DELETE("/api/v2/auth")
     fun gAuthDelete()
