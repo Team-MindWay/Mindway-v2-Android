@@ -57,4 +57,5 @@
     <string name="please_enter_the_book_writer">저자를 입력해주세요</string>
     <string name="please_enter_the_link">YES24 링크를 입력해주세요</string>
     <string name="book_delete">독서 삭제</string>
+    <string name="book">독서를</string>
 </resources>

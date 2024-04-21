@@ -12,16 +12,21 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.main.component.HomeBottomSheet
+import com.chobo.presentation.view.main.component.ViewDetailPopUp
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -39,13 +44,14 @@ fun ViewDetailScreen(
     val titleTextState by viewDetailViewModel.titleTextState.collectAsState()
     val contentTextState by viewDetailViewModel.contentTextState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    var checkBookDialog by remember { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
                 HomeBottomSheet(
                     navigateToBookEdit = navigateToHomeEditBook,
-                    bookDeleteOnClick = { },
+                    bookDeleteOnClick = { checkBookDialog = true },
                 )
             }
         ) { sheetState ->
@@ -54,6 +60,20 @@ fun ViewDetailScreen(
                     .fillMaxSize()
                     .background(color = colors.WHITE)
             ) {
+                if (checkBookDialog) {
+                    Dialog(onDismissRequest = { checkBookDialog = false }) {
+                        ViewDetailPopUp(
+                            cancelOnclick = {
+                                viewDetailViewModel.cancelOnclick()
+                                checkBookDialog = false
+                            },
+                            checkOnclick = {
+                                viewDetailViewModel.checkOnclick()
+                                checkBookDialog = false
+                            },
+                        )
+                    }
+                }
                 Spacer(modifier = Modifier.height(20.dp))
                 ViewDetailTopAppBar(
                     startIconOnClick = { navigateToBack() },
