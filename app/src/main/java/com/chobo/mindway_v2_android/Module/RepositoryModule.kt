@@ -6,6 +6,6 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-annotation class RepositoryModule {
+abstract class RepositoryModule {
 
 }
