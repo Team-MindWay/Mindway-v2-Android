@@ -1,7 +1,7 @@
 package com.chobo.data.util
 
 import android.util.Log
-import com.chobo.domain.excption.*
+import com.chobo.domain.exception.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

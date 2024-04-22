@@ -2,7 +2,7 @@ package com.chobo.data.util
 
 import com.chobo.data.BuildConfig
 import com.chobo.data.local.datasource.LocalAuthDataSource
-import com.chobo.domain.excption.NeedLoginException
+import com.chobo.domain.exception.NeedLoginException
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.coroutines.flow.first
