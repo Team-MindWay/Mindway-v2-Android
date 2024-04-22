@@ -41,7 +41,7 @@ fun GoalReadingTopAppBar(
                     tint = MindWayColor.Black
                 )
             }
-            else { Spacer(modifier = Modifier.size(24.dp)) }
+            else { PlusIcon(tint = MindWayColor.GRAY400) }
         }
     )
 }
