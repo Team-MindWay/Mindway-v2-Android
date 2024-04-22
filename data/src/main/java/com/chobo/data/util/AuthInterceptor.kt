@@ -32,7 +32,6 @@ class AuthInterceptor @Inject constructor(
         }
 
         runBlocking {
-            val refreshToken = dataSource.getRefreshToken().first().replace("\"", "")
             val accessTime = dataSource.getAccessTime().first().replace("\"", "")
             val refreshTime = dataSource.getRefreshTime().first().replace("\"", "")
 
@@ -45,7 +44,10 @@ class AuthInterceptor @Inject constructor(
                 val refreshRequest = Request.Builder()
                     .url(BuildConfig.BASE_URL + "auth")
                     .patch(chain.request().body ?: RequestBody.create(null, byteArrayOf()))
-                    .addHeader(name = "refreshToken", value = "Bearer $refreshToken")
+                    .addHeader(
+                    "refreshToken",
+                        dataSource.getRefreshToken().first().replace("\"", "")
+                    )
                     .build()
                 val jsonParser = JsonParser()
                 val response = client.newCall(refreshRequest).execute()
