@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
@@ -73,71 +74,75 @@ fun MindWayTextField(
                     }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .background(
-                        color = colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-            ) {
-                BasicTextField(
-                    onValueChange = { newText ->
-                        if (lengthLimit != 0) {
-                            if (newText.length <= lengthLimit) {
-                                updateTextValue(newText)
-                            }
-                        } else {
-                            updateTextValue(newText)
-                        }
-                    },
-                    value = textState,
-                    textStyle = typography.bodySmall.copy(
-                        fontWeight = FontWeight.Normal,
-                        color = colors.Black,
-                        textAlign = if (isTextRight) TextAlign.End else TextAlign.Start,
-                    ),
-                    cursorBrush = SolidColor(colors.MAIN),
-                    modifier = Modifier
-                        .fillMaxWidth(if (isTextRight) 0.95f else 1f)
-                        .padding(15.dp),
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    if (!isTextRight && (textState == "")) {
-                        Text(
-                            text = placeholder,
-                            style = typography.bodySmall,
-                            fontWeight = FontWeight.Normal,
-                            color = colors.GRAY400,
+            LazyColumn {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
+                                shape = RoundedCornerShape(size = 8.dp)
+                            )
+                            .background(
+                                color = colors.GRAY100,
+                                shape = RoundedCornerShape(size = 8.dp)
+                            )
+                    ) {
+                        BasicTextField(
+                            onValueChange = { newText ->
+                                if (lengthLimit != 0) {
+                                    if (newText.length <= lengthLimit) {
+                                        updateTextValue(newText)
+                                    }
+                                } else {
+                                    updateTextValue(newText)
+                                }
+                            },
+                            value = textState,
+                            textStyle = typography.bodySmall.copy(
+                                fontWeight = FontWeight.Normal,
+                                color = colors.Black,
+                                textAlign = if (isTextRight) TextAlign.End else TextAlign.Start,
+                            ),
+                            cursorBrush = SolidColor(colors.MAIN),
+                            modifier = Modifier
+                                .fillMaxWidth(if (isTextRight) 0.95f else 1f)
+                                .padding(15.dp),
                         )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                        ) {
+                            if (!isTextRight && (textState == "")) {
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
+                            }
+                            if (isTextRight) {
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
+                            }
+                        }
                     }
-                    if (isTextRight) {
+                    if (lengthCheck) {
                         Text(
-                            text = placeholder,
-                            style = typography.bodySmall,
+                            text = errorMessage,
+                            style = typography.labelLarge,
                             fontWeight = FontWeight.Normal,
-                            color = colors.GRAY400,
+                            color = colors.SYSTEM
                         )
                     }
                 }
-            }
-            if (lengthCheck) {
-                Text(
-                    text = errorMessage,
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.SYSTEM
-                )
             }
         }
     }
