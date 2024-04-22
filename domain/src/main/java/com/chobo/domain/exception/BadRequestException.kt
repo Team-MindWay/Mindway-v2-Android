@@ -16,6 +16,10 @@ class NotFoundException( // 404: 요청한 리소스를 찾을 수 없음
     override val message: String?
 ) : RuntimeException()
 
+class NotAcceptableException(
+    override val message: String?
+) : RuntimeException()
+
 class TimeOutException( // 408: 요청시간초과
     override val message: String?
 ) : RuntimeException()
