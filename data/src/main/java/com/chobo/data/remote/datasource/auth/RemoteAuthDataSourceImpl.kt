@@ -2,7 +2,7 @@ package com.chobo.data.remote.datasource.auth
 
 import com.chobo.data.remote.api.AuthAPI
 import com.chobo.data.remote.dto.auth.request.GAuthPostRequestBody
-import com.chobo.data.remote.dto.auth.response.GAuthResponse
+import com.chobo.data.remote.dto.auth.response.GAuthDeleteResponse
 import com.chobo.data.util.MindWayAPIHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -13,9 +13,9 @@ import javax.inject.Inject
 class RemoteAuthDataSourceImpl @Inject constructor(
     private val authService: AuthAPI
 ) : RemoteAuthDataSource {
-    override suspend fun GuauthLogin(body: GAuthPostRequestBody): Flow<GAuthResponse> = flow {
+    override suspend fun GuauthLogin(body: GAuthPostRequestBody): Flow<GAuthDeleteResponse> = flow {
         emit(
-            MindWayAPIHandler<GAuthResponse>()
+            MindWayAPIHandler<GAuthDeleteResponse>()
                 .httpRequest { authService.gAuthLogin(body = body) }
                 .sendRequest()
         )
