@@ -1,8 +1,8 @@
-package com.chobo.domain.excption
+package com.chobo.domain.exception
 
 class BadRequestException( // 400: 올바르지 않은 요청
     override val message: String?
-) : RuntimeException()
+): RuntimeException()
 
 class UnauthorizedException( // 401: 비인증 상태
     override val message: String?

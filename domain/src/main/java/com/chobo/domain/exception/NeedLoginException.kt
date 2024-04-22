@@ -1,4 +1,4 @@
-package com.chobo.domain.excption
+package com.chobo.domain.exception
 
 import java.io.IOException
 
