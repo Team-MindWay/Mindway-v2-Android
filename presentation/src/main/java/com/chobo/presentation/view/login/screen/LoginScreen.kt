@@ -20,9 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
+import com.chobo.presentation.viewModel.AuthViewModel
+import com.chobo.presentation.BuildConfig
 import com.msg.gauthsignin.GAuthSigninWebView
 import com.msg.gauthsignin.component.GAuthButton
 import com.msg.gauthsignin.component.utils.Types
@@ -30,7 +33,8 @@ import com.msg.gauthsignin.component.utils.Types
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     var isClicked by remember { mutableStateOf(false) }
 
@@ -53,8 +57,7 @@ fun LoginScreen(
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                MindWayGAuthButton(modifier = Modifier.height(48.dp))
-                { isClicked = true }
+                MindWayGAuthButton(modifier = Modifier.height(48.dp)) { isClicked = true }
                 Spacer(modifier = Modifier.height(30.dp))
                 Button(
                     onClick = { navigateToHome() }
@@ -64,13 +67,14 @@ fun LoginScreen(
             }
         }
     }
-    /*if (isClicked) {
+    if (isClicked) {
         GAuthSigninWebView(
-            clientId = ,
-            redirectUri = )
-        {
+            clientId = BuildConfig.CLIENT_ID,
+            redirectUri = BuildConfig.REDIRECT_URI
+        ) {
+            authViewModel.gAuthLogin(it)
         }
-    } -> todo : WebView */
+    }
 }
 
 @Preview
