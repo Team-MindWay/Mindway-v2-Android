@@ -70,7 +70,6 @@ fun HomeAddBookScreen(
                             textState = titleTextState,
                             placeholder = stringResource(R.string.please_enter_the_book_title),
                             errorMessage = stringResource(R.string.error_title),
-                            lengthLimit = homeAddBookViewModel.titleTextMaxLength,
                             updateTextValue = homeAddBookViewModel::updateTitleTextState
                         )
                         MindWayTextField(

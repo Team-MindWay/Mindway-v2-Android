@@ -11,13 +11,11 @@ import javax.inject.Inject
 class HomeAddBookViewModel @Inject constructor() : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
-    val titleTextMaxLength
-        get() = 60
 
     private val _contentTextState = MutableStateFlow("")
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
     val contentTextMaxLength
-        get() = 300
+        get() = 1000
     fun updateTitleTextState(input:String){
         _titleTextState.value = input
     }
