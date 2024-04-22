@@ -8,6 +8,7 @@ import com.chobo.domain.model.auth.request.GAuthLoginRequestModel
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.GAuthLoginUseCase
+import com.chobo.domain.usecase.auth.LogoutUseCase
 import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
 import com.chobo.presentation.viewModel.util.Event
 import com.chobo.presentation.viewModel.util.errorHandling
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val gAuthLoginUseCase: GAuthLoginUseCase,
     private val saveTokenUseCase: SaveLoginDataUseCase,
+    private val logoutUseCase: LogoutUseCase,
     private val deleteTokenUseCase: DeleteTokenUseCase
 ): ViewModel() {
     private val _gAuthLoginRequest = MutableLiveData<Event<GAuthLoginResponseModel>>()
@@ -50,6 +52,10 @@ class AuthViewModel @Inject constructor(
             .onFailure {
                 _saveTokenRequest.value = it.errorHandling()
             }
+    }
+
+    fun logout() = viewModelScope.launch {
+        logoutUseCase()
     }
 
     fun deleteToken() = viewModelScope.launch {
