@@ -18,5 +18,5 @@ interface AuthAPI {
     suspend fun gAuthAccess(): GAuthResponse
 
     @DELETE("/api/v2/auth")
-    fun gAuthDelete()
+    fun gAuthLogout()
 }
