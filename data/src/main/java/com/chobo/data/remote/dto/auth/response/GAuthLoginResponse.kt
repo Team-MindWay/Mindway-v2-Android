@@ -2,7 +2,7 @@ package com.chobo.data.remote.dto.auth.response
 
 import com.google.gson.annotations.SerializedName
 
-data class GAuthDeleteResponse(
+data class GAuthLoginResponse(
     @SerializedName("accessToken")
     val accessToken: String,
     @SerializedName("refreshToken")
