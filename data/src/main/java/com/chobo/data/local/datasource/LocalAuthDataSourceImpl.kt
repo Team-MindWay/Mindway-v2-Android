@@ -74,4 +74,20 @@ class LocalAuthDataSourceImpl @Inject constructor(
             it.remove(AuthDataStoreKey.REFRESH_TIME)
         }
     }
+
+    override suspend fun getRoleInfo(): Flow<String> = dataStore.data.map {
+        it[AuthDataStoreKey.ROLE] ?: ""
+    }
+
+    override suspend fun setRoleInfo(role: String) {
+        dataStore.edit {
+            it[AuthDataStoreKey.ROLE] = role
+        }
+    }
+
+    override suspend fun deleteRoleInfo() {
+        dataStore.edit {
+            it.remove(AuthDataStoreKey.ROLE)
+        }
+    }
 }
