@@ -27,8 +27,6 @@ import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.viewModel.AuthViewModel
 import com.chobo.presentation.BuildConfig
 import com.msg.gauthsignin.GAuthSigninWebView
-import com.msg.gauthsignin.component.GAuthButton
-import com.msg.gauthsignin.component.utils.Types
 
 @Composable
 fun LoginScreen(
