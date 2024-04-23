@@ -32,7 +32,7 @@ fun MindWayTextField(
     placeholder: String,
     overflowErrorMessage: String = "",
     emptyErrorMessage: String,
-    isError: Boolean = false,
+    isError: Boolean,
     lengthLimit: Int = 0,
     isTextRight: Boolean = false,
     updateTextValue: (String) -> Unit,
@@ -80,7 +80,7 @@ fun MindWayTextField(
                 modifier = Modifier
                     .border(
                         width = 1.dp,
-                        color = if (lengthCheck || !isError) colors.SYSTEM else colors.GRAY100,
+                        color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .background(
@@ -148,7 +148,7 @@ fun MindWayTextField(
                     color = colors.SYSTEM
                 )
             }
-            if (!isError) {
+            if (isError) {
                 Text(
                     text = emptyErrorMessage,
                     style = typography.labelLarge,
