@@ -74,20 +74,20 @@ fun MindWayTextField(
                     }
                 }
             }
-            LazyColumn {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .border(
-                                width = 1.dp,
-                                color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
-                                shape = RoundedCornerShape(size = 8.dp)
-                            )
-                            .background(
-                                color = colors.GRAY100,
-                                shape = RoundedCornerShape(size = 8.dp)
-                            )
-                    ) {
+            Box(
+                modifier = Modifier
+                    .border(
+                        width = 1.dp,
+                        color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .background(
+                        color = colors.GRAY100,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+            ) {
+                LazyColumn {
+                    item {
                         BasicTextField(
                             onValueChange = { newText ->
                                 if (lengthLimit != 0) {
@@ -106,7 +106,7 @@ fun MindWayTextField(
                             ),
                             cursorBrush = SolidColor(colors.MAIN),
                             modifier = Modifier
-                                .fillMaxWidth(if (isTextRight) 0.95f else 1f)
+                                .fillMaxWidth()
                                 .padding(15.dp),
                         )
                         Row(
@@ -133,14 +133,14 @@ fun MindWayTextField(
                                 )
                             }
                         }
-                    }
-                    if (lengthCheck) {
-                        Text(
-                            text = errorMessage,
-                            style = typography.labelLarge,
-                            fontWeight = FontWeight.Normal,
-                            color = colors.SYSTEM
-                        )
+                        if (lengthCheck) {
+                            Text(
+                                text = errorMessage,
+                                style = typography.labelLarge,
+                                fontWeight = FontWeight.Normal,
+                                color = colors.SYSTEM
+                            )
+                        }
                     }
                 }
             }
