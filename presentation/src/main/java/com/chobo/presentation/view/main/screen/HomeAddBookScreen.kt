@@ -36,6 +36,8 @@ fun HomeAddBookScreen(
 ) {
     val titleTextState by homeAddBookViewModel.titleTextState.collectAsState()
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsState()
+    val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsState()
+    val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsState()
     val focusManager = LocalFocusManager.current
 
     MindWayAndroidTheme { colors, _ ->
@@ -69,16 +71,20 @@ fun HomeAddBookScreen(
                             title = stringResource(R.string.title),
                             textState = titleTextState,
                             placeholder = stringResource(R.string.please_enter_the_book_title),
-                            errorMessage = stringResource(R.string.error_title),
-                            updateTextValue = homeAddBookViewModel::updateTitleTextState
+                            overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                            emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                            updateTextValue = homeAddBookViewModel::updateTitleTextState,
+                            isError = titleTextStateIsEmpty
                         )
                         MindWayTextField(
                             title = stringResource(R.string.content),
                             textState = contentTextState,
                             placeholder = stringResource(R.string.please_enter_the_book_content),
-                            errorMessage = stringResource(R.string.error_content),
+                            overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                            emptyErrorMessage = stringResource(R.string.error_content),
                             lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-                            updateTextValue = homeAddBookViewModel::updateContentTextState
+                            updateTextValue = homeAddBookViewModel::updateContentTextState,
+                            isError = contentTextStateIsEmpty
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         MindWayButton(
