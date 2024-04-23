@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
@@ -29,10 +30,12 @@ fun MindWayTextField(
     title: String,
     textState: String,
     placeholder: String,
-    errorMessage: String,
-    updateTextValue: (String) -> Unit,
+    overflowErrorMessage: String = "",
+    emptyErrorMessage: String,
+    isError: Boolean,
     lengthLimit: Int = 0,
     isTextRight: Boolean = false,
+    updateTextValue: (String) -> Unit,
 ) {
     val lengthCheck = if (lengthLimit != 0) {
         textState.length >= lengthLimit
@@ -77,7 +80,7 @@ fun MindWayTextField(
                 modifier = Modifier
                     .border(
                         width = 1.dp,
-                        color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
+                        color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .background(
@@ -85,55 +88,69 @@ fun MindWayTextField(
                         shape = RoundedCornerShape(size = 8.dp)
                     )
             ) {
-                BasicTextField(
-                    onValueChange = { newText ->
-                        if (lengthLimit != 0) {
-                            if (newText.length <= lengthLimit) {
-                                updateTextValue(newText)
+                LazyColumn {
+                    item {
+                        Box {
+                            BasicTextField(
+                                onValueChange = { newText ->
+                                    if (lengthLimit != 0) {
+                                        if (newText.length <= lengthLimit) {
+                                            updateTextValue(newText)
+                                        }
+                                    } else {
+                                        updateTextValue(newText)
+                                    }
+                                },
+                                value = textState,
+                                textStyle = typography.bodySmall.copy(
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.Black,
+                                    textAlign = if (isTextRight) TextAlign.End else TextAlign.Start,
+                                ),
+                                cursorBrush = SolidColor(colors.MAIN),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp),
+                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                if (!isTextRight && (textState == "")) {
+                                    Text(
+                                        text = placeholder,
+                                        style = typography.bodySmall,
+                                        fontWeight = FontWeight.Normal,
+                                        color = colors.GRAY400,
+                                    )
+                                }
+                                if (isTextRight) {
+                                    Text(
+                                        text = placeholder,
+                                        style = typography.bodySmall,
+                                        fontWeight = FontWeight.Normal,
+                                        color = colors.GRAY400,
+                                    )
+                                }
                             }
-                        } else {
-                            updateTextValue(newText)
                         }
-                    },
-                    value = textState,
-                    textStyle = typography.bodySmall.copy(
-                        fontWeight = FontWeight.Normal,
-                        color = colors.Black,
-                        textAlign = if (isTextRight) TextAlign.End else TextAlign.Start,
-                    ),
-                    cursorBrush = SolidColor(colors.MAIN),
-                    modifier = Modifier
-                        .fillMaxWidth(if (isTextRight) 0.95f else 1f)
-                        .padding(15.dp),
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    if (!isTextRight && (textState == "")) {
-                        Text(
-                            text = placeholder,
-                            style = typography.bodySmall,
-                            fontWeight = FontWeight.Normal,
-                            color = colors.GRAY400,
-                        )
-                    }
-                    if (isTextRight) {
-                        Text(
-                            text = placeholder,
-                            style = typography.bodySmall,
-                            fontWeight = FontWeight.Normal,
-                            color = colors.GRAY400,
-                        )
                     }
                 }
             }
             if (lengthCheck) {
                 Text(
-                    text = errorMessage,
+                    text = overflowErrorMessage,
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.SYSTEM
+                )
+            }
+            if (isError) {
+                Text(
+                    text = emptyErrorMessage,
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
                     color = colors.SYSTEM
@@ -151,7 +168,9 @@ fun Preview() {
         textState = "가나다라",
         placeholder = "힌트다",
         isTextRight = false,
-        errorMessage = "에러니까 고치셈",
-        updateTextValue = {}
+        overflowErrorMessage = "에러니까 고치셈",
+        emptyErrorMessage = "비어ㅆ습니다",
+        updateTextValue = {},
+        isError = false
     )
 }
