@@ -30,10 +30,12 @@ fun MindWayTextField(
     title: String,
     textState: String,
     placeholder: String,
-    errorMessage: String,
-    updateTextValue: (String) -> Unit,
+    overflowErrorMessage: String = "",
+    emptyErrorMessage: String,
+    isError: Boolean = false,
     lengthLimit: Int = 0,
     isTextRight: Boolean = false,
+    updateTextValue: (String) -> Unit,
 ) {
     val lengthCheck = if (lengthLimit != 0) {
         textState.length >= lengthLimit
@@ -78,7 +80,7 @@ fun MindWayTextField(
                 modifier = Modifier
                     .border(
                         width = 1.dp,
-                        color = if (lengthCheck) colors.SYSTEM else colors.GRAY100,
+                        color = if (lengthCheck || !isError) colors.SYSTEM else colors.GRAY100,
                         shape = RoundedCornerShape(size = 8.dp)
                     )
                     .background(
@@ -140,7 +142,15 @@ fun MindWayTextField(
             }
             if (lengthCheck) {
                 Text(
-                    text = errorMessage,
+                    text = overflowErrorMessage,
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.SYSTEM
+                )
+            }
+            if (!isError) {
+                Text(
+                    text = emptyErrorMessage,
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
                     color = colors.SYSTEM
@@ -158,7 +168,9 @@ fun Preview() {
         textState = "가나다라",
         placeholder = "힌트다",
         isTextRight = false,
-        errorMessage = "에러니까 고치셈",
-        updateTextValue = {}
+        overflowErrorMessage = "에러니까 고치셈",
+        emptyErrorMessage = "비어ㅆ습니다",
+        updateTextValue = {},
+        isError = false
     )
 }
