@@ -38,6 +38,9 @@ fun MyBookEditScreen(
     val titleTextState by myBookEditViewModel.titleTextState.collectAsState()
     val writeTextState by myBookEditViewModel.writeTextState.collectAsState()
     val linkTextState by myBookEditViewModel.linkTextState.collectAsState()
+    val titleTextStateIsEmpty by myBookEditViewModel.titleTextStateIsEmpty.collectAsState()
+    val writeTextStateIsEmpty by myBookEditViewModel.writeTextStateIsEmpty.collectAsState()
+    val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsState()
     val focusManager = LocalFocusManager.current
 
     MindWayAndroidTheme { colors, _ ->
@@ -51,7 +54,7 @@ fun MyBookEditScreen(
                 }
             ) {
                 BookEditTopAppBar(
-                    startIconOnClick = { navigateToBack() },
+                    startIconOnClick = navigateToBack,
                     endIconOnClick = {}
                 )
                 Column(
@@ -69,22 +72,25 @@ fun MyBookEditScreen(
                         title = stringResource(R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
-                        errorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = myBookEditViewModel::updateTitleTextState
+                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                        updateTextValue = myBookEditViewModel::updateTitleTextState,
+                        isError = titleTextStateIsEmpty
                     )
                     MindWayTextField(
                         title = stringResource(R.string.writer),
                         textState = writeTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_writer),
-                        errorMessage = stringResource(R.string.please_enter_the_book_writer),
-                        updateTextValue = myBookEditViewModel::updateWriteTextState
+                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
+                        updateTextValue = myBookEditViewModel::updateWriteTextState,
+                        isError = writeTextStateIsEmpty
                     )
                     MindWayTextField(
                         title = stringResource(R.string.link),
                         textState = linkTextState,
                         placeholder = stringResource(R.string.please_enter_the_link),
-                        errorMessage = stringResource(R.string.please_enter_the_link),
-                        updateTextValue = myBookEditViewModel::updateLinkTextState
+                        emptyErrorMessage = stringResource(R.string.please_enter_the_link),
+                        updateTextValue = myBookEditViewModel::updateLinkTextState,
+                        isError = linkTextStateIsEmpty
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
@@ -92,7 +98,7 @@ fun MyBookEditScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = { myBookEditViewModel.checkButton() }
+                        onClick = { myBookEditViewModel.checkButtonOnClick() }
                     )
                 }
             }
