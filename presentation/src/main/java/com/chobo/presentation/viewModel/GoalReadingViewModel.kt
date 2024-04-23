@@ -18,6 +18,9 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     private val _goalBookReadSetting = MutableStateFlow("")
     val goalBookReadSetting: StateFlow<String> = _goalBookReadSetting.asStateFlow()
 
+    private val _goalBookReadSettingIsEmpty = MutableStateFlow(false)
+    val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
+
     private val _goalReadingGraphDataList = MutableStateFlow<List<GoalReadingGraphData>>(listOf())
     val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> =
         _goalReadingGraphDataList.asStateFlow()
@@ -28,23 +31,14 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
         _goalReadingListOfBooksReadItemDataList.asStateFlow()
 
     fun updateGoalBookReadSetting(input:String){
+        _goalBookReadSettingIsEmpty.value = false
         _goalBookReadSetting.value = input
     }
 
     fun goalBookReadSettingOnClick(){
-
+        _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
     }
     init {
-        _goalBookRead.value = 15
-        _goalReadingGraphDataList.value = listOf(
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(3, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, true, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-        )
         _goalReadingListOfBooksReadItemDataList.value =
             MutableList(30) {
                 GoalReadingListOfBooksReadItemData(
