@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,6 +27,7 @@ fun GoalReadingBottomSheet(
     textState: String,
     updateTextValue: (String) -> Unit,
     onclick: () -> Unit,
+    isError: Boolean,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -94,8 +93,9 @@ fun GoalReadingBottomSheet(
                     textState = textState,
                     placeholder = "권",
                     isTextRight = true,
-                    errorMessage = stringResource(id = R.string.goal_reading_error),
-                    updateTextValue = updateTextValue
+                    emptyErrorMessage = stringResource(R.string.goal_reading_error),
+                    updateTextValue = updateTextValue,
+                    isError = isError,
                 )
             }
             MindWayButton(
@@ -111,5 +111,5 @@ fun GoalReadingBottomSheet(
 @Preview
 @Composable
 fun GoalReadingBottomSheetPreview() {
-    GoalReadingBottomSheet(textState = "dwq", updateTextValue = {}) { }
+    GoalReadingBottomSheet(textState = "dwq", updateTextValue = {}, { }, isError = false)
 }
