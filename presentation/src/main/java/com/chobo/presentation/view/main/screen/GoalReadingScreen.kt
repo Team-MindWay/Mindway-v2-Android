@@ -1,5 +1,9 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,8 +18,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +38,7 @@ import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.GoalReadingViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -49,6 +57,13 @@ fun GoalReadingScreen(
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
+    val snackbarState = remember { mutableStateOf(false) }
+
+    LaunchedEffect(snackbarState.value) {
+        delay(2000)
+        snackbarState.value = false
+    }
+
     MindWayBottomSheetDialog(
         sheetContent = {
             GoalReadingBottomSheet(
@@ -65,6 +80,7 @@ fun GoalReadingScreen(
                 GoalReadingTopAppBar(
                     startIconOnClick = navigateToBack,
                     endIconOnClick = {
+
                         coroutineScope.launch { sheetState.show() }
                     },
                     isData = goalBookRead == 0
@@ -106,14 +122,30 @@ fun GoalReadingScreen(
                             )
                         }
                     }
-                    MindWayToast(
-                        text = "임시 토스트 메시지",
-                        isSuccess = true,
+                    this@Column.AnimatedVisibility(
+                        visible = snackbarState.value,
                         modifier = Modifier
-                            .fillMaxWidth()
                             .align(Alignment.BottomCenter)
-                            .offset(y = 64.dp),
-                    )
+                            .offset(y = (-50).dp),
+                        enter = slideInVertically(
+                            initialOffsetY = { it },
+                            animationSpec = tween(durationMillis = 500)
+                        ),
+                        exit = slideOutVertically(
+                            targetOffsetY = { it },
+                            animationSpec = tween(durationMillis = 500)
+                        )
+                    ) {
+                        Column(modifier = Modifier
+                            .padding(horizontal = 24.dp)
+                            .fillMaxWidth()) {
+                            MindWayToast(
+                                text = "임시",
+                                isSuccess = true,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
                 }
             }
         }
