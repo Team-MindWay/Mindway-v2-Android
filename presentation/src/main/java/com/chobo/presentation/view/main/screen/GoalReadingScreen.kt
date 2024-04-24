@@ -165,7 +165,6 @@ fun GoalReadingScreen(
             }
         }
     }
-
     LaunchedEffect(isToastVisible) {
         delay(2000)
         goalReadingViewModel.toggleIsToastVisible()
