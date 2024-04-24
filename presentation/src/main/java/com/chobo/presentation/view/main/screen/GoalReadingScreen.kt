@@ -1,5 +1,9 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,14 +18,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
@@ -31,6 +38,7 @@ import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.GoalReadingViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -47,7 +55,12 @@ fun GoalReadingScreen(
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsState()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsState()
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
+    val isToastVisible by goalReadingViewModel.isToastVisible.collectAsState()
+    val isSuccess by goalReadingViewModel.isSuccess.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+
+    val toastText = if (isSuccess) stringResource(R.string.goal_reading_fail_toast)
+        else stringResource(R.string.goal_reading_success_toast)
 
     MindWayBottomSheetDialog(
         sheetContent = {
@@ -64,10 +77,10 @@ fun GoalReadingScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 GoalReadingTopAppBar(
                     startIconOnClick = navigateToBack,
+                    isData = goalBookRead == 0,
                     endIconOnClick = {
                         coroutineScope.launch { sheetState.show() }
                     },
-                    isData = goalBookRead == 0
                 )
                 Box(modifier = Modifier.fillMaxSize()) {
                     LazyColumn(
@@ -106,17 +119,38 @@ fun GoalReadingScreen(
                             )
                         }
                     }
-                    MindWayToast(
-                        text = "임시 토스트 메시지",
-                        isSuccess = true,
+                    this@Column.AnimatedVisibility(
+                        visible = isToastVisible,
                         modifier = Modifier
-                            .fillMaxWidth()
                             .align(Alignment.BottomCenter)
-                            .offset(y = 64.dp),
-                    )
+                            .offset(y = (-50).dp),
+                        enter = slideInVertically(
+                            initialOffsetY = { it },
+                            animationSpec = tween(durationMillis = 500)
+                        ),
+                        exit = slideOutVertically(
+                            targetOffsetY = { it },
+                            animationSpec = tween(durationMillis = 500)
+                        )
+                    ) {
+                        Column(modifier = Modifier
+                            .padding(horizontal = 24.dp)
+                            .fillMaxWidth()) {
+                            MindWayToast(
+                                text = toastText,
+                                isSuccess = isSuccess,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
                 }
             }
         }
+    }
+
+    LaunchedEffect(isToastVisible) {
+        delay(2000)
+        goalReadingViewModel.toggleIsToastVisible()
     }
 }
 
