@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 data class GoalReadingGraphData(
@@ -71,11 +72,7 @@ fun HomeGoalReadingChart(
                             color = colors.Black,
                         )
                         ChevronRightIcon(
-                            modifier = Modifier
-                                .clickable(
-                                    interactionSource = MutableInteractionSource(),
-                                    indication = null
-                                ) { onClick() }
+                            modifier = Modifier.clickableSingle { onClick() }
                         )
                     }
                     GoalReadingIndicator(
