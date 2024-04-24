@@ -99,14 +99,14 @@ fun BookScreen(
                     when (page) {
                         0 -> {
                             item { MindWayListSpacerM() }
-                            itemsIndexed(novelDataList) { index, item ->
+                            itemsIndexed(novelDataList) { _, item ->
                                 BookListItem(data = item)
                             }
                         }
 
                         1 -> {
                             item { MindWayListSpacerM() }
-                            itemsIndexed(essayDataList) { index, item ->
+                            itemsIndexed(essayDataList) { _, item ->
                                 BookListItem(data = item)
                             }
                         }
