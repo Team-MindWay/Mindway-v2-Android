@@ -49,7 +49,6 @@ fun HomeAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
-                .imePadding()
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 AddBookTopAppBar(startIconOnClick = { navigateToBack() })
