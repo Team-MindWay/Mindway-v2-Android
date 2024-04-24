@@ -1,17 +1,13 @@
 package com.chobo.presentation.view.main.component
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.icon.PlusIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.color.MindWayColor
 
@@ -23,21 +19,13 @@ fun GoalReadingTopAppBar(
 ) {
     MindWayTopAppBar(
         startIcon = {
-            ChevronLeftIcon(
-                modifier = Modifier.clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = null
-                ) { startIconOnClick() }
-            )
+            ChevronLeftIcon(modifier = Modifier.clickableSingle { startIconOnClick() })
         },
         midText = stringResource(R.string.goal_reading),
         endIcon = {
             if (isData) {
                 PlusIcon(
-                    modifier = Modifier.clickable(
-                        interactionSource = MutableInteractionSource(),
-                        indication = null
-                    ) { endIconOnClick() },
+                    modifier = Modifier.clickableSingle { endIconOnClick() },
                     tint = MindWayColor.Black
                 )
             }
