@@ -30,6 +30,9 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     val goalReadingListOfBooksReadItemDataList: StateFlow<List<GoalReadingListOfBooksReadItemData>> =
         _goalReadingListOfBooksReadItemDataList.asStateFlow()
 
+    private val _isToastVisible = MutableStateFlow(false)
+    val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
+
     fun updateGoalBookReadSetting(input:String){
         _goalBookReadSettingIsEmpty.value = false
         _goalBookReadSetting.value = input
@@ -37,6 +40,10 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
 
     fun goalBookReadSettingOnClick(){
         _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
+    }
+
+    fun toggleIsToastVisible(){
+        _isToastVisible != _isToastVisible
     }
     init {
         _goalReadingListOfBooksReadItemDataList.value =

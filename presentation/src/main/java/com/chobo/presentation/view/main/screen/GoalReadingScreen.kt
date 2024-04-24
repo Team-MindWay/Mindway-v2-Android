@@ -55,13 +55,13 @@ fun GoalReadingScreen(
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsState()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsState()
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
+    val isToastVisible by goalReadingViewModel.isToastVisible.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
-    val snackbarState = remember { mutableStateOf(false) }
 
-    LaunchedEffect(snackbarState.value) {
+    LaunchedEffect(isToastVisible) {
         delay(2000)
-        snackbarState.value = false
+        goalReadingViewModel.toggleIsToastVisible()
     }
 
     MindWayBottomSheetDialog(
@@ -123,7 +123,7 @@ fun GoalReadingScreen(
                         }
                     }
                     this@Column.AnimatedVisibility(
-                        visible = snackbarState.value,
+                        visible = isToastVisible,
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .offset(y = (-50).dp),
