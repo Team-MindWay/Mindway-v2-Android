@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -41,30 +40,32 @@ fun GoalReadingScreen(
     goalReadingViewModel: GoalReadingViewModel = viewModel(),
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: () -> Unit
+    navigateToHomeViewDetail: () -> Unit,
 ) {
     val goalBookRead by goalReadingViewModel.goalBookRead.collectAsState()
+    val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsState()
+    val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsState()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsState()
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
-
     val coroutineScope = rememberCoroutineScope()
 
     MindWayBottomSheetDialog(
         sheetContent = {
-            GoalReadingBottomSheet {
-
-            }
+            GoalReadingBottomSheet(
+                isError = goalBookReadSettingIsEmpty,
+                textState = goalBookReadSetting,
+                onclick = goalReadingViewModel::goalBookReadSettingOnClick,
+                updateTextValue = goalReadingViewModel::updateGoalBookReadSetting
+            )
         }
     ) { sheetState ->
         MindWayAndroidTheme { colors, _ ->
             Column(modifier = modifier.background(color = colors.WHITE)) {
                 Spacer(modifier = Modifier.height(20.dp))
                 GoalReadingTopAppBar(
-                    startIconOnClick = { navigateToBack() },
+                    startIconOnClick = navigateToBack,
                     endIconOnClick = {
-                        coroutineScope.launch {
-                            sheetState.show()
-                        }
+                        coroutineScope.launch { sheetState.show() }
                     },
                     isData = goalBookRead == 0
                 )
@@ -82,31 +83,31 @@ fun GoalReadingScreen(
                     ) {
                         item {
                             GoalReadingChart(
-                                isHasData = true,
+                                goalBookRead = goalBookRead,
+                                goalReadingGraphData = goalReadingGraphDataList,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(180.dp),
-                                goalBookRead = goalBookRead,
-                                goalReadingGraphData = goalReadingGraphDataList
                             )
                         }
                         item {
-                            GoalReadingPlusCard(onClick = navigateToHomeAddBook)
+                            GoalReadingPlusCard(
+                                onClick = navigateToHomeAddBook,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(60.dp)
+                            )
                         }
                         items(goalReadingListOfBooksReadItemDataList) { item ->
                             GoalReadingListOfBooksReadItem(
-                                modifier = Modifier .shadow(
-                                    elevation = 20.dp,
-                                    spotColor = colors.CardShadow,
-                                    ambientColor = colors.CardShadow,
-                                ),
                                 data = item,
-                                onClick = navigateToHomeViewDetail
+                                onClick = navigateToHomeViewDetail,
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
                     MindWayToast(
-                        text = "dwadawdwada",
+                        text = "임시 토스트 메시지",
                         isSuccess = true,
                         modifier = Modifier
                             .fillMaxWidth()

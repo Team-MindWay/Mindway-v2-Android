@@ -56,4 +56,7 @@
     <string name="copyright">© 2022. MINDWAY All rights reserved.</string>
     <string name="please_enter_the_book_writer">저자를 입력해주세요</string>
     <string name="please_enter_the_link">YES24 링크를 입력해주세요</string>
+    <string name="book_delete">독서 삭제</string>
+    <string name="book">독서를</string>
+    <string name="overFlowErrorMessage">최대 글자수를 초과했습니다</string>
 </resources>

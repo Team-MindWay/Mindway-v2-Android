@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -37,9 +36,11 @@ fun HomeAddBookScreen(
 ) {
     val titleTextState by homeAddBookViewModel.titleTextState.collectAsState()
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsState()
+    val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsState()
+    val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
             Column(modifier = modifier
                 .background(color = colors.WHITE)
@@ -71,17 +72,20 @@ fun HomeAddBookScreen(
                             title = stringResource(R.string.title),
                             textState = titleTextState,
                             placeholder = stringResource(R.string.please_enter_the_book_title),
-                            errorMessage = stringResource(R.string.error_title),
-                            lengthLimit = homeAddBookViewModel.titleTextMaxLength,
-                            updateTextValue = homeAddBookViewModel::updateTitleTextState
+                            overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                            emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                            updateTextValue = homeAddBookViewModel::updateTitleTextState,
+                            isError = titleTextStateIsEmpty
                         )
                         MindWayTextField(
                             title = stringResource(R.string.content),
                             textState = contentTextState,
                             placeholder = stringResource(R.string.please_enter_the_book_content),
-                            errorMessage = stringResource(R.string.error_content),
+                            overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                            emptyErrorMessage = stringResource(R.string.error_content),
                             lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-                            updateTextValue = homeAddBookViewModel::updateContentTextState
+                            updateTextValue = homeAddBookViewModel::updateContentTextState,
+                            isError = contentTextStateIsEmpty
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         MindWayButton(

@@ -15,6 +15,12 @@ class ViewDetailViewModel @Inject constructor() : ViewModel() {
     private val _contentTextState = MutableStateFlow("")
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
 
+    fun cancelOnclick(){
+
+    }
+    fun checkOnclick(){
+
+    }
     init {
         _titleTextState.value = "임시데이터 임시데이터 임시데이터"
         _contentTextState.value = "임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터"

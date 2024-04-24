@@ -79,6 +79,8 @@ dependencies {
     implementation(Dependency.Hilt.HILT)
     ksp(Dependency.Hilt.HILT_COMPILER)
 
+    implementation(Dependency.DataStore.PREFERENCES)
+
     implementation(Dependency.Retrofit.RETROFIT)
     implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
     implementation(Dependency.OkHttp.OKHTTP)

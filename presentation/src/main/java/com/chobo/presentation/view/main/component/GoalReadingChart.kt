@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,20 +24,15 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun GoalReadingChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean,
-    goalBookRead:Int,
+    goalBookRead: Int,
     goalReadingGraphData: List<GoalReadingGraphData> = listOf(),
 ) {
+    val isHasData = goalReadingGraphData.isNotEmpty()
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = if (isHasData) Arrangement.SpaceBetween else Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .shadow(
-                    elevation = 20.dp,
-                    spotColor = colors.CardShadow,
-                    ambientColor = colors.CardShadow,
-                )
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
@@ -94,7 +88,6 @@ fun GoalReadingChartPreview() {
         modifier = Modifier
             .width(312.dp)
             .height(180.dp),
-        isHasData = true,
         goalReadingGraphData = listOf(
             GoalReadingGraphData(1, 3, false, "오"),
             GoalReadingGraphData(2, 3, true, "늘"),

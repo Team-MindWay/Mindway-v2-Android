@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,8 +23,12 @@ import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
-    val textState = remember { mutableStateOf("") }
+fun GoalReadingBottomSheet(
+    textState: String,
+    updateTextValue: (String) -> Unit,
+    onclick: () -> Unit,
+    isError: Boolean,
+) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
@@ -83,19 +85,18 @@ fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
                         }
                     }
                 }
-/*                MindWayTextField(
-                    outSideModifier = Modifier
+                MindWayTextField(
+                    modifier = Modifier
                         .fillMaxWidth()
                         .height(119.dp),
-                    textFieldModifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
                     title = stringResource(id = R.string.goal_reading),
                     textState = textState,
                     placeholder = "권",
                     isTextRight = true,
-                    errorMessage = stringResource(id = R.string.goal_reading_error),
-                )*/
+                    emptyErrorMessage = stringResource(R.string.goal_reading_error),
+                    updateTextValue = updateTextValue,
+                    isError = isError,
+                )
             }
             MindWayButton(
                 modifier = Modifier
@@ -109,6 +110,6 @@ fun GoalReadingBottomSheet(onclick: () -> Unit, ) {
 }
 @Preview
 @Composable
-fun GoalReadingBottomSheetPreview(){
-    GoalReadingBottomSheet { }
+fun GoalReadingBottomSheetPreview() {
+    GoalReadingBottomSheet(textState = "dwq", updateTextValue = {}, { }, isError = false)
 }
