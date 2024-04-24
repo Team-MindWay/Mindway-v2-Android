@@ -58,9 +58,6 @@ fun BookAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
-                /*.windowInsetsPadding(
-                WindowInsets.ime.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
-            )*/
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 BookRequestTopAppBar(

@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,12 +19,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,6 +62,7 @@ fun GoalReadingScreen(
     val isToastVisible by goalReadingViewModel.isToastVisible.collectAsState()
     val isSuccess by goalReadingViewModel.isSuccess.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
 
     val toastText = if (isSuccess) stringResource(R.string.goal_reading_fail_toast)
     else stringResource(R.string.goal_reading_success_toast)
@@ -78,75 +83,85 @@ fun GoalReadingScreen(
         }
     ) { sheetState ->
         MindWayAndroidTheme { colors, _ ->
-            Column(modifier = modifier.background(color = colors.WHITE)) {
-                Spacer(modifier = Modifier.height(20.dp))
-                GoalReadingTopAppBar(
-                    startIconOnClick = navigateToBack,
-                    endIconOnClick = {
-
-                        coroutineScope.launch { sheetState.show() }
-                    },
-                    isData = goalBookRead == 0
-                )
-                Box(modifier = Modifier.fillMaxSize()) {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .padding(
-                                start = 24.dp,
-                                end = 24.dp,
-                                top = 12.dp,
+            CompositionLocalProvider(LocalFocusManager provides focusManager) {
+                Column(
+                    modifier = modifier
+                        .background(color = colors.WHITE)
+                        .pointerInput(Unit) {
+                            detectTapGestures {
+                                focusManager.clearFocus()
+                            }
+                        }) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    GoalReadingTopAppBar(
+                        startIconOnClick = navigateToBack,
+                        endIconOnClick = {
+                            coroutineScope.launch { sheetState.show() }
+                        },
+                        isData = goalBookRead == 0
+                    )
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .padding(
+                                    start = 24.dp,
+                                    end = 24.dp,
+                                    top = 12.dp,
+                                )
+                                .fillMaxSize()
+                        ) {
+                            item {
+                                GoalReadingChart(
+                                    goalBookRead = goalBookRead,
+                                    goalReadingGraphData = goalReadingGraphDataList,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(180.dp),
+                                )
+                            }
+                            item {
+                                GoalReadingPlusCard(
+                                    onClick = navigateToHomeAddBook,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(60.dp)
+                                )
+                            }
+                            items(goalReadingListOfBooksReadItemDataList) { item ->
+                                GoalReadingListOfBooksReadItem(
+                                    data = item,
+                                    onClick = navigateToHomeViewDetail,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
+                        }
+                        this@Column.AnimatedVisibility(
+                            visible = isToastVisible,
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .offset(y = (-50).dp),
+                            enter = slideInVertically(
+                                initialOffsetY = { it },
+                                animationSpec = tween(durationMillis = 500)
+                            ),
+                            exit = slideOutVertically(
+                                targetOffsetY = { it },
+                                animationSpec = tween(durationMillis = 500)
                             )
-                            .fillMaxSize()
-                    ) {
-                        item {
-                            GoalReadingChart(
-                                goalBookRead = goalBookRead,
-                                goalReadingGraphData = goalReadingGraphDataList,
+                        ) {
+                            Column(
                                 modifier = Modifier
+                                    .padding(horizontal = 24.dp)
                                     .fillMaxWidth()
-                                    .height(180.dp),
-                            )
-                        }
-                        item {
-                            GoalReadingPlusCard(
-                                onClick = navigateToHomeAddBook,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(60.dp)
-                            )
-                        }
-                        items(goalReadingListOfBooksReadItemDataList) { item ->
-                            GoalReadingListOfBooksReadItem(
-                                data = item,
-                                onClick = navigateToHomeViewDetail,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                    this@Column.AnimatedVisibility(
-                        visible = isToastVisible,
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .offset(y = (-50).dp),
-                        enter = slideInVertically(
-                            initialOffsetY = { it },
-                            animationSpec = tween(durationMillis = 500)
-                        ),
-                        exit = slideOutVertically(
-                            targetOffsetY = { it },
-                            animationSpec = tween(durationMillis = 500)
-                        )
-                    ) {
-                        Column(modifier = Modifier
-                            .padding(horizontal = 24.dp)
-                            .fillMaxWidth()) {
-                            MindWayToast(
-                                isSuccess = true,
-                                text = toastText,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                            ) {
+                                MindWayToast(
+                                    isSuccess = true,
+                                    text = toastText,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
                     }
                 }
