@@ -37,7 +37,7 @@ fun MindWayNavBar(
             modifier = modifier
                 .fillMaxWidth()
                 .background(colors.WHITE)
-                .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 32.dp),
+                .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             itemList.forEach { item ->

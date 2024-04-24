@@ -44,6 +44,7 @@ fun GoalReadingScreen(
 ) {
     val goalBookRead by goalReadingViewModel.goalBookRead.collectAsState()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsState()
+    val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsState()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsState()
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -51,6 +52,7 @@ fun GoalReadingScreen(
     MindWayBottomSheetDialog(
         sheetContent = {
             GoalReadingBottomSheet(
+                isError = goalBookReadSettingIsEmpty,
                 textState = goalBookReadSetting,
                 onclick = goalReadingViewModel::goalBookReadSettingOnClick,
                 updateTextValue = goalReadingViewModel::updateGoalBookReadSetting
@@ -81,7 +83,6 @@ fun GoalReadingScreen(
                     ) {
                         item {
                             GoalReadingChart(
-                                isHasData = true,
                                 goalBookRead = goalBookRead,
                                 goalReadingGraphData = goalReadingGraphDataList,
                                 modifier = Modifier
