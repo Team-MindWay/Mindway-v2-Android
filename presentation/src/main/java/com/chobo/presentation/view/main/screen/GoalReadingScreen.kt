@@ -56,8 +56,11 @@ fun GoalReadingScreen(
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsState()
     val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsState()
     val isToastVisible by goalReadingViewModel.isToastVisible.collectAsState()
+    val isSuccess by goalReadingViewModel.isSuccess.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
+    val toastText = if (isSuccess) stringResource(R.string.goal_reading_fail_toast)
+    else stringResource(R.string.goal_reading_success_toast)
 
     LaunchedEffect(isToastVisible) {
         delay(2000)
