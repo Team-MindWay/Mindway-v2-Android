@@ -33,58 +33,50 @@ fun Events(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(20.dp))
-        Surface(
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             modifier = modifier
                 .fillMaxWidth()
-                .shadow(elevation = 20.dp, spotColor = colors.CardShadow),
-            color = colors.WHITE,
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = colors.WHITE,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 20.dp
-                    )
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = eventsData.title,
-                        style = typography.bodySmall,
-                        color = colors.Black,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Spacer(modifier = modifier.weight(1f))
-                    ChevronRightIcon(
-                        modifier = Modifier.clickableSingle {
-                            onClick()
-                            navigateToDetailEvent()
-                        }
-                    )
-                }
-                Spacer(modifier = modifier.height(8.dp))
-                Text(
-                    text = eventsData.content,
-                    style = typography.bodySmall,
-                    color = colors.GRAY800,
-                    fontWeight = FontWeight.Normal
+                .shadow(elevation = 20.dp, spotColor = colors.CardShadow)
+                .background(
+                    color = colors.WHITE,
+                    shape = RoundedCornerShape(8.dp)
                 )
-                Spacer(modifier = modifier.height(8.dp))
+                .padding(
+                    horizontal = 24.dp,
+                    vertical = 20.dp
+                )
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
-                    text = eventsData.date,
-                    style = typography.labelLarge,
-                    color = colors.GRAY400,
-                    fontWeight = FontWeight.Normal
+                    text = eventsData.title,
+                    style = typography.bodySmall,
+                    color = colors.Black,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = modifier.weight(1f))
+                ChevronRightIcon(
+                    modifier = Modifier.clickableSingle {
+                        onClick()
+                        navigateToDetailEvent()
+                    }
                 )
             }
+            Text(
+                text = eventsData.content,
+                style = typography.bodySmall,
+                color = colors.GRAY800,
+                fontWeight = FontWeight.Normal
+            )
+            Text(
+                text = eventsData.date,
+                style = typography.labelLarge,
+                color = colors.GRAY400,
+                fontWeight = FontWeight.Normal
+            )
         }
     }
 }
