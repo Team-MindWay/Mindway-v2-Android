@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.my.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,15 +30,13 @@ fun MyNameCard(
             verticalAlignment = Alignment.Top,
             modifier = Modifier
                 .fillMaxWidth()
+                .background(color = colors.GRAY100)
                 .padding(
                     vertical = 24.dp,
                     horizontal = 40.dp
                 )
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
-                horizontalAlignment = Alignment.Start,
-            ) {
+            Column {
                 Text(
                     text = stringResource(R.string.greeting),
                     style = typography.headlineSmall,
