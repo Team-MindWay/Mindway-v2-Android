@@ -10,7 +10,7 @@ const val BookAddBookRoute = "book_add_book_route"
 fun NavController.navigationToBookAddBook() {
     this.navigate(BookAddBookRoute)
 }
-fun NavGraphBuilder.bookAddBook(navigateToBack: () -> Unit) {
+fun NavGraphBuilder.bookAddBookScreen(navigateToBack: () -> Unit) {
     composable(BookAddBookRoute) {
         BookAddBookScreen(navigateToBack = { navigateToBack() })
     }
