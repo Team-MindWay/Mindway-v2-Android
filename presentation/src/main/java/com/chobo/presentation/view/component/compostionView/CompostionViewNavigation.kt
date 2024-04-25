@@ -13,7 +13,7 @@ fun NavController.navigationToCombinationView() {
 }
 
 fun NavGraphBuilder.combinationScreen(
-    topDestination: MutableState<MindWayNavBarItemType>,
+    currentDestination: MutableState<MindWayNavBarItemType>,
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
@@ -22,7 +22,7 @@ fun NavGraphBuilder.combinationScreen(
 ) {
     composable(CombinationViewRoute) {
         MindWayCombinationView(
-            topDestination = topDestination,
+            currentDestination = currentDestination,
             navigateToDetailEvent = navigateToDetailEvent,
             navigateToGoalReading = navigateToGoalReading,
             navigateToBookAddBook = navigateToBookAddBook,

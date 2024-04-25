@@ -34,7 +34,7 @@ fun MindWayNavHost(
     startDestination: String
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-    val topDestination = remember {
+    val currentDestination = remember {
         mutableStateOf(MindWayNavBarItemType.HOME)
     }
     NavHost(
@@ -44,7 +44,7 @@ fun MindWayNavHost(
         loginScreen(navigateToHome = navController::navigationToCombinationView)
 
         combinationScreen(
-            topDestination = topDestination,
+            currentDestination = currentDestination,
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
             navigateToBookAddBook = navController::navigationToBookAddBook,
