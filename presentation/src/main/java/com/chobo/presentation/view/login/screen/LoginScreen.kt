@@ -71,9 +71,10 @@ fun LoginScreen(
     if (isClicked) {
         GAuthSigninWebView(
             clientId = BuildConfig.CLIENT_ID,
-            redirectUri = BuildConfig.REDIRECT_URI
-        ) {
-            authViewModel.gAuthLogin(it)
+            redirectUri = BuildConfig.REDIRECT_URI,
+        ) { code ->
+            authViewModel.gAuthLogin(code)
+            navigateToHome()
         }
     }
 }
