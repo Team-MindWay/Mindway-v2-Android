@@ -52,7 +52,9 @@ fun MindWayBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
-                modifier = Modifier.clickableSingle { topOnClick() }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickableSingle { topOnClick() }
             )
             Spacer(
                 modifier = Modifier
@@ -65,7 +67,9 @@ fun MindWayBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.SYSTEM,
-                modifier = Modifier.clickableSingle { bottomOnCLick() }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickableSingle { bottomOnCLick() }
             )
         }
     }
