@@ -28,14 +28,21 @@ fun GoalReadingTopAppBar(
                     modifier = Modifier.clickableSingle { endIconOnClick() },
                     tint = MindWayColor.Black
                 )
+            } else {
+                PlusIcon(tint = MindWayColor.GRAY400)
             }
-            else { PlusIcon(tint = MindWayColor.GRAY400) }
         }
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "GoalReadingTopAppBarNoDataPreview")
 @Composable
-fun GoalReadingTopAppBarPreview() {
+fun GoalReadingTopAppBarNoDataPreview() {
     GoalReadingTopAppBar(startIconOnClick = { }, isData = false) { }
+}
+
+@Preview(showBackground = true, name = "GoalReadingTopAppBarHasDataPreview")
+@Composable
+fun GoalReadingTopAppBarHasDataPreview() {
+    GoalReadingTopAppBar(startIconOnClick = { }, isData = true) { }
 }
