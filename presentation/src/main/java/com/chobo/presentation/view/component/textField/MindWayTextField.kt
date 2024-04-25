@@ -33,15 +33,11 @@ fun MindWayTextField(
     overflowErrorMessage: String = "",
     emptyErrorMessage: String,
     isError: Boolean,
-    lengthLimit: Int = 0,
     isTextRight: Boolean = false,
+    lengthLimit: Int = 0,
     updateTextValue: (String) -> Unit,
 ) {
-    val lengthCheck = if (lengthLimit != 0) {
-        textState.length >= lengthLimit
-    } else {
-        false
-    }
+    val lengthCheck = if (lengthLimit != 0) textState.length >= lengthLimit else false
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -119,15 +115,14 @@ fun MindWayTextField(
                                     .padding(16.dp)
                                     .fillMaxWidth()
                             ) {
-                                if (!isTextRight && (textState == "")) {
+                                if (isTextRight) {
                                     Text(
                                         text = placeholder,
                                         style = typography.bodySmall,
                                         fontWeight = FontWeight.Normal,
                                         color = colors.GRAY400,
                                     )
-                                }
-                                if (isTextRight) {
+                                } else if (textState.isEmpty()) {
                                     Text(
                                         text = placeholder,
                                         style = typography.bodySmall,
