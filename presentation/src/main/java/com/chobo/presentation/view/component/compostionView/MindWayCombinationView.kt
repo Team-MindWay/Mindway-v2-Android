@@ -27,7 +27,6 @@ import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.event.screen.EventScreen
 import com.chobo.presentation.view.main.screen.HomeScreen
-import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyScreen
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import kotlinx.coroutines.launch
