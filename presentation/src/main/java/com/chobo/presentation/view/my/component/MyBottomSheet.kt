@@ -11,19 +11,6 @@ fun MyBottomSheet(
     navigateToIntro: () -> Unit,
     logoutOnClick: () -> Unit,
 ) {
-    MindWayBottomSheet(
-        topText = stringResource(R.string.mindway_intro),
-        bottomText = stringResource(R.string.logout),
-        topOnClick = navigateToIntro,
-        bottomOnCLick = logoutOnClick
-    )
+
 }
 
-@Preview(showBackground = true)
-@Composable
-fun MyBottomSheetPreview() {
-    MyBottomSheet(
-        logoutOnClick = { },
-        navigateToIntro = { },
-    )
-}
