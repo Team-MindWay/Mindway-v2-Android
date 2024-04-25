@@ -63,6 +63,50 @@ fun MindWayCombinationView(
                         }
                     }
                 )
+    MindWayAndroidTheme { colors, _ ->
+
+        MindWayBottomSheetDialog(
+            sheetContent = {
+                MyBottomSheet(
+                    navigateToIntro = navigateToIntro,
+                    logoutOnClick = { }
+                )
+            }
+        ) { sheetState ->
+            Scaffold(
+                topBar = {
+                        MindWayTopAppBar(
+                            modifier = Modifier.background(color = colors.WHITE),
+                            startIcon = { LogoIcon() },
+                        )
+                    }
+                },
+                bottomBar = {
+                    MindWayNavBar(
+                        navigateToHome = { currentDestination.value = HOME },
+                        navigateToEvent = { currentDestination.value = EVENT },
+                        navigateToBooks = { currentDestination.value = BOOKS },
+                        navigateToMy = { currentDestination.value = MY }
+                    )
+                }
+            ) {
+                Column(modifier = Modifier.padding(it)) {
+                        HOME -> HomeScreen(
+                            navigateToGoalReading = navigateToGoalReading,
+                            navigateToDetailEvent = navigateToDetailEvent,
+                        )
+                        EVENT -> EventScreen(navigateToDetailEvent = navigateToDetailEvent)
+                        BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
+                        MY -> MyScreen(
+                            navigateToMyBookEdit = navigateToMyBookEdit,
+                            onClick = {
+                                coroutineScope.launch {
+                                    sheetState.show()
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
     }
