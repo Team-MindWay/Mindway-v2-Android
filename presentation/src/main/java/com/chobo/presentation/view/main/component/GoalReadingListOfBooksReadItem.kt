@@ -62,11 +62,7 @@ fun GoalReadingListOfBooksReadItem(
                     color = colors.Black,
                 )
                 Text(
-                    text = stringResource(
-                        R.string.month_day,
-                        data.month,
-                        data.day
-                    ),
+                    text = stringResource(R.string.month_day, data.month, data.day),
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,

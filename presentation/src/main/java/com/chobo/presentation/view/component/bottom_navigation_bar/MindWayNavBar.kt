@@ -1,8 +1,6 @@
 package com.chobo.presentation.view.component.bottom_navigation_bar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,13 +24,6 @@ fun MindWayNavBar(
     navigateToMy: () -> Unit,
     currentDestination: MutableState<MindWayNavBarItemType>,
 ) {
-    val itemList = listOf(
-        MindWayNavBarItemType.HOME,
-        MindWayNavBarItemType.EVENT,
-        MindWayNavBarItemType.BOOKS,
-        MindWayNavBarItemType.MY
-    )
-
     MindWayAndroidTheme { colors, _ ->
         Row(
             modifier = modifier
@@ -41,7 +32,12 @@ fun MindWayNavBar(
                 .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemList.forEach { item ->
+            listOf(
+                MindWayNavBarItemType.HOME,
+                MindWayNavBarItemType.EVENT,
+                MindWayNavBarItemType.BOOKS,
+                MindWayNavBarItemType.MY
+            ).forEach { item ->
                 MindWayNavBarItem(
                     modifier = modifier
                         .clickableSingle(

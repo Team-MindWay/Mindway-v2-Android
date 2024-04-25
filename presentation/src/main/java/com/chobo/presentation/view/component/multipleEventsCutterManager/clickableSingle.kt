@@ -12,13 +12,7 @@ import androidx.compose.ui.platform.debugInspectorInfo
 fun Modifier.clickableSingle(
     enabled: Boolean = true,
     onClick: () -> Unit
-): Modifier = composed(
-    inspectorInfo = debugInspectorInfo {
-        name = "clickable"
-        properties["enabled"] = enabled
-        properties["onClick"] = onClick
-    }
-) {
+): Modifier = composed {
     multipleEventsCutter { manager ->
         clickable(
             enabled = enabled,

@@ -29,7 +29,7 @@ fun NavController.navigationToHomeEditBook() {
     this.navigate(homeEditBookRoute)
 }
 
-fun NavGraphBuilder.goalReading(
+fun NavGraphBuilder.goalReadingScreen(
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
     navigateToHomeViewDetail: () -> Unit
@@ -43,7 +43,7 @@ fun NavGraphBuilder.goalReading(
     }
 }
 
-fun NavGraphBuilder.viewDetail(
+fun NavGraphBuilder.viewDetailScreen(
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: () -> Unit
 ) {
@@ -55,13 +55,13 @@ fun NavGraphBuilder.viewDetail(
     }
 }
 
-fun NavGraphBuilder.homeAddBook(navigateToBack: () -> Unit) {
+fun NavGraphBuilder.homeAddBookScreen(navigateToBack: () -> Unit) {
     composable(homeAddBookRoute) {
         HomeAddBookScreen(navigateToBack = navigateToBack)
     }
 }
 
-fun NavGraphBuilder.homeEditBook(navigateToBack: () -> Unit) {
+fun NavGraphBuilder.homeEditBookScreen(navigateToBack: () -> Unit) {
     composable(homeEditBookRoute) {
         HomeEditBookScreen(navigateToBack = navigateToBack)
     }

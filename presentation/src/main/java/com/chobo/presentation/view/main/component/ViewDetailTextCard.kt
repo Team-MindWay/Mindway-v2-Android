@@ -23,8 +23,8 @@ fun ViewDetailTextCard(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
-            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
+            horizontalAlignment = Alignment.Start,
         ) {
             Text(
                 text = title,
@@ -33,8 +33,8 @@ fun ViewDetailTextCard(
                 color = colors.GRAY400,
             )
             Row(
-                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
