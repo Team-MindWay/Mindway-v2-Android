@@ -20,12 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
-import com.msg.gauthsignin.GAuthSigninWebView
-import com.msg.gauthsignin.component.GAuthButton
-import com.msg.gauthsignin.component.utils.Types
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun LoginScreen(

@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -43,9 +44,7 @@ fun MindWayNavBar(
             itemList.forEach { item ->
                 MindWayNavBarItem(
                     modifier = modifier
-                        .clickable(
-                            interactionSource = MutableInteractionSource(),
-                            indication = null,
+                        .clickableSingle(
                             onClick = {
                                 if (currentDestination.value != item) {
                                     currentDestination.value = item
