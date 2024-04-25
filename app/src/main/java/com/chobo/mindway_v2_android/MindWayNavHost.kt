@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import com.chobo.presentation.view.book.navigation.bookAddBook
 import com.chobo.presentation.view.book.navigation.navigationToBookAddBook
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
-import com.chobo.presentation.view.component.compostionView.CompostionView
-import com.chobo.presentation.view.component.compostionView.navigationToCompostionView
+import com.chobo.presentation.view.component.compostionView.combinationView
+import com.chobo.presentation.view.component.compostionView.navigationToCombinationView
 import com.chobo.presentation.view.event.navigation.detailEventScreen
 import com.chobo.presentation.view.event.navigation.eventScreen
 import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
@@ -41,9 +41,9 @@ fun MindWayNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        loginScreen(navigateToHome = navController::navigationToCompostionView)
+        loginScreen(navigateToHome = navController::navigationToCombinationView)
 
-        CompostionView(
+        combinationView(
             topDestination = topDestination,
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
