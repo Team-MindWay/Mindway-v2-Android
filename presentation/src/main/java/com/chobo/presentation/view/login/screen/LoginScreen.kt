@@ -55,7 +55,10 @@ fun LoginScreen(
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                MindWayGAuthButton(modifier = Modifier.height(48.dp)) { isClicked = true }
+                MindWayGAuthButton(
+                    modifier = Modifier.height(48.dp),
+                    onClick = { isClicked = true }
+                    )
                 Spacer(modifier = Modifier.height(30.dp))
                 Button(
                     onClick = { navigateToHome() }
