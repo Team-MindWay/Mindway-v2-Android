@@ -33,7 +33,6 @@ fun EventPager(
     onGoingEvent: @Composable (ColumnScope.() -> Unit),
     pastEvent: @Composable (ColumnScope.() -> Unit)
 ) {
-
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
@@ -58,7 +57,7 @@ fun EventPager(
                     Tab(
                         text = {
                             Text(
-                                title,
+                                text = title,
                                 color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400
                             )
                         },
@@ -74,7 +73,6 @@ fun EventPager(
                     )
                 }
             }
-
             HorizontalPager(
                 state = pagerState
             ) { page ->
