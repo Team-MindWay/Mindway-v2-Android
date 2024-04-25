@@ -85,14 +85,24 @@ fun HomeReadersOfTheMonthChart(
 
 @Preview
 @Composable
-fun HomeReadersOfTheMonthChartPreview() {
+fun HomeReadersOfTheMonthChartHasDataPreview() {
     HomeReadersOfTheMonthChart(
         modifier = Modifier
-            .width(312.dp),
+            .width(312.dp)
+            .height(239.dp),
         bookKingOfTheMonthData = listOf(
             BookKingOfTheMonthData("나다", 12),
             BookKingOfTheMonthData("나다", 2),
             BookKingOfTheMonthData("나다", 30),
         )
+    )
+}
+@Preview
+@Composable
+fun HomeReadersOfTheMonthChartPreview() {
+    HomeReadersOfTheMonthChart(
+        modifier = Modifier
+            .width(312.dp)
+            .height(239.dp),
     )
 }
