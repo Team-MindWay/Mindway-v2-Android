@@ -26,13 +26,6 @@ fun MindWayNavBarItem(
     type: MindWayNavBarItemType,
     isSelected: Boolean
 ) {
-    val text =
-        when (type) {
-            MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
-            MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
-            MindWayNavBarItemType.BOOKS -> stringResource(id = R.string.books)
-            MindWayNavBarItemType.MY -> stringResource(id = R.string.my)
-        }
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.Center,
@@ -46,7 +39,12 @@ fun MindWayNavBarItem(
             }
             Spacer(modifier = modifier.height(4.dp))
             Text(
-                text = text,
+                text = when (type) {
+                    MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
+                    MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
+                    MindWayNavBarItemType.BOOKS -> stringResource(id = R.string.books)
+                    MindWayNavBarItemType.MY -> stringResource(id = R.string.my)
+                },
                 style = typography.labelLarge,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
