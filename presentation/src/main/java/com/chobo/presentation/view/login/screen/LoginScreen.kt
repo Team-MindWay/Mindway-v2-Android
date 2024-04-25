@@ -58,13 +58,7 @@ fun LoginScreen(
                 MindWayGAuthButton(
                     modifier = Modifier.height(48.dp),
                     onClick = { isClicked = true }
-                    )
-                Spacer(modifier = Modifier.height(30.dp))
-                Button(
-                    onClick = { navigateToHome() }
-                ) {
-                    Text(text = "Button")
-                }
+                )
             }
         }
     }
