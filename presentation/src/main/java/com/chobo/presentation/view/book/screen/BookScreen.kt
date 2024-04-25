@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,7 +31,6 @@ import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
-import com.chobo.presentation.view.component.spacer.MindWayListSpacerM
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.BookScreenViewModel
 import kotlinx.coroutines.launch
@@ -98,14 +99,14 @@ fun BookScreen(
                 ) {
                     when (page) {
                         0 -> {
-                            item { MindWayListSpacerM() }
+                            item { Spacer(modifier = modifier.height(28.dp)) }
                             itemsIndexed(novelDataList) { _, item ->
                                 BookListItem(data = item)
                             }
                         }
 
                         1 -> {
-                            item { MindWayListSpacerM() }
+                            item { Spacer(modifier = modifier.height(28.dp)) }
                             itemsIndexed(essayDataList) { _, item ->
                                 BookListItem(data = item)
                             }
