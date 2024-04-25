@@ -23,7 +23,7 @@ class AuthViewModel @Inject constructor(
     private val saveTokenUseCase: SaveLoginDataUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val deleteTokenUseCase: DeleteTokenUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _gAuthLoginRequest = MutableLiveData<Event<GAuthLoginResponseModel>>()
     val gAuthLoginRequest: LiveData<Event<GAuthLoginResponseModel>> get() = _gAuthLoginRequest
 
