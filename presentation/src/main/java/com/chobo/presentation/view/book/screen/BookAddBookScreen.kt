@@ -1,21 +1,14 @@
 package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -49,6 +42,9 @@ fun BookAddBookScreen(
     val titleTextState by bookAddBookViewModel.titleTextState.collectAsState()
     val writeTextState by bookAddBookViewModel.writeTextState.collectAsState()
     val linkTextState by bookAddBookViewModel.linkTextState.collectAsState()
+    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsState()
+    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsState()
+    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsState()
     var checkBookDialog by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
@@ -62,9 +58,6 @@ fun BookAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
-                /*.windowInsetsPadding(
-                WindowInsets.ime.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
-            )*/
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 BookRequestTopAppBar(
@@ -97,22 +90,25 @@ fun BookAddBookScreen(
                             title = stringResource(id = R.string.title),
                             textState = titleTextState,
                             placeholder = stringResource(R.string.please_enter_the_book_title),
-                            errorMessage = stringResource(R.string.please_enter_the_book_title),
+                            emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                             updateTextValue = bookAddBookViewModel::updateTitleTextState,
+                            isError = titleTextStateIsEmpty
                         )
                         MindWayTextField(
                             title = stringResource(id = R.string.writer),
                             textState = writeTextState,
                             placeholder = stringResource(id = R.string.please_enter_the_book_writer),
-                            errorMessage = stringResource(id = R.string.please_enter_the_book_writer),
+                            emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
                             updateTextValue = bookAddBookViewModel::updateWriteTextState,
+                            isError = writeTextStateIsEmpty
                         )
                         MindWayTextField(
                             title = stringResource(id = R.string.link),
                             textState = linkTextState,
                             placeholder = stringResource(id = R.string.please_enter_the_link),
-                            errorMessage = stringResource(id = R.string.please_enter_the_link),
+                            emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
                             updateTextValue = bookAddBookViewModel::updateLinkTextState,
+                            isError = linkTextStateIsEmpty
                         )
                         Spacer(modifier = modifier.weight(1f))
                         MindWayButton(
@@ -120,7 +116,7 @@ fun BookAddBookScreen(
                             modifier = modifier
                                 .fillMaxWidth()
                                 .height(56.dp),
-                            onClick = { bookAddBookViewModel.checkButton() }
+                            onClick = bookAddBookViewModel::checkButtonOnClick
                         )
                     }
                 }
@@ -128,6 +124,7 @@ fun BookAddBookScreen(
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewAddBookScreen() {

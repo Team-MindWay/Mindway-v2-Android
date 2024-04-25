@@ -2,13 +2,13 @@ package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,7 +30,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.icon.PlusIcon
-import com.chobo.presentation.view.component.spacer.MindWayListSpacerM
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.BookScreenViewModel
 import kotlinx.coroutines.launch
@@ -41,7 +41,7 @@ fun BookScreen(
     modifier: Modifier = Modifier,
     bookViewModel: BookScreenViewModel = viewModel(),
     navigateToBookAddBook: () -> Unit,
-    ) {
+) {
     val novelDataList by bookViewModel.novelDataList.collectAsState()
     val essayDataList by bookViewModel.essayDataList.collectAsState()
 
@@ -85,10 +85,7 @@ fun BookScreen(
                     }
                 }
                 PlusIcon(
-                    modifier = Modifier.clickable(
-                        interactionSource = MutableInteractionSource(),
-                        indication = null
-                    ) { navigateToBookAddBook() },
+                    modifier = Modifier.clickableSingle { navigateToBookAddBook() },
                     tint = colors.Black
                 )
             }
@@ -102,15 +99,15 @@ fun BookScreen(
                 ) {
                     when (page) {
                         0 -> {
-                            item { MindWayListSpacerM() }
-                            itemsIndexed(novelDataList) { index, item ->
+                            item { Spacer(modifier = modifier.height(28.dp)) }
+                            itemsIndexed(novelDataList) { _, item ->
                                 BookListItem(data = item)
                             }
                         }
 
                         1 -> {
-                            item { MindWayListSpacerM() }
-                            itemsIndexed(essayDataList) { index, item ->
+                            item { Spacer(modifier = modifier.height(28.dp)) }
+                            itemsIndexed(essayDataList) { _, item ->
                                 BookListItem(data = item)
                             }
                         }
@@ -124,5 +121,5 @@ fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookScreen(navigateToBookAddBook = {  })
+    BookScreen(navigateToBookAddBook = { })
 }

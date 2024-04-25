@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheet
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
-import com.chobo.presentation.view.main.component.HomeBottomSheet
 import com.chobo.presentation.view.main.component.ViewDetailPopUp
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
@@ -49,9 +49,11 @@ fun ViewDetailScreen(
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
-                HomeBottomSheet(
-                    navigateToBookEdit = navigateToHomeEditBook,
-                    bookDeleteOnClick = { checkBookDialog = true },
+                MindWayBottomSheet(
+                    topText = stringResource(R.string.book_modify),
+                    bottomText = stringResource(R.string.book_delete),
+                    topOnClick = navigateToHomeEditBook,
+                    bottomOnCLick = { checkBookDialog = true },
                 )
             }
         ) { sheetState ->

@@ -22,7 +22,6 @@ fun MindWayBottomSheetDialog(
     content: @Composable (sheetState: ModalBottomSheetState) -> Unit
 ) {
     MindWayAndroidTheme { colors, _ ->
-        val sheetBackgroundColor = colors.WHITE
         val sheetState = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
@@ -32,7 +31,7 @@ fun MindWayBottomSheetDialog(
             modifier = modifier,
             sheetState = sheetState,
             sheetContent = sheetContent,
-            sheetBackgroundColor = sheetBackgroundColor,
+            sheetBackgroundColor = colors.WHITE,
             sheetShape = sheetShape
         ) {
             content(sheetState)
