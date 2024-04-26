@@ -130,13 +130,14 @@ fun BookScreen(
                 visible = isToastVisible,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = (-50).dp),
+                    .offset(y = -(20).dp)
+                    .padding(horizontal = 24.dp),
                 enter = slideInVertically(
-                    initialOffsetY = { it + 170 },
+                    initialOffsetY = { it + 55 },
                     animationSpec = tween(durationMillis = 500)
                 ),
                 exit = slideOutVertically(
-                    targetOffsetY = { it + 170 },
+                    targetOffsetY = { it + 55 },
                     animationSpec = tween(durationMillis = 500)
                 )
             ) {
