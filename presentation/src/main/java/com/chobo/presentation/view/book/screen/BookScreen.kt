@@ -48,12 +48,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun BookScreen(
     modifier: Modifier = Modifier,
-    bookViewModel: BookScreenViewModel = viewModel(),
+    bookScreenViewModel: BookScreenViewModel = viewModel(),
     navigateToBookAddBook: () -> Unit,
 ) {
-    val novelDataList by bookViewModel.novelDataList.collectAsState()
-    val essayDataList by bookViewModel.essayDataList.collectAsState()
-    val isToastVisible by bookViewModel.isToastVisible.collectAsState()
+    val novelDataList by bookScreenViewModel.novelDataList.collectAsState()
+    val essayDataList by bookScreenViewModel.essayDataList.collectAsState()
+    val isToastVisible by bookScreenViewModel.isToastVisible.collectAsState()
 
     val pagerState = rememberPagerState(pageCount = { 2 })
     val tabNames = listOf(
