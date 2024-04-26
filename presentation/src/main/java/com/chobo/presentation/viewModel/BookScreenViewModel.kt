@@ -16,6 +16,8 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
     private val _essayDataList = MutableStateFlow<List<BookListItemData>>(listOf())
     val essayDataList: StateFlow<List<BookListItemData>> = _essayDataList.asStateFlow()
 
+    private val _isToastVisible = MutableStateFlow(false)
+    val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
     fun plusIconOnClick() {
 
     }
@@ -26,6 +28,10 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
 
     fun essayOnClick(index: Int) {
 
+    }
+
+    fun toggleIsToastVisible(){
+        _isToastVisible != _isToastVisible
     }
 
     init {
