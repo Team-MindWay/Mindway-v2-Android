@@ -45,7 +45,7 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     }
 
     fun toggleIsToastVisible(){
-        _isToastVisible != _isToastVisible
+        _isToastVisible.value = !_isToastVisible.value
     }
     init {
         _goalReadingListOfBooksReadItemDataList.value =
