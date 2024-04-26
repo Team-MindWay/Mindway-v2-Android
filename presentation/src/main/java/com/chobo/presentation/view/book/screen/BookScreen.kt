@@ -63,7 +63,7 @@ fun BookScreen(
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
-        Box (modifier = modifier.background(color = colors.WHITE)){
+        Box(modifier = modifier.background(color = colors.WHITE)) {
             Column {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -141,17 +141,11 @@ fun BookScreen(
                     animationSpec = tween(durationMillis = 500)
                 )
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp)
-                        .fillMaxWidth()
-                ) {
-                    MindWayToast(
-                        isSuccess = true,
-                        text = stringResource(R.string.book_request_succes_toast),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+                MindWayToast(
+                    isSuccess = true,
+                    text = stringResource(R.string.book_request_succes_toast),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
