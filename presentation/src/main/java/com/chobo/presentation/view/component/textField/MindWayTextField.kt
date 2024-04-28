@@ -75,21 +75,20 @@ fun MindWayTextField(
                     }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .background(
-                        color = colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-            ) {
-                LazyColumn {
-                    item {
-                        Box {
+            LazyColumn {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
+                                shape = RoundedCornerShape(size = 8.dp)
+                            )
+                            .background(
+                                color = colors.GRAY100,
+                                shape = RoundedCornerShape(size = 8.dp)
+                            )
+                    ) {
                             BasicTextField(
                                 onValueChange = { newText ->
                                     if (lengthLimit != 0) {
@@ -109,51 +108,50 @@ fun MindWayTextField(
                                 cursorBrush = SolidColor(colors.MAIN),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(15.dp),
                             )
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth()
-                            ) {
-                                if (isTextRight) {
-                                    Text(
-                                        text = placeholder,
-                                        style = typography.bodySmall,
-                                        fontWeight = FontWeight.Normal,
-                                        color = colors.GRAY400,
-                                    )
-                                } else if (textState.isEmpty()) {
-                                    Text(
-                                        text = placeholder,
-                                        style = typography.bodySmall,
-                                        fontWeight = FontWeight.Normal,
-                                        color = colors.GRAY400,
-                                    )
-                                }
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                        ) {
+                            if (isTextRight) {
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
+                            } else if (textState.isEmpty()) {
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
                             }
                         }
                     }
                 }
             }
-            if (lengthCheck) {
-                Text(
-                    text = overflowErrorMessage,
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.SYSTEM
-                )
-            }
-            if (isError) {
-                Text(
-                    text = emptyErrorMessage,
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.SYSTEM
-                )
-            }
+        }
+        if (lengthCheck) {
+            Text(
+                text = overflowErrorMessage,
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
+                color = colors.SYSTEM
+            )
+        }
+        if (isError) {
+            Text(
+                text = emptyErrorMessage,
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
+                color = colors.SYSTEM
+            )
         }
     }
 }
