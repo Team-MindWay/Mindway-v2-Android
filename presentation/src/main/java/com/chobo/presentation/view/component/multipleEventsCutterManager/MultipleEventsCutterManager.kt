@@ -1,43 +1,22 @@
 package com.chobo.presentation.view.component.multipleEventsCutterManager
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.debounce
-
-interface MultipleEventsCutterManager {
+internal interface MultipleEventsCutter {
     fun processEvent(event: () -> Unit)
+
+    companion object
 }
 
-@OptIn(FlowPreview::class)
-@Composable
-fun <T> multipleEventsCutter(
-    content: @Composable (MultipleEventsCutterManager) -> T
-): T {
-    val result: T
-    val debounceState = remember {
-        MutableSharedFlow<() -> Unit>(
-            replay = 0,
-            extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST,
-        )
-    }
-    LaunchedEffect(true) {
-        debounceState
-            .debounce(300L)
-            .collect { onClick ->
-                onClick.invoke()
-            }
-    }
-    result = content(
-        object : MultipleEventsCutterManager {
-            override fun processEvent(event: () -> Unit) {
-                debounceState.tryEmit(event)
-            }
+internal fun MultipleEventsCutter.Companion.get(): MultipleEventsCutter = MultipleEventsCutterImpl()
+
+private class MultipleEventsCutterImpl : MultipleEventsCutter {
+    private val now = System.currentTimeMillis()
+
+    private var lastEventTimeMs: Long = 0
+
+    override fun processEvent(event: () -> Unit) {
+        if (now - lastEventTimeMs >= 400L) {
+            event.invoke()
         }
-    )
-    return result
+        lastEventTimeMs = now
+    }
 }

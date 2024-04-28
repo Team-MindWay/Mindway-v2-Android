@@ -6,19 +6,17 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.platform.debugInspectorInfo
 
 @SuppressLint("ModifierFactoryUnreferencedReceiver")
 fun Modifier.clickableSingle(
     enabled: Boolean = true,
     onClick: () -> Unit
-): Modifier = composed {
-    multipleEventsCutter { manager ->
-        clickable(
-            enabled = enabled,
-            onClick = { manager.processEvent { onClick() } },
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }
-        )
-    }
+) = composed {
+    val multipleEventsCutter = remember { MultipleEventsCutter.get() }
+    Modifier.clickable(
+        enabled = enabled,
+        onClick = { multipleEventsCutter.processEvent { onClick() } },
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() }
+    )
 }
