@@ -89,6 +89,21 @@ fun MindWayTextField(
                                 shape = RoundedCornerShape(size = 8.dp)
                             )
                     ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .then(
+                                    if (isTextRight) Modifier.padding(
+                                        top = 16.dp,
+                                        bottom = 16.dp,
+                                        start = 16.dp,
+                                        end = 34.dp
+                                    )
+                                    else Modifier.padding(16.dp)
+                                )
+                        ) {
                             BasicTextField(
                                 onValueChange = { newText ->
                                     if (lengthLimit != 0) {
