@@ -60,7 +60,6 @@ fun BookAddBookScreen(
                         }
                     }
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
                 BookRequestTopAppBar(
                     startIconOnClick = { navigateToBack() },
                     endIconOnClick = { checkBookDialog = true }
