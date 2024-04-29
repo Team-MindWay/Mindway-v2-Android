@@ -44,7 +44,7 @@ fun EventScreen(
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
                         eventDataList = currentEventsDataList,
-                        onIconClick = eventViewModel::onCurrentEventOnClick,
+                        onIconClick = eventViewModel::onCurrentEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
                 },
@@ -52,7 +52,7 @@ fun EventScreen(
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
                         eventDataList = pastEventsDataList,
-                        onIconClick = eventViewModel::onPastEventOnClick,
+                        onIconClick = eventViewModel::onPastEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
                 }
