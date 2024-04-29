@@ -1,12 +1,15 @@
 package com.chobo.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,18 +38,23 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     private val _isSuccess = MutableStateFlow(false)
     val isSuccess: StateFlow<Boolean> = _isSuccess.asStateFlow()
 
-    fun updateGoalBookReadSetting(input:String){
+    fun updateGoalBookReadSetting(input: String) {
         _goalBookReadSettingIsEmpty.value = false
         _goalBookReadSetting.value = input
     }
 
-    fun goalBookReadSettingOnClick(){
+    fun goalBookReadSettingOnClick() {
         _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
     }
 
-    fun toggleIsToastVisible(){
-        _isToastVisible != _isToastVisible
+    fun showToast() {
+        _isToastVisible.value = true
+        viewModelScope.launch {
+            delay(2000)
+            _isToastVisible.value = false
+        }
     }
+
     init {
         _goalReadingListOfBooksReadItemDataList.value =
             MutableList(30) {
