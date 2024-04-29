@@ -53,48 +53,42 @@ fun HomeAddBookScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 AddBookTopAppBar(startIconOnClick = { navigateToBack() })
                 Column(
-                    verticalArrangement = Arrangement.SpaceBetween,
+                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 24.dp,
+                            vertical = 28.dp
+                        )
+                        .fillMaxSize()
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.Start,
+                    MindWayTextField(
+                        title = stringResource(R.string.title),
+                        textState = titleTextState,
+                        placeholder = stringResource(R.string.please_enter_the_book_title),
+                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                        updateTextValue = homeAddBookViewModel::updateTitleTextState,
+                        isError = titleTextStateIsEmpty
+                    )
+                    MindWayTextField(
+                        title = stringResource(R.string.content),
+                        textState = contentTextState,
+                        placeholder = stringResource(R.string.please_enter_the_book_content),
+                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                        emptyErrorMessage = stringResource(R.string.error_content),
+                        lengthLimit = homeAddBookViewModel.contentTextMaxLength,
+                        updateTextValue = homeAddBookViewModel::updateContentTextState,
+                        isError = contentTextStateIsEmpty
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    MindWayButton(
+                        text = stringResource(R.string.check),
+                        onClick = { homeAddBookViewModel.checkButton() },
                         modifier = Modifier
-                            .padding(
-                                horizontal = 24.dp,
-                                vertical = 28.dp
-                            )
                             .fillMaxWidth()
-                    ) {
-                        MindWayTextField(
-                            title = stringResource(R.string.title),
-                            textState = titleTextState,
-                            placeholder = stringResource(R.string.please_enter_the_book_title),
-                            overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
-                            emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                            updateTextValue = homeAddBookViewModel::updateTitleTextState,
-                            isError = titleTextStateIsEmpty
-                        )
-                        MindWayTextField(
-                            title = stringResource(R.string.content),
-                            textState = contentTextState,
-                            placeholder = stringResource(R.string.please_enter_the_book_content),
-                            overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
-                            emptyErrorMessage = stringResource(R.string.error_content),
-                            lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-                            updateTextValue = homeAddBookViewModel::updateContentTextState,
-                            isError = contentTextStateIsEmpty
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        MindWayButton(
-                            text = stringResource(R.string.check),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp),
-                            onClick = { homeAddBookViewModel.checkButton() }
-                        )
-                    }
+                            .height(60.dp),
+                    )
                 }
             }
         }

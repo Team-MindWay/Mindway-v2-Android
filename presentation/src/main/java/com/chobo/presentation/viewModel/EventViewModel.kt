@@ -16,11 +16,11 @@ class EventViewModel @Inject constructor() : ViewModel() {
     private val _pastEventsDataList = MutableStateFlow<List<EventsData>>(listOf())
     val pastEventsDataList: StateFlow<List<EventsData>> = _pastEventsDataList.asStateFlow()
 
-    fun onCurrentIconClick(index: Int) {
+    fun onCurrentEventClick(index: Int) {
 
     }
 
-    fun onPastIconClick(index: Int) {
+    fun onPastEventClick(index: Int) {
 
     }
 

@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -42,7 +41,6 @@ import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.MyBookEditViewModel
 import com.chobo.presentation.viewModel.MyViewModel
-import kotlinx.coroutines.delay
 
 @Composable
 fun MyScreen(
@@ -114,7 +112,7 @@ fun MyScreen(
                             title = item.title,
                             writer = item.writer,
                             editOnclick = {
-                                myBookEditViewModel.initValue(index = index)
+                                myBookEditViewModel.editBookOnClick(index = index)
                                 navigateToMyBookEdit()
                             },
                             trashCanOnclick = {
@@ -149,10 +147,6 @@ fun MyScreen(
                 )
             }
         }
-    }
-    LaunchedEffect(isToastVisible) {
-        delay(2000)
-        myViewModel.toggleIsToastVisible()
     }
 }
 

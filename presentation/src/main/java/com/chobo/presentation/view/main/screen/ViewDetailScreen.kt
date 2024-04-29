@@ -64,7 +64,6 @@ fun ViewDetailScreen(
                     Dialog(onDismissRequest = { checkBookDialog = false }) {
                         ViewDetailPopUp(
                             cancelOnclick = {
-                                viewDetailViewModel.cancelOnclick()
                                 checkBookDialog = false
                             },
                             checkOnclick = {
@@ -76,7 +75,7 @@ fun ViewDetailScreen(
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 ViewDetailTopAppBar(
-                    startIconOnClick = { navigateToBack() },
+                    startIconOnClick = navigateToBack,
                     endIconOnClick = {
                         coroutineScope.launch { sheetState.show() }
                     }

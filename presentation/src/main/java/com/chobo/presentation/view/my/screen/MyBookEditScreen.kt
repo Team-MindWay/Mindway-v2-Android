@@ -98,7 +98,7 @@ fun MyBookEditScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = { myBookEditViewModel.checkButtonOnClick() }
+                        onClick = myBookEditViewModel::checkButtonOnClick
                     )
                 }
             }

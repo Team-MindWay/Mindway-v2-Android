@@ -27,24 +27,28 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
     private val _linkTextStateIsEmpty = MutableStateFlow(false)
     val linkTextStateIsEmpty: StateFlow<Boolean> = _linkTextStateIsEmpty.asStateFlow()
 
-    fun updateTitleTextState(input:String){
+    fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
         _titleTextState.value = input
     }
-    fun updateWriteTextState(input:String){
+
+    fun updateWriteTextState(input: String) {
         _writeTextStateIsEmpty.value = false
         _writeTextState.value = input
     }
-    fun updateLinkTextState(input:String){
+
+    fun updateLinkTextState(input: String) {
         _linkTextStateIsEmpty.value = false
         _linkTextState.value = input
     }
+
     fun checkButtonOnClick() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
     }
-    fun initValue(index: Int) {
+
+    fun editBookOnClick(index: Int) {
 
     }
 

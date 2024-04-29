@@ -28,14 +28,6 @@ fun EventScreen(
     val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsState()
     val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsState()
 
-    val tabs = listOf(
-        stringResource(id = R.string.ongoing_event),
-        stringResource(id = R.string.past_event)
-    )
-    val pagerState = rememberPagerState {
-        tabs.size
-    }
-
     MindWayAndroidTheme { colors, _ ->
         Box(
             modifier = modifier
@@ -43,13 +35,16 @@ fun EventScreen(
                 .background(color = colors.WHITE)
         ) {
             EventPager(
-                pagerState = pagerState,
-                tabs = tabs,
+                pagerState = rememberPagerState { 2 },
+                tabs = listOf(
+                    stringResource(id = R.string.ongoing_event),
+                    stringResource(id = R.string.past_event)
+                ),
                 onGoingEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
                         eventDataList = currentEventsDataList,
-                        onIconClick = eventViewModel::onCurrentIconClick,
+                        onIconClick = eventViewModel::onCurrentEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
                 },
@@ -57,7 +52,7 @@ fun EventScreen(
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
                         eventDataList = pastEventsDataList,
-                        onIconClick = eventViewModel::onPastIconClick,
+                        onIconClick = eventViewModel::onPastEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
                 }

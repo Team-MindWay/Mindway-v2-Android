@@ -1,11 +1,14 @@
 package com.chobo.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chobo.presentation.view.book.component.BookListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,20 +21,13 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
 
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
-    fun plusIconOnClick() {
 
-    }
-
-    fun novelOnClick(index: Int) {
-
-    }
-
-    fun essayOnClick(index: Int) {
-
-    }
-
-    fun toggleIsToastVisible(){
-        _isToastVisible != _isToastVisible
+    fun showToast() {
+        _isToastVisible.value = true
+        viewModelScope.launch {
+            delay(2000)
+            _isToastVisible.value = false
+        }
     }
 
     init {

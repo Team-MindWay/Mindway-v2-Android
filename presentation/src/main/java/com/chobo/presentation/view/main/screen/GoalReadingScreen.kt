@@ -75,7 +75,7 @@ fun GoalReadingScreen(
         }
     ) { sheetState ->
         MindWayAndroidTheme { colors, _ ->
-            CompositionLocalProvider(LocalFocusManager provides focusManager) {
+            CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
                 Column(
                     modifier = modifier
                         .background(color = colors.WHITE)
@@ -83,7 +83,8 @@ fun GoalReadingScreen(
                             detectTapGestures {
                                 focusManager.clearFocus()
                             }
-                        }) {
+                        }
+                ) {
                     Spacer(modifier = Modifier.height(20.dp))
                     GoalReadingTopAppBar(
                         startIconOnClick = navigateToBack,
@@ -155,10 +156,6 @@ fun GoalReadingScreen(
                 }
             }
         }
-    }
-    LaunchedEffect(isToastVisible) {
-        delay(2000)
-        goalReadingViewModel.toggleIsToastVisible()
     }
 }
 
