@@ -36,6 +36,7 @@ class AuthViewModel @Inject constructor(
                 it.catch { remoteError ->
                     _gAuthLoginRequest.value = remoteError.errorHandling()
                 }.collect { response ->
+                    saveLoginData(response)
                     _gAuthLoginRequest.value = Event.Success(data = response)
                 }
             }
@@ -44,7 +45,7 @@ class AuthViewModel @Inject constructor(
             }
     }
 
-    fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
+    private fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
         saveTokenUseCase(data = data)
             .onSuccess {
                 _saveTokenRequest.value = Event.Success()
@@ -55,10 +56,11 @@ class AuthViewModel @Inject constructor(
     }
 
     fun logout() = viewModelScope.launch {
+        deleteTokenUseCase()
         logoutUseCase()
     }
 
-    fun deleteToken() = viewModelScope.launch {
+    private fun deleteToken() = viewModelScope.launch {
         deleteTokenUseCase()
     }
 }
