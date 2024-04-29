@@ -73,7 +73,6 @@ fun ViewDetailScreen(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(20.dp))
                 ViewDetailTopAppBar(
                     startIconOnClick = navigateToBack,
                     endIconOnClick = {

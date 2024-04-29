@@ -50,7 +50,6 @@ fun HomeAddBookScreen(
                     }
                 }
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
                 AddBookTopAppBar(startIconOnClick = { navigateToBack() })
                 Column(
                     verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
