@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
@@ -37,7 +38,9 @@ fun MindWayTextField(
     lengthLimit: Int = 0,
     updateTextValue: (String) -> Unit,
 ) {
-    val lengthCheck = if (lengthLimit != 0) textState.length >= lengthLimit else false
+    val lengthCheck = remember {
+        if (lengthLimit != 0) textState.length >= lengthLimit else false
+    }
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -72,21 +75,35 @@ fun MindWayTextField(
                     }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-                    .background(
-                        color = colors.GRAY100,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    )
-            ) {
-                LazyColumn {
-                    item {
-                        Box {
+            LazyColumn {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
+                                shape = RoundedCornerShape(size = 8.dp)
+                            )
+                            .background(
+                                color = colors.GRAY100,
+                                shape = RoundedCornerShape(size = 8.dp)
+                            )
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .then(
+                                    if (isTextRight) Modifier.padding(
+                                        top = 16.dp,
+                                        bottom = 16.dp,
+                                        start = 16.dp,
+                                        end = 34.dp
+                                    )
+                                    else Modifier.padding(16.dp)
+                                )
+                        ) {
                             BasicTextField(
                                 onValueChange = { newText ->
                                     if (lengthLimit != 0) {
@@ -106,51 +123,50 @@ fun MindWayTextField(
                                 cursorBrush = SolidColor(colors.MAIN),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(15.dp),
                             )
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth()
-                            ) {
-                                if (isTextRight) {
-                                    Text(
-                                        text = placeholder,
-                                        style = typography.bodySmall,
-                                        fontWeight = FontWeight.Normal,
-                                        color = colors.GRAY400,
-                                    )
-                                } else if (textState.isEmpty()) {
-                                    Text(
-                                        text = placeholder,
-                                        style = typography.bodySmall,
-                                        fontWeight = FontWeight.Normal,
-                                        color = colors.GRAY400,
-                                    )
-                                }
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                        ) {
+                            if (isTextRight) {
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
+                            } else if (textState.isEmpty()) {
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
                             }
                         }
                     }
                 }
             }
-            if (lengthCheck) {
-                Text(
-                    text = overflowErrorMessage,
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.SYSTEM
-                )
-            }
-            if (isError) {
-                Text(
-                    text = emptyErrorMessage,
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.SYSTEM
-                )
-            }
+        }
+        if (lengthCheck) {
+            Text(
+                text = overflowErrorMessage,
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
+                color = colors.SYSTEM
+            )
+        }
+        if (isError) {
+            Text(
+                text = emptyErrorMessage,
+                style = typography.labelLarge,
+                fontWeight = FontWeight.Normal,
+                color = colors.SYSTEM
+            )
         }
     }
 }

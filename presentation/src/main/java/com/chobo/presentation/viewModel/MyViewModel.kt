@@ -17,6 +17,12 @@ class MyViewModel @Inject constructor() : ViewModel() {
     private val _myName = MutableStateFlow("")
     val myName: StateFlow<String> = _myName.asStateFlow()
 
+    private val _isToastVisible = MutableStateFlow(false)
+    val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
+
+    fun toggleIsToastVisible(){
+        _isToastVisible.value = !_isToastVisible.value
+    }
     init {
         _myName.value = "내이름"
         _myBookListItemDataList.value =
