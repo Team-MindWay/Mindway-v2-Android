@@ -6,23 +6,23 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
 
-const val CombinationViewRoute = "combination_view_route"
+const val CompostionViewRoute = "copmostion_view_route"
 
-fun NavController.navigationToCombinationView() {
-    this.navigate(CombinationViewRoute)
+fun NavController.navigationToCompostionView() {
+    this.navigate(CompostionViewRoute)
 }
 
-fun NavGraphBuilder.combinationScreen(
-    currentDestination: MutableState<MindWayNavBarItemType>,
+fun NavGraphBuilder.CompostionView(
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
+    topDestination: MutableState<MindWayNavBarItemType>,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
-    composable(CombinationViewRoute) {
+    composable(CompostionViewRoute) {
         MindWayCombinationView(
-            currentDestination = currentDestination,
+            topDestination = topDestination,
             navigateToDetailEvent = navigateToDetailEvent,
             navigateToGoalReading = navigateToGoalReading,
             navigateToBookAddBook = navigateToBookAddBook,

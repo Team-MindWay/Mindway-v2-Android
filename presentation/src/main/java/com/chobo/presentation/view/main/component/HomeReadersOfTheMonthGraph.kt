@@ -23,6 +23,7 @@ fun HomeReadersOfTheMonthGraph(
     modifier: Modifier,
     bookKingOfTheMonthData: BookKingOfTheMonthData,
 ) {
+    val height = ((78 * bookKingOfTheMonthData.numOfBooks) / 30 + 2).toFloat().dp
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
@@ -39,7 +40,7 @@ fun HomeReadersOfTheMonthGraph(
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(((78 * bookKingOfTheMonthData.numOfBooks) / 30 + 2).toFloat().dp)
+                    .height(height.value.dp)
                     .background(
                         color = colors.MAIN,
                         shape = RoundedCornerShape(

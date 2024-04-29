@@ -2,9 +2,12 @@ package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -38,7 +40,10 @@ fun HomeNoticeCard(
             horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
-                .clickableSingle{ onClick() }
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { onClick() }
                 .background(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)

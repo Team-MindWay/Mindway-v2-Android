@@ -26,6 +26,7 @@ fun GoalReadingIndicator(
     numBooksRead: Int,
     goalBookRead:Int
 ) {
+    val readProgress = if (numBooksRead < 30) numBooksRead else 30
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -33,7 +34,7 @@ fun GoalReadingIndicator(
             modifier = modifier,
         ) {
             LinearProgressIndicator(
-                progress = (if (numBooksRead < 30) numBooksRead else 30) / goalBookRead.toFloat(),
+                progress = (readProgress) / goalBookRead.toFloat(),
                 trackColor = colors.GRAY100,
                 color = colors.MAIN,
                 modifier = Modifier
