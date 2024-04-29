@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -52,9 +51,10 @@ fun MindWayBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickableSingle { topOnClick() }
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { topOnClick() }
             )
             Spacer(
                 modifier = Modifier
@@ -67,9 +67,10 @@ fun MindWayBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.SYSTEM,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickableSingle { bottomOnCLick() }
+                modifier = Modifier.clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { bottomOnCLick() }
             )
         }
     }

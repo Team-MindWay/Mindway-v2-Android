@@ -6,23 +6,23 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.chobo.presentation.view.book.navigation.bookAddBookScreen
+import com.chobo.presentation.view.book.navigation.bookAddBook
 import com.chobo.presentation.view.book.navigation.navigationToBookAddBook
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
-import com.chobo.presentation.view.component.compostionView.combinationScreen
-import com.chobo.presentation.view.component.compostionView.navigationToCombinationView
+import com.chobo.presentation.view.component.compostionView.CompostionView
+import com.chobo.presentation.view.component.compostionView.navigationToCompostionView
 import com.chobo.presentation.view.event.navigation.detailEventScreen
-import com.chobo.presentation.view.event.navigation.eventScreenScreen
+import com.chobo.presentation.view.event.navigation.eventScreen
 import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
 import com.chobo.presentation.view.login.navigation.loginScreen
-import com.chobo.presentation.view.main.navigation.goalReadingScreen
-import com.chobo.presentation.view.main.navigation.homeAddBookScreen
-import com.chobo.presentation.view.main.navigation.homeEditBookScreen
+import com.chobo.presentation.view.main.navigation.goalReading
+import com.chobo.presentation.view.main.navigation.homeAddBook
+import com.chobo.presentation.view.main.navigation.homeEditBook
 import com.chobo.presentation.view.main.navigation.navigationToGoalReading
 import com.chobo.presentation.view.main.navigation.navigationToHomeAddBook
 import com.chobo.presentation.view.main.navigation.navigationToHomeEditBook
 import com.chobo.presentation.view.main.navigation.navigationToViewDetail
-import com.chobo.presentation.view.main.navigation.viewDetailScreen
+import com.chobo.presentation.view.main.navigation.viewDetail
 import com.chobo.presentation.view.my.navigation.introScreen
 import com.chobo.presentation.view.my.navigation.myBookEditScreen
 import com.chobo.presentation.view.my.navigation.navigationToIntro
@@ -34,17 +34,17 @@ fun MindWayNavHost(
     startDestination: String
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-    val currentDestination = remember {
+    val topDestination = remember {
         mutableStateOf(MindWayNavBarItemType.HOME)
     }
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        loginScreen(navigateToHome = navController::navigationToCombinationView)
+        loginScreen(navigateToHome = navController::navigationToCompostionView)
 
-        combinationScreen(
-            currentDestination = currentDestination,
+        CompostionView(
+            topDestination = topDestination,
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
             navigateToBookAddBook = navController::navigationToBookAddBook,
@@ -52,26 +52,26 @@ fun MindWayNavHost(
             navigateToMyBookEdit = navController::navigationToMyBookEdit,
         )
 
-        goalReadingScreen(
+        goalReading(
             navigateToBack = navController::popBackStack,
             navigateToHomeAddBook = navController::navigationToHomeAddBook,
             navigateToHomeViewDetail = navController::navigationToViewDetail,
         )
 
-        viewDetailScreen(
+        viewDetail(
             navigateToBack = navController::popBackStack,
             navigateToHomeEditBook = navController::navigationToHomeEditBook
         )
 
-        homeAddBookScreen(navigateToBack = navController::popBackStack)
+        homeAddBook(navigateToBack = navController::popBackStack)
 
-        homeEditBookScreen(navigateToBack = navController::popBackStack)
+        homeEditBook(navigateToBack = navController::popBackStack)
 
-        eventScreenScreen(navigateToDetailEvent = navController::navigationToDetailEvent)
+        eventScreen(navigateToDetailEvent = navController::navigationToDetailEvent)
 
         detailEventScreen(navigateToBack = navController::popBackStack)
 
-        bookAddBookScreen(navigateToBack = navController::popBackStack)
+        bookAddBook(navigateToBack = navController::popBackStack)
 
         myBookEditScreen(navigateToBack = navController::popBackStack)
 

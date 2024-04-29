@@ -1,7 +1,7 @@
 package com.chobo.data.util
 
 import android.annotation.SuppressLint
-import com.chobo.domain.excption.NeedLoginException
+import com.chobo.domain.exception.NeedLoginException
 import java.text.SimpleDateFormat
 import java.util.Date
 

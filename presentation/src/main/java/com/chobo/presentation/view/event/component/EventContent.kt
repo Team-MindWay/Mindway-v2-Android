@@ -38,8 +38,7 @@ fun EventContent(
                     Events(
                         eventsData = item,
                         onClick = { onIconClick(index) },
-                        navigateToDetailEvent = { navigateToDetailEvent() }
-                    )
+                        navigateToDetailEvent = { navigateToDetailEvent() })
                 }
             }
         } else {
@@ -63,21 +62,11 @@ fun EventContent(
     }
 }
 
-@Preview(name = "noData")
+@Preview
 @Composable
-fun EventContentNoDataPreview() {
+fun EventContentPreview() {
     EventContent(
         content = "리뷰 정말 감사합니다 임시 데이터 입니다",
-        onIconClick = {},
-        navigateToDetailEvent = {},
-    )
-}
-@Preview(name = "hasData")
-@Composable
-fun EventContentHasDataPreview() {
-    EventContent(
-        content = "리뷰 정말 감사합니다 임시 데이터 입니다",
-        eventDataList = MutableList(200) {EventsData(title = "재목", content = "wqedwqdqwdqwdqwdqwdqwdqwdqw", date = "오늘의 날자")},
         onIconClick = {},
         navigateToDetailEvent = {},
     )

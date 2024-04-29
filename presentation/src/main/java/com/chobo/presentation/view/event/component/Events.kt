@@ -1,6 +1,8 @@
 package com.chobo.presentation.view.event.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 data class EventsData(val title: String, val content: String, val date: String)
@@ -33,50 +34,61 @@ fun Events(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(20.dp))
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+        Surface(
             modifier = modifier
                 .fillMaxWidth()
-                .shadow(elevation = 20.dp, spotColor = colors.CardShadow)
-                .background(
-                    color = colors.WHITE,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .padding(
-                    horizontal = 24.dp,
-                    vertical = 20.dp
-                )
+                .shadow(elevation = 20.dp, spotColor = colors.CardShadow),
+            color = colors.WHITE,
+            shape = RoundedCornerShape(8.dp)
         ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 20.dp
+                    )
             ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = eventsData.title,
+                        style = typography.bodySmall,
+                        color = colors.Black,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(modifier = modifier.weight(1f))
+                    ChevronRightIcon(
+                        modifier = Modifier.clickable(
+                            interactionSource = MutableInteractionSource(),
+                            indication = null
+                        ) {
+                            onClick()
+                            navigateToDetailEvent()
+                        }
+                    )
+                }
+                Spacer(modifier = modifier.height(8.dp))
                 Text(
-                    text = eventsData.title,
+                    text = eventsData.content,
                     style = typography.bodySmall,
-                    color = colors.Black,
-                    fontWeight = FontWeight.SemiBold
+                    color = colors.GRAY800,
+                    fontWeight = FontWeight.Normal
                 )
-                Spacer(modifier = modifier.weight(1f))
-                ChevronRightIcon(
-                    modifier = Modifier.clickableSingle {
-                        onClick()
-                        navigateToDetailEvent()
-                    }
+                Spacer(modifier = modifier.height(8.dp))
+                Text(
+                    text = eventsData.date,
+                    style = typography.labelLarge,
+                    color = colors.GRAY400,
+                    fontWeight = FontWeight.Normal
                 )
             }
-            Text(
-                text = eventsData.content,
-                style = typography.bodySmall,
-                color = colors.GRAY800,
-                fontWeight = FontWeight.Normal
-            )
-            Text(
-                text = eventsData.date,
-                style = typography.labelLarge,
-                color = colors.GRAY400,
-                fontWeight = FontWeight.Normal
-            )
         }
     }
 }

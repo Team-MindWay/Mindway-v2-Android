@@ -27,29 +27,74 @@ fun MindWayNavBarItem(
     isSelected: Boolean
 ) {
     MindWayAndroidTheme { colors, typography ->
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            when (type) {
-                MindWayNavBarItemType.HOME -> HomeIcon(modifier = modifier, isSelected = isSelected)
-                MindWayNavBarItemType.EVENT -> HeartIcon(modifier = modifier, isSelected = isSelected)
-                MindWayNavBarItemType.BOOKS -> BookIcon(modifier = modifier, isSelected = isSelected)
-                MindWayNavBarItemType.MY -> ProfileIcon(modifier = modifier, isSelected = isSelected)
+        when (type) {
+            MindWayNavBarItemType.HOME -> {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    HomeIcon(modifier = modifier, isSelected = isSelected)
+                    Spacer(modifier = modifier.height(4.dp))
+                    Text(
+                        text = stringResource(id = R.string.home),
+                        style = typography.labelLarge,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = if (isSelected) colors.Black else colors.GRAY400
+                    )
+                }
             }
-            Spacer(modifier = modifier.height(4.dp))
-            Text(
-                text = when (type) {
-                    MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
-                    MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
-                    MindWayNavBarItemType.BOOKS -> stringResource(id = R.string.books)
-                    MindWayNavBarItemType.MY -> stringResource(id = R.string.my)
-                },
-                style = typography.labelLarge,
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                color = if (isSelected) colors.Black else colors.GRAY400
-            )
+
+            MindWayNavBarItemType.EVENT -> {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    HeartIcon(modifier = modifier, isSelected = isSelected)
+                    Spacer(modifier = modifier.height(4.dp))
+                    Text(
+                        text = stringResource(id = R.string.event),
+                        style = typography.labelLarge,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = if (isSelected) colors.Black else colors.GRAY400
+                    )
+                }
+            }
+
+            MindWayNavBarItemType.BOOKS -> {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BookIcon(modifier = modifier, isSelected = isSelected)
+                    Spacer(modifier = modifier.height(4.dp))
+                    Text(
+                        text = stringResource(id = R.string.books),
+                        style = typography.labelLarge,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = if (isSelected) colors.Black else colors.GRAY400
+                    )
+                }
+            }
+
+            MindWayNavBarItemType.MY -> {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    ProfileIcon(modifier = modifier, isSelected = isSelected)
+                    Spacer(modifier = modifier.height(4.dp))
+                    Text(
+                        text = stringResource(id = R.string.my),
+                        style = typography.labelLarge,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = if (isSelected) colors.Black else colors.GRAY400
+                    )
+                }
+            }
         }
     }
 }

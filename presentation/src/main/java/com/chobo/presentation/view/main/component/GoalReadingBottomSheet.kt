@@ -30,9 +30,9 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun GoalReadingBottomSheet(
     textState: String,
-    isError: Boolean,
     updateTextValue: (String) -> Unit,
     onclick: () -> Unit,
+    isError: Boolean,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -124,14 +124,8 @@ fun GoalReadingBottomSheet(
     }
 }
 
-@Preview(name = "GoalReadingBottomSheetErrorPreview")
+@Preview
 @Composable
-fun GoalReadingBottomSheetErrorPreview() {
-    GoalReadingBottomSheet(textState = "", updateTextValue = {}, onclick = { }, isError = true)
-}
-
-@Preview(name = "GoalReadingBottomSheetNoErrorPreview")
-@Composable
-fun GoalReadingBottomSheetNoErrorPreview() {
-    GoalReadingBottomSheet(textState = "", updateTextValue = {}, onclick = { }, isError = false)
+fun GoalReadingBottomSheetPreview() {
+    GoalReadingBottomSheet(textState = "dwq", updateTextValue = {}, { }, isError = false)
 }

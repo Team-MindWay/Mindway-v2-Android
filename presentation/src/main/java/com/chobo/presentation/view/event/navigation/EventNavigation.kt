@@ -17,7 +17,7 @@ fun NavController.navigationToDetailEvent() {
     this.navigate(detailEventRoute)
 }
 
-fun NavGraphBuilder.eventScreenScreen(
+fun NavGraphBuilder.eventScreen(
     navigateToDetailEvent: () -> Unit
 ) {
     composable(eventRoute) {

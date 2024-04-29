@@ -25,36 +25,34 @@ data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
-    bookKingOfTheMonthData: List<BookKingOfTheMonthData> = listOf()
+    bookKingOfTheMonthData: List<BookKingOfTheMonthData>
 ) {
-    val isHasData = bookKingOfTheMonthData.isNotEmpty()
     MindWayAndroidTheme { colors, typography ->
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = if (isHasData) Arrangement.spacedBy(20.dp, Alignment.Top)
-            else Arrangement.SpaceBetween,
-            modifier = modifier
-                .shadow(
-                    elevation = 20.dp,
-                    spotColor = colors.CardShadow,
-                    ambientColor = colors.CardShadow,
+        if (bookKingOfTheMonthData.isNotEmpty()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                modifier = modifier
+                    .shadow(
+                        elevation = 20.dp,
+                        spotColor = colors.CardShadow,
+                        ambientColor = colors.CardShadow,
+                    )
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .padding(all = 24.dp)
+            ) {
+                Text(
+                    text = "이달의 독서왕",
+                    style = typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.Black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(27.dp),
                 )
-                .background(
-                    color = colors.WHITE,
-                    shape = RoundedCornerShape(size = 8.dp)
-                )
-                .padding(all = 24.dp)
-        ) {
-            Text(
-                text = "이달의 독서왕",
-                style = typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = colors.Black,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(27.dp),
-            )
-            if (isHasData) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom,
@@ -65,12 +63,36 @@ fun HomeReadersOfTheMonthChart(
                             bookKingOfTheMonthData = it,
                             modifier = Modifier.weight(72f)
                         )
+
                         if (index < bookKingOfTheMonthData.size - 1) {
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         }
                     }
                 }
-            } else {
+            }
+        } else {
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = modifier
+                    .shadow(
+                        elevation = 20.dp,
+                        spotColor = colors.CardShadow,
+                        ambientColor = colors.CardShadow,
+                    )
+                    .background(
+                        color = colors.WHITE,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .padding(all = 24.dp)
+            ) {
+                Text(
+                    text = "이달의 독서왕",
+                    style = typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.Black,
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Text(
                     text = "아직 이달의 독서왕이 없습니다.",
                     style = typography.bodySmall,
@@ -85,24 +107,14 @@ fun HomeReadersOfTheMonthChart(
 
 @Preview
 @Composable
-fun HomeReadersOfTheMonthChartHasDataPreview() {
+fun HomeReadersOfTheMonthChartPreview() {
     HomeReadersOfTheMonthChart(
         modifier = Modifier
-            .width(312.dp)
-            .height(239.dp),
+            .width(312.dp),
         bookKingOfTheMonthData = listOf(
             BookKingOfTheMonthData("나다", 12),
             BookKingOfTheMonthData("나다", 2),
             BookKingOfTheMonthData("나다", 30),
         )
-    )
-}
-@Preview
-@Composable
-fun HomeReadersOfTheMonthChartPreview() {
-    HomeReadersOfTheMonthChart(
-        modifier = Modifier
-            .width(312.dp)
-            .height(239.dp),
     )
 }
