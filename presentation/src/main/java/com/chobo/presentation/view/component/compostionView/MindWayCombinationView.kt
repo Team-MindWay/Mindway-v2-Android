@@ -40,12 +40,6 @@ fun MindWayCombinationView(
     ) { sheetState ->
         MindWayScaffold(
             currentDestination = topDestination,
-            isTopAppBar = topDestination.value == HOME,
-            startIcon = {
-                if (topDestination.value == HOME) {
-                    LogoIcon()
-                }
-            }
         ) {
             when (topDestination.value) {
                 HOME -> HomeScreen(
