@@ -24,13 +24,10 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
 
     private val _goalReadingGraphDataList = MutableStateFlow<List<GoalReadingGraphData>>(listOf())
-    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> =
-        _goalReadingGraphDataList.asStateFlow()
+    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> = _goalReadingGraphDataList.asStateFlow()
 
-    private val _goalReadingListOfBooksReadItemDataList =
-        MutableStateFlow<List<GoalReadingListOfBooksReadItemData>>(listOf())
-    val goalReadingListOfBooksReadItemDataList: StateFlow<List<GoalReadingListOfBooksReadItemData>> =
-        _goalReadingListOfBooksReadItemDataList.asStateFlow()
+    private val _goalReadingListOfBooksReadItemDataList = MutableStateFlow<List<GoalReadingListOfBooksReadItemData>>(listOf())
+    val goalReadingListOfBooksReadItemDataList: StateFlow<List<GoalReadingListOfBooksReadItemData>> = _goalReadingListOfBooksReadItemDataList.asStateFlow()
 
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
