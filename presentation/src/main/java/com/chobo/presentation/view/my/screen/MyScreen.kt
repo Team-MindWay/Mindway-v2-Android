@@ -114,7 +114,7 @@ fun MyScreen(
                             title = item.title,
                             writer = item.writer,
                             editOnclick = {
-                                myBookEditViewModel.initValue(index = index)
+                                myBookEditViewModel.editBookOnClick(index = index)
                                 navigateToMyBookEdit()
                             },
                             trashCanOnclick = {

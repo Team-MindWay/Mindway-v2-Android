@@ -44,7 +44,8 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
     }
-    fun initValue(index: Int) {
+
+    fun editBookOnClick(index: Int) {
 
     }
 
