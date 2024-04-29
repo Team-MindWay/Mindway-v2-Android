@@ -31,8 +31,10 @@ fun MyNameCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    vertical = 24.dp,
-                    horizontal = 40.dp
+                    top = 60.dp,
+                    start = 24.dp,
+                    end = 24.dp,
+                    bottom = 40.dp
                 )
         ) {
             Column(
