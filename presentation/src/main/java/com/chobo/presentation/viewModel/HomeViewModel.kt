@@ -15,12 +15,10 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
 
     private val _goalReadingGraphDataList = MutableStateFlow<List<GoalReadingGraphData>>(listOf())
-    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> =
-        _goalReadingGraphDataList.asStateFlow()
+    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> = _goalReadingGraphDataList.asStateFlow()
 
     private val _bookKingOfTheMonthDataList = MutableStateFlow<List<BookKingOfTheMonthData>>(listOf())
-    val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> =
-        _bookKingOfTheMonthDataList.asStateFlow()
+    val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> = _bookKingOfTheMonthDataList.asStateFlow()
 
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()

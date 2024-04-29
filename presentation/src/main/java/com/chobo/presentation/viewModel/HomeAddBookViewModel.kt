@@ -23,14 +23,17 @@ class HomeAddBookViewModel @Inject constructor() : ViewModel() {
 
     val contentTextMaxLength
         get() = 1000
-    fun updateTitleTextState(input:String){
+
+    fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
         _titleTextState.value = input
     }
-    fun updateContentTextState(input:String){
+
+    fun updateContentTextState(input: String) {
         _contentTextStateIsEmpty.value = false
         _contentTextState.value = input
     }
+
     fun checkButton() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _contentTextStateIsEmpty.value = _contentTextState.value.isEmpty()
