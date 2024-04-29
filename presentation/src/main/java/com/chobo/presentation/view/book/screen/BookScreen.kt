@@ -154,10 +154,6 @@ fun BookScreen(
             }
         }
     }
-    LaunchedEffect(isToastVisible) {
-        delay(2000)
-        bookScreenViewModel.toggleIsToastVisible()
-    }
 }
 
 @Preview(showBackground = true)
