@@ -49,15 +49,16 @@ fun BookAddBookScreen(
     val focusManager = LocalFocusManager.current
 
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(LocalFocusManager provides focusManager) {
-            Column(modifier = modifier
-                .fillMaxSize()
-                .background(color = colors.WHITE)
-                .pointerInput(Unit) {
-                    detectTapGestures {
-                        focusManager.clearFocus()
+        CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(color = colors.WHITE)
+                    .pointerInput(Unit) {
+                        detectTapGestures {
+                            focusManager.clearFocus()
+                        }
                     }
-                }
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 BookRequestTopAppBar(
@@ -65,60 +66,54 @@ fun BookAddBookScreen(
                     endIconOnClick = { checkBookDialog = true }
                 )
                 Column(
+                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = modifier.fillMaxSize()
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 24.dp,
+                            vertical = 28.dp
+                        )
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.Start,
+                    if (checkBookDialog) {
+                        Dialog(onDismissRequest = { checkBookDialog = false }) {
+                            BookPopUp(
+                                onDismiss = { checkBookDialog = false }
+                            )
+                        }
+                    }
+                    MindWayTextField(
+                        title = stringResource(id = R.string.title),
+                        textState = titleTextState,
+                        placeholder = stringResource(R.string.please_enter_the_book_title),
+                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                        updateTextValue = bookAddBookViewModel::updateTitleTextState,
+                        isError = titleTextStateIsEmpty
+                    )
+                    MindWayTextField(
+                        title = stringResource(id = R.string.writer),
+                        textState = writeTextState,
+                        placeholder = stringResource(id = R.string.please_enter_the_book_writer),
+                        emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
+                        updateTextValue = bookAddBookViewModel::updateWriteTextState,
+                        isError = writeTextStateIsEmpty
+                    )
+                    MindWayTextField(
+                        title = stringResource(id = R.string.link),
+                        textState = linkTextState,
+                        placeholder = stringResource(id = R.string.please_enter_the_link),
+                        emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
+                        updateTextValue = bookAddBookViewModel::updateLinkTextState,
+                        isError = linkTextStateIsEmpty
+                    )
+                    Spacer(modifier = modifier.weight(1f))
+                    MindWayButton(
+                        text = stringResource(id = R.string.apply),
                         modifier = modifier
                             .fillMaxWidth()
-                            .padding(
-                                horizontal = 24.dp,
-                                vertical = 28.dp
-                            )
-                    ) {
-                        if (checkBookDialog) {
-                            Dialog(onDismissRequest = { checkBookDialog = false }) {
-                                BookPopUp(
-                                    onDismiss = { checkBookDialog = false }
-                                )
-                            }
-                        }
-                        MindWayTextField(
-                            title = stringResource(id = R.string.title),
-                            textState = titleTextState,
-                            placeholder = stringResource(R.string.please_enter_the_book_title),
-                            emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                            updateTextValue = bookAddBookViewModel::updateTitleTextState,
-                            isError = titleTextStateIsEmpty
-                        )
-                        MindWayTextField(
-                            title = stringResource(id = R.string.writer),
-                            textState = writeTextState,
-                            placeholder = stringResource(id = R.string.please_enter_the_book_writer),
-                            emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
-                            updateTextValue = bookAddBookViewModel::updateWriteTextState,
-                            isError = writeTextStateIsEmpty
-                        )
-                        MindWayTextField(
-                            title = stringResource(id = R.string.link),
-                            textState = linkTextState,
-                            placeholder = stringResource(id = R.string.please_enter_the_link),
-                            emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
-                            updateTextValue = bookAddBookViewModel::updateLinkTextState,
-                            isError = linkTextStateIsEmpty
-                        )
-                        Spacer(modifier = modifier.weight(1f))
-                        MindWayButton(
-                            text = stringResource(id = R.string.apply),
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .height(56.dp),
-                            onClick = bookAddBookViewModel::checkButtonOnClick
-                        )
-                    }
+                            .height(56.dp),
+                        onClick = bookAddBookViewModel::checkButtonOnClick
+                    )
                 }
             }
         }
