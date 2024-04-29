@@ -133,28 +133,23 @@ fun GoalReadingScreen(
                             visible = isToastVisible,
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
-                                .offset(y = (-50).dp),
+                                .offset(y = (-40).dp)
+                                .padding(horizontal = 24.dp),
                             enter = slideInVertically(
-                                initialOffsetY = { it },
+                                initialOffsetY = { it + 110 },
                                 animationSpec = tween(durationMillis = 500)
                             ),
                             exit = slideOutVertically(
-                                targetOffsetY = { it },
+                                targetOffsetY = { it + 110 },
                                 animationSpec = tween(durationMillis = 500)
                             )
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(horizontal = 24.dp)
-                                    .fillMaxWidth()
-                            ) {
-                                MindWayToast(
-                                    isSuccess = true,
-                                    text = if (isSuccess) stringResource(R.string.goal_reading_fail_toast)
-                                    else stringResource(R.string.goal_reading_success_toast),
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
+                            MindWayToast(
+                                isSuccess = isSuccess,
+                                text = if (isSuccess) stringResource(R.string.goal_reading_fail_toast)
+                                else stringResource(R.string.goal_reading_success_toast),
+                                modifier = Modifier.fillMaxWidth()
+                            )
                         }
                     }
                 }
