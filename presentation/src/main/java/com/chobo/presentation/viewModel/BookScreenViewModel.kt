@@ -18,17 +18,6 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
 
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
-    fun plusIconOnClick() {
-
-    }
-
-    fun novelOnClick(index: Int) {
-
-    }
-
-    fun essayOnClick(index: Int) {
-
-    }
 
     fun toggleIsToastVisible(){
         _isToastVisible != _isToastVisible
