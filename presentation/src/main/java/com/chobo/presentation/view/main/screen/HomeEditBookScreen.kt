@@ -37,7 +37,6 @@ fun HomeEditBookScreen(
 
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            Spacer(modifier = Modifier.height(20.dp))
             AddBookTopAppBar(startIconOnClick = { navigateToBack() })
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,

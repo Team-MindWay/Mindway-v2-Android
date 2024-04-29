@@ -37,11 +37,6 @@ fun MindWayIntroScreen(
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayIntroTopAppBar(startIconOnClick = { navigateToBack() })
             Box(modifier = Modifier.fillMaxSize()) {
-                Image(
-                    painter = painterResource(id = R.drawable.image_book),
-                    contentDescription = "MindWay_book",
-                    modifier = Modifier.align(Alignment.Center)
-                )
                 Column {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
@@ -66,16 +61,17 @@ fun MindWayIntroScreen(
                             color = colors.Black,
                         )
                     }
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(
-                            10.dp,
-                            Alignment.CenterHorizontally
-                        ),
-                        verticalAlignment = Alignment.CenterVertically,
+                    Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 20.dp)
                     ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.image_book),
+                            contentDescription = "MindWay_book",
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                         Text(
                             text = stringResource(R.string.mindway_intro3),
                             style = TextStyle(
