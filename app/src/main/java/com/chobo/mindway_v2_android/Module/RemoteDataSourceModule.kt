@@ -3,6 +3,7 @@ package com.chobo.mindway_v2_android.Module
 import com.chobo.data.remote.datasource.auth.RemoteAuthDataSource
 import com.chobo.data.remote.datasource.auth.RemoteAuthDataSourceImpl
 import com.chobo.data.remote.datasource.book.RemoteBookDataSource
+import com.chobo.data.remote.datasource.book.RemoteBookDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,6 +19,6 @@ abstract class RemoteDataSourceModule {
 
     @Binds
     abstract fun provideRemoteBookDataSource(
-        remoteBookDataSourceImpl: RemoteAuthDataSourceImpl
+        remoteBookDataSourceImpl: RemoteBookDataSourceImpl
     ): RemoteBookDataSource
 }
