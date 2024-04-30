@@ -11,21 +11,21 @@ import retrofit2.http.Path
 
 interface BookAPI {
     @POST("/api/v2/book")
-    fun bookPost(
+    suspend fun bookPost(
         @Body body: BookRequestBody,
     )
 
     @GET("/api/v2/book")
-    fun bookGet(): List<BookListResponse>
+    suspend fun bookGet(): List<BookListResponse>
 
     @PATCH("/api/v2/book/{book_id}")
-    fun bookPatch(
+    suspend fun bookPatch(
         @Body body: BookRequestBody,
         @Path("book_id") bookId: Long
     )
 
     @DELETE("/api/v2/book/{book_id}")
-    fun bookDelete(
+    suspend fun bookDelete(
         @Path("book_id") bookId: Long
     )
 }
