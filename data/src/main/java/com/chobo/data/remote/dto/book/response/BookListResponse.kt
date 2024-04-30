@@ -13,7 +13,7 @@ data class BookListResponse(
 )
 
 fun BookListResponse.toModel(): BookListResponseModel = BookListResponseModel(
-    title = this.title,
-    plot = this.plot,
-    created_at = this.created_at
+    title = title,
+    plot = plot,
+    created_at = created_at
 )

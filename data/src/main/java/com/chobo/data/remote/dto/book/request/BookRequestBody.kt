@@ -11,7 +11,7 @@ data class BookRequestBody(
 )
 
 fun BookRequestBodyModel.toDto(): BookRequestBody = BookRequestBody(
-    title = this.title,
-    plot = this.plot
+    title = title,
+    plot = plot
 )
 
