@@ -10,7 +10,7 @@ interface BookRepository {
 
     suspend fun bookPatch(
         bookId: Long,
-        bookRequestBodyModel: BookRequestBodyModel
+        body: BookRequestBodyModel
     ): Flow<Unit>
 
     suspend fun bookDelete(bookId: Long): Flow<Unit>

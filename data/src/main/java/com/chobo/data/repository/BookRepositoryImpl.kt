@@ -23,9 +23,9 @@ class BookRepositoryImpl @Inject constructor(
 
     override suspend fun bookPatch(
         bookId: Long,
-        bookRequestBodyModel: BookRequestBodyModel
+        body: BookRequestBodyModel
     ): Flow<Unit> {
-        return bookDataSource.bookPatch(bookId = bookId, body = bookRequestBodyModel.toDto())
+        return bookDataSource.bookPatch(bookId = bookId, body = body.toDto())
     }
 
     override suspend fun bookDelete(bookId: Long): Flow<Unit> {
