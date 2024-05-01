@@ -12,5 +12,5 @@ interface NoticeAPI {
     )
 
     @GET("/api/v2/notice")
-    suspend fun noticePost(): NoticeAll
+    suspend fun noticeGet(): NoticeAll
 }
