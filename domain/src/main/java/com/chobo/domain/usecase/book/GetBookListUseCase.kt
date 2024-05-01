@@ -7,6 +7,6 @@ class GetBookListUseCase @Inject constructor(
     private val bookRepository: BookRepository
 ) {
     suspend operator fun invoke() = runCatching {
-        bookRepository.bookGet()
+        bookRepository.bookListGet()
     }
 }

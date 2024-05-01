@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BookRepository {
     suspend fun bookPost(body: BookRequestBodyModel): Flow<Unit>
-    suspend fun bookGet(): Flow<List<BookListResponseModel>>
+    suspend fun bookListGet(): Flow<List<BookListResponseModel>>
 
     suspend fun bookPatch(
         bookId: Long,
