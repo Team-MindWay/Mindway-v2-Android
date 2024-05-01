@@ -9,6 +9,8 @@ interface RemoteBookDataSource {
 
     suspend fun bookListGet(): Flow<List<BookListResponse>>
 
+    suspend fun bookGet(bookId: Long): Flow<BookListResponse>
+
     suspend fun bookPatch(
         body: BookRequestBody,
         bookId: Long

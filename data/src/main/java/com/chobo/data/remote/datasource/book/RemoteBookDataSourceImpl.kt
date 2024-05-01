@@ -29,6 +29,16 @@ class RemoteBookDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
+
+    override suspend fun bookGet(
+        bookId: Long
+    ): Flow<BookListResponse> = flow {
+        emit(
+            MindWayAPIHandler<BookListResponse>()
+                .httpRequest { bookAPI.bookGet(bookId = bookId) }
+                .sendRequest()
+        )
+    }.flowOn(Dispatchers.IO)
     override suspend fun bookPatch(
         body: BookRequestBody,
         bookId: Long
