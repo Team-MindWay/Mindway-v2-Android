@@ -18,6 +18,11 @@ interface BookAPI {
     @GET("/api/v2/book")
     suspend fun bookListGet(): List<BookListResponse>
 
+    @GET("/api/v2/book/{book_id}")
+    suspend fun bookGet(
+        @Path("book_id") bookId: Long
+    ): BookListResponse
+
     @PATCH("/api/v2/book/{book_id}")
     suspend fun bookPatch(
         @Body body: BookRequestBody,
