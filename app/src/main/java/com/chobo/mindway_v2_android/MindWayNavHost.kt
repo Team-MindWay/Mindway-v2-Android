@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.book.navigation.bookAddBook
 import com.chobo.presentation.view.book.navigation.navigationToBookAddBook
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
@@ -30,7 +31,7 @@ import com.chobo.presentation.view.my.navigation.navigationToMyBookEdit
 
 @Composable
 fun MindWayNavHost(
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
     startDestination: String
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
