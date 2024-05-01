@@ -16,7 +16,7 @@ interface BookAPI {
     )
 
     @GET("/api/v2/book")
-    suspend fun bookGet(): List<BookListResponse>
+    suspend fun bookListGet(): List<BookListResponse>
 
     @PATCH("/api/v2/book/{book_id}")
     suspend fun bookPatch(

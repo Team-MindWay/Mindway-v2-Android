@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteBookDataSource {
     suspend fun bookPost(body: BookRequestBody): Flow<Unit>
 
-    suspend fun bookGet(): Flow<List<BookListResponse>>
+    suspend fun bookListGet(): Flow<List<BookListResponse>>
 
     suspend fun bookPatch(
         body: BookRequestBody,

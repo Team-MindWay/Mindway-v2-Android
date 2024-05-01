@@ -21,10 +21,10 @@ class RemoteBookDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun bookGet(): Flow<List<BookListResponse>> = flow {
+    override suspend fun bookListGet(): Flow<List<BookListResponse>> = flow {
         emit(
             MindWayAPIHandler<List<BookListResponse>>()
-                .httpRequest { bookAPI.bookGet() }
+                .httpRequest { bookAPI.bookListGet() }
                 .sendRequest()
         )
     }.flowOn(Dispatchers.IO)
