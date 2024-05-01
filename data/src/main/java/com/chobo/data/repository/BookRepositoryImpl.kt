@@ -21,6 +21,10 @@ class BookRepositoryImpl @Inject constructor(
         return bookDataSource.bookListGet().map { list -> list.map { it.toModel() } }
     }
 
+    override suspend fun bookGet(bookId: Long): Flow<BookListResponseModel> {
+        return bookDataSource.bookGet(bookId = bookId).map { it.toModel() }
+    }
+
     override suspend fun bookPatch(
         bookId: Long,
         body: BookRequestBodyModel
