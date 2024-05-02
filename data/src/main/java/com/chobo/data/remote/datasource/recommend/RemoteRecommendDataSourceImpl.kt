@@ -3,10 +3,11 @@ package com.chobo.data.remote.datasource.recommend
 import com.chobo.data.remote.api.RecommendAPI
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
 import com.chobo.data.remote.dto.recommend.response.RecommendAllResponse
-import com.chobo.data.remote.enumtype.OrderRequestBookType
 import com.chobo.data.util.MindWayAPIHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class RemoteRecommendDataSourceImpl @Inject constructor(
@@ -26,7 +27,7 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
                 }
                 .sendRequest()
         )
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun getRecommendBook(type: String): Flow<RecommendAllResponse> = flow {
         emit(
@@ -38,7 +39,7 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
                 }
                 .sendRequest()
         )
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun patchRecommendBook(body: RecommendAllRequest, id: Long): Flow<Unit> = flow {
         emit(
@@ -51,7 +52,7 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
                 }
                 .sendRequest()
         )
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun deleteRecommendBook(id: Long): Flow<Unit> = flow {
         emit(
@@ -63,5 +64,5 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
                 }
                 .sendRequest()
         )
-    }
+    }.flowOn(Dispatchers.IO)
 }
