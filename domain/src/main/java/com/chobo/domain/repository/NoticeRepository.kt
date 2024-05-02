@@ -5,5 +5,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface NoticeRepository {
     suspend fun noticeGet(): Flow<NoticeAllModel>
-
 }
