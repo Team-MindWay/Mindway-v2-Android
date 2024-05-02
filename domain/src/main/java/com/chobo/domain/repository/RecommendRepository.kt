@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface RecommendRepository {
     suspend fun postRecommendBook(body: RecommendRequestAllModel, type: String): Flow<Unit>
     suspend fun getRecommendBook(type: String): Flow<RecommendResponseAllModel>
-    suspend fun patchRecommendBHook(body: RecommendRequestAllModel, id: Long): Flow<Unit>
+    suspend fun patchRecommendBook(body: RecommendRequestAllModel, id: Long): Flow<Unit>
     suspend fun deleteRecommendBook(id: Long): Flow<Unit>
 }

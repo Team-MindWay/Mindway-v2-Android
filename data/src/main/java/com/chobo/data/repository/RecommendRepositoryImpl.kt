@@ -35,7 +35,7 @@ class RecommendRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun patchRecommendBHook(body: RecommendRequestAllModel, id: Long): Flow<Unit> {
+    override suspend fun patchRecommendBook(body: RecommendRequestAllModel, id: Long): Flow<Unit> {
         return remoteRecommendDataSource.patchRecommendBook(
             body = RecommendAllRequest(
                 title = body.title,
