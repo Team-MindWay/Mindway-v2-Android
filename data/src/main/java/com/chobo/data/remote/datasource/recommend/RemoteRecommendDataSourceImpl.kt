@@ -14,7 +14,7 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
 ) : RemoteRecommendDataSource {
     override suspend fun postRecommendBook(
         body: RecommendAllRequest,
-        type: OrderRequestBookType
+        type: String
     ): Flow<Unit> = flow {
         emit(
             MindWayAPIHandler<Unit>()
@@ -28,7 +28,7 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getRecommendBook(type: OrderRequestBookType): Flow<RecommendAllResponse> = flow {
+    override suspend fun getRecommendBook(type: String): Flow<RecommendAllResponse> = flow {
         emit(
             MindWayAPIHandler<RecommendAllResponse>()
                 .httpRequest {
