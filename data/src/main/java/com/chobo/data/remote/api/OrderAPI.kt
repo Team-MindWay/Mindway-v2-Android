@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 interface OrderAPI {
     @POST("/api/v2/order")
-    suspend fun orderPost(
+    suspend fun orderUpload(
         @Body body: OrderRequestBody
     )
 
@@ -18,11 +18,13 @@ interface OrderAPI {
     suspend fun orderListGet(): List<OrderRequestBody>
 
     @PATCH("/api/v2/order/{order_id}")
-    suspend fun orderPatch(
+    suspend fun orderModifyById(
         @Body body: OrderRequestBody,
         @Path("order_id") orderId: String,
     )
 
-    @DELETE("/api/v2/order")
-    suspend fun orderDelete()
+    @DELETE("/api/v2/order/{order_id}")
+    suspend fun orderDeleteById(
+        @Path("order_id") orderId: String,
+    )
 }
