@@ -5,14 +5,16 @@ import com.chobo.data.remote.dto.book.response.BookListResponse
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteBookDataSource {
-    suspend fun bookPost(body: BookRequestBody): Flow<Unit>
+    suspend fun bookUpload(body: BookRequestBody): Flow<Unit>
 
-    suspend fun bookGet(): Flow<List<BookListResponse>>
+    suspend fun bookListGet(): Flow<List<BookListResponse>>
 
-    suspend fun bookPatch(
+    suspend fun bookGetById(bookId: Long): Flow<BookListResponse>
+
+    suspend fun bookModify(
         body: BookRequestBody,
         bookId: Long
     ): Flow<Unit>
 
-    suspend fun bookDelete(bookId: Long): Flow<Unit>
+    suspend fun bookDeleteById(bookId: Long): Flow<Unit>
 }

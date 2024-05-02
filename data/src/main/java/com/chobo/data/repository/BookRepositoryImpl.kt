@@ -13,22 +13,26 @@ import javax.inject.Inject
 class BookRepositoryImpl @Inject constructor(
     private val bookDataSource: RemoteBookDataSource
 ) : BookRepository {
-    override suspend fun bookPost(body: BookRequestBodyModel): Flow<Unit> {
-        return bookDataSource.bookPost(body = body.toDto())
+    override suspend fun bookUpload(body: BookRequestBodyModel): Flow<Unit> {
+        return bookDataSource.bookUpload(body = body.toDto())
     }
 
-    override suspend fun bookGet(): Flow<List<BookListResponseModel>> {
-        return bookDataSource.bookGet().map { list -> list.map { it.toModel() } }
+    override suspend fun bookListGet(): Flow<List<BookListResponseModel>> {
+        return bookDataSource.bookListGet().map { list -> list.map { it.toModel() } }
     }
 
-    override suspend fun bookPatch(
+    override suspend fun bookGetById(bookId: Long): Flow<BookListResponseModel> {
+        return bookDataSource.bookGetById(bookId = bookId).map { it.toModel() }
+    }
+
+    override suspend fun bookModify(
         bookId: Long,
         body: BookRequestBodyModel
     ): Flow<Unit> {
-        return bookDataSource.bookPatch(bookId = bookId, body = body.toDto())
+        return bookDataSource.bookModify(bookId = bookId, body = body.toDto())
     }
 
-    override suspend fun bookDelete(bookId: Long): Flow<Unit> {
-        return bookDataSource.bookDelete(bookId = bookId)
+    override suspend fun bookDeleteById(bookId: Long): Flow<Unit> {
+        return bookDataSource.bookDeleteById(bookId = bookId)
     }
 }
