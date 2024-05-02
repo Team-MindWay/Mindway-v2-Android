@@ -23,7 +23,7 @@ interface RecommendAPI {
     @GET("/api/v2/recommend")
     suspend fun getRecommendBookList(
         @Query("type") type: String
-    ): GetRecommendBookListResponse
+    ): List<GetRecommendBookListResponse>
 
     @PATCH("/api/v2/recommend/{rec_id}")
     suspend fun patchRecommendBook(

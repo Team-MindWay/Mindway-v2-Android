@@ -30,9 +30,9 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getRecommendBookList(type: String): Flow<GetRecommendBookListResponse> = flow {
+    override suspend fun getRecommendBookList(type: String): Flow<List<GetRecommendBookListResponse>> = flow {
         emit(
-            MindWayAPIHandler<GetRecommendBookListResponse>()
+            MindWayAPIHandler<List<GetRecommendBookListResponse>>()
                 .httpRequest {
                     recommendService.getRecommendBookList(
                         type = type
