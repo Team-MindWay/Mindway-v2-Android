@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class GetRecommendBookListResponse(
     @SerializedName("title")
-    val title: List<String>,
+    val title: String,
     @SerializedName("content")
-    val content: List<String>,
+    val content: String,
     @SerializedName("author")
-    val author: List<String>
+    val author: String
 )
 
 fun GetRecommendBookListResponse.toGetRecommendListResponseModel(): RecommendListResponseAllModel {
