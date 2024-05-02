@@ -2,6 +2,7 @@ package com.chobo.data.remote.datasource.recommend
 
 import com.chobo.data.remote.api.RecommendAPI
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
+import com.chobo.data.remote.dto.recommend.response.GetRecommendBookListResponse
 import com.chobo.data.remote.dto.recommend.response.RecommendAllResponse
 import com.chobo.data.util.MindWayAPIHandler
 import kotlinx.coroutines.Dispatchers
@@ -29,11 +30,11 @@ class RemoteRecommendDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getRecommendBook(type: String): Flow<RecommendAllResponse> = flow {
+    override suspend fun getRecommendBookList(type: String): Flow<GetRecommendBookListResponse> = flow {
         emit(
-            MindWayAPIHandler<RecommendAllResponse>()
+            MindWayAPIHandler<GetRecommendBookListResponse>()
                 .httpRequest {
-                    recommendService.getRecommendBook(
+                    recommendService.getRecommendBookList(
                         type = type
                     )
                 }

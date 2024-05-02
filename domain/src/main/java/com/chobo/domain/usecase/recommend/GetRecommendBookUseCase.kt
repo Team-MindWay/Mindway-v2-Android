@@ -7,7 +7,7 @@ class GetRecommendBookUseCase @Inject constructor(
     private val recommendRepository: RecommendRepository
 ) {
     suspend operator fun invoke(type: String) = runCatching {
-        recommendRepository.getRecommendBook(
+        recommendRepository.getRecommendBookList(
             type = type
         )
     }

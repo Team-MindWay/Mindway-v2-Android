@@ -1,13 +1,14 @@
 package com.chobo.data.remote.datasource.recommend
 
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
+import com.chobo.data.remote.dto.recommend.response.GetRecommendBookListResponse
 import com.chobo.data.remote.dto.recommend.response.RecommendAllResponse
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteRecommendDataSource {
 
     suspend fun postRecommendBook(body: RecommendAllRequest, type: String): Flow<Unit>
-    suspend fun getRecommendBook(type: String): Flow<RecommendAllResponse>
+    suspend fun getRecommendBookList(type: String): Flow<GetRecommendBookListResponse>
     suspend fun patchRecommendBook(body: RecommendAllRequest, id: Long): Flow<Unit>
     suspend fun deleteRecommendBook(id: Long): Flow<Unit>
 }

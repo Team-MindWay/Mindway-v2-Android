@@ -2,8 +2,11 @@ package com.chobo.data.repository
 
 import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSource
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
+import com.chobo.data.remote.dto.recommend.response.GetRecommendBookListResponse
 import com.chobo.data.remote.dto.recommend.response.toAllRecommendResponseModel
+import com.chobo.data.remote.dto.recommend.response.toGetRecommendListResponseModel
 import com.chobo.domain.model.recommend.request.RecommendRequestAllModel
+import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.domain.model.recommend.response.RecommendResponseAllModel
 import com.chobo.domain.repository.RecommendRepository
 import kotlinx.coroutines.flow.Flow
@@ -27,11 +30,11 @@ class RecommendRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getRecommendBook(type: String): Flow<RecommendResponseAllModel> {
-        return remoteRecommendDataSource.getRecommendBook(
+    override suspend fun getRecommendBookList(type: String): Flow<RecommendListResponseAllModel> {
+        return remoteRecommendDataSource.getRecommendBookList(
             type = type
         ).map {
-            it.toAllRecommendResponseModel()
+            it.toGetRecommendListResponseModel()
         }
     }
 
