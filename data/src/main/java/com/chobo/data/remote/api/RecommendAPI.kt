@@ -1,6 +1,7 @@
 package com.chobo.data.remote.api
 
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
+import com.chobo.data.remote.dto.recommend.response.GetRecommendBookListResponse
 import com.chobo.data.remote.dto.recommend.response.RecommendAllResponse
 import com.chobo.data.remote.enumtype.OrderRequestBookType
 import retrofit2.http.Body
@@ -20,9 +21,9 @@ interface RecommendAPI {
     )
 
     @GET("/api/v2/recommend")
-    suspend fun getRecommendBook(
+    suspend fun getRecommendBookList(
         @Query("type") type: String
-    ): RecommendAllResponse
+    ): GetRecommendBookListResponse
 
     @PATCH("/api/v2/recommend/{rec_id}")
     suspend fun patchRecommendBook(
