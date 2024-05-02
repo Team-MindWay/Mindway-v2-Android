@@ -13,10 +13,10 @@ import javax.inject.Inject
 class RemoteBookDataSourceImpl @Inject constructor(
     private val bookAPI: BookAPI
 ) : RemoteBookDataSource {
-    override suspend fun bookPost(body: BookRequestBody): Flow<Unit> = flow {
+    override suspend fun bookUpload(body: BookRequestBody): Flow<Unit> = flow {
         emit(
             MindWayAPIHandler<Unit>()
-                .httpRequest { bookAPI.bookPost(body = body) }
+                .httpRequest { bookAPI.bookUpload(body = body) }
                 .sendRequest()
         )
     }.flowOn(Dispatchers.IO)
@@ -30,30 +30,31 @@ class RemoteBookDataSourceImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-    override suspend fun bookGet(
+    override suspend fun bookGetById(
         bookId: Long
     ): Flow<BookListResponse> = flow {
         emit(
             MindWayAPIHandler<BookListResponse>()
-                .httpRequest { bookAPI.bookGet(bookId = bookId) }
+                .httpRequest { bookAPI.bookGetById(bookId = bookId) }
                 .sendRequest()
         )
     }.flowOn(Dispatchers.IO)
-    override suspend fun bookPatch(
+
+    override suspend fun bookModify(
         body: BookRequestBody,
         bookId: Long
     ): Flow<Unit> = flow {
         emit(
             MindWayAPIHandler<Unit>()
-                .httpRequest { bookAPI.bookPatch(body = body, bookId = bookId) }
+                .httpRequest { bookAPI.bookModify(body = body, bookId = bookId) }
                 .sendRequest()
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun bookDelete(bookId: Long): Flow<Unit> = flow {
+    override suspend fun bookDeleteById(bookId: Long): Flow<Unit> = flow {
         emit(
             MindWayAPIHandler<Unit>()
-                .httpRequest { bookAPI.bookDelete(bookId = bookId) }
+                .httpRequest { bookAPI.bookDeleteById(bookId = bookId) }
                 .sendRequest()
         )
     }.flowOn(Dispatchers.IO)

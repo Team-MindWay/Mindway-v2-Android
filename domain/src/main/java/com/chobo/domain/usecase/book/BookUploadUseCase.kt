@@ -4,10 +4,10 @@ import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.repository.BookRepository
 import javax.inject.Inject
 
-class PostBookUseCase @Inject constructor(
+class BookUploadUseCase @Inject constructor(
     private val bookRepository: BookRepository
 ) {
     suspend operator fun invoke(body: BookRequestBodyModel) = runCatching {
-        bookRepository.bookPost(body = body)
+        bookRepository.bookUpload(body = body)
     }
 }
