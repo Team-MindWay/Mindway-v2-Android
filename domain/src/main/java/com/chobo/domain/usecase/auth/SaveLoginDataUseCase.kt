@@ -8,6 +8,6 @@ class SaveLoginDataUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(data: GAuthLoginResponseModel) = runCatching {
-        authRepository.saveLoginData(data)
+        authRepository.saveLoginData(data = data)
     }
 }
