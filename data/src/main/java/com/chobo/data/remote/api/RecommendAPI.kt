@@ -16,12 +16,12 @@ interface RecommendAPI {
     @POST("/api/v2/recommend")
     suspend fun postRecommendBook(
         @Body body: RecommendAllRequest,
-        @Query("type") type: OrderRequestBookType
+        @Query("type") type: String
     )
 
     @GET("/api/v2/recommend")
     suspend fun getRecommendBook(
-        @Query("type") type: OrderRequestBookType
+        @Query("type") type: String
     ): RecommendAllResponse
 
     @PATCH("/api/v2/recommend/{rec_id}")
