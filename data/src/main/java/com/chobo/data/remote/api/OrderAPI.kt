@@ -3,6 +3,7 @@ package com.chobo.data.remote.api
 import com.chobo.data.remote.dto.order_request.OrderRequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -12,6 +13,9 @@ interface OrderAPI {
     suspend fun orderPost(
         @Body body: OrderRequestBody
     )
+
+    @GET("/api/v2/order")
+    suspend fun orderListGet(): List<OrderRequestBody>
 
     @PATCH("/api/v2/order/{order_id}")
     suspend fun orderPatch(
