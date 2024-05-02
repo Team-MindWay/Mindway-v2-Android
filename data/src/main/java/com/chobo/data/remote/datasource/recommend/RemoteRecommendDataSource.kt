@@ -2,7 +2,6 @@ package com.chobo.data.remote.datasource.recommend
 
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
 import com.chobo.data.remote.dto.recommend.response.RecommendAllResponse
-import com.chobo.data.remote.enumtype.OrderRequestBookType
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteRecommendDataSource {
