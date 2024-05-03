@@ -6,6 +6,8 @@ import com.chobo.data.remote.datasource.book.RemoteBookDataSource
 import com.chobo.data.remote.datasource.book.RemoteBookDataSourceImpl
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSource
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSourceImpl
+import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSource
+import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,4 +30,9 @@ abstract class RemoteDataSourceModule {
     abstract fun provideRemoteOrderDataSource(
         remoteOrderDataSourceImpl: RemoteOrderDataSourceImpl
     ): RemoteOrderDataSource
+
+    @Binds
+    abstract fun provideRemoteRecommendDataSource(
+        remoteRecommendDataSourceImpl: RemoteRecommendDataSourceImpl
+    ): RemoteRecommendDataSource
 }

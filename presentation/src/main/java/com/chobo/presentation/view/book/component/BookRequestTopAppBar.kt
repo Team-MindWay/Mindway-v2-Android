@@ -26,14 +26,6 @@ fun BookRequestTopAppBar(
             )
         },
         midText = stringResource(R.string.book_request),
-        endIcon = {
-            InfoIcon(
-                modifier = Modifier.clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = null
-                ) { endIconOnClick() }
-            )
-        }
     )
 }
 @Preview(showBackground = true)
