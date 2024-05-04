@@ -2,9 +2,11 @@ package com.chobo.mindway_v2_android.Module
 
 import com.chobo.data.repository.AuthRepositoryImpl
 import com.chobo.data.repository.BookRepositoryImpl
+import com.chobo.data.repository.OrderRepositoryImpl
 import com.chobo.data.repository.RecommendRepositoryImpl
 import com.chobo.domain.repository.AuthRepository
 import com.chobo.domain.repository.BookRepository
+import com.chobo.domain.repository.OrderRepository
 import com.chobo.domain.repository.RecommendRepository
 import dagger.Binds
 import dagger.Module
@@ -23,6 +25,11 @@ abstract class RepositoryModule {
     abstract fun provideBookRepository(
         bookRepositoryImpl: BookRepositoryImpl
     ): BookRepository
+
+    @Binds
+    abstract fun provideOrderRepository(
+        orderRepositoryImpl: OrderRepositoryImpl
+    ): OrderRepository
 
     @Binds
     abstract fun provideRecommendRepository(
