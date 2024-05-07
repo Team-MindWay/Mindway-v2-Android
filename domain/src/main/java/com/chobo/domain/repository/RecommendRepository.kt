@@ -2,7 +2,6 @@ package com.chobo.domain.repository
 
 import com.chobo.domain.model.recommend.request.RecommendRequestAllModel
 import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
-import com.chobo.domain.model.recommend.response.RecommendResponseAllModel
 import kotlinx.coroutines.flow.Flow
 
 interface RecommendRepository {

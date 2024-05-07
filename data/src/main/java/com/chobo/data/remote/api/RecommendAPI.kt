@@ -2,8 +2,6 @@ package com.chobo.data.remote.api
 
 import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
 import com.chobo.data.remote.dto.recommend.response.GetRecommendBookListResponse
-import com.chobo.data.remote.dto.recommend.response.RecommendAllResponse
-import com.chobo.data.remote.enumtype.OrderRequestBookType
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
