@@ -54,10 +54,6 @@ fun BookScreen(
     val isToastVisible by bookScreenViewModel.isToastVisible.collectAsState()
 
     val pagerState = rememberPagerState(pageCount = { 2 })
-    val tabNames = listOf(
-        stringResource(R.string.novel),
-        stringResource(R.string.essay),
-    )
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
@@ -80,7 +76,10 @@ fun BookScreen(
                         contentColor = colors.MAIN,
                         backgroundColor = colors.WHITE
                     ) {
-                        tabNames.forEachIndexed { index, tabName ->
+                        listOf(
+                            stringResource(R.string.novel),
+                            stringResource(R.string.essay),
+                        ).forEachIndexed { index, tabName ->
                             BookTabRowItem(
                                 indexState = pagerState.currentPage,
                                 index = index,
