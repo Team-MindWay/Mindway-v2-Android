@@ -23,7 +23,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,7 +40,6 @@ import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.BookScreenViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -56,10 +54,6 @@ fun BookScreen(
     val isToastVisible by bookScreenViewModel.isToastVisible.collectAsState()
 
     val pagerState = rememberPagerState(pageCount = { 2 })
-    val tabNames = listOf(
-        stringResource(R.string.novel),
-        stringResource(R.string.essay),
-    )
     val coroutineScope = rememberCoroutineScope()
 
     MindWayAndroidTheme { colors, _ ->
@@ -82,7 +76,10 @@ fun BookScreen(
                         contentColor = colors.MAIN,
                         backgroundColor = colors.WHITE
                     ) {
-                        tabNames.forEachIndexed { index, tabName ->
+                        listOf(
+                            stringResource(R.string.novel),
+                            stringResource(R.string.essay),
+                        ).forEachIndexed { index, tabName ->
                             BookTabRowItem(
                                 indexState = pagerState.currentPage,
                                 index = index,

@@ -3,8 +3,6 @@ package com.chobo.presentation.view.login.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.view.theme.color.MindWayColor
 
@@ -42,10 +41,7 @@ fun MindWayGAuthButton(
                     colors.MAIN,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = null
-                ) { onClick() }
+                .clickableSingle { onClick() }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_mindway_gauth),

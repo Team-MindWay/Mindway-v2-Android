@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -31,10 +32,7 @@ fun BookTabRowItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(8.dp)
-                .clickable (
-                    interactionSource = MutableInteractionSource(),
-                    indication = null
-                ){ onClick() }
+                .clickableSingle { onClick() }
         ) {
             if (indexState == index) {
                 Text(
