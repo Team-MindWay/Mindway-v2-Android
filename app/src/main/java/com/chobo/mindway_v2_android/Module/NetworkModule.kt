@@ -3,6 +3,7 @@ package com.chobo.mindway_v2_android.Module
 import android.util.Log
 import com.chobo.data.remote.api.AuthAPI
 import com.chobo.data.remote.api.BookAPI
+import com.chobo.data.remote.api.EventAPI
 import com.chobo.data.remote.api.GoalAPI
 import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.MyAPI
@@ -105,5 +106,11 @@ object NetworkModule {
     @Singleton
     fun provideRecommendAPI(retrofit: Retrofit): RecommendAPI {
         return retrofit.create(RecommendAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventAPI(retrofit: Retrofit): EventAPI {
+        return retrofit.create(EventAPI::class.java)
     }
 }

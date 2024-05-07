@@ -16,11 +16,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val remoteAuthDataSource: RemoteAuthDataSource
 ): AuthRepository {
     override suspend fun gAuthLogin(body: GAuthLoginRequestModel): Flow<GAuthLoginResponseModel> {
-        return remoteAuthDataSource.GuauthLogin(
-            body = GAuthLoginRequestBody(
-                code = body.code
-            )
-        ).map { it.toLoginModel() }
+        return remoteAuthDataSource.GuauthLogin(body = GAuthLoginRequestBody(code = body.code)).map { it.toLoginModel() }
     }
 
     override suspend fun saveLoginData(data: GAuthLoginResponseModel) {

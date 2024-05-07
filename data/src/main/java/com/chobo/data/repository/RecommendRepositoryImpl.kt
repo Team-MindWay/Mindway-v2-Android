@@ -31,9 +31,7 @@ class RecommendRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRecommendBookList(type: String): Flow<List<RecommendListResponseAllModel>> {
-        return remoteRecommendDataSource.getRecommendBookList(
-            type = type
-        ).map { list ->
+        return remoteRecommendDataSource.getRecommendBookList(type = type).map { list ->
             list.map {
                 it.toGetRecommendListResponseModel()
             }
@@ -52,8 +50,6 @@ class RecommendRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteRecommendBook(id: Long): Flow<Unit> {
-        return remoteRecommendDataSource.deleteRecommendBook(
-            id = id
-        )
+        return remoteRecommendDataSource.deleteRecommendBook(id = id)
     }
 }
