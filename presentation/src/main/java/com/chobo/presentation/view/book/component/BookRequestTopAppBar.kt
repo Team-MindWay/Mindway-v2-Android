@@ -14,7 +14,6 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 @Composable
 fun BookRequestTopAppBar(
     startIconOnClick: () -> Unit,
-    endIconOnClick: () -> Unit,
 ) {
     MindWayTopAppBar(
         startIcon = {
@@ -31,5 +30,5 @@ fun BookRequestTopAppBar(
 @Preview(showBackground = true)
 @Composable
 fun BookRequestTopAppBarPreview(){
-    BookRequestTopAppBar(startIconOnClick = { }) {}
+    BookRequestTopAppBar(startIconOnClick = { })
 }
