@@ -7,8 +7,6 @@ class DeleteRecommendBookUseCase @Inject constructor(
     private val recommendRepository: RecommendRepository
 ) {
     suspend operator fun invoke(id: Long) = runCatching {
-        recommendRepository.deleteRecommendBook(
-            id = id
-        )
+        recommendRepository.deleteRecommendBook(id = id)
     }
 }
