@@ -1,8 +1,6 @@
 package com.chobo.presentation.view.component.bottom_navigation_bar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,21 +40,17 @@ fun MindWayNavBar(
             ).forEach { item ->
                 MindWayNavBarItem(
                     modifier = modifier
-                        .clickable(
-                            interactionSource = MutableInteractionSource(),
-                            indication = null,
-                            onClick = {
-                                if (currentDestination.value != item) {
-                                    currentDestination.value = item
-                                    when (item) {
-                                        MindWayNavBarItemType.HOME -> navigateToHome()
-                                        MindWayNavBarItemType.EVENT -> navigateToEvent()
-                                        MindWayNavBarItemType.BOOKS -> navigateToBooks()
-                                        MindWayNavBarItemType.MY -> navigateToMy()
-                                    }
+                        .clickableSingle {
+                            if (currentDestination.value != item) {
+                                currentDestination.value = item
+                                when (item) {
+                                    MindWayNavBarItemType.HOME -> navigateToHome()
+                                    MindWayNavBarItemType.EVENT -> navigateToEvent()
+                                    MindWayNavBarItemType.BOOKS -> navigateToBooks()
+                                    MindWayNavBarItemType.MY -> navigateToMy()
                                 }
                             }
-                        ),
+                        },
                     type = item,
                     isSelected = currentDestination.value == item
                 )
