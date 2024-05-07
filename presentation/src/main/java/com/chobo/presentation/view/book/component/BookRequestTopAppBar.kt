@@ -23,11 +23,6 @@ fun BookRequestTopAppBar(
             )
         },
         midText = stringResource(R.string.book_request),
-        endIcon = {
-            InfoIcon(
-                modifier = Modifier.clickableSingle { endIconOnClick() }
-            )
-        }
     )
 }
 
