@@ -16,7 +16,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.EventViewModel
+import com.chobo.presentation.viewModel.event.EventViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

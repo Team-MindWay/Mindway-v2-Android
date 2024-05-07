@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel
+package com.chobo.presentation.viewModel.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
-import com.chobo.presentation.viewModel.AuthViewModel
+import com.chobo.presentation.viewModel.auth.AuthViewModel
 import com.chobo.presentation.BuildConfig
 import com.msg.gauthsignin.GAuthSigninWebView
 
