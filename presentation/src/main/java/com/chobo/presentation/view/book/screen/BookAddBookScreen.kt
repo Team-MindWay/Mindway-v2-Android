@@ -60,10 +60,7 @@ fun BookAddBookScreen(
                         }
                     }
             ) {
-                BookRequestTopAppBar(
-                    startIconOnClick = { navigateToBack() },
-                    endIconOnClick = { checkBookDialog = true }
-                )
+                BookRequestTopAppBar(startIconOnClick = { navigateToBack() })
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
