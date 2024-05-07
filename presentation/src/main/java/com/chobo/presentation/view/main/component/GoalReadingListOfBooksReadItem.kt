@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 
@@ -45,10 +46,7 @@ fun GoalReadingListOfBooksReadItem(
                     spotColor = colors.CardShadow,
                     ambientColor = colors.CardShadow,
                 )
-                .clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = null
-                ) { onClick() }
+                .clickableSingle { onClick() }
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
