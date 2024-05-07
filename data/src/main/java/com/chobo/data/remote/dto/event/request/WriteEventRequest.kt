@@ -18,15 +18,6 @@ data class WriteEventRequest(
         @SerializedName("ended_at")
         val ended_at: String
     )
-
-    fun Dto.toDomainDto(): DomainDto {
-        return DomainDto(
-            title = title,
-            content = content,
-            started_at = started_at,
-            ended_at = ended_at
-        )
-    }
 }
 
 fun WriteEventRequestModel.toWriteEventRequest(): WriteEventRequest {
