@@ -38,8 +38,8 @@ fun MindWayNavBarItem(
                     Text(
                         text = stringResource(id = R.string.home),
                         style = typography.labelLarge,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 11.sp,
                         color = if (isSelected) colors.Black else colors.GRAY400
                     )
                 }
