@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 data class EventsData(val title: String, val content: String, val date: String)
@@ -65,10 +66,7 @@ fun Events(
                     )
                     Spacer(modifier = modifier.weight(1f))
                     ChevronRightIcon(
-                        modifier = Modifier.clickable(
-                            interactionSource = MutableInteractionSource(),
-                            indication = null
-                        ) {
+                        modifier = Modifier.clickableSingle {
                             onClick()
                             navigateToDetailEvent()
                         }
