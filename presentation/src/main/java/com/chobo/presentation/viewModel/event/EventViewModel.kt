@@ -1,23 +1,50 @@
 package com.chobo.presentation.viewModel.event
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chobo.presentation.viewModel.util.result.Result
+import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.domain.usecase.event.GetEventListUseCase
 import com.chobo.presentation.view.event.component.EventsData
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EventViewModel @Inject constructor() : ViewModel() {
+class EventViewModel @Inject constructor(
+    private val getEventListUseCase: GetEventListUseCase
+) : ViewModel() {
+    private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
+    val getEventListUiState = _getEventListUiState.asStateFlow()
+
     private val _currentEventsDataList = MutableStateFlow<List<EventsData>>(listOf())
     val currentEventsDataList: StateFlow<List<EventsData>> = _currentEventsDataList.asStateFlow()
 
     private val _pastEventsDataList = MutableStateFlow<List<EventsData>>(listOf())
     val pastEventsDataList: StateFlow<List<EventsData>> = _pastEventsDataList.asStateFlow()
 
-    fun onCurrentEventClick(index: Int) {
+    fun getEventList(status: String) = viewModelScope.launch {
+        getEventListUseCase(status = status)
+            .asResult()
+            .collectLatest { result ->
+                when(result) {
+                    is Result.Loading -> _getEventListUiState.value = GetEventListUiState.Loading
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getEventListUiState.value = GetEventListUiState.Empty
+                    } else {
+                        _getEventListUiState.value = GetEventListUiState.Success(result.data)
+                    }
+                    is Result.Fail -> _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
+                }
+            }
+    }
 
+    fun onCurrentEventClick(index: Int) {
     }
 
     fun onPastEventClick(index: Int) {
