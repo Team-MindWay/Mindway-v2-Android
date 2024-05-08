@@ -58,6 +58,7 @@ dependencies {
 
     implementation(Dependency.Compose.ACTIVITY_COMPOSE)
     implementation(platform(Dependency.Compose.COMPOSE_BOM))
+    implementation(Dependency.AndroidX.COMPOSE_LIFECYCLE)
     implementation(Dependency.Compose.COMPOSE)
     implementation(Dependency.Compose.COMPOSE_GRAPHICS)
     implementation(Dependency.Compose.COMPOSE_PREVIEW)
