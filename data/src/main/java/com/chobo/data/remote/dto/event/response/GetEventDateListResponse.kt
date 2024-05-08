@@ -1,9 +1,9 @@
 package com.chobo.data.remote.dto.event.response
 
-import com.chobo.domain.model.event.response.GetEventDateResponseModel
+import com.chobo.domain.model.event.response.GetEventDateListResponseModel
 import java.io.File
 
-data class GetEventDateResponse(
+data class GetEventDateListResponse(
     val title: String,
     val content: String,
     val image: File,
@@ -11,8 +11,8 @@ data class GetEventDateResponse(
     val endedAt: String
 )
 
-fun GetEventDateResponse.toGetEventDateResponseModel(): GetEventDateResponseModel {
-    return GetEventDateResponseModel(
+fun GetEventDateListResponse.toGetEventDateListResponseModel(): GetEventDateListResponseModel {
+    return GetEventDateListResponseModel(
         title = title,
         content = content,
         image = image,
