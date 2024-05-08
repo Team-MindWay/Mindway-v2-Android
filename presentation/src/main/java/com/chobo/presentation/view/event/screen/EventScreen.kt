@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.EventContent
@@ -25,8 +25,8 @@ fun EventScreen(
     navigateToDetailEvent: () -> Unit,
     eventViewModel: EventViewModel = viewModel(),
 ) {
-    val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsState()
-    val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsState()
+    val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsStateWithLifecycle()
+    val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsStateWithLifecycle()
 
     MindWayAndroidTheme { colors, _ ->
         Box(

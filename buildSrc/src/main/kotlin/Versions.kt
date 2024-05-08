@@ -14,6 +14,7 @@ object Versions {
     const val COMPOSE_FOUNDATION = "1.6.1"
 
     const val LIFECYCLE = "2.3.1"
+    const val COMPOSE_LIFECYCLE = "2.6.2"
     const val CORE_KTX = "1.5.0"
     const val MATERIAL = "1.9.0"
     const val SPLASH = "1.0.0-beta02"

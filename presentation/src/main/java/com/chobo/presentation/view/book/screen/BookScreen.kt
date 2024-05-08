@@ -23,7 +23,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -31,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
@@ -49,9 +49,9 @@ fun BookScreen(
     bookScreenViewModel: BookScreenViewModel = viewModel(),
     navigateToBookAddBook: () -> Unit,
 ) {
-    val novelDataList by bookScreenViewModel.novelDataList.collectAsState()
-    val essayDataList by bookScreenViewModel.essayDataList.collectAsState()
-    val isToastVisible by bookScreenViewModel.isToastVisible.collectAsState()
+    val novelDataList by bookScreenViewModel.novelDataList.collectAsStateWithLifecycle()
+    val essayDataList by bookScreenViewModel.essayDataList.collectAsStateWithLifecycle()
+    val isToastVisible by bookScreenViewModel.isToastVisible.collectAsStateWithLifecycle()
 
     val pagerState = rememberPagerState(pageCount = { 2 })
     val coroutineScope = rememberCoroutineScope()

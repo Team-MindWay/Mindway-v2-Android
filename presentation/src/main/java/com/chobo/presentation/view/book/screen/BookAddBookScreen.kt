@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
@@ -39,12 +39,12 @@ fun BookAddBookScreen(
     bookAddBookViewModel: BookAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
 ) {
-    val titleTextState by bookAddBookViewModel.titleTextState.collectAsState()
-    val writeTextState by bookAddBookViewModel.writeTextState.collectAsState()
-    val linkTextState by bookAddBookViewModel.linkTextState.collectAsState()
-    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsState()
-    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsState()
-    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsState()
+    val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
+    val writeTextState by bookAddBookViewModel.writeTextState.collectAsStateWithLifecycle()
+    val linkTextState by bookAddBookViewModel.linkTextState.collectAsStateWithLifecycle()
+    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
+    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
     var checkBookDialog by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
