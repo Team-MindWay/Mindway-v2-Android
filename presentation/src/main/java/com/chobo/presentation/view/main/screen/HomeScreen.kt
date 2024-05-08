@@ -8,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
@@ -30,11 +30,11 @@ fun HomeScreen(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
-    val titleTextState by homeViewModel.titleTextState.collectAsState()
-    val contentTextState by homeViewModel.contentTextState.collectAsState()
-    val goalBookRead by homeViewModel.goalBookRead.collectAsState()
-    val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsState()
-    val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsState()
+    val titleTextState by homeViewModel.titleTextState.collectAsStateWithLifecycle()
+    val contentTextState by homeViewModel.contentTextState.collectAsStateWithLifecycle()
+    val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
+    val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
+    val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
 
     MindWayAndroidTheme { colors, _ ->
         Column {

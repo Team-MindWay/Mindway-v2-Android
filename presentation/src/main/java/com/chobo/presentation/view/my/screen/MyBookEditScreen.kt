@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +20,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -35,12 +35,12 @@ fun MyBookEditScreen(
     myBookEditViewModel: MyBookEditViewModel = viewModel(),
     navigateToBack: () -> Unit,
 ) {
-    val titleTextState by myBookEditViewModel.titleTextState.collectAsState()
-    val writeTextState by myBookEditViewModel.writeTextState.collectAsState()
-    val linkTextState by myBookEditViewModel.linkTextState.collectAsState()
-    val titleTextStateIsEmpty by myBookEditViewModel.titleTextStateIsEmpty.collectAsState()
-    val writeTextStateIsEmpty by myBookEditViewModel.writeTextStateIsEmpty.collectAsState()
-    val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsState()
+    val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
+    val writeTextState by myBookEditViewModel.writeTextState.collectAsStateWithLifecycle()
+    val linkTextState by myBookEditViewModel.linkTextState.collectAsStateWithLifecycle()
+    val titleTextStateIsEmpty by myBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val writeTextStateIsEmpty by myBookEditViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
+    val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
     MindWayAndroidTheme { colors, _ ->
