@@ -26,7 +26,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
 
 @Composable
-fun HomeRoute(
+internal fun HomeRoute(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(),
     navigateToGoalReading: () -> Unit,
@@ -50,7 +50,7 @@ fun HomeRoute(
 }
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     modifier: Modifier = Modifier,
     titleTextState: String,
     contentTextState: String,

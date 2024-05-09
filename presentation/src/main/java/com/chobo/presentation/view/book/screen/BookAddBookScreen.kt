@@ -32,7 +32,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 
 @Composable
-fun BookAddBookRoute(
+internal fun BookAddBookRoute(
     modifier: Modifier = Modifier,
     bookAddBookViewModel: BookAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
@@ -66,7 +66,7 @@ fun BookAddBookRoute(
 }
 
 @Composable
-fun BookAddBookScreen(
+internal fun BookAddBookScreen(
     modifier: Modifier = Modifier,
     titleTextState: String,
     writeTextState: String,

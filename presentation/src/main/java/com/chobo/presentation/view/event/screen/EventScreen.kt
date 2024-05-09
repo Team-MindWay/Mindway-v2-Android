@@ -27,7 +27,7 @@ import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EventScreenRoute(
+internal fun EventScreenRoute(
     modifier: Modifier = Modifier,
     navigateToDetailEvent: () -> Unit,
     eventViewModel: EventViewModel = viewModel(LocalContext.current as ComponentActivity)

@@ -48,7 +48,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun BookRoute(
+internal fun BookRoute(
     modifier: Modifier = Modifier,
     bookScreenViewModel: BookScreenViewModel = viewModel(),
     navigateToBookAddBook: () -> Unit,
@@ -71,7 +71,7 @@ fun BookRoute(
 }
 
 @Composable
-fun BookScreen(
+internal fun BookScreen(
     modifier: Modifier = Modifier,
     novelDataList: List<BookListItemData>,
     essayDataList: List<BookListItemData>,
