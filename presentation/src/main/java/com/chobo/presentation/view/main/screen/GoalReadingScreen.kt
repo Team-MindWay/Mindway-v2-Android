@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -35,16 +36,18 @@ import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDial
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
 import com.chobo.presentation.view.main.component.GoalReadingChart
+import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
+import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun GoalReadingScreen(
+fun GoalReadingRoute(
     modifier: Modifier = Modifier,
     goalReadingViewModel: GoalReadingViewModel = viewModel(),
     navigateToBack: () -> Unit,
@@ -61,13 +64,52 @@ fun GoalReadingScreen(
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
 
+    GoalReadingScreen(
+        modifier = modifier,
+        goalBookRead = goalBookRead,
+        goalBookReadSetting = goalBookReadSetting,
+        goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
+        goalReadingGraphDataList = goalReadingGraphDataList,
+        goalReadingListOfBooksReadItemDataList = goalReadingListOfBooksReadItemDataList,
+        isToastVisible = isToastVisible,
+        isSuccess = isSuccess,
+        coroutineScope = coroutineScope,
+        focusManager = focusManager,
+        navigateToBack = navigateToBack,
+        navigateToHomeAddBook = navigateToHomeAddBook,
+        navigateToHomeViewDetail = navigateToHomeViewDetail,
+        goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
+        updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun GoalReadingScreen(
+    modifier: Modifier = Modifier,
+    goalBookRead: Int,
+    goalBookReadSetting: String,
+    goalBookReadSettingIsEmpty: Boolean,
+    goalReadingGraphDataList: List<GoalReadingGraphData>,
+    goalReadingListOfBooksReadItemDataList: List<GoalReadingListOfBooksReadItemData>,
+    isToastVisible: Boolean,
+    isSuccess: Boolean,
+    coroutineScope: CoroutineScope,
+    focusManager: FocusManager,
+    navigateToBack: () -> Unit,
+    navigateToHomeAddBook: () -> Unit,
+    navigateToHomeViewDetail: () -> Unit,
+    goalBookReadSettingOnClick: () -> Unit,
+    updateGoalBookReadSetting: (String) -> Unit,
+) {
+
     MindWayBottomSheetDialog(
         sheetContent = {
             GoalReadingBottomSheet(
                 isError = goalBookReadSettingIsEmpty,
                 textState = goalBookReadSetting,
-                onclick = goalReadingViewModel::goalBookReadSettingOnClick,
-                updateTextValue = goalReadingViewModel::updateGoalBookReadSetting
+                onclick = goalBookReadSettingOnClick,
+                updateTextValue = updateGoalBookReadSetting
             )
         }
     ) { sheetState ->
@@ -161,10 +203,9 @@ fun GoalReadingScreenPreview() {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        GoalReadingScreen(
+        GoalReadingRoute(
             navigateToBack = { },
             navigateToHomeAddBook = { },
-            navigateToHomeViewDetail = { },
-        )
+            navigateToHomeViewDetail = { },)
     }
 }

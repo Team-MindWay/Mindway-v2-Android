@@ -3,7 +3,7 @@ package com.chobo.presentation.view.main.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.chobo.presentation.view.main.screen.GoalReadingScreen
+import com.chobo.presentation.view.main.screen.GoalReadingRoute
 import com.chobo.presentation.view.main.screen.HomeAddBookScreen
 import com.chobo.presentation.view.main.screen.HomeEditBookScreen
 import com.chobo.presentation.view.main.screen.ViewDetailScreen
@@ -35,7 +35,7 @@ fun NavGraphBuilder.goalReading(
     navigateToHomeViewDetail: () -> Unit
 ) {
     composable(goalReadingRoute) {
-        GoalReadingScreen(
+        GoalReadingRoute(
             navigateToBack = navigateToBack,
             navigateToHomeAddBook = navigateToHomeAddBook,
             navigateToHomeViewDetail = navigateToHomeViewDetail,
