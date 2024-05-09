@@ -36,6 +36,7 @@ fun EventScreenRoute(
     val getEventDateListUiState by eventViewModel.getEventDateListUiState.collectAsStateWithLifecycle()
     val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsStateWithLifecycle()
     val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsStateWithLifecycle()
+    val pagerState = rememberPagerState { 2 }
 
     EventScreen(
         modifier = modifier,
@@ -45,6 +46,7 @@ fun EventScreenRoute(
         getEventDateListUiState = getEventDateListUiState,
         pastEventsDataList = pastEventsDataList,
         currentEventsDataList = currentEventsDataList,
+        pagerState = pagerState,
         onCurrentEventClick = eventViewModel::onCurrentEventClick,
         onPastEventClick = eventViewModel::onPastEventClick,
         mainCallBack = { }
@@ -64,6 +66,10 @@ internal fun EventScreen(
     currentEventsDataList: List<EventsData>,
     onCurrentEventClick: KFunction1<Int, Unit>,
     onPastEventClick: KFunction1<Int, Unit>
+    mainCallBack: () -> Unit,
+    onCurrentEventClick: (Int) -> Unit,
+    onPastEventClick: (Int) -> Unit,
+    navigateToDetailEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Box(
@@ -72,7 +78,7 @@ internal fun EventScreen(
                 .background(color = colors.WHITE)
         ) {
             EventPager(
-                pagerState = rememberPagerState { 2 },
+                pagerState = pagerState,
                 tabs = listOf(
                     stringResource(id = R.string.ongoing_event),
                     stringResource(id = R.string.past_event)
