@@ -21,7 +21,7 @@ import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.HomeViewModel
+import com.chobo.presentation.viewModel.main.HomeViewModel
 
 @Composable
 fun HomeScreen(

@@ -22,7 +22,7 @@ import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.main.component.AddBookTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.HomeAddBookViewModel
+import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 
 @Composable
 fun HomeEditBookScreen(

@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel
+package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import com.chobo.presentation.view.main.component.BookKingOfTheMonthData

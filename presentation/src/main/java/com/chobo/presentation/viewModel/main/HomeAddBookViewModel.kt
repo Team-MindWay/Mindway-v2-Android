@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel
+package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

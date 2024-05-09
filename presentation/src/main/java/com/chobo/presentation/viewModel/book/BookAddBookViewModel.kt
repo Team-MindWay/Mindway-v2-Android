@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel.my
+package com.chobo.presentation.viewModel.book
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class MyBookEditViewModel @Inject constructor() : ViewModel() {
+class BookAddBookViewModel @Inject constructor() : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
 
@@ -46,15 +46,5 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
-    }
-
-    fun editBookOnClick(index: Int) {
-
-    }
-
-    init {
-        _titleTextState.value = "임시 데이터입니당"
-        _writeTextState.value = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
-        _linkTextState.value = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
     }
 }

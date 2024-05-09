@@ -28,7 +28,7 @@ import com.chobo.presentation.view.main.component.ViewDetailPopUp
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.ViewDetailViewModel
+import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)

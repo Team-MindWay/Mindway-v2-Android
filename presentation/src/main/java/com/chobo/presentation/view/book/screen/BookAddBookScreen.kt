@@ -31,7 +31,7 @@ import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.BookAddBookViewModel
+import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 
 @Composable
 fun BookAddBookScreen(
