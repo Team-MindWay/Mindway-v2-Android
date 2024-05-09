@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.chobo.presentation.view.book.screen
 
 import androidx.compose.animation.AnimatedVisibility
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
@@ -34,17 +37,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
+import com.chobo.presentation.view.book.component.BookListItemData
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookScreenViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookScreen(
+fun BookRoute(
     modifier: Modifier = Modifier,
     bookScreenViewModel: BookScreenViewModel = viewModel(),
     navigateToBookAddBook: () -> Unit,
@@ -52,10 +56,30 @@ fun BookScreen(
     val novelDataList by bookScreenViewModel.novelDataList.collectAsStateWithLifecycle()
     val essayDataList by bookScreenViewModel.essayDataList.collectAsStateWithLifecycle()
     val isToastVisible by bookScreenViewModel.isToastVisible.collectAsStateWithLifecycle()
-
     val pagerState = rememberPagerState(pageCount = { 2 })
     val coroutineScope = rememberCoroutineScope()
 
+    BookScreen(
+        modifier = modifier,
+        novelDataList = novelDataList,
+        essayDataList = essayDataList,
+        isToastVisible = isToastVisible,
+        pagerState = pagerState,
+        coroutineScope = coroutineScope,
+        navigateToBookAddBook = navigateToBookAddBook
+    )
+}
+
+@Composable
+fun BookScreen(
+    modifier: Modifier = Modifier,
+    novelDataList: List<BookListItemData>,
+    essayDataList: List<BookListItemData>,
+    isToastVisible: Boolean,
+    pagerState: PagerState,
+    navigateToBookAddBook: () -> Unit,
+    coroutineScope: CoroutineScope,
+) {
     MindWayAndroidTheme { colors, _ ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
             Column {
@@ -151,5 +175,5 @@ fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookScreen(navigateToBookAddBook = { })
+    BookRoute{  }
 }

@@ -27,6 +27,9 @@ class BookAddBookViewModel @Inject constructor() : ViewModel() {
     private val _linkTextStateIsEmpty = MutableStateFlow(false)
     val linkTextStateIsEmpty: StateFlow<Boolean> = _linkTextStateIsEmpty.asStateFlow()
 
+    private val _checkBookDialog = MutableStateFlow(false)
+    val checkBookDialog: StateFlow<Boolean> = _checkBookDialog.asStateFlow()
+
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
         _titleTextState.value = input
@@ -40,6 +43,10 @@ class BookAddBookViewModel @Inject constructor() : ViewModel() {
     fun updateLinkTextState(input: String) {
         _linkTextStateIsEmpty.value = false
         _linkTextState.value = input
+    }
+
+    fun toggleCheckBookDialog() {
+        _checkBookDialog.value = !_checkBookDialog.value
     }
 
     fun checkButtonOnClick() {

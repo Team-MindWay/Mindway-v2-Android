@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.chobo.presentation.view.book.screen.BookScreen
+import com.chobo.presentation.view.book.screen.BookRoute
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.BOOKS
@@ -64,7 +64,7 @@ fun MindWayCombinationView(
 
                     EVENT -> EventScreenRoute(navigateToDetailEvent = navigateToDetailEvent)
 
-                    BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
+                    BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
 
                     MY -> MyScreen(
                         navigateToMyBookEdit = navigateToMyBookEdit,
