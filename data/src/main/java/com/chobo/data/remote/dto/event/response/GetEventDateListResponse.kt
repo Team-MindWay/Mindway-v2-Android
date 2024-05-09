@@ -2,7 +2,6 @@ package com.chobo.data.remote.dto.event.response
 
 import com.chobo.domain.model.event.response.GetEventDateListResponseModel
 import okhttp3.MultipartReader
-import java.io.File
 
 data class GetEventDateListResponse(
     val title: String,
