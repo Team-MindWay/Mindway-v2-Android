@@ -31,7 +31,7 @@ fun DetailEventScreen(
     val title by detailEventViewModel.title.collectAsStateWithLifecycle()
     val content by detailEventViewModel.content.collectAsStateWithLifecycle()
     val date by detailEventViewModel.date.collectAsStateWithLifecycle()
-    val imageResId by detailEventViewModel.imageResId.collectAsStateWithLifecycle()
+    val imageRes by detailEventViewModel.imageRes.collectAsStateWithLifecycle()
 
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
@@ -42,7 +42,7 @@ fun DetailEventScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 Image(
-                    painter = painterResource(imageResId),
+                    painter = painterResource(imageRes),
                     contentDescription = "Event Image",
                     modifier = Modifier
                         .padding(vertical = 20.dp)
