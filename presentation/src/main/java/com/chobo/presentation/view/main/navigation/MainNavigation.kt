@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.chobo.presentation.view.main.screen.GoalReadingRoute
+import com.chobo.presentation.view.main.screen.HomeAddBookRoute
 import com.chobo.presentation.view.main.screen.HomeAddBookScreen
 import com.chobo.presentation.view.main.screen.HomeEditBookScreen
 import com.chobo.presentation.view.main.screen.ViewDetailScreen
@@ -57,7 +58,7 @@ fun NavGraphBuilder.viewDetail(
 
 fun NavGraphBuilder.homeAddBook(navigateToBack: () -> Unit) {
     composable(homeAddBookRoute) {
-        HomeAddBookScreen(navigateToBack = navigateToBack)
+        HomeAddBookRoute(navigateToBack = navigateToBack)
     }
 }
 

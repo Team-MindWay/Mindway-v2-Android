@@ -14,6 +14,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -29,7 +30,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 
 @Composable
-fun HomeAddBookScreen(
+fun HomeAddBookRoute(
     modifier: Modifier = Modifier,
     homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
@@ -38,8 +39,38 @@ fun HomeAddBookScreen(
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength
     val focusManager = LocalFocusManager.current
 
+    HomeAddBookScreen(
+        modifier = modifier,
+        navigateToBack = navigateToBack,
+        titleTextState = titleTextState,
+        contentTextState = contentTextState,
+        titleTextStateIsEmpty = titleTextStateIsEmpty,
+        contentTextStateIsEmpty = contentTextStateIsEmpty,
+        contentTextMaxLength = contentTextMaxLength,
+        focusManager = focusManager,
+        updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
+        updateContentTextState = homeAddBookViewModel::updateContentTextState,
+        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick
+    )
+}
+
+@Composable
+fun HomeAddBookScreen(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit,
+    titleTextState: String,
+    contentTextState: String,
+    titleTextStateIsEmpty: Boolean,
+    contentTextStateIsEmpty: Boolean,
+    contentTextMaxLength: Int,
+    focusManager: FocusManager,
+    updateTitleTextState: (String) -> Unit,
+    updateContentTextState: (String) -> Unit,
+    checkButtonOnClick: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
             Column(modifier = modifier
@@ -67,7 +98,7 @@ fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = homeAddBookViewModel::updateTitleTextState,
+                        updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
                     MindWayTextField(
@@ -76,8 +107,8 @@ fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_content),
                         overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-                        updateTextValue = homeAddBookViewModel::updateContentTextState,
+                        lengthLimit = contentTextMaxLength,
+                        updateTextValue = updateContentTextState,
                         isError = contentTextStateIsEmpty
                     )
                     Spacer(modifier = Modifier.weight(1f))
@@ -97,5 +128,5 @@ fun HomeAddBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun AddBookScreenPreview() {
-    HomeAddBookScreen(navigateToBack = { })
+    HomeAddBookRoute(navigateToBack = { })
 }
