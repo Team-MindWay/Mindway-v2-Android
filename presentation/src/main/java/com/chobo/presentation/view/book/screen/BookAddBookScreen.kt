@@ -45,9 +45,10 @@ fun BookAddBookScreen(
     val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
     val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
-    var checkBookDialog by remember { mutableStateOf(false) }
+    val checkBookDialog by bookAddBookViewModel.checkBookDialog.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
+        checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
             Column(
@@ -72,9 +73,9 @@ fun BookAddBookScreen(
                         )
                 ) {
                     if (checkBookDialog) {
-                        Dialog(onDismissRequest = { checkBookDialog = false }) {
+                        Dialog(onDismissRequest = toggleCheckBookDialog) {
                             BookPopUp(
-                                onDismiss = { checkBookDialog = false }
+                                onDismiss = toggleCheckBookDialog
                             )
                         }
                     }
