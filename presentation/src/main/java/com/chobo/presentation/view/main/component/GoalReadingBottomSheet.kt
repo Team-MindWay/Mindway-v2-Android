@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.textField.MindWayRightTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -99,14 +99,13 @@ fun GoalReadingBottomSheet(
                             }
                         }
                     }
-                    MindWayTextField(
+                    MindWayRightTextField(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(119.dp),
                         title = stringResource(id = R.string.goal_reading),
                         textState = textState,
                         placeholder = "권",
-                        isTextRight = true,
                         emptyErrorMessage = stringResource(R.string.goal_reading_error),
                         updateTextValue = updateTextValue,
                         isError = isError,
