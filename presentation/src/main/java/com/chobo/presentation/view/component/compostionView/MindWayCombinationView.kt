@@ -1,7 +1,6 @@
 package com.chobo.presentation.view.component.compostionView
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
@@ -24,6 +23,9 @@ import com.chobo.presentation.view.event.screen.EventScreen
 import com.chobo.presentation.view.main.screen.HomeScreen
 import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyScreen
+import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -61,7 +63,12 @@ fun MindWayCombinationView(
                         navigateToGoalReading = navigateToGoalReading,
                         navigateToDetailEvent = navigateToDetailEvent,
                     )
-                    EVENT -> EventScreen(navigateToDetailEvent = navigateToDetailEvent)
+                    EVENT -> EventScreen(
+                        navigateToDetailEvent = navigateToDetailEvent,
+                        getEventListUiState = GetEventListUiState.Loading,
+                        getDetailEventUiState = GetDetailEventUiState.Loading,
+                        getEventDateListUiState = GetEventDateListUiState.Loading,
+                        mainCallBack = {  })
                     BOOKS -> BookScreen(navigateToBookAddBook = navigateToBookAddBook)
                     MY -> MyScreen(
                         navigateToMyBookEdit = navigateToMyBookEdit,
