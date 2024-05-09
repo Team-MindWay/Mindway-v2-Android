@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -30,12 +31,10 @@ fun EventPager(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
     tabs: List<String>,
+    coroutineScope : CoroutineScope = rememberCoroutineScope(),
     onGoingEvent: @Composable (ColumnScope.() -> Unit),
     pastEvent: @Composable (ColumnScope.() -> Unit)
 ) {
-
-    val coroutineScope = rememberCoroutineScope()
-
     MindWayAndroidTheme { colors, _ ->
         Column(
             modifier = modifier.fillMaxSize(),
