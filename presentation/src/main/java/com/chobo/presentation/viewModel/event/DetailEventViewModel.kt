@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel
+package com.chobo.presentation.viewModel.event
 
 import androidx.lifecycle.ViewModel
 import com.chobo.presentation.R

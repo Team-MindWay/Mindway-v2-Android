@@ -2,18 +2,10 @@ package com.chobo.data.remote.api
 
 import com.chobo.data.remote.dto.event.request.WriteEventRequest
 import com.chobo.data.remote.dto.event.response.GetDetailEventResponse
-import com.chobo.data.remote.dto.event.response.GetEventDateResponse
+import com.chobo.data.remote.dto.event.response.GetEventDateListResponse
 import com.chobo.data.remote.dto.event.response.GetEventListResponse
 import okhttp3.MultipartBody
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface EventAPI {
 
@@ -50,5 +42,5 @@ interface EventAPI {
     @GET("/api/v2/event/date")
     suspend fun getEventDate(
         @Query("date") date: String
-    ): List<GetEventDateResponse>
+    ): List<GetEventDateListResponse>
 }

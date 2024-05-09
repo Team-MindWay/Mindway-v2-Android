@@ -27,7 +27,7 @@ import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.my.component.BookEditTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.MyBookEditViewModel
+import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 
 @Composable
 fun MyBookEditScreen(

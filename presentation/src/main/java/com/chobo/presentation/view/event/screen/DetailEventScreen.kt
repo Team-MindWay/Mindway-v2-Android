@@ -20,7 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.event.component.DetailEventTopBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.DetailEventViewModel
+import com.chobo.presentation.viewModel.event.DetailEventViewModel
 
 @Composable
 fun DetailEventScreen(

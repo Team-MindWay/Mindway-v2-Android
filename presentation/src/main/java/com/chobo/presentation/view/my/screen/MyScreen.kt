@@ -37,8 +37,8 @@ import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.MyBookEditViewModel
-import com.chobo.presentation.viewModel.MyViewModel
+import com.chobo.presentation.viewModel.my.MyBookEditViewModel
+import com.chobo.presentation.viewModel.my.MyViewModel
 
 @Composable
 fun MyScreen(

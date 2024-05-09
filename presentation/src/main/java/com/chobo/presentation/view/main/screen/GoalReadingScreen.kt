@@ -39,7 +39,7 @@ import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingPlusCard
 import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.GoalReadingViewModel
+import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)

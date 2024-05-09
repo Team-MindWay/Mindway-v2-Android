@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel
+package com.chobo.presentation.viewModel.book
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

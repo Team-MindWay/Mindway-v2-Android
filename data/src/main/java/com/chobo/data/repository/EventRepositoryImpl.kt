@@ -3,11 +3,11 @@ package com.chobo.data.repository
 import com.chobo.data.remote.datasource.event.RemoteEventDataSource
 import com.chobo.data.remote.dto.event.request.toWriteEventRequest
 import com.chobo.data.remote.dto.event.response.toGetDetailEventResponseModel
-import com.chobo.data.remote.dto.event.response.toGetEventDateResponseModel
+import com.chobo.data.remote.dto.event.response.toGetEventDateListResponseModel
 import com.chobo.data.remote.dto.event.response.toGetEventListResponseModel
 import com.chobo.domain.model.event.request.WriteEventRequestModel
 import com.chobo.domain.model.event.response.GetDetailEventResponseModel
-import com.chobo.domain.model.event.response.GetEventDateResponseModel
+import com.chobo.domain.model.event.response.GetEventDateListResponseModel
 import com.chobo.domain.model.event.response.GetEventListResponseModel
 import com.chobo.domain.repository.EventRepository
 import kotlinx.coroutines.flow.Flow
@@ -56,10 +56,10 @@ class EventRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getEventDate(date: String): Flow<List<GetEventDateResponseModel>> {
-        return remoteEventDataSource.getEventDate(date = date).map { list ->
+    override suspend fun getEventDateList(date: String): Flow<List<GetEventDateListResponseModel>> {
+        return remoteEventDataSource.getEventDateList(date = date).map { list ->
             list.map {
-                it.toGetEventDateResponseModel()
+                it.toGetEventDateListResponseModel()
             }
         }
     }

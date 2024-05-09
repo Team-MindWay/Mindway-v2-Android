@@ -39,7 +39,7 @@ import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.BookScreenViewModel
+import com.chobo.presentation.viewModel.book.BookScreenViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

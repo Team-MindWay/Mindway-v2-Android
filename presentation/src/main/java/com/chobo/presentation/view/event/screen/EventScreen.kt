@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.event.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,17 +18,44 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.EventViewModel
+import com.chobo.presentation.viewModel.event.EventViewModel
+import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+
+@Composable
+internal fun EventScreenRoute(
+    modifier: Modifier = Modifier,
+    navigateToDetailEvent: () -> Unit,
+    eventViewModel: EventViewModel = viewModel(LocalContext.current as ComponentActivity)
+) {
+    val getEventListUiState by eventViewModel.getEventListUiState.collectAsStateWithLifecycle()
+    val getDetailEventUiState by eventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
+    val getEventDateListUiState by eventViewModel.getEventDateListUiState.collectAsStateWithLifecycle()
+
+    EventScreen(
+        modifier = modifier,
+        navigateToDetailEvent = navigateToDetailEvent,
+        getEventListUiState = getEventListUiState,
+        getDetailEventUiState = getDetailEventUiState,
+        getEventDateListUiState = getEventDateListUiState,
+        mainCallBack = {  }
+    )
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EventScreen(
+internal fun EventScreen(
     modifier: Modifier = Modifier,
     navigateToDetailEvent: () -> Unit,
-    eventViewModel: EventViewModel = viewModel(),
+    getEventListUiState: GetEventListUiState,
+    getDetailEventUiState: GetDetailEventUiState,
+    getEventDateListUiState: GetEventDateListUiState,
+    mainCallBack: () -> Unit,
+    eventViewModel: EventViewModel = viewModel(LocalContext.current as ComponentActivity)
 ) {
-    val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsStateWithLifecycle()
     val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsStateWithLifecycle()
+    val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsStateWithLifecycle()
 
     MindWayAndroidTheme { colors, _ ->
         Box(
@@ -64,5 +93,11 @@ fun EventScreen(
 @Preview
 @Composable
 fun EventScreenPre() {
-    EventScreen(navigateToDetailEvent = { })
+    EventScreen(
+        navigateToDetailEvent = {  },
+        mainCallBack = {  },
+        getEventListUiState = GetEventListUiState.Loading,
+        getDetailEventUiState = GetDetailEventUiState.Loading,
+        getEventDateListUiState = GetEventDateListUiState.Loading
+    )
 }
