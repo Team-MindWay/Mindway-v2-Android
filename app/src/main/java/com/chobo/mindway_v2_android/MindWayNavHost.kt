@@ -3,7 +3,6 @@ package com.chobo.mindway_v2_android
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -13,7 +12,6 @@ import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.compostionView.CompostionView
 import com.chobo.presentation.view.component.compostionView.navigationToCompostionView
 import com.chobo.presentation.view.event.navigation.detailEventScreen
-import com.chobo.presentation.view.event.navigation.eventScreen
 import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
 import com.chobo.presentation.view.login.navigation.loginScreen
 import com.chobo.presentation.view.main.navigation.goalReading
@@ -34,7 +32,6 @@ fun MindWayNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String
 ) {
-    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val topDestination = remember {
         mutableStateOf(MindWayNavBarItemType.HOME)
     }
@@ -67,8 +64,6 @@ fun MindWayNavHost(
         homeAddBook(navigateToBack = navController::popBackStack)
 
         homeEditBook(navigateToBack = navController::popBackStack)
-
-        eventScreen(navigateToDetailEvent = navController::navigationToDetailEvent)
 
         detailEventScreen(navigateToBack = navController::popBackStack)
 
