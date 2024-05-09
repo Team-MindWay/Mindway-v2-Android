@@ -17,6 +17,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
+import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
+import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
@@ -24,7 +26,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
 
 @Composable
-fun HomeScreen(
+fun HomeRoute(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(),
     navigateToGoalReading: () -> Unit,
@@ -35,7 +37,29 @@ fun HomeScreen(
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
+    HomeScreen(
+        modifier = modifier,
+        titleTextState = titleTextState,
+        contentTextState = contentTextState,
+        goalBookRead = goalBookRead,
+        readingGoalGraphDataList = readingGoalGraphDataList,
+        bookKingOfTheMonthDataList = bookKingOfTheMonthDataList,
+        navigateToGoalReading = navigateToGoalReading,
+        navigateToDetailEvent = navigateToDetailEvent,
+    )
+}
 
+@Composable
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    titleTextState: String,
+    contentTextState: String,
+    goalBookRead: Int,
+    readingGoalGraphDataList: List<GoalReadingGraphData>,
+    bookKingOfTheMonthDataList: List<BookKingOfTheMonthData>,
+    navigateToGoalReading: () -> Unit,
+    navigateToDetailEvent: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
         Column {
             MindWayTopAppBar(startIcon = { LogoIcon() })
@@ -77,7 +101,7 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(
+    HomeRoute(
         navigateToGoalReading = { },
         navigateToDetailEvent = { }
     )

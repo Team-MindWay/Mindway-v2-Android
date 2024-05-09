@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,11 +26,11 @@ import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.main.component.ViewDetailTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ViewDetailScreen(
+fun ViewDetailRoute(
     modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
     navigateToBack: () -> Unit,
@@ -41,15 +38,41 @@ fun ViewDetailScreen(
 ) {
     val titleTextState by viewDetailViewModel.titleTextState.collectAsStateWithLifecycle()
     val contentTextState by viewDetailViewModel.contentTextState.collectAsStateWithLifecycle()
+    val checkBookDialogIsVisible by viewDetailViewModel.checkBookDialogIsVisible.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
-    var checkBookDialog by remember { mutableStateOf(false) }
 
+    ViewDetailScreen(
+        modifier = modifier,
+        titleTextState = titleTextState,
+        contentTextState = contentTextState,
+        coroutineScope = coroutineScope,
+        checkBookDialogIsVisible = checkBookDialogIsVisible,
+        checkOnclick = viewDetailViewModel::checkOnclick,
+        toggleCheckBookDialogIsVisible = viewDetailViewModel::toggleCheckBookDialogIsVisible,
+        navigateToBack = navigateToBack,
+        navigateToHomeEditBook = navigateToHomeEditBook,
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ViewDetailScreen(
+    modifier: Modifier = Modifier,
+    titleTextState: String,
+    contentTextState: String,
+    coroutineScope: CoroutineScope,
+    checkBookDialogIsVisible: Boolean,
+    checkOnclick: () -> Unit,
+    toggleCheckBookDialogIsVisible: () -> Unit,
+    navigateToBack: () -> Unit,
+    navigateToHomeEditBook: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
                 HomeBottomSheet(
                     navigateToBookEdit = navigateToHomeEditBook,
-                    bookDeleteOnClick = { checkBookDialog = true },
+                    bookDeleteOnClick = toggleCheckBookDialogIsVisible,
                 )
             }
         ) { sheetState ->
@@ -58,15 +81,13 @@ fun ViewDetailScreen(
                     .fillMaxSize()
                     .background(color = colors.WHITE)
             ) {
-                if (checkBookDialog) {
-                    Dialog(onDismissRequest = { checkBookDialog = false }) {
+                if (checkBookDialogIsVisible) {
+                    Dialog(onDismissRequest = toggleCheckBookDialogIsVisible) {
                         ViewDetailPopUp(
-                            cancelOnclick = {
-                                checkBookDialog = false
-                            },
+                            cancelOnclick = toggleCheckBookDialogIsVisible,
                             checkOnclick = {
-                                viewDetailViewModel.checkOnclick()
-                                checkBookDialog = false
+                                checkOnclick()
+                                toggleCheckBookDialogIsVisible()
                             },
                         )
                     }
@@ -104,8 +125,8 @@ fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    ViewDetailScreen(
+    ViewDetailRoute(
         navigateToBack = { },
-        navigateToHomeEditBook = { }
+        navigateToHomeEditBook = { },
     )
 }

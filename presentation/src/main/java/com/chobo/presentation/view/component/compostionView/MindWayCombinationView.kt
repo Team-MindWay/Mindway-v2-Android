@@ -20,7 +20,7 @@ import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.MY
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.event.screen.EventScreenRoute
-import com.chobo.presentation.view.main.screen.HomeScreen
+import com.chobo.presentation.view.main.screen.HomeRoute
 import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyScreen
 import kotlinx.coroutines.CoroutineScope
@@ -57,7 +57,7 @@ fun MindWayCombinationView(
         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
                 when (topDestination.value) {
-                    HOME -> HomeScreen(
+                    HOME -> HomeRoute(
                         navigateToGoalReading = navigateToGoalReading,
                         navigateToDetailEvent = navigateToDetailEvent,
                     )
