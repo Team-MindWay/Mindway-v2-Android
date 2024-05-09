@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,8 +24,8 @@ import com.chobo.presentation.viewModel.event.EventViewModel
 import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
 import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
 import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
-import kotlin.reflect.KFunction1
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventScreenRoute(
     modifier: Modifier = Modifier,
@@ -57,15 +58,12 @@ fun EventScreenRoute(
 @Composable
 internal fun EventScreen(
     modifier: Modifier = Modifier,
-    navigateToDetailEvent: () -> Unit,
     getEventListUiState: GetEventListUiState,
     getDetailEventUiState: GetDetailEventUiState,
     getEventDateListUiState: GetEventDateListUiState,
-    mainCallBack: () -> Unit,
     pastEventsDataList: List<EventsData>,
     currentEventsDataList: List<EventsData>,
-    onCurrentEventClick: KFunction1<Int, Unit>,
-    onPastEventClick: KFunction1<Int, Unit>
+    pagerState: PagerState,
     mainCallBack: () -> Unit,
     onCurrentEventClick: (Int) -> Unit,
     onPastEventClick: (Int) -> Unit,
