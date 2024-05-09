@@ -28,6 +28,7 @@ import com.chobo.presentation.view.book.component.BookPopUp
 import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 
@@ -113,7 +114,7 @@ internal fun BookAddBookScreen(
                             )
                         }
                     }
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
@@ -121,7 +122,7 @@ internal fun BookAddBookScreen(
                         updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.writer),
                         textState = writeTextState,
                         placeholder = stringResource(id = R.string.please_enter_the_book_writer),
@@ -129,7 +130,7 @@ internal fun BookAddBookScreen(
                         updateTextValue = updateWriteTextState,
                         isError = writeTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.link),
                         textState = linkTextState,
                         placeholder = stringResource(id = R.string.please_enter_the_link),
