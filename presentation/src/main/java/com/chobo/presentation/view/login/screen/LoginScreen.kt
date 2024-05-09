@@ -37,7 +37,7 @@ internal fun LoginRoute(
     LoginScreen(
         modifier = modifier,
         navigateToHome = navigateToHome,
-        authViewModel = authViewModel
+        authViewModel = authViewModel,
     )
 }
 
@@ -45,7 +45,7 @@ internal fun LoginRoute(
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
 ) {
     var isClicked by remember { mutableStateOf(false) }
 
