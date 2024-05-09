@@ -23,19 +23,20 @@ import com.chobo.presentation.view.event.screen.EventScreenRoute
 import com.chobo.presentation.view.main.screen.HomeScreen
 import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyScreen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MindWayCombinationView(
     topDestination: MutableState<MindWayNavBarItemType>,
+    coroutineScope : CoroutineScope = rememberCoroutineScope(),
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     MindWayBottomSheetDialog(
         sheetContent = {
             MyBottomSheet(
