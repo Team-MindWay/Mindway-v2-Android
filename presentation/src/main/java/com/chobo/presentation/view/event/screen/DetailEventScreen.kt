@@ -23,7 +23,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.DetailEventViewModel
 
 @Composable
-fun DetailEventScreen(
+fun DetailEventRoute(
     modifier: Modifier = Modifier,
     detailEventViewModel: DetailEventViewModel = viewModel(),
     navigateToBack: () -> Unit,
@@ -33,6 +33,25 @@ fun DetailEventScreen(
     val date by detailEventViewModel.date.collectAsStateWithLifecycle()
     val imageRes by detailEventViewModel.imageRes.collectAsStateWithLifecycle()
 
+    DetailEventScreen(
+        modifier = modifier,
+        title = title,
+        content = content,
+        date = date,
+        imageRes = imageRes,
+        navigateToBack = navigateToBack
+    )
+}
+
+@Composable
+fun DetailEventScreen(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit,
+    title: String,
+    content: String,
+    date: String,
+    imageRes: Int,
+) {
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             DetailEventTopBar(startIconOnClick = { navigateToBack() })
@@ -63,5 +82,5 @@ fun DetailEventScreen(
 @Preview(showBackground = true)
 @Composable
 fun DetailEventScreenPre() {
-    DetailEventScreen(navigateToBack = { })
+    DetailEventRoute(navigateToBack = { })
 }
