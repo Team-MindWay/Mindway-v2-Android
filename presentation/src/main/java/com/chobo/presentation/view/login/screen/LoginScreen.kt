@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.login.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,22 +16,36 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.auth.AuthViewModel
-import com.chobo.presentation.BuildConfig
 import com.msg.gauthsignin.GAuthSigninWebView
 
 @Composable
-fun LoginScreen(
+internal fun LoginRoute(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel = viewModel(LocalContext .current as ComponentActivity)
+) {
+    LoginScreen(
+        modifier = modifier,
+        navigateToHome = navigateToHome,
+        authViewModel = authViewModel
+    )
+}
+
+@Composable
+internal fun LoginScreen(
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
+    authViewModel: AuthViewModel
 ) {
     var isClicked by remember { mutableStateOf(false) }
 
@@ -74,5 +89,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(navigateToHome = { })
+    LoginRoute(navigateToHome = {  })
 }
