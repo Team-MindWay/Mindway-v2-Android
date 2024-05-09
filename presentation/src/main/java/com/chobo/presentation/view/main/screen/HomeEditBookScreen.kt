@@ -25,7 +25,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 
 @Composable
-fun HomeEditBookRoute(
+internal fun HomeEditBookRoute(
     modifier: Modifier = Modifier,
     homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
@@ -51,7 +51,7 @@ fun HomeEditBookRoute(
 }
 
 @Composable
-fun HomeEditBookScreen(
+internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
     titleTextState: String,
     contentTextState: String,

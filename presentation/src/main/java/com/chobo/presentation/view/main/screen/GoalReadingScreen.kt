@@ -47,7 +47,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun GoalReadingRoute(
+internal fun GoalReadingRoute(
     modifier: Modifier = Modifier,
     goalReadingViewModel: GoalReadingViewModel = viewModel(),
     navigateToBack: () -> Unit,
@@ -85,7 +85,7 @@ fun GoalReadingRoute(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun GoalReadingScreen(
+internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
     goalBookReadSetting: String,

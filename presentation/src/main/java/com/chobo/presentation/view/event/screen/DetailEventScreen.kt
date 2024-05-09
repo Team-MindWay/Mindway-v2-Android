@@ -23,7 +23,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.DetailEventViewModel
 
 @Composable
-fun DetailEventRoute(
+internal fun DetailEventRoute(
     modifier: Modifier = Modifier,
     detailEventViewModel: DetailEventViewModel = viewModel(),
     navigateToBack: () -> Unit,
@@ -44,7 +44,7 @@ fun DetailEventRoute(
 }
 
 @Composable
-fun DetailEventScreen(
+internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
     navigateToBack: () -> Unit,
     title: String,

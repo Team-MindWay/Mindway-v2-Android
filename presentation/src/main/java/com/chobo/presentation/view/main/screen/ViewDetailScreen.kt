@@ -30,7 +30,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun ViewDetailRoute(
+internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = viewModel(),
     navigateToBack: () -> Unit,
@@ -56,7 +56,7 @@ fun ViewDetailRoute(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ViewDetailScreen(
+internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     titleTextState: String,
     contentTextState: String,
