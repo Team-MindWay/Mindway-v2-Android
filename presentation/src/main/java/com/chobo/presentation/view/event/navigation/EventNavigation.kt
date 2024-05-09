@@ -29,7 +29,7 @@ fun NavGraphBuilder.eventScreen(
             getEventListUiState = GetEventListUiState.Loading,
             getDetailEventUiState = GetDetailEventUiState.Loading,
             getEventDateListUiState = GetEventDateListUiState.Loading,
-            mainCallBack = { /*TODO*/ })
+            mainCallBack = {  })
     }
 }
 
