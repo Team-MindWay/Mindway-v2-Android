@@ -34,7 +34,7 @@ class HomeAddBookViewModel @Inject constructor() : ViewModel() {
         _contentTextState.value = input
     }
 
-    fun checkButton() {
+    fun checkButtonOnClick() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _contentTextStateIsEmpty.value = _contentTextState.value.isEmpty()
     }

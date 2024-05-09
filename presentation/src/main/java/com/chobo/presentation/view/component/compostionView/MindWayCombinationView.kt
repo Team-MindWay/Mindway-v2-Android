@@ -19,26 +19,23 @@ import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.HOME
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.MY
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
-import com.chobo.presentation.view.event.screen.EventScreen
-import com.chobo.presentation.view.main.screen.HomeScreen
+import com.chobo.presentation.view.event.screen.EventScreenRoute
 import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyScreen
-import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MindWayCombinationView(
     topDestination: MutableState<MindWayNavBarItemType>,
+    coroutineScope : CoroutineScope = rememberCoroutineScope(),
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     MindWayBottomSheetDialog(
         sheetContent = {
             MyBottomSheet(
@@ -59,18 +56,12 @@ fun MindWayCombinationView(
         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
                 when (topDestination.value) {
-                    HOME -> HomeScreen(
+                    HOME -> HomeRoute(
                         navigateToGoalReading = navigateToGoalReading,
                         navigateToDetailEvent = navigateToDetailEvent,
                     )
 
-                    EVENT -> EventScreen(
-                        navigateToDetailEvent = navigateToDetailEvent,
-                        getEventListUiState = GetEventListUiState.Loading,
-                        getDetailEventUiState = GetDetailEventUiState.Loading,
-                        getEventDateListUiState = GetEventDateListUiState.Loading,
-                        mainCallBack = { }
-                    )
+                    EVENT -> EventScreenRoute(navigateToDetailEvent = navigateToDetailEvent)
 
                     BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
 

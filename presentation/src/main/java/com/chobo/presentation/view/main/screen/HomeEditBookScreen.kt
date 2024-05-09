@@ -25,7 +25,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 
 @Composable
-fun HomeEditBookScreen(
+fun HomeEditBookRoute(
     modifier: Modifier = Modifier,
     homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
     navigateToBack: () -> Unit
@@ -34,10 +34,38 @@ fun HomeEditBookScreen(
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength
 
+    HomeEditBookScreen(
+        modifier = modifier,
+        titleTextState = titleTextState,
+        contentTextState = contentTextState,
+        titleTextStateIsEmpty = titleTextStateIsEmpty,
+        contentTextStateIsEmpty = contentTextStateIsEmpty,
+        contentTextMaxLength = contentTextMaxLength,
+        updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
+        updateContentTextState = homeAddBookViewModel::updateContentTextState,
+        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick,
+        navigateToBack = navigateToBack,
+    )
+}
+
+@Composable
+fun HomeEditBookScreen(
+    modifier: Modifier = Modifier,
+    titleTextState: String,
+    contentTextState: String,
+    titleTextStateIsEmpty: Boolean,
+    contentTextStateIsEmpty: Boolean,
+    contentTextMaxLength: Int,
+    updateTitleTextState: (String) -> Unit,
+    updateContentTextState: (String) -> Unit,
+    checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            AddBookTopAppBar(startIconOnClick = { navigateToBack() })
+            AddBookTopAppBar(startIconOnClick = navigateToBack)
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.Start,
@@ -59,7 +87,7 @@ fun HomeEditBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = homeAddBookViewModel::updateTitleTextState,
+                        updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
                     MindWayTextField(
@@ -68,17 +96,17 @@ fun HomeEditBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_content),
                         overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-                        updateTextValue = homeAddBookViewModel::updateContentTextState,
+                        lengthLimit = contentTextMaxLength,
+                        updateTextValue = updateContentTextState,
                         isError = contentTextStateIsEmpty
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(R.string.check),
+                        onClick = checkButtonOnClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
-                        onClick = { homeAddBookViewModel.checkButton() }
                     )
                 }
             }
@@ -89,5 +117,5 @@ fun HomeEditBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeBookEditScreenPreview() {
-    HomeEditBookScreen(navigateToBack = { })
+    HomeEditBookRoute(navigateToBack = { })
 }

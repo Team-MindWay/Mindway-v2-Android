@@ -15,8 +15,15 @@ class ViewDetailViewModel @Inject constructor() : ViewModel() {
     private val _contentTextState = MutableStateFlow("")
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
 
+    private val _checkBookDialogIsVisible = MutableStateFlow(false)
+    val checkBookDialogIsVisible: StateFlow<Boolean> = _checkBookDialogIsVisible.asStateFlow()
+
     fun checkOnclick() {
 
+    }
+
+    fun toggleCheckBookDialogIsVisible() {
+        _checkBookDialogIsVisible.value = !_checkBookDialogIsVisible.value
     }
 
     init {
