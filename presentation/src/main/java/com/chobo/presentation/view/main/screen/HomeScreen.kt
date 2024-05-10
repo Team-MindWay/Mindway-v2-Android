@@ -37,6 +37,7 @@ internal fun HomeRoute(
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
+
     HomeScreen(
         modifier = modifier,
         titleTextState = titleTextState,

@@ -46,7 +46,7 @@ import com.chobo.presentation.viewModel.my.MyViewModel
 internal fun MyRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = viewModel(LocalContext.current as ComponentActivity),
-    onClick: () -> Unit,
+    optionIconOnClick: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ){
     val myName by myViewModel.myName.collectAsStateWithLifecycle()
@@ -55,7 +55,7 @@ internal fun MyRoute(
 
     MyScreen(
         modifier = modifier,
-        onClick = onClick,
+        optionIconOnClick = optionIconOnClick,
         navigateToMyBookEdit = navigateToMyBookEdit,
         myName = myName,
         myBookListItemDataList = myBookListItemDataList,
@@ -68,7 +68,7 @@ internal fun MyRoute(
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    optionIconOnClick: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
     myName: String,
     myBookListItemDataList: List<MyBookListItemData>,
@@ -104,7 +104,7 @@ fun MyScreen(
                 }
                 MyNameCard(
                     name = myName,
-                    onClick = onClick,
+                    onClick = optionIconOnClick,
                 )
                 Row(
                     horizontalArrangement = Arrangement.Start,
@@ -175,5 +175,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyRoute(onClick = {  }){}
+    MyRoute(optionIconOnClick = {  }){}
 }

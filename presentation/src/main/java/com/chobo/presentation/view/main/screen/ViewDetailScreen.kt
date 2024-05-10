@@ -94,9 +94,7 @@ internal fun ViewDetailScreen(
                 }
                 ViewDetailTopAppBar(
                     startIconOnClick = navigateToBack,
-                    endIconOnClick = {
-                        coroutineScope.launch { sheetState.show() }
-                    }
+                    endIconOnClick = { coroutineScope.launch { sheetState.show() } }
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),

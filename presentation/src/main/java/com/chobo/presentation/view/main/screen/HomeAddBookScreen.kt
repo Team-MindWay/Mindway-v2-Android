@@ -74,13 +74,14 @@ internal fun HomeAddBookScreen(
 ) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
-            Column(modifier = modifier
-                .background(color = colors.WHITE)
-                .pointerInput(Unit) {
-                    detectTapGestures {
-                        focusManager.clearFocus()
+            Column(
+                modifier = modifier
+                    .background(color = colors.WHITE)
+                    .pointerInput(Unit) {
+                        detectTapGestures {
+                            focusManager.clearFocus()
+                        }
                     }
-                }
             ) {
                 AddBookTopAppBar(startIconOnClick = { navigateToBack() })
                 Column(
