@@ -67,8 +67,10 @@ fun MindWayCombinationView(
 
                     BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
 
-                    MY -> MyRoute(onClick = {  }) {
-                    }
+                    MY -> MyRoute(
+                        optionIconOnClick = { coroutineScope.launch { sheetState.show() } },
+                        navigateToMyBookEdit = navigateToMyBookEdit,
+                    )
                 }
             }
         }
