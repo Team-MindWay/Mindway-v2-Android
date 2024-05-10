@@ -24,11 +24,12 @@ fun EventContent(
     modifier: Modifier = Modifier,
     content: String,
     eventDataList: List<EventsData> = listOf(),
+    eventDataListIsEmpty: Boolean,
     onIconClick: (Int) -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (eventDataList.isNotEmpty()) {
+        if (eventDataListIsEmpty) {
             LazyColumn(
                 modifier = modifier
                     .background(color = colors.WHITE)
@@ -68,6 +69,7 @@ fun EventContentPreview() {
     EventContent(
         content = "리뷰 정말 감사합니다 임시 데이터 입니다",
         onIconClick = {},
+        eventDataListIsEmpty = true,
         navigateToDetailEvent = {},
     )
 }

@@ -85,14 +85,16 @@ internal fun EventScreen(
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
                         eventDataList = currentEventsDataList,
+                        eventDataListIsEmpty = currentEventsDataList.isEmpty(),
                         onIconClick = onCurrentEventClick,
-                        navigateToDetailEvent = navigateToDetailEvent
+                        navigateToDetailEvent = navigateToDetailEvent,
                     )
                 },
                 pastEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
                         eventDataList = pastEventsDataList,
+                        eventDataListIsEmpty = pastEventsDataList.isEmpty(),
                         onIconClick = onPastEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
