@@ -113,5 +113,5 @@ internal fun MindWayIntroScreen(
 @Preview(showBackground = true)
 @Composable
 fun MindWayIntroScreenPreview() {
-    MindWayIntroScreen(navigateToBack = {})
+    MindWayIntroRoute(navigateToBack = {})
 }
