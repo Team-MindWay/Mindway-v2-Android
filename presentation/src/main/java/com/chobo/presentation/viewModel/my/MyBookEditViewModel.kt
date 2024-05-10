@@ -48,10 +48,6 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
     }
 
-    fun editBookOnClick(index: Int) {
-
-    }
-
     init {
         _titleTextState.value = "임시 데이터입니당"
         _writeTextState.value = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
