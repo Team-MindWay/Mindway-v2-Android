@@ -77,10 +77,6 @@ internal fun EventScreen(
         ) {
             EventPager(
                 pagerState = pagerState,
-                tabs = listOf(
-                    stringResource(id = R.string.ongoing_event),
-                    stringResource(id = R.string.past_event)
-                ),
                 onGoingEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
@@ -94,7 +90,7 @@ internal fun EventScreen(
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
                         eventDataList = pastEventsDataList,
-                        eventDataListIsEmpty = pastEventsDataList.isEmpty(),
+                        eventDataListIsEmpty = currentEventsDataList.isEmpty(),
                         onIconClick = onPastEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )
