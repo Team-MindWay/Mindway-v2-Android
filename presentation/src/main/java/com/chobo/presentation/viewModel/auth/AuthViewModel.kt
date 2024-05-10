@@ -67,7 +67,7 @@ class AuthViewModel @Inject constructor(
         deleteTokenUseCase()
     }
 
-    fun isClickLoginButton() {
+    fun toggleIsClickLoginButton() {
         _isClickLoginButton.value = !_isClickLoginButton.value
     }
 }
