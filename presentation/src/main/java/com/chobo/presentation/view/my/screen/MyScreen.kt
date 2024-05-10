@@ -40,14 +40,12 @@ import com.chobo.presentation.view.my.component.MyBookListItem
 import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 import com.chobo.presentation.viewModel.my.MyViewModel
 
 @Composable
 internal fun MyRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = viewModel(LocalContext.current as ComponentActivity),
-    myBookEditViewModel: MyBookEditViewModel = viewModel(LocalContext.current as ComponentActivity),
     onClick: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ){
@@ -63,7 +61,7 @@ internal fun MyRoute(
         myBookListItemDataList = myBookListItemDataList,
         isToastVisible = isToastVisible,
         removeBookItem = myViewModel::removeBookItem,
-        editBookOnClick = myBookEditViewModel::editBookOnClick
+        editBookOnClick = myViewModel::editBookOnClick
     )
 }
 
