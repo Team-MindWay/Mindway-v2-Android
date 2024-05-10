@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.my.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,22 +37,45 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
+import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 import com.chobo.presentation.viewModel.my.MyViewModel
+
+@Composable
+internal fun MyRoute(
+    modifier: Modifier = Modifier,
+    myViewModel: MyViewModel = viewModel(LocalContext.current as ComponentActivity),
+    onClick: () -> Unit,
+    navigateToMyBookEdit: () -> Unit,
+){
+    val myName by myViewModel.myName.collectAsStateWithLifecycle()
+    val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
+    val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
+
+    MyScreen(
+        modifier = modifier,
+        onClick = onClick,
+        navigateToMyBookEdit = navigateToMyBookEdit,
+        myName = myName,
+        myBookListItemDataList = myBookListItemDataList,
+        isToastVisible = isToastVisible,
+        removeBookItem = myViewModel::removeBookItem,
+        editBookOnClick = myViewModel::editBookOnClick
+    )
+}
 
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
-    myViewModel: MyViewModel = viewModel(),
-    myBookEditViewModel: MyBookEditViewModel = viewModel(),
     onClick: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
+    myName: String,
+    myBookListItemDataList: List<MyBookListItemData>,
+    isToastVisible: Boolean,
+    removeBookItem: (Int) -> Unit,
+    editBookOnClick: (Int) -> Unit
 ) {
-    val myName by myViewModel.myName.collectAsStateWithLifecycle()
-    val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
-    val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
     var bookDeleteDialog by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableIntStateOf(-1) }
     var selectedBookTitle by remember { mutableStateOf("") }
@@ -68,7 +93,7 @@ fun MyScreen(
                             },
                             checkOnclick = {
                                 if (selectedIndex != -1) {
-                                    myViewModel.removeBookItem(selectedIndex)
+                                    removeBookItem(selectedIndex)
                                     selectedIndex = -1
                                 }
                                 bookDeleteDialog = false
@@ -109,7 +134,7 @@ fun MyScreen(
                             title = item.title,
                             writer = item.writer,
                             editOnclick = {
-                                myBookEditViewModel.editBookOnClick(index = index)
+                                editBookOnClick(index)
                                 navigateToMyBookEdit()
                             },
                             trashCanOnclick = {
@@ -150,8 +175,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen(
-        onClick = { },
-        navigateToMyBookEdit = { }
-    )
+    MyRoute(onClick = {  }){}
 }

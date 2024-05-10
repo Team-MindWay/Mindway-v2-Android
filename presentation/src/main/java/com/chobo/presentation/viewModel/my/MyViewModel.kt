@@ -38,6 +38,10 @@ class MyViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun editBookOnClick(index: Int) {
+
+    }
+
     init {
         _myName.value = "내이름"
         _myBookListItemDataList.value =

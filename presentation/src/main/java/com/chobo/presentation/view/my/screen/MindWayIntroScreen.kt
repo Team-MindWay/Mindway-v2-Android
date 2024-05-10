@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +28,18 @@ import com.chobo.presentation.view.my.component.MindWayIntroTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun MindWayIntroScreen(
+internal fun MindWayIntroRoute(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit
+) {
+    MindWayIntroScreen (
+        modifier = modifier,
+        navigateToBack = navigateToBack
+    )
+}
+
+@Composable
+internal fun MindWayIntroScreen(
     modifier: Modifier = Modifier,
     navigateToBack: () -> Unit
 ) {
@@ -103,5 +113,5 @@ fun MindWayIntroScreen(
 @Preview(showBackground = true)
 @Composable
 fun MindWayIntroScreenPreview() {
-    MindWayIntroScreen(navigateToBack = {})
+    MindWayIntroRoute(navigateToBack = {})
 }

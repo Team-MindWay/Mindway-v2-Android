@@ -22,9 +22,8 @@ import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDial
 import com.chobo.presentation.view.event.screen.EventScreenRoute
 import com.chobo.presentation.view.main.screen.HomeRoute
 import com.chobo.presentation.view.my.component.MyBottomSheet
-import com.chobo.presentation.view.my.screen.MyScreen
+import com.chobo.presentation.view.my.screen.MyRoute
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -66,14 +65,8 @@ fun MindWayCombinationView(
 
                     BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
 
-                    MY -> MyScreen(
-                        navigateToMyBookEdit = navigateToMyBookEdit,
-                        onClick = {
-                            coroutineScope.launch {
-                                sheetState.show()
-                            }
-                        }
-                    )
+                    MY -> MyRoute(onClick = {  }) {
+                    }
                 }
             }
         }
