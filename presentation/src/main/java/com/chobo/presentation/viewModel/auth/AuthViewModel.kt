@@ -13,6 +13,8 @@ import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
 import com.chobo.presentation.viewModel.util.Event
 import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +31,9 @@ class AuthViewModel @Inject constructor(
 
     private val _saveTokenRequest = MutableLiveData<Event<Nothing>>()
     val saveTokenRequest: LiveData<Event<Nothing>> get() = _saveTokenRequest
+
+    private val _isClickLoginButton = MutableStateFlow(false)
+    val isClickLoginButton: StateFlow<Boolean> = _isClickLoginButton
 
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
@@ -60,5 +65,9 @@ class AuthViewModel @Inject constructor(
 
     fun deleteToken() = viewModelScope.launch {
         deleteTokenUseCase()
+    }
+
+    fun isClickLoginButton() {
+        _isClickLoginButton.value = !_isClickLoginButton.value
     }
 }
