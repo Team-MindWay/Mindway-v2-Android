@@ -12,11 +12,10 @@ fun NavController.navigationToCombinationView() {
     this.navigate(CombinationViewRoute)
 }
 
-fun NavGraphBuilder.CompostionView(
 fun NavGraphBuilder.combinationView(
+    topDestination: MutableState<MindWayNavBarItemType>,
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
-    topDestination: MutableState<MindWayNavBarItemType>,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
