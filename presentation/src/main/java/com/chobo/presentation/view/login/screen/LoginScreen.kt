@@ -11,15 +11,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
@@ -34,10 +32,13 @@ internal fun LoginRoute(
     navigateToHome: () -> Unit,
     authViewModel: AuthViewModel = viewModel(LocalContext .current as ComponentActivity)
 ) {
+    val isClickLoginButton by authViewModel.isClickLoginButton.collectAsStateWithLifecycle()
+
     LoginScreen(
         modifier = modifier,
         navigateToHome = navigateToHome,
         authViewModel = authViewModel,
+        isClickLoginButton = isClickLoginButton
     )
 }
 
@@ -46,8 +47,8 @@ internal fun LoginScreen(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
     authViewModel: AuthViewModel,
+    isClickLoginButton: Boolean
 ) {
-    var isClicked by rememberSaveable { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -70,12 +71,12 @@ internal fun LoginScreen(
             ) {
                 MindWayGAuthButton(
                     modifier = Modifier.height(48.dp),
-                    onClick = { isClicked = true }
+                    onClick = { authViewModel.isClickLoginButton() }
                 )
             }
         }
     }
-    if (isClicked) {
+    if (isClickLoginButton) {
         GAuthSigninWebView(
             clientId = BuildConfig.CLIENT_ID,
             redirectUri = BuildConfig.REDIRECT_URI,
