@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.my.component.BookEditTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyBookEditViewModel
@@ -68,7 +68,7 @@ fun MyBookEditScreen(
                             vertical = 28.dp
                         )
                 ) {
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
@@ -76,7 +76,7 @@ fun MyBookEditScreen(
                         updateTextValue = myBookEditViewModel::updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.writer),
                         textState = writeTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_writer),
@@ -84,7 +84,7 @@ fun MyBookEditScreen(
                         updateTextValue = myBookEditViewModel::updateWriteTextState,
                         isError = writeTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.link),
                         textState = linkTextState,
                         placeholder = stringResource(R.string.please_enter_the_link),

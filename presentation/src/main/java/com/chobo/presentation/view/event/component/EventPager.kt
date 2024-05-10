@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -29,13 +30,10 @@ import kotlinx.coroutines.launch
 fun EventPager(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    tabs: List<String>,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onGoingEvent: @Composable (ColumnScope.() -> Unit),
     pastEvent: @Composable (ColumnScope.() -> Unit)
 ) {
-
-    val coroutineScope = rememberCoroutineScope()
-
     MindWayAndroidTheme { colors, _ ->
         Column(
             modifier = modifier.fillMaxSize(),
@@ -54,11 +52,14 @@ fun EventPager(
                 containerColor = colors.WHITE,
                 contentColor = colors.GRAY400,
             ) {
-                tabs.forEachIndexed { index, title ->
+                listOf(
+                    stringResource(id = R.string.ongoing_event),
+                    stringResource(id = R.string.past_event)
+                ).forEachIndexed { index, title ->
                     Tab(
                         text = {
                             Text(
-                                title,
+                                text = title,
                                 color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400
                             )
                         },
@@ -91,16 +92,11 @@ fun EventPager(
 @Preview
 @Composable
 fun EventPagerPre() {
-    val tabs = listOf(
-        stringResource(id = R.string.ongoing_event),
-        stringResource(id = R.string.past_event)
-    )
     val pagerState = rememberPagerState {
-        tabs.size
+        2
     }
     EventPager(
         pagerState = pagerState,
-        tabs = tabs,
         onGoingEvent = { },
         pastEvent = { }
     )

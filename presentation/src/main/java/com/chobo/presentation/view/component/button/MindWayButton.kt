@@ -22,34 +22,27 @@ fun MindWayButton(
     modifier: Modifier = Modifier,
     text: String,
     buttonColor: Color = MindWayColor.MAIN,
-    isClickable: Boolean = true,
     onClick: () -> Unit,
 ) {
-    val clickableModifier =
-        if (isClickable) modifier.clickableSingle { onClick() }
-
-        else modifier
-
-    MindWayAndroidTheme { colors, typography ->
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .background(
-                    color = buttonColor,
-                    shape = RoundedCornerShape(size = 8.dp)
+        MindWayAndroidTheme { colors, typography ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier
+                    .background(
+                        color = buttonColor,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    ).clickableSingle { onClick() }
+            ) {
+                Text(
+                    text = text,
+                    style = typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.WHITE,
+                    textAlign = TextAlign.Center,
                 )
-                .then(clickableModifier)
-        ) {
-            Text(
-                text = text,
-                style = typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = colors.WHITE,
-                textAlign = TextAlign.Center,
-            )
+            }
         }
-    }
 }
 
 @Preview

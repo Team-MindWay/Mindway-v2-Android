@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.main.component.AddBookTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
@@ -92,11 +93,10 @@ internal fun HomeAddBookScreen(
                         )
                         .fillMaxSize()
                 ) {
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
-                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                         updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
