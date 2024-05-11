@@ -77,12 +77,12 @@ internal fun BookAddBookScreen(
     linkTextStateIsEmpty: Boolean,
     checkBookDialog: Boolean,
     focusManager: FocusManager,
-    navigateToBack: () -> Unit,
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
     toggleCheckBookDialog: () -> Unit,
     checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
@@ -96,7 +96,7 @@ internal fun BookAddBookScreen(
                         }
                     }
             ) {
-                BookRequestTopAppBar(startIconOnClick = { navigateToBack() })
+                BookRequestTopAppBar(startIconOnClick = navigateToBack)
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
@@ -141,10 +141,10 @@ internal fun BookAddBookScreen(
                     Spacer(modifier = modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
+                        onClick = checkButtonOnClick,
                         modifier = modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = checkButtonOnClick
                     )
                 }
             }

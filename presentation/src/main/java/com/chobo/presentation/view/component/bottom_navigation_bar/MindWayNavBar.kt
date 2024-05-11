@@ -32,11 +32,11 @@ fun MindWayNavBar(
 ) {
     MindWayAndroidTheme { colors, _ ->
         Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = modifier
                 .fillMaxWidth()
                 .background(colors.WHITE)
                 .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             listOf(
                 MindWayNavBarItemType.HOME,
@@ -56,29 +56,29 @@ fun MindWayNavBar(
                         when (item) {
                             MindWayNavBarItemType.HOME -> {
                                 HomeIcon(
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
-                                    isSelected = currentDestination.value == item
                                 )
                             }
 
                             MindWayNavBarItemType.EVENT -> {
                                 HeartIcon(
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
-                                    isSelected = currentDestination.value == item
                                 )
                             }
 
                             MindWayNavBarItemType.BOOKS -> {
                                 BookIcon(
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
-                                    isSelected = currentDestination.value == item
                                 )
                             }
 
                             MindWayNavBarItemType.MY -> {
                                 ProfileIcon(
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
-                                    isSelected = currentDestination.value == item
                                 )
                             }
                         }

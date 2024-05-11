@@ -126,9 +126,7 @@ internal fun GoalReadingScreen(
                 ) {
                     GoalReadingTopAppBar(
                         startIconOnClick = navigateToBack,
-                        endIconOnClick = {
-                            coroutineScope.launch { sheetState.show() }
-                        },
+                        endIconOnClick = { coroutineScope.launch { sheetState.show() } },
                         isData = goalBookRead == 0
                     )
                     Box(modifier = Modifier.fillMaxSize()) {
@@ -170,10 +168,6 @@ internal fun GoalReadingScreen(
                         }
                         this@Column.AnimatedVisibility(
                             visible = isToastVisible,
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .offset(y = (-40).dp)
-                                .padding(horizontal = 24.dp),
                             enter = slideInVertically(
                                 initialOffsetY = { it + 110 },
                                 animationSpec = tween(durationMillis = 500)
@@ -181,7 +175,11 @@ internal fun GoalReadingScreen(
                             exit = slideOutVertically(
                                 targetOffsetY = { it + 110 },
                                 animationSpec = tween(durationMillis = 500)
-                            )
+                            ),
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .offset(y = (-40).dp)
+                                .padding(horizontal = 24.dp),
                         ) {
                             MindWayToast(
                                 isSuccess = isSuccess,
@@ -206,6 +204,7 @@ fun GoalReadingScreenPreview() {
         GoalReadingRoute(
             navigateToBack = { },
             navigateToHomeAddBook = { },
-            navigateToHomeViewDetail = { },)
+            navigateToHomeViewDetail = { },
+        )
     }
 }

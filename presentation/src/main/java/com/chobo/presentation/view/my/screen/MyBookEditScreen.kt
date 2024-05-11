@@ -131,10 +131,10 @@ internal fun MyBookEditScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
+                        onClick = checkButtonOnClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = checkButtonOnClick
                     )
                 }
             }
@@ -145,5 +145,5 @@ internal fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditRoute(navigateToBack = {  })
+    MyBookEditRoute(navigateToBack = { })
 }

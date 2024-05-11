@@ -77,8 +77,8 @@ internal fun BookScreen(
     essayDataList: List<BookListItemData>,
     isToastVisible: Boolean,
     pagerState: PagerState,
-    navigateToBookAddBook: () -> Unit,
     coroutineScope: CoroutineScope,
+    navigateToBookAddBook: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
@@ -95,10 +95,10 @@ internal fun BookScreen(
                         .fillMaxWidth()
                 ) {
                     TabRow(
-                        modifier = Modifier.width(166.dp),
                         selectedTabIndex = pagerState.currentPage,
                         contentColor = colors.MAIN,
-                        backgroundColor = colors.WHITE
+                        backgroundColor = colors.WHITE,
+                        modifier = Modifier.width(166.dp),
                     ) {
                         listOf(
                             stringResource(R.string.novel),
@@ -117,8 +117,8 @@ internal fun BookScreen(
                         }
                     }
                     PlusIcon(
+                        tint = colors.Black,
                         modifier = Modifier.clickableSingle { navigateToBookAddBook() },
-                        tint = colors.Black
                     )
                 }
                 HorizontalPager(state = pagerState) { page ->
@@ -149,10 +149,6 @@ internal fun BookScreen(
             }
             AnimatedVisibility(
                 visible = isToastVisible,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = -(20).dp)
-                    .padding(horizontal = 24.dp),
                 enter = slideInVertically(
                     initialOffsetY = { it + 55 },
                     animationSpec = tween(durationMillis = 500)
@@ -160,7 +156,11 @@ internal fun BookScreen(
                 exit = slideOutVertically(
                     targetOffsetY = { it + 55 },
                     animationSpec = tween(durationMillis = 500)
-                )
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = -(20).dp)
+                    .padding(horizontal = 24.dp),
             ) {
                 MindWayToast(
                     isSuccess = true,
@@ -175,5 +175,5 @@ internal fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookRoute{  }
+    BookRoute { }
 }

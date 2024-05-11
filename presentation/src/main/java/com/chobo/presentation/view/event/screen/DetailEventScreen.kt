@@ -46,11 +46,11 @@ internal fun DetailEventRoute(
 @Composable
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
-    navigateToBack: () -> Unit,
     title: String,
     content: String,
     date: String,
     imageRes: Int,
+    navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {

@@ -1,4 +1,4 @@
-package com.chobo.presentation.view.component.compostionView
+package com.chobo.presentation.view.component.combinationView
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -24,12 +24,13 @@ import com.chobo.presentation.view.main.screen.HomeRoute
 import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyRoute
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MindWayCombinationView(
     topDestination: MutableState<MindWayNavBarItemType>,
-    coroutineScope : CoroutineScope = rememberCoroutineScope(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
@@ -44,15 +45,16 @@ fun MindWayCombinationView(
             )
         }
     ) { sheetState ->
-        Scaffold(bottomBar = {
-            MindWayNavBar(
-                currentDestination = topDestination,
-                navigateToHome = { topDestination.value = HOME },
-                navigateToEvent = { topDestination.value = EVENT },
-                navigateToBooks = { topDestination.value = BOOKS },
-                navigateToMy = { topDestination.value = MY }
-            )
-        }
+        Scaffold(
+            bottomBar = {
+                MindWayNavBar(
+                    currentDestination = topDestination,
+                    navigateToHome = { topDestination.value = HOME },
+                    navigateToEvent = { topDestination.value = EVENT },
+                    navigateToBooks = { topDestination.value = BOOKS },
+                    navigateToMy = { topDestination.value = MY }
+                )
+            }
         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
                 when (topDestination.value) {
@@ -65,8 +67,10 @@ fun MindWayCombinationView(
 
                     BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
 
-                    MY -> MyRoute(onClick = {  }) {
-                    }
+                    MY -> MyRoute(
+                        optionIconOnClick = { coroutineScope.launch { sheetState.show() } },
+                        navigateToMyBookEdit = navigateToMyBookEdit,
+                    )
                 }
             }
         }
