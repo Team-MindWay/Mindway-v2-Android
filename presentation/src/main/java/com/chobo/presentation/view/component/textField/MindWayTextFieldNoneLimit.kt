@@ -49,7 +49,6 @@ fun MindWayTextFieldNoneLimit(
                 LazyColumn {
                     item {
                         Box(
-
                             modifier = Modifier
                                 .border(
                                     width = 1.dp,
@@ -79,8 +78,7 @@ fun MindWayTextFieldNoneLimit(
                                         textAlign = TextAlign.Start,
                                     ),
                                     cursorBrush = SolidColor(colors.MAIN),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth()
                                 )
                             }
                             Row(

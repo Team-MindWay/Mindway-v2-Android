@@ -63,7 +63,10 @@ fun MyBookDeletePopUp(
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        10.dp,
+                        Alignment.CenterHorizontally
+                    ),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,19 +94,19 @@ fun MyBookDeletePopUp(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 MindWayButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(vertical = 12.dp),
                     text = stringResource(R.string.cancel),
                     onClick = cancelOnclick,
-                    buttonColor = colors.GRAY600
-                )
-                MindWayButton(
+                    buttonColor = colors.GRAY600,
                     modifier = Modifier
                         .weight(1f)
                         .padding(vertical = 12.dp),
+                )
+                MindWayButton(
                     text = stringResource(R.string.check),
-                    onClick = checkOnclick
+                    onClick = checkOnclick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(vertical = 12.dp),
                 )
             }
         }

@@ -136,10 +136,6 @@ fun MyScreen(
             }
             AnimatedVisibility(
                 visible = isToastVisible,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-50).dp)
-                    .padding(horizontal = 24.dp),
                 enter = slideInVertically(
                     initialOffsetY = { it + 110 },
                     animationSpec = tween(durationMillis = 500)
@@ -147,7 +143,11 @@ fun MyScreen(
                 exit = slideOutVertically(
                     targetOffsetY = { it + 110 },
                     animationSpec = tween(durationMillis = 500)
-                )
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-50).dp)
+                    .padding(horizontal = 24.dp),
             ) {
                 MindWayToast(
                     isSuccess = true,

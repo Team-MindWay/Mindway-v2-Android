@@ -35,8 +35,8 @@ fun EventPager(
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                         color = colors.MAIN,
+                        modifier = modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                     )
                 },
                 divider = {},
@@ -51,18 +51,18 @@ fun EventPager(
                         text = {
                             Text(
                                 text = title,
-                                color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400
+                                color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400 // TODO: 상태 호이스팅
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .weight(1f),
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
-                        }
+                        },
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f),
                     )
                 }
             }

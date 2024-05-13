@@ -58,7 +58,7 @@ fun HomeReadersOfTheMonthChart(
                             modifier = Modifier.weight(72f)
                         )
 
-                        if (index < bookKingOfTheMonthData.size - 1) {
+                        if (index < bookKingOfTheMonthData.size - 1) { // TODO: 상태 호이스팅
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         }
                     }

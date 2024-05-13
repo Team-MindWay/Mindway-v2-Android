@@ -127,9 +127,7 @@ fun HomeGoalReadingChart(
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
-                Spacer(
-                    modifier = Modifier.height(27.dp)
-                )
+                Spacer(modifier = Modifier.height(27.dp))
             }
         }
     }
