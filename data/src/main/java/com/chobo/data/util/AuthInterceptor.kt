@@ -1,6 +1,5 @@
 package com.chobo.data.util
 
-import android.util.Log
 import com.chobo.data.BuildConfig
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.domain.exception.NeedLoginException
@@ -8,7 +7,11 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
@@ -37,7 +40,6 @@ class AuthInterceptor @Inject constructor(
             if (currentTime.after(refreshTime.toDate())) throw NeedLoginException()
 
             if (currentTime.after(accessTime.toDate())) {
-                Log.d("AuthInterceptor", "Test1")
                 val client = OkHttpClient()
                 val refreshRequest = Request.Builder()
                     .url(BuildConfig.BASE_URL + "auth")
@@ -50,7 +52,6 @@ class AuthInterceptor @Inject constructor(
                 val jsonParser = JsonParser()
                 val response = client.newCall(refreshRequest).execute()
                 if (response.isSuccessful) {
-                    Log.d("AuthInterceptor", "Test2")
                     val token = jsonParser.parse(response.body!!.string()) as JsonObject
                     dataSource.setAccessToken(token["accessToken"].toString())
                     dataSource.setRefreshToken(token["refreshToken"].toString())
