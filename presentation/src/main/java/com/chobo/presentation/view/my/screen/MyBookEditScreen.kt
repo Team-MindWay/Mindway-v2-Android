@@ -27,8 +27,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.InfoIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
-import com.chobo.presentation.view.my.component.BookEditTopAppBar
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 
@@ -90,9 +93,10 @@ internal fun MyBookEditScreen(
                 }
                 .imePadding()
             ) {
-                BookEditTopAppBar(
-                    startIconOnClick = navigateToBack,
-                    endIconOnClick = {}
+                MindWayTopAppBar(
+                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                    endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },
+                    midText = stringResource(R.string.book_modify),
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
