@@ -11,11 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.view.main.component.HomeGoalReadingChart
-import com.chobo.presentation.view.main.component.HomeNoticeCard
-import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
+import com.chobo.presentation.view.main.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
 
