@@ -84,8 +84,8 @@ fun MindWayNavBar(
                         }
                     },
                     modifier = modifier
-                            if (currentDestination.value != item) {
                         .clickableSingle(
+                            enabled = currentDestination.value != item,
                             onClick = {
                                 currentDestination.value = item
                                 when (item) {
@@ -95,7 +95,7 @@ fun MindWayNavBar(
                                     MindWayNavBarItemType.MY -> navigateToMy()
                                 }
                             }
-                        },
+                        )
                 )
             }
         }
