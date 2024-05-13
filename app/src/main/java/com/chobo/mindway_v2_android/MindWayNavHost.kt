@@ -14,6 +14,7 @@ import com.chobo.presentation.view.component.combinationView.navigationToCombina
 import com.chobo.presentation.view.event.navigation.detailEventScreen
 import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
 import com.chobo.presentation.view.login.navigation.loginScreen
+import com.chobo.presentation.view.login.navigation.navigationToLogin
 import com.chobo.presentation.view.main.navigation.goalReading
 import com.chobo.presentation.view.main.navigation.homeAddBook
 import com.chobo.presentation.view.main.navigation.homeEditBook
@@ -48,6 +49,7 @@ fun MindWayNavHost(
             navigateToBookAddBook = navController::navigationToBookAddBook,
             navigateToIntro = navController::navigationToIntro,
             navigateToMyBookEdit = navController::navigationToMyBookEdit,
+            navigateToLogin = navController::navigationToLogin
         )
 
         goalReading(

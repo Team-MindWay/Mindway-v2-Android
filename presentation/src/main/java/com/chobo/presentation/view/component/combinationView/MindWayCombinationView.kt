@@ -36,12 +36,13 @@ fun MindWayCombinationView(
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
+    navigateToLogin: () -> Unit,
 ) {
     MindWayBottomSheetDialog(
         sheetContent = {
             MyBottomSheet(
                 navigateToIntro = navigateToIntro,
-                logoutOnClick = { }
+                logoutOnClick = navigateToLogin
             )
         }
     ) { sheetState ->
@@ -89,6 +90,7 @@ fun MindWayCombinationViewPreview() {
         navigateToGoalReading = { },
         navigateToBookAddBook = { },
         navigateToIntro = { },
-        navigateToMyBookEdit = { }
+        navigateToMyBookEdit = { },
+        navigateToLogin = { }
     )
 }
