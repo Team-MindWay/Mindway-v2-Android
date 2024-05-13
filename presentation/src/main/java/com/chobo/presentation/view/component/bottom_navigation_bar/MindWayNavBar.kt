@@ -3,6 +3,7 @@ package com.chobo.presentation.view.component.bottom_navigation_bar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +39,11 @@ fun MindWayNavBar(
                 MindWayNavBarItemType.BOOKS,
                 MindWayNavBarItemType.MY
             ).forEach { item ->
+                val isCurrentDestination by remember {
+                    mutableStateOf (currentDestination.value == item)
+                }
                 MindWayNavBarItem(
-                    colors = if (currentDestination.value != item) colors.GRAY400 else colors.Black,// TODO: 상태 호이스팅
+                    colors = if (!isCurrentDestination) colors.GRAY400 else colors.Black,
                     text = when (item) {
                         MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
                         MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
@@ -50,28 +54,28 @@ fun MindWayNavBar(
                         when (item) {
                             MindWayNavBarItemType.HOME -> {
                                 HomeIcon(
-                                    isSelected = currentDestination.value == item, // TODO: 상태 호이스팅
+                                    isSelected = isCurrentDestination,
                                     modifier = modifier,
                                 )
                             }
 
                             MindWayNavBarItemType.EVENT -> {
                                 HeartIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = isCurrentDestination,
                                     modifier = modifier,
                                 )
                             }
 
                             MindWayNavBarItemType.BOOKS -> {
                                 BookIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = isCurrentDestination,
                                     modifier = modifier,
                                 )
                             }
 
                             MindWayNavBarItemType.MY -> {
                                 ProfileIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = isCurrentDestination,
                                     modifier = modifier,
                                 )
                             }
@@ -79,7 +83,7 @@ fun MindWayNavBar(
                     },
                     modifier = modifier
                         .clickableSingle(
-                            enabled = currentDestination.value != item,
+                            enabled = !isCurrentDestination,
                             onClick = {
                                 currentDestination.value = item
                                 when (item) {
