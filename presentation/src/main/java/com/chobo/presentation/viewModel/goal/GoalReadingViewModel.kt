@@ -14,6 +14,9 @@ class GoalReadingViewModel @Inject constructor() : ViewModel() {
     private val _goalBookRead = MutableStateFlow(0)
     val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
 
+    private val _goalBookReadIsEmpty = MutableStateFlow(_goalBookRead.value == 0)
+    val goalBookReadIsEmpty: StateFlow<Boolean> = _goalBookReadIsEmpty.asStateFlow()
+
     private val _goalBookReadSetting = MutableStateFlow("")
     val goalBookReadSetting: StateFlow<String> = _goalBookReadSetting.asStateFlow()
 

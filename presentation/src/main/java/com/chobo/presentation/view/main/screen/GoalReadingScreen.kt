@@ -48,6 +48,7 @@ internal fun GoalReadingRoute(
     navigateToHomeViewDetail: () -> Unit,
 ) {
     val goalBookRead by goalReadingViewModel.goalBookRead.collectAsStateWithLifecycle()
+    val goalBookReadIsEmpty by goalReadingViewModel.goalBookReadIsEmpty.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
@@ -60,6 +61,7 @@ internal fun GoalReadingRoute(
     GoalReadingScreen(
         modifier = modifier,
         goalBookRead = goalBookRead,
+        goalBookReadIsEmpty = goalBookReadIsEmpty,
         goalBookReadSetting = goalBookReadSetting,
         goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
         goalReadingGraphDataList = goalReadingGraphDataList,
@@ -81,6 +83,7 @@ internal fun GoalReadingRoute(
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
+    goalBookReadIsEmpty: Boolean,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
     goalReadingGraphDataList: List<GoalReadingGraphData>,
@@ -118,14 +121,10 @@ internal fun GoalReadingScreen(
                         }
                 ) {
                     MindWayTopAppBar(
-                        startIcon = {
-                            ChevronLeftIcon(
-                                modifier = Modifier.clickableSingle(onClick = navigateToBack)
-                            )
-                        },
+                        startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
                         midText = stringResource(R.string.goal_reading),
                         endIcon = {
-                            if (goalBookRead == 0) { // TODO: 상태 호이스팅
+                            if (goalBookReadIsEmpty) {
                                 PlusIcon(
                                     modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                     tint = MindWayColor.Black
