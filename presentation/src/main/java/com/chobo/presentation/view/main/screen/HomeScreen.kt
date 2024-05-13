@@ -85,6 +85,7 @@ internal fun HomeScreen(
                 )
                 HomeReadersOfTheMonthChart(
                     bookKingOfTheMonthData = bookKingOfTheMonthDataList,
+                    isHasData = bookKingOfTheMonthDataList.isNotEmpty(),
                     modifier = Modifier
                         .height(239.dp)
                         .fillMaxWidth(),
