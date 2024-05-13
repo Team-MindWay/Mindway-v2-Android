@@ -48,33 +48,33 @@ internal fun MyRoute(
     myViewModel: MyViewModel = viewModel(LocalContext.current as ComponentActivity),
     optionIconOnClick: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
-){
+) {
     val myName by myViewModel.myName.collectAsStateWithLifecycle()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
 
     MyScreen(
         modifier = modifier,
-        optionIconOnClick = optionIconOnClick,
-        navigateToMyBookEdit = navigateToMyBookEdit,
         myName = myName,
         myBookListItemDataList = myBookListItemDataList,
         isToastVisible = isToastVisible,
+        optionIconOnClick = optionIconOnClick,
         removeBookItem = myViewModel::removeBookItem,
-        editBookOnClick = myViewModel::editBookOnClick
+        editBookOnClick = myViewModel::editBookOnClick,
+        navigateToMyBookEdit = navigateToMyBookEdit,
     )
 }
 
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
-    optionIconOnClick: () -> Unit,
-    navigateToMyBookEdit: () -> Unit,
     myName: String,
     myBookListItemDataList: List<MyBookListItemData>,
     isToastVisible: Boolean,
+    optionIconOnClick: () -> Unit,
     removeBookItem: (Int) -> Unit,
-    editBookOnClick: (Int) -> Unit
+    editBookOnClick: (Int) -> Unit,
+    navigateToMyBookEdit: () -> Unit
 ) {
     var bookDeleteDialog by remember { mutableStateOf(false) } // TODO: 상태 호이스팅
     var selectedIndex by remember { mutableIntStateOf(-1) }
@@ -175,5 +175,5 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyRoute(optionIconOnClick = {  }){}
+    MyRoute(optionIconOnClick = { }) {}
 }
