@@ -1,7 +1,6 @@
 package com.chobo.presentation.viewModel.event
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.chobo.domain.usecase.event.GetDetailEventUseCase
 import com.chobo.domain.usecase.event.GetEventDateListUseCase
 import com.chobo.domain.usecase.event.GetEventListUseCase

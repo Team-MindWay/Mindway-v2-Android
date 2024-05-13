@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.component.icon
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -11,7 +10,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.color.MindWayColor
-
 
 @Composable
 fun BookImage(modifier: Modifier = Modifier) {
