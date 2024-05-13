@@ -77,7 +77,7 @@ fun ViewDetailPopUp(
                 MindWayButton(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 12.dp),
+                        .padding(vertical = 12.dp), // TODO: modifier 위치이동 
                     text = stringResource(R.string.cancel),
                     onClick = cancelOnclick,
                     buttonColor = colors.GRAY600

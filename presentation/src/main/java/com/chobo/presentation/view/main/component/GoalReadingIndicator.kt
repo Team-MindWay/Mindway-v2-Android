@@ -26,7 +26,7 @@ fun GoalReadingIndicator(
     numBooksRead: Int,
     goalBookRead:Int
 ) {
-    val readProgress = if (numBooksRead < 30) numBooksRead else 30
+    val readProgress = if (numBooksRead < 30) numBooksRead else 30 // TODO: 로직변경, 상태호이스팅
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
