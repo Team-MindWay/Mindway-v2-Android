@@ -3,9 +3,7 @@ package com.chobo.data.remote.api
 import com.chobo.data.remote.dto.event.response.GetDetailEventResponse
 import com.chobo.data.remote.dto.event.response.GetEventDateListResponse
 import com.chobo.data.remote.dto.event.response.GetEventListResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface EventAPI {
 

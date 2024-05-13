@@ -7,8 +7,7 @@ import com.chobo.data.remote.dto.auth.response.toLoginModel
 import com.chobo.domain.model.auth.request.GAuthLoginRequestModel
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.repository.AuthRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
