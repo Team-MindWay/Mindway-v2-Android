@@ -13,6 +13,7 @@ const val myBookEditRoute = "my_book_edit_route"
 fun NavController.navigationToIntro() {
     this.navigate(introRoute)
 }
+
 fun NavController.navigationToMyBookEdit() {
     this.navigate(myBookEditRoute)
 }
@@ -20,12 +21,12 @@ fun NavController.navigationToMyBookEdit() {
 
 fun NavGraphBuilder.introScreen(navigateToBack: () -> Unit) {
     composable(introRoute) {
-        MindWayIntroRoute {}
+        MindWayIntroRoute(navigateToBack = navigateToBack)
     }
 }
 
 fun NavGraphBuilder.myBookEditScreen(navigateToBack: () -> Unit) {
     composable(myBookEditRoute) {
-        MyBookEditRoute(navigateToBack = {  })
+        MyBookEditRoute(navigateToBack = navigateToBack)
     }
 }
