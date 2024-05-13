@@ -27,7 +27,7 @@ fun GoalReadingChart(
     goalBookRead: Int,
     goalReadingGraphData: List<GoalReadingGraphData> = listOf(),
 ) {
-    val isHasData = goalReadingGraphData.isNotEmpty()
+    val isHasData = goalReadingGraphData.isNotEmpty() // TODO: 상태 호이스팅
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = if (isHasData) Arrangement.SpaceBetween else Arrangement.SpaceAround,
