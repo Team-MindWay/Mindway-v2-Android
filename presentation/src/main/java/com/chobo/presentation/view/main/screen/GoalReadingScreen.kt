@@ -150,6 +150,7 @@ internal fun GoalReadingScreen(
                             item {
                                 GoalReadingChart(
                                     goalBookRead = goalBookRead,
+                                    isHasData = goalReadingGraphDataList.isNotEmpty(),
                                     goalReadingGraphData = goalReadingGraphDataList,
                                     modifier = Modifier
                                         .fillMaxWidth()

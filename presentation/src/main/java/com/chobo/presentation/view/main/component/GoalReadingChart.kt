@@ -18,9 +18,9 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun GoalReadingChart(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
+    isHasData :Boolean = false,
     goalReadingGraphData: List<GoalReadingGraphData> = listOf(),
 ) {
-    val isHasData = goalReadingGraphData.isNotEmpty() // TODO: 상태 호이스팅
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = if (isHasData) Arrangement.SpaceBetween else Arrangement.SpaceAround,
