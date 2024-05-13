@@ -24,7 +24,7 @@ import com.chobo.presentation.view.theme.color.MindWayColor
 fun MindWayGAuthButton(
     modifier: Modifier = Modifier,
     buttonColor: Color = MindWayColor.WHITE,
-    onClick:() -> Unit
+    onClick: () -> Unit
 ) {
     MindWayAndroidTheme { colors, _ ->
         Row(
@@ -41,7 +41,7 @@ fun MindWayGAuthButton(
                     colors.MAIN,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick = onClick)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_mindway_gauth),
@@ -60,5 +60,5 @@ fun MindWayGAuthButton(
 @Preview
 @Composable
 fun MindWayGAuthButtonPreview() {
-    MindWayGAuthButton{}
+    MindWayGAuthButton {}
 }

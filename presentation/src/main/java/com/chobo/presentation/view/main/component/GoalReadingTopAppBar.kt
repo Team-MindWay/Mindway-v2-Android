@@ -20,14 +20,14 @@ fun GoalReadingTopAppBar(
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         midText = stringResource(R.string.goal_reading),
         endIcon = {
             if (isData) {
                 PlusIcon(
-                    modifier = Modifier.clickableSingle { endIconOnClick() },
+                    modifier = Modifier.clickableSingle(onClick = endIconOnClick),
                     tint = MindWayColor.Black
                 )
             }

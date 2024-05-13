@@ -38,7 +38,7 @@ fun HomeGoalReadingChart(
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (readNumberList.isNotEmpty()) {
+        if (readNumberList.isNotEmpty()) { // TODO: 상태 호이스팅
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
@@ -69,9 +69,7 @@ fun HomeGoalReadingChart(
                             fontWeight = FontWeight.SemiBold,
                             color = colors.Black,
                         )
-                        ChevronRightIcon(
-                            modifier = Modifier.clickableSingle { onClick() }
-                        )
+                        ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                     }
                     GoalReadingIndicator(
                         numBooksRead = readNumberList.sumOf { it.numBooksRead },

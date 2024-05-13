@@ -44,7 +44,7 @@ fun GoalReadingListOfBooksReadItem(
                     spotColor = colors.CardShadow,
                     ambientColor = colors.CardShadow,
                 )
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick = onClick)
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)

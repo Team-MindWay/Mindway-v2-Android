@@ -45,7 +45,7 @@ fun MindWayNavBar(
                 MindWayNavBarItemType.MY
             ).forEach { item ->
                 MindWayNavBarItem(
-                    colors = if (currentDestination.value != item) colors.GRAY400 else colors.Black,
+                    colors = if (currentDestination.value != item) colors.GRAY400 else colors.Black,// TODO: 상태 호이스팅
                     text = when (item) {
                         MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
                         MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
@@ -56,7 +56,7 @@ fun MindWayNavBar(
                         when (item) {
                             MindWayNavBarItemType.HOME -> {
                                 HomeIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = currentDestination.value == item, // TODO: 상태 호이스팅
                                     modifier = modifier,
                                 )
                             }
@@ -84,8 +84,9 @@ fun MindWayNavBar(
                         }
                     },
                     modifier = modifier
-                        .clickableSingle {
-                            if (currentDestination.value != item) {
+                        .clickableSingle(
+                            enabled = currentDestination.value != item,
+                            onClick = {
                                 currentDestination.value = item
                                 when (item) {
                                     MindWayNavBarItemType.HOME -> navigateToHome()
@@ -94,7 +95,7 @@ fun MindWayNavBar(
                                     MindWayNavBarItemType.MY -> navigateToMy()
                                 }
                             }
-                        },
+                        )
                 )
             }
         }

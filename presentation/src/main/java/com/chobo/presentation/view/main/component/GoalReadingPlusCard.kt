@@ -36,7 +36,7 @@ fun GoalReadingPlusCard(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick = onClick)
                 .padding(16.dp)
         ) {
             PlusIcon(modifier = Modifier.fillMaxSize())

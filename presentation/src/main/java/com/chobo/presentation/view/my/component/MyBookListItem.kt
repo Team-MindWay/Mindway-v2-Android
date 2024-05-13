@@ -76,10 +76,10 @@ fun MyBookListItem(
                 verticalAlignment = Alignment.Top,
             ) {
                 EditIcon(
-                    modifier = Modifier.clickableSingle { editOnclick() }
+                    modifier = Modifier.clickableSingle(onClick = editOnclick)
                 )
                 TrashCanIcon(
-                    modifier = Modifier.clickableSingle { trashCanOnclick() }
+                    modifier = Modifier.clickableSingle(onClick = trashCanOnclick)
                 )
             }
         }

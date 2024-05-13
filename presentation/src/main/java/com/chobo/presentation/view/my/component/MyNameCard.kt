@@ -62,7 +62,7 @@ fun MyNameCard(
                 }
             }
             OptionIcon(
-                modifier = Modifier.clickableSingle { onClick() }
+                modifier = Modifier.clickableSingle (onClick = onClick)
             )
         }
     }

@@ -53,7 +53,7 @@ fun BookPopUp(onDismiss: () -> Unit) {
                     .fillMaxWidth()
                     .padding(10.dp),
                 text = stringResource(R.string.check),
-                onClick = { onDismiss() }
+                onClick = onDismiss
             )
         }
     }
