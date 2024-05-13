@@ -76,7 +76,7 @@ fun MyScreen(
     removeBookItem: (Int) -> Unit,
     editBookOnClick: (Int) -> Unit
 ) {
-    var bookDeleteDialog by remember { mutableStateOf(false) }
+    var bookDeleteDialog by remember { mutableStateOf(false) } // TODO: 상태 호이스팅
     var selectedIndex by remember { mutableIntStateOf(-1) }
     var selectedBookTitle by remember { mutableStateOf("") }
 
