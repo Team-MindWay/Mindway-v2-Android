@@ -24,25 +24,26 @@ fun MindWayButton(
     buttonColor: Color = MindWayColor.MAIN,
     onClick: () -> Unit,
 ) {
-        MindWayAndroidTheme { colors, typography ->
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier
-                    .background(
-                        color = buttonColor,
-                        shape = RoundedCornerShape(size = 8.dp)
-                    ).clickableSingle { onClick() }
-            ) {
-                Text(
-                    text = text,
-                    style = typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = colors.WHITE,
-                    textAlign = TextAlign.Center,
+    MindWayAndroidTheme { colors, typography ->
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .background(
+                    color = buttonColor,
+                    shape = RoundedCornerShape(size = 8.dp)
                 )
-            }
+                .clickableSingle(onClick = onClick)
+        ) {
+            Text(
+                text = text,
+                style = typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = colors.WHITE,
+                textAlign = TextAlign.Center,
+            )
         }
+    }
 }
 
 @Preview

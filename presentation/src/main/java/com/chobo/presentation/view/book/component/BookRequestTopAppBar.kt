@@ -13,13 +13,11 @@ import com.chobo.presentation.view.component.multipleEventsCutterManager.clickab
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 @Composable
-fun BookRequestTopAppBar(
-    startIconOnClick: () -> Unit,
-) {
+fun BookRequestTopAppBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         midText = stringResource(R.string.book_request),
@@ -28,6 +26,6 @@ fun BookRequestTopAppBar(
 
 @Preview(showBackground = true)
 @Composable
-fun BookRequestTopAppBarPreview(){
+fun BookRequestTopAppBarPreview() {
     BookRequestTopAppBar(startIconOnClick = { })
 }
