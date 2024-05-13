@@ -26,11 +26,12 @@ data class GoalReadingGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
+    isHasData :Boolean,
     readNumberList: List<GoalReadingGraphData> = listOf(),
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (readNumberList.isNotEmpty()) { // TODO: 상태 호이스팅
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
@@ -152,6 +153,7 @@ fun HomeGoalReadingChartPreview() {
             GoalReadingGraphData(2, 3, false, "일"),
         ),
         onClick = { },
-        goalBookRead = 14
+        goalBookRead = 14,
+        isHasData = true
     )
 }

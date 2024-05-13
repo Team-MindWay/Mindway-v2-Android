@@ -75,9 +75,10 @@ internal fun HomeScreen(
                         .fillMaxWidth(),
                 )
                 HomeGoalReadingChart(
+                    goalBookRead = goalBookRead,
+                    isHasData = readingGoalGraphDataList.isNotEmpty(),
                     readNumberList = readingGoalGraphDataList,
                     onClick = navigateToGoalReading,
-                    goalBookRead = goalBookRead,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(211.dp),
