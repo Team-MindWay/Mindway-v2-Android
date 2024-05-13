@@ -13,20 +13,18 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun BookTabRowItem(
-    indexState: Int,
-    index: Int,
     tabName: String,
     onClick: () -> Unit,
+    isCurrentIndex: Boolean,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
-            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(8.dp)
                 .clickableSingle(onClick = onClick)
         ) {
-            if (indexState == index) { // TODO: 상태 호이스팅
+            if (isCurrentIndex) {
                 Text(
                     text = tabName,
                     style = typography.bodyLarge,
@@ -50,9 +48,8 @@ fun BookTabRowItem(
 fun BookTabRowItemPreview() {
     var indexState by remember { mutableIntStateOf(0) }
     BookTabRowItem(
-        indexState = 1,
-        index = 1,
         tabName = "이름",
-        onClick = { indexState = 1 }
+        onClick = { indexState = 1 },
+        isCurrentIndex = true
     )
 }

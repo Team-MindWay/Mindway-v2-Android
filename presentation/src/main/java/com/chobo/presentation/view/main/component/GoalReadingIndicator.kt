@@ -17,9 +17,9 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun GoalReadingIndicator(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
-    goalBookRead:Int
+    goalBookRead: Int
 ) {
-    val readProgress = if (numBooksRead < 30) numBooksRead else 30 // TODO: 로직변경, 상태호이스팅
+    val readProgress: (Int, Int) -> Int = { limit, input -> if (input < limit) input else limit }
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -27,7 +27,7 @@ fun GoalReadingIndicator(
             modifier = modifier,
         ) {
             LinearProgressIndicator(
-                progress = (readProgress) / goalBookRead.toFloat(),
+                progress = (readProgress(goalBookRead, numBooksRead)) / goalBookRead.toFloat(),
                 trackColor = colors.GRAY100,
                 color = colors.MAIN,
                 modifier = Modifier
@@ -37,9 +37,9 @@ fun GoalReadingIndicator(
                     .clip(RoundedCornerShape(5.dp)),
             )
             Row(
-                modifier = Modifier.fillMaxHeight(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxHeight(),
             ) {
                 Text(
                     text = numBooksRead.toString(),
@@ -49,9 +49,9 @@ fun GoalReadingIndicator(
                     textAlign = TextAlign.Center,
                 )
                 Row(
-                    modifier = Modifier.height(30.dp),
                     horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.height(30.dp),
                 ) {
                     Text(
                         text = "/",

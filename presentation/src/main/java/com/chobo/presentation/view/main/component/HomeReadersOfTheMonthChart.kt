@@ -18,10 +18,11 @@ data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
+    isHasData: Boolean,
     bookKingOfTheMonthData: List<BookKingOfTheMonthData>
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (bookKingOfTheMonthData.isNotEmpty()) { // TODO: 상태 호이스팅
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -57,7 +58,7 @@ fun HomeReadersOfTheMonthChart(
                             modifier = Modifier.weight(72f)
                         )
 
-                        if (index < bookKingOfTheMonthData.size - 1) {
+                        if (index < bookKingOfTheMonthData.size - 1) { // TODO: 상태 호이스팅
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         }
                     }
@@ -102,6 +103,7 @@ fun HomeReadersOfTheMonthChart(
 @Composable
 fun HomeReadersOfTheMonthChartPreview() {
     HomeReadersOfTheMonthChart(
+        isHasData = true,
         modifier = Modifier
             .width(312.dp),
         bookKingOfTheMonthData = listOf(

@@ -69,19 +69,19 @@ fun ViewDetailPopUp(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 MindWayButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(vertical = 12.dp), // TODO: modifier 위치이동 
                     text = stringResource(R.string.cancel),
                     onClick = cancelOnclick,
-                    buttonColor = colors.GRAY600
-                )
-                MindWayButton(
+                    buttonColor = colors.GRAY600,
                     modifier = Modifier
                         .weight(1f)
                         .padding(vertical = 12.dp),
+                )
+                MindWayButton(
                     text = stringResource(R.string.check),
-                    onClick = checkOnclick
+                    onClick = checkOnclick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(vertical = 12.dp),
                 )
             }
         }

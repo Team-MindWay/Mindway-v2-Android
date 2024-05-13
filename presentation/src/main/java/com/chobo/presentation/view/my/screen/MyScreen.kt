@@ -27,6 +27,7 @@ import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
+import kotlin.reflect.KFunction1
 
 @Composable
 internal fun MyRoute(
@@ -38,14 +39,21 @@ internal fun MyRoute(
     val myName by myViewModel.myName.collectAsStateWithLifecycle()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
+    val bookDeleteDialogIsVisible by myViewModel.bookDeleteDialogIsVisible.collectAsStateWithLifecycle()
+    val selectedIndex by myViewModel.selectedIndex.collectAsStateWithLifecycle()
 
     MyScreen(
         modifier = modifier,
         myName = myName,
         myBookListItemDataList = myBookListItemDataList,
         isToastVisible = isToastVisible,
+        selectedBookTitle = selectedBookTitle,
+        bookDeleteDialogIsVisible = bookDeleteDialogIsVisible,
+        selectedIndex = selectedIndex,
         optionIconOnClick = optionIconOnClick,
-        removeBookItem = myViewModel::removeBookItem,
+        toggleBookDeleteDialogIsVisible = myViewModel::toggleBookDeleteDialogIsVisible,
+        setSelectedIndex = myViewModel::setSelectedIndex,
         editBookOnClick = myViewModel::editBookOnClick,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
@@ -57,33 +65,27 @@ fun MyScreen(
     myName: String,
     myBookListItemDataList: List<MyBookListItemData>,
     isToastVisible: Boolean,
+    selectedBookTitle: String,
+    bookDeleteDialogIsVisible: Boolean,
+    selectedIndex: Int,
     optionIconOnClick: () -> Unit,
-    removeBookItem: (Int) -> Unit,
+    toggleBookDeleteDialogIsVisible: () -> Unit,
+    setSelectedIndex: (Int) -> Unit,
     editBookOnClick: (Int) -> Unit,
-    navigateToMyBookEdit: () -> Unit
+    navigateToMyBookEdit: () -> Unit,
 ) {
-    var bookDeleteDialog by remember { mutableStateOf(false) } // TODO: 상태 호이스팅
-    var selectedIndex by remember { mutableIntStateOf(-1) }
-    var selectedBookTitle by remember { mutableStateOf("") }
-
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
             Column {
-                if (bookDeleteDialog) {
-                    Dialog(onDismissRequest = { bookDeleteDialog = false }) {
+                if (bookDeleteDialogIsVisible) {
+                    Dialog(onDismissRequest = toggleBookDeleteDialogIsVisible) {
                         MyBookDeletePopUp(
                             title = selectedBookTitle,
-                            cancelOnclick = {
-                                bookDeleteDialog = false
-                                selectedBookTitle = ""
-                            },
+                            cancelOnclick = toggleBookDeleteDialogIsVisible,
                             checkOnclick = {
-                                if (selectedIndex != -1) {
-                                    removeBookItem(selectedIndex)
-                                    selectedIndex = -1
-                                }
-                                bookDeleteDialog = false
-                                selectedBookTitle = ""
+                                if (selectedIndex != -1)
+                                    setSelectedIndex(-1)
+                                toggleBookDeleteDialogIsVisible()
                             }
                         )
                     }
@@ -125,9 +127,8 @@ fun MyScreen(
                             },
                             trashCanOnclick = {
                                 item.trashCanOnclick
-                                bookDeleteDialog = true
-                                selectedIndex = index
-                                selectedBookTitle = item.title
+                                toggleBookDeleteDialogIsVisible()
+                                setSelectedIndex(index)
                             }
                         )
                     }
@@ -135,10 +136,6 @@ fun MyScreen(
             }
             AnimatedVisibility(
                 visible = isToastVisible,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-50).dp)
-                    .padding(horizontal = 24.dp),
                 enter = slideInVertically(
                     initialOffsetY = { it + 110 },
                     animationSpec = tween(durationMillis = 500)
@@ -146,7 +143,11 @@ fun MyScreen(
                 exit = slideOutVertically(
                     targetOffsetY = { it + 110 },
                     animationSpec = tween(durationMillis = 500)
-                )
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-50).dp)
+                    .padding(horizontal = 24.dp),
             ) {
                 MindWayToast(
                     isSuccess = true,

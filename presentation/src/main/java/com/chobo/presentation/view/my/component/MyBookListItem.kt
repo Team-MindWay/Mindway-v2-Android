@@ -70,12 +70,8 @@ fun MyBookListItem(
                 horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.Start),
                 verticalAlignment = Alignment.Top,
             ) {
-                EditIcon(
-                    modifier = Modifier.clickableSingle(onClick = editOnclick)
-                )
-                TrashCanIcon(
-                    modifier = Modifier.clickableSingle(onClick = trashCanOnclick)
-                )
+                EditIcon(modifier = Modifier.clickableSingle(onClick = editOnclick))
+                TrashCanIcon(modifier = Modifier.clickableSingle(onClick = trashCanOnclick))
             }
         }
     }

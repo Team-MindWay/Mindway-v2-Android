@@ -46,11 +46,11 @@ fun BookPopUp(onDismiss: () -> Unit) {
                 textAlign = TextAlign.Center,
             )
             MindWayButton(
+                text = stringResource(R.string.check),
+                onClick = onDismiss,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
-                text = stringResource(R.string.check),
-                onClick = onDismiss
             )
         }
     }

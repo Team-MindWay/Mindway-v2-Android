@@ -57,9 +57,7 @@ fun MyNameCard(
                     )
                 }
             }
-            OptionIcon(
-                modifier = Modifier.clickableSingle (onClick = onClick)
-            )
+            OptionIcon(modifier = Modifier.clickableSingle (onClick = onClick))
         }
     }
 }

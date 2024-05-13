@@ -71,15 +71,17 @@ internal fun HomeScreen(
                         .fillMaxWidth(),
                 )
                 HomeGoalReadingChart(
+                    goalBookRead = goalBookRead,
+                    isHasData = readingGoalGraphDataList.isNotEmpty(),
                     readNumberList = readingGoalGraphDataList,
                     onClick = navigateToGoalReading,
-                    goalBookRead = goalBookRead,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(211.dp),
                 )
                 HomeReadersOfTheMonthChart(
                     bookKingOfTheMonthData = bookKingOfTheMonthDataList,
+                    isHasData = bookKingOfTheMonthDataList.isNotEmpty(),
                     modifier = Modifier
                         .height(239.dp)
                         .fillMaxWidth(),

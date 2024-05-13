@@ -26,11 +26,11 @@ fun Events(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Surface(
+            color = colors.WHITE,
+            shape = RoundedCornerShape(8.dp),
             modifier = modifier
                 .fillMaxWidth()
                 .shadow(elevation = 20.dp, spotColor = colors.CardShadow),
-            color = colors.WHITE,
-            shape = RoundedCornerShape(8.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),

@@ -83,8 +83,7 @@ fun MindWayRightTextField(
                                         textAlign = TextAlign.End,
                                     ),
                                     cursorBrush = SolidColor(colors.MAIN),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth()
                                 )
                             }
                             Row(
