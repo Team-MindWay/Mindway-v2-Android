@@ -18,13 +18,13 @@ fun BookEditTopAppBar(
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         midText = stringResource(R.string.book_modify),
         endIcon = {
             InfoIcon(
-                modifier = Modifier.clickableSingle { endIconOnClick() }
+                modifier = Modifier.clickableSingle (onClick = endIconOnClick)
             )
         }
     )

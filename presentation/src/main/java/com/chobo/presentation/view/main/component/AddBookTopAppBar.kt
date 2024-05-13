@@ -14,7 +14,7 @@ fun AddBookTopAppBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         midText = stringResource(R.string.add_book),

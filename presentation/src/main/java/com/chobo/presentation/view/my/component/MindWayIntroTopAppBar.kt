@@ -16,14 +16,15 @@ fun MindWayIntroTopAppBar(
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         midText = stringResource(R.string.mindway_intro),
     )
 }
+
 @Preview(showBackground = true)
 @Composable
-fun MindWayIntroTopAppBarPreview(){
+fun MindWayIntroTopAppBarPreview() {
     MindWayIntroTopAppBar(startIconOnClick = { })
 }

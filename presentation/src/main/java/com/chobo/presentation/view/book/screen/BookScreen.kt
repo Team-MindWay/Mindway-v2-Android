@@ -118,7 +118,7 @@ internal fun BookScreen(
                     }
                     PlusIcon(
                         tint = colors.Black,
-                        modifier = Modifier.clickableSingle { navigateToBookAddBook() },
+                        modifier = Modifier.clickableSingle(onClick = navigateToBookAddBook),
                     )
                 }
                 HorizontalPager(state = pagerState) { page ->

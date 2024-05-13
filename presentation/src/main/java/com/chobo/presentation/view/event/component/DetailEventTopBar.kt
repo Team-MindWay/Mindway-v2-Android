@@ -10,13 +10,11 @@ import com.chobo.presentation.view.component.multipleEventsCutterManager.clickab
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 
 @Composable
-fun DetailEventTopBar(
-    startIconOnClick: () -> Unit
-) {
+fun DetailEventTopBar(startIconOnClick: () -> Unit) {
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         midText = stringResource(id = R.string.ongoing_event)

@@ -84,8 +84,9 @@ fun MindWayNavBar(
                         }
                     },
                     modifier = modifier
-                        .clickableSingle {
                             if (currentDestination.value != item) {
+                        .clickableSingle(
+                            onClick = {
                                 currentDestination.value = item
                                 when (item) {
                                     MindWayNavBarItemType.HOME -> navigateToHome()
