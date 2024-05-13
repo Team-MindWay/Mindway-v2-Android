@@ -83,7 +83,7 @@ internal fun HomeAddBookScreen(
                         }
                     }
             ) {
-                AddBookTopAppBar(startIconOnClick = { navigateToBack() })
+                AddBookTopAppBar(startIconOnClick = navigateToBack)
                 Column(
                     verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,

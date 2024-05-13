@@ -69,9 +69,7 @@ fun HomeGoalReadingChart(
                             fontWeight = FontWeight.SemiBold,
                             color = colors.Black,
                         )
-                        ChevronRightIcon(
-                            modifier = Modifier.clickableSingle { onClick() }
-                        )
+                        ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                     }
                     GoalReadingIndicator(
                         numBooksRead = readNumberList.sumOf { it.numBooksRead },
