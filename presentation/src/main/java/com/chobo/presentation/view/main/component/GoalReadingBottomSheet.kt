@@ -100,7 +100,7 @@ fun GoalReadingBottomSheet(
                         placeholder = "권",
                         emptyErrorMessage = stringResource(R.string.goal_reading_error),
                         updateTextValue = updateTextValue,
-                        isError = isError,
+                        isError = isError,// TODO: modifier 수정
                     )
                 }
                 MindWayButton(

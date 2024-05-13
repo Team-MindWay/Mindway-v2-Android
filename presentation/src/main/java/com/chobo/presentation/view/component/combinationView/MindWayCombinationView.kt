@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.chobo.presentation.R
 import com.chobo.presentation.view.book.screen.BookRoute
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
@@ -12,10 +14,10 @@ import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.EVENT
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.HOME
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.MY
+import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheet
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.event.screen.EventScreenRoute
 import com.chobo.presentation.view.main.screen.HomeRoute
-import com.chobo.presentation.view.my.component.MyBottomSheet
 import com.chobo.presentation.view.my.screen.MyRoute
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -34,9 +36,11 @@ fun MindWayCombinationView(
 ) {
     MindWayBottomSheetDialog(
         sheetContent = {
-            MyBottomSheet(
-                navigateToIntro = navigateToIntro,
-                logoutOnClick = navigateToLogin
+            MindWayBottomSheet(
+                topText = stringResource(R.string.mindway_intro),
+                bottomText = stringResource(R.string.logout),
+                topOnClick = navigateToIntro,
+                bottomOnCLick = navigateToLogin
             )
         }
     ) { sheetState ->

@@ -25,7 +25,6 @@ fun Events(
     navigateToDetailEvent: () -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
-        Spacer(modifier = modifier.height(20.dp))
         Surface(
             modifier = modifier
                 .fillMaxWidth()
@@ -34,12 +33,9 @@ fun Events(
             shape = RoundedCornerShape(8.dp)
         ) {
             Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = modifier
                     .fillMaxWidth()
-                    .background(
-                        color = colors.WHITE,
-                        shape = RoundedCornerShape(8.dp)
-                    )
                     .padding(
                         horizontal = 24.dp,
                         vertical = 20.dp
@@ -63,14 +59,12 @@ fun Events(
                         }
                     )
                 }
-                Spacer(modifier = modifier.height(8.dp))
                 Text(
                     text = eventsData.content,
                     style = typography.bodySmall,
                     color = colors.GRAY800,
                     fontWeight = FontWeight.Normal
                 )
-                Spacer(modifier = modifier.height(8.dp))
                 Text(
                     text = eventsData.date,
                     style = typography.labelLarge,

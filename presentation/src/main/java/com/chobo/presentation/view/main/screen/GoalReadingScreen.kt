@@ -7,10 +7,12 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -22,14 +24,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.component.customToast.MindWayToast
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.PlusIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
-import com.chobo.presentation.view.main.component.GoalReadingPlusCard
-import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -112,10 +117,23 @@ internal fun GoalReadingScreen(
                             }
                         }
                 ) {
-                    GoalReadingTopAppBar(
-                        startIconOnClick = navigateToBack,
-                        endIconOnClick = { coroutineScope.launch { sheetState.show() } },
-                        isData = goalBookRead == 0
+                    MindWayTopAppBar(
+                        startIcon = {
+                            ChevronLeftIcon(
+                                modifier = Modifier.clickableSingle(onClick = navigateToBack)
+                            )
+                        },
+                        midText = stringResource(R.string.goal_reading),
+                        endIcon = {
+                            if (goalBookRead == 0) { // TODO: 상태 호이스팅
+                                PlusIcon(
+                                    modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                    tint = MindWayColor.Black
+                                )
+                            } else {
+                                PlusIcon(tint = MindWayColor.GRAY400)
+                            }
+                        }
                     )
                     Box(modifier = Modifier.fillMaxSize()) {
                         LazyColumn(
@@ -139,12 +157,24 @@ internal fun GoalReadingScreen(
                                 )
                             }
                             item {
-                                GoalReadingPlusCard(
-                                    onClick = navigateToHomeAddBook,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(60.dp)
-                                )
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = modifier
+                                        .shadow(
+                                            elevation = 20.dp,
+                                            spotColor = colors.CardShadow,
+                                            ambientColor = colors.CardShadow
+                                        )
+                                        .background(
+                                            color = colors.WHITE,
+                                            shape = RoundedCornerShape(size = 8.dp)
+                                        )
+                                        .clickableSingle(onClick = navigateToHomeAddBook)
+                                        .padding(16.dp)
+                                ) {
+                                    PlusIcon(modifier = Modifier.fillMaxSize())
+                                }
                             }
                             items(goalReadingListOfBooksReadItemDataList) { item ->
                                 GoalReadingListOfBooksReadItem(

@@ -18,7 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.my.component.MindWayIntroTopAppBar
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -39,7 +41,10 @@ internal fun MindWayIntroScreen(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            MindWayIntroTopAppBar(startIconOnClick = navigateToBack)
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.mindway_intro),
+            )
             Box(modifier = Modifier.fillMaxSize()) {
                 Column {
                     Column(
