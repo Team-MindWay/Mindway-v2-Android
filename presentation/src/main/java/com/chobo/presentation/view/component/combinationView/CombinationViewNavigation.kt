@@ -19,6 +19,7 @@ fun NavGraphBuilder.combinationView(
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
+    navigateToLogin: () -> Unit,
 ) {
     composable(CombinationViewRoute) {
         MindWayCombinationView(
@@ -28,6 +29,7 @@ fun NavGraphBuilder.combinationView(
             navigateToBookAddBook = navigateToBookAddBook,
             navigateToIntro = navigateToIntro,
             navigateToMyBookEdit = navigateToMyBookEdit,
+            navigateToLogin = navigateToLogin,
         )
     }
 }
