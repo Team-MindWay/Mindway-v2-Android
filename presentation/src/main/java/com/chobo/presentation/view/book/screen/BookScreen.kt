@@ -89,8 +89,7 @@ internal fun BookScreen(
                             stringResource(R.string.essay),
                         ).forEachIndexed { index, tabName ->
                             BookTabRowItem(
-                                indexState = pagerState.currentPage,
-                                index = index,
+                                isCurrentIndex = index == pagerState.currentPage,
                                 tabName = tabName,
                                 onClick = {
                                     coroutineScope.launch {
