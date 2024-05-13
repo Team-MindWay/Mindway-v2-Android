@@ -76,12 +76,11 @@ fun GoalReadingBottomSheet(
                             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
                             verticalAlignment = Alignment.Top,
                         ) {
-                            val textList = listOf(
+                            listOf(
                                 stringResource(id = R.string.month_day, 3, 24),
                                 stringResource(id = R.string.wave),
                                 stringResource(id = R.string.month_day, 3, 21)
-                            )
-                            textList.forEach {
+                            ).forEach {
                                 Text(
                                     text = it,
                                     style = typography.bodyMedium,
@@ -92,23 +91,21 @@ fun GoalReadingBottomSheet(
                         }
                     }
                     MindWayRightTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(119.dp),
                         title = stringResource(id = R.string.goal_reading),
                         textState = textState,
                         placeholder = "권",
                         emptyErrorMessage = stringResource(R.string.goal_reading_error),
                         updateTextValue = updateTextValue,
-                        isError = isError,// TODO: modifier 수정
+                        isError = isError,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(119.dp),
                     )
                 }
                 MindWayButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
                     text = stringResource(id = R.string.check),
-                    onClick = onclick
+                    onClick = onclick,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
