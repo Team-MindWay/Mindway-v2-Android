@@ -25,10 +25,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
-import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 
@@ -96,7 +97,10 @@ internal fun BookAddBookScreen(
                         }
                     }
             ) {
-                BookRequestTopAppBar(startIconOnClick = navigateToBack)
+                MindWayTopAppBar(
+                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                    midText = stringResource(R.string.book_request),
+                )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
