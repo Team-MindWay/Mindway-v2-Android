@@ -1,8 +1,6 @@
 package com.chobo.data.remote.datasource.event
 
-import com.chobo.data.remote.dto.event.response.GetDetailEventResponse
-import com.chobo.data.remote.dto.event.response.GetEventDateListResponse
-import com.chobo.data.remote.dto.event.response.GetEventListResponse
+import com.chobo.data.remote.dto.event.response.*
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteEventDataSource {

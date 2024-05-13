@@ -1,8 +1,7 @@
 package com.chobo.presentation.viewModel.goal
 
 import androidx.lifecycle.*
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
+import com.chobo.presentation.view.main.component.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*

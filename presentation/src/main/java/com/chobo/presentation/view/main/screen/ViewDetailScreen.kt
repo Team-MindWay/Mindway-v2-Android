@@ -13,14 +13,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
-import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheet
-import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
-import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.icon.OptionIcon
+import com.chobo.presentation.view.component.bottom_sheet.*
+import com.chobo.presentation.view.component.icon.*
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.ViewDetailPopUp
-import com.chobo.presentation.view.main.component.ViewDetailTextCard
+import com.chobo.presentation.view.main.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope

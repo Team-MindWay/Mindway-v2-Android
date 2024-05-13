@@ -1,12 +1,8 @@
 package com.chobo.data.repository
 
 import com.chobo.data.remote.datasource.event.RemoteEventDataSource
-import com.chobo.data.remote.dto.event.response.toGetDetailEventResponseModel
-import com.chobo.data.remote.dto.event.response.toGetEventDateListResponseModel
-import com.chobo.data.remote.dto.event.response.toGetEventListResponseModel
-import com.chobo.domain.model.event.response.GetDetailEventResponseModel
-import com.chobo.domain.model.event.response.GetEventDateListResponseModel
-import com.chobo.domain.model.event.response.GetEventListResponseModel
+import com.chobo.data.remote.dto.event.response.*
+import com.chobo.domain.model.event.response.*
 import com.chobo.domain.repository.EventRepository
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

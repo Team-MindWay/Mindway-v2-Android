@@ -13,14 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
-import com.chobo.presentation.view.event.component.EventContent
-import com.chobo.presentation.view.event.component.EventPager
-import com.chobo.presentation.view.event.component.EventsData
+import com.chobo.presentation.view.event.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
-import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+import com.chobo.presentation.viewModel.event.uistate.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

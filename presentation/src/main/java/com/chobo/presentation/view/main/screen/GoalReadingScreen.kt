@@ -24,15 +24,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.component.customToast.MindWayToast
-import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.icon.PlusIcon
+import com.chobo.presentation.view.component.icon.*
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
-import com.chobo.presentation.view.main.component.GoalReadingChart
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
+import com.chobo.presentation.view.main.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
