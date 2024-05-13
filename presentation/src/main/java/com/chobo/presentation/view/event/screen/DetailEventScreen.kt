@@ -23,7 +23,6 @@ import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.event.component.DetailEventContent
-import com.chobo.presentation.view.event.component.DetailEventTopBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.DetailEventViewModel
 
