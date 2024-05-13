@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -23,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -167,12 +169,24 @@ internal fun GoalReadingScreen(
                                 )
                             }
                             item {
-                                GoalReadingPlusCard(
-                                    onClick = navigateToHomeAddBook,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(60.dp)
-                                )
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = modifier
+                                        .shadow(
+                                            elevation = 20.dp,
+                                            spotColor = colors.CardShadow,
+                                            ambientColor = colors.CardShadow
+                                        )
+                                        .background(
+                                            color = colors.WHITE,
+                                            shape = RoundedCornerShape(size = 8.dp)
+                                        )
+                                        .clickableSingle(onClick = navigateToHomeAddBook)
+                                        .padding(16.dp)
+                                ) {
+                                    PlusIcon(modifier = Modifier.fillMaxSize())
+                                }
                             }
                             items(goalReadingListOfBooksReadItemDataList) { item ->
                                 GoalReadingListOfBooksReadItem(
