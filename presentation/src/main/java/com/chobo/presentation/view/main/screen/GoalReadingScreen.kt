@@ -34,14 +34,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.component.customToast.MindWayToast
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.PlusIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
-import com.chobo.presentation.view.main.component.GoalReadingPlusCard
-import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -124,10 +127,23 @@ internal fun GoalReadingScreen(
                             }
                         }
                 ) {
-                    GoalReadingTopAppBar(
-                        startIconOnClick = navigateToBack,
-                        endIconOnClick = { coroutineScope.launch { sheetState.show() } },
-                        isData = goalBookRead == 0
+                    MindWayTopAppBar(
+                        startIcon = {
+                            ChevronLeftIcon(
+                                modifier = Modifier.clickableSingle(onClick = navigateToBack)
+                            )
+                        },
+                        midText = stringResource(R.string.goal_reading),
+                        endIcon = {
+                            if (goalBookRead == 0) { // TODO: 상태 호이스팅
+                                PlusIcon(
+                                    modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                    tint = MindWayColor.Black
+                                )
+                            } else {
+                                PlusIcon(tint = MindWayColor.GRAY400)
+                            }
+                        }
                     )
                     Box(modifier = Modifier.fillMaxSize()) {
                         LazyColumn(
