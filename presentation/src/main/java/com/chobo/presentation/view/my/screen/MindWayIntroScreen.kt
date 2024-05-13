@@ -32,7 +32,7 @@ internal fun MindWayIntroRoute(
     modifier: Modifier = Modifier,
     navigateToBack: () -> Unit
 ) {
-    MindWayIntroScreen (
+    MindWayIntroScreen(
         modifier = modifier,
         navigateToBack = navigateToBack
     )
@@ -45,7 +45,7 @@ internal fun MindWayIntroScreen(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            MindWayIntroTopAppBar(startIconOnClick = { navigateToBack() })
+            MindWayIntroTopAppBar(startIconOnClick = navigateToBack)
             Box(modifier = Modifier.fillMaxSize()) {
                 Column {
                     Column(

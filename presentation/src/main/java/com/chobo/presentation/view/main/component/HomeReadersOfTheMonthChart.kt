@@ -28,7 +28,7 @@ fun HomeReadersOfTheMonthChart(
     bookKingOfTheMonthData: List<BookKingOfTheMonthData>
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (bookKingOfTheMonthData.isNotEmpty()) {
+        if (bookKingOfTheMonthData.isNotEmpty()) { // TODO: 상태 호이스팅
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),

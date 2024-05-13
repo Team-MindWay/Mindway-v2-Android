@@ -18,12 +18,12 @@ fun ViewDetailTopAppBar(
     MindWayTopAppBar(
         startIcon = {
             ChevronLeftIcon(
-                modifier = Modifier.clickableSingle { startIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = startIconOnClick)
             )
         },
         endIcon = {
             OptionIcon(
-                modifier = Modifier.clickableSingle { endIconOnClick() }
+                modifier = Modifier.clickableSingle(onClick = endIconOnClick)
             )
         },
         midText = stringResource(R.string.view_detail),

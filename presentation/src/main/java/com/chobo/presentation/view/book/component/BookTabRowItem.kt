@@ -32,9 +32,9 @@ fun BookTabRowItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(8.dp)
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick = onClick)
         ) {
-            if (indexState == index) {
+            if (indexState == index) { // TODO: 상태 호이스팅
                 Text(
                     text = tabName,
                     style = typography.bodyLarge,

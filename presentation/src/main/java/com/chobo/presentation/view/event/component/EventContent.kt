@@ -39,7 +39,8 @@ fun EventContent(
                     Events(
                         eventsData = item,
                         onClick = { onIconClick(index) },
-                        navigateToDetailEvent = { navigateToDetailEvent() })
+                        navigateToDetailEvent = navigateToDetailEvent
+                    )
                 }
             }
         } else {

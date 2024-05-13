@@ -54,7 +54,7 @@ internal fun DetailEventScreen(
 ) {
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            DetailEventTopBar(startIconOnClick = { navigateToBack() })
+            DetailEventTopBar(startIconOnClick = navigateToBack)
             Column(
                 modifier = Modifier
                     .fillMaxSize()

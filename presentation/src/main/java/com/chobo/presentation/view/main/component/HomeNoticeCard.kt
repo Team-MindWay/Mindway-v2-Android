@@ -38,7 +38,7 @@ fun HomeNoticeCard(
             horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick =  onClick)
                 .background(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)
