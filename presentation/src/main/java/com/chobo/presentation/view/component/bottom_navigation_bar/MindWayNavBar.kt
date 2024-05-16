@@ -1,9 +1,14 @@
 package com.chobo.presentation.view.component.bottom_navigation_bar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,11 +44,8 @@ fun MindWayNavBar(
                 MindWayNavBarItemType.BOOKS,
                 MindWayNavBarItemType.MY
             ).forEach { item ->
-                val isCurrentDestination by remember {
-                    mutableStateOf (currentDestination.value == item)
-                }
                 MindWayNavBarItem(
-                    colors = if (!isCurrentDestination) colors.GRAY400 else colors.Black,
+                    colors = if (currentDestination.value != item) colors.GRAY400 else colors.Black,
                     text = when (item) {
                         MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
                         MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
@@ -54,44 +56,49 @@ fun MindWayNavBar(
                         when (item) {
                             MindWayNavBarItemType.HOME -> {
                                 HomeIcon(
-                                    isSelected = isCurrentDestination,
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
 
                             MindWayNavBarItemType.EVENT -> {
                                 HeartIcon(
-                                    isSelected = isCurrentDestination,
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
 
                             MindWayNavBarItemType.BOOKS -> {
                                 BookIcon(
-                                    isSelected = isCurrentDestination,
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
 
                             MindWayNavBarItemType.MY -> {
                                 ProfileIcon(
-                                    isSelected = isCurrentDestination,
+                                    isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
                         }
                     },
                     modifier = modifier
-                        .clickableSingle(
-                            enabled = !isCurrentDestination,
-                            onClick = {
-                                currentDestination.value = item
-                                when (item) {
-                                    MindWayNavBarItemType.HOME -> navigateToHome()
-                                    MindWayNavBarItemType.EVENT -> navigateToEvent()
-                                    MindWayNavBarItemType.BOOKS -> navigateToBooks()
-                                    MindWayNavBarItemType.MY -> navigateToMy()
-                                }
+                        .then(
+                            if (currentDestination.value == item) {
+                                Modifier
+                            } else {
+                                Modifier.clickableSingle(
+                                    onClick = {
+                                        currentDestination.value = item
+                                        when (item) {
+                                            MindWayNavBarItemType.HOME -> navigateToHome()
+                                            MindWayNavBarItemType.EVENT -> navigateToEvent()
+                                            MindWayNavBarItemType.BOOKS -> navigateToBooks()
+                                            MindWayNavBarItemType.MY -> navigateToMy()
+                                        }
+                                    }
+                                )
                             }
                         )
                 )
