@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.*
 import com.chobo.presentation.view.component.icon.BookIcon
 import com.chobo.presentation.view.component.icon.HeartIcon
 import com.chobo.presentation.view.component.icon.HomeIcon
@@ -39,43 +40,43 @@ fun MindWayNavBar(
                 .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 20.dp),
         ) {
             listOf(
-                MindWayNavBarItemType.HOME,
-                MindWayNavBarItemType.EVENT,
-                MindWayNavBarItemType.BOOKS,
-                MindWayNavBarItemType.MY
+                HOME,
+                EVENT,
+                BOOKS,
+                MY
             ).forEach { item ->
                 MindWayNavBarItem(
                     colors = if (currentDestination.value != item) colors.GRAY400 else colors.Black,
                     text = when (item) {
-                        MindWayNavBarItemType.HOME -> stringResource(id = R.string.home)
-                        MindWayNavBarItemType.EVENT -> stringResource(id = R.string.event)
-                        MindWayNavBarItemType.BOOKS -> stringResource(id = R.string.books)
-                        MindWayNavBarItemType.MY -> stringResource(id = R.string.my)
+                        HOME -> stringResource(id = R.string.home)
+                        EVENT -> stringResource(id = R.string.event)
+                        BOOKS -> stringResource(id = R.string.books)
+                        MY -> stringResource(id = R.string.my)
                     },
                     icon = {
                         when (item) {
-                            MindWayNavBarItemType.HOME -> {
+                            HOME -> {
                                 HomeIcon(
                                     isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
 
-                            MindWayNavBarItemType.EVENT -> {
+                            EVENT -> {
                                 HeartIcon(
                                     isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
 
-                            MindWayNavBarItemType.BOOKS -> {
+                            BOOKS -> {
                                 BookIcon(
                                     isSelected = currentDestination.value == item,
                                     modifier = modifier,
                                 )
                             }
 
-                            MindWayNavBarItemType.MY -> {
+                            MY -> {
                                 ProfileIcon(
                                     isSelected = currentDestination.value == item,
                                     modifier = modifier,
@@ -92,10 +93,10 @@ fun MindWayNavBar(
                                     onClick = {
                                         currentDestination.value = item
                                         when (item) {
-                                            MindWayNavBarItemType.HOME -> navigateToHome()
-                                            MindWayNavBarItemType.EVENT -> navigateToEvent()
-                                            MindWayNavBarItemType.BOOKS -> navigateToBooks()
-                                            MindWayNavBarItemType.MY -> navigateToMy()
+                                            HOME -> navigateToHome()
+                                            EVENT -> navigateToEvent()
+                                            BOOKS -> navigateToBooks()
+                                            MY -> navigateToMy()
                                         }
                                     }
                                 )
@@ -111,7 +112,7 @@ fun MindWayNavBar(
 @Composable
 fun MindWayNavBarPre() {
     val topDestination = remember {
-        mutableStateOf(MindWayNavBarItemType.HOME)
+        mutableStateOf(HOME)
     }
     MindWayNavBar(
         navigateToHome = {},
