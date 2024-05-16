@@ -19,11 +19,11 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayNavBar(
     modifier: Modifier = Modifier,
+    currentDestination: MutableState<MindWayNavBarItemType>,
     navigateToHome: () -> Unit,
     navigateToEvent: () -> Unit,
     navigateToBooks: () -> Unit,
     navigateToMy: () -> Unit,
-    currentDestination: MutableState<MindWayNavBarItemType>,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Row(
