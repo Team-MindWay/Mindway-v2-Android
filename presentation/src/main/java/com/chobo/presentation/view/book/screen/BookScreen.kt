@@ -2,32 +2,16 @@
 
 package com.chobo.presentation.view.book.screen
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.pager.*
 import androidx.compose.material.TabRow
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,9 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
-import com.chobo.presentation.view.book.component.BookListItem
-import com.chobo.presentation.view.book.component.BookListItemData
-import com.chobo.presentation.view.book.component.BookTabRowItem
+import com.chobo.presentation.view.book.component.*
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
@@ -77,8 +59,8 @@ internal fun BookScreen(
     essayDataList: List<BookListItemData>,
     isToastVisible: Boolean,
     pagerState: PagerState,
-    navigateToBookAddBook: () -> Unit,
     coroutineScope: CoroutineScope,
+    navigateToBookAddBook: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
@@ -95,18 +77,17 @@ internal fun BookScreen(
                         .fillMaxWidth()
                 ) {
                     TabRow(
-                        modifier = Modifier.width(166.dp),
                         selectedTabIndex = pagerState.currentPage,
                         contentColor = colors.MAIN,
-                        backgroundColor = colors.WHITE
+                        backgroundColor = colors.WHITE,
+                        modifier = Modifier.width(166.dp),
                     ) {
                         listOf(
                             stringResource(R.string.novel),
                             stringResource(R.string.essay),
                         ).forEachIndexed { index, tabName ->
                             BookTabRowItem(
-                                indexState = pagerState.currentPage,
-                                index = index,
+                                isCurrentIndex = index == pagerState.currentPage,
                                 tabName = tabName,
                                 onClick = {
                                     coroutineScope.launch {
@@ -117,8 +98,8 @@ internal fun BookScreen(
                         }
                     }
                     PlusIcon(
-                        modifier = Modifier.clickableSingle { navigateToBookAddBook() },
-                        tint = colors.Black
+                        tint = colors.Black,
+                        modifier = Modifier.clickableSingle(onClick = navigateToBookAddBook),
                     )
                 }
                 HorizontalPager(state = pagerState) { page ->
@@ -149,10 +130,6 @@ internal fun BookScreen(
             }
             AnimatedVisibility(
                 visible = isToastVisible,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = -(20).dp)
-                    .padding(horizontal = 24.dp),
                 enter = slideInVertically(
                     initialOffsetY = { it + 55 },
                     animationSpec = tween(durationMillis = 500)
@@ -160,7 +137,11 @@ internal fun BookScreen(
                 exit = slideOutVertically(
                     targetOffsetY = { it + 55 },
                     animationSpec = tween(durationMillis = 500)
-                )
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = -(20).dp)
+                    .padding(horizontal = 24.dp),
             ) {
                 MindWayToast(
                     isSuccess = true,
@@ -175,5 +156,5 @@ internal fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookRoute{  }
+    BookRoute { }
 }

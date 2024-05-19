@@ -1,14 +1,10 @@
 package com.chobo.presentation.viewModel.goal
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
+import androidx.lifecycle.*
+import com.chobo.presentation.view.main.component.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,6 +12,9 @@ import javax.inject.Inject
 class GoalReadingViewModel @Inject constructor() : ViewModel() {
     private val _goalBookRead = MutableStateFlow(0)
     val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
+
+    private val _goalBookReadIsEmpty = MutableStateFlow(_goalBookRead.value == 0)
+    val goalBookReadIsEmpty: StateFlow<Boolean> = _goalBookReadIsEmpty.asStateFlow()
 
     private val _goalBookReadSetting = MutableStateFlow("")
     val goalBookReadSetting: StateFlow<String> = _goalBookReadSetting.asStateFlow()

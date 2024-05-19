@@ -1,14 +1,8 @@
 package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,11 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.view.main.component.HomeGoalReadingChart
-import com.chobo.presentation.view.main.component.HomeNoticeCard
-import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
+import com.chobo.presentation.view.main.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
 
@@ -37,6 +27,7 @@ internal fun HomeRoute(
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
+
     HomeScreen(
         modifier = modifier,
         titleTextState = titleTextState,
@@ -80,15 +71,17 @@ internal fun HomeScreen(
                         .fillMaxWidth(),
                 )
                 HomeGoalReadingChart(
+                    goalBookRead = goalBookRead,
+                    isHasData = readingGoalGraphDataList.isNotEmpty(),
                     readNumberList = readingGoalGraphDataList,
                     onClick = navigateToGoalReading,
-                    goalBookRead = goalBookRead,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(211.dp),
                 )
                 HomeReadersOfTheMonthChart(
                     bookKingOfTheMonthData = bookKingOfTheMonthDataList,
+                    isHasData = bookKingOfTheMonthDataList.isNotEmpty(),
                     modifier = Modifier
                         .height(239.dp)
                         .fillMaxWidth(),

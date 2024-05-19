@@ -1,14 +1,7 @@
 package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,10 +18,11 @@ data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
+    isHasData: Boolean,
     bookKingOfTheMonthData: List<BookKingOfTheMonthData>
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (bookKingOfTheMonthData.isNotEmpty()) {
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -64,7 +58,7 @@ fun HomeReadersOfTheMonthChart(
                             modifier = Modifier.weight(72f)
                         )
 
-                        if (index < bookKingOfTheMonthData.size - 1) {
+                        if (index < bookKingOfTheMonthData.size - 1) { // TODO: 상태 호이스팅
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         }
                     }
@@ -109,6 +103,7 @@ fun HomeReadersOfTheMonthChart(
 @Composable
 fun HomeReadersOfTheMonthChartPreview() {
     HomeReadersOfTheMonthChart(
+        isHasData = true,
         modifier = Modifier
             .width(312.dp),
         bookKingOfTheMonthData = listOf(

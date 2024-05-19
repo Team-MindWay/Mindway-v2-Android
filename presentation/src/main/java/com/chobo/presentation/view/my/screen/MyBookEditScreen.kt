@@ -1,21 +1,15 @@
 package com.chobo.presentation.view.my.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,16 +18,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
-import com.chobo.presentation.view.my.component.BookEditTopAppBar
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.InfoIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 
 @Composable
-fun MyBookEditScreen(
+internal fun MyBookEditRoute(
     modifier: Modifier = Modifier,
-    myBookEditViewModel: MyBookEditViewModel = viewModel(),
     navigateToBack: () -> Unit,
+    myBookEditViewModel: MyBookEditViewModel = viewModel(LocalContext.current as ComponentActivity)
 ) {
     val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
     val writeTextState by myBookEditViewModel.writeTextState.collectAsStateWithLifecycle()
@@ -43,20 +40,54 @@ fun MyBookEditScreen(
     val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
+    MyBookEditScreen(
+        modifier = modifier,
+        navigateToBack = navigateToBack,
+        focusManager = focusManager,
+        titleTextState = titleTextState,
+        writeTextState = writeTextState,
+        linkTextState = linkTextState,
+        titleTextStateIsEmpty = titleTextStateIsEmpty,
+        writeTextStateIsEmpty = writeTextStateIsEmpty,
+        linkTextStateIsEmpty = linkTextStateIsEmpty,
+        updateTitleTextState = myBookEditViewModel::updateTitleTextState,
+        updateWriteTextState = myBookEditViewModel::updateWriteTextState,
+        updateLinkTextState = myBookEditViewModel::updateLinkTextState,
+        checkButtonOnClick = myBookEditViewModel::checkButtonOnClick
+    )
+}
+
+@Composable
+internal fun MyBookEditScreen(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit,
+    focusManager: FocusManager,
+    titleTextState: String,
+    writeTextState: String,
+    linkTextState: String,
+    titleTextStateIsEmpty: Boolean,
+    writeTextStateIsEmpty: Boolean,
+    linkTextStateIsEmpty: Boolean,
+    updateTitleTextState: (String) -> Unit,
+    updateWriteTextState: (String) -> Unit,
+    updateLinkTextState: (String) -> Unit,
+    checkButtonOnClick: () -> Unit
+) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
             Column(modifier = modifier
                 .background(colors.WHITE)
                 .pointerInput(Unit) {
-                    detectTapGestures{
+                    detectTapGestures {
                         focusManager.clearFocus()
                     }
                 }
                 .imePadding()
             ) {
-                BookEditTopAppBar(
-                    startIconOnClick = navigateToBack,
-                    endIconOnClick = {}
+                MindWayTopAppBar(
+                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                    endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },
+                    midText = stringResource(R.string.book_modify),
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
@@ -68,37 +99,37 @@ fun MyBookEditScreen(
                             vertical = 28.dp
                         )
                 ) {
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = myBookEditViewModel::updateTitleTextState,
+                        updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.writer),
                         textState = writeTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_writer),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
-                        updateTextValue = myBookEditViewModel::updateWriteTextState,
+                        updateTextValue = updateWriteTextState,
                         isError = writeTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.link),
                         textState = linkTextState,
                         placeholder = stringResource(R.string.please_enter_the_link),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_link),
-                        updateTextValue = myBookEditViewModel::updateLinkTextState,
+                        updateTextValue = updateLinkTextState,
                         isError = linkTextStateIsEmpty
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
+                        onClick = checkButtonOnClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = myBookEditViewModel::checkButtonOnClick
                     )
                 }
             }
@@ -109,5 +140,5 @@ fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditScreen(navigateToBack = { } )
+    MyBookEditRoute(navigateToBack = { })
 }

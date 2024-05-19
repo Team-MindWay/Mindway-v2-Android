@@ -3,9 +3,7 @@ package com.chobo.presentation.view.login.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +22,7 @@ import com.chobo.presentation.view.theme.color.MindWayColor
 fun MindWayGAuthButton(
     modifier: Modifier = Modifier,
     buttonColor: Color = MindWayColor.WHITE,
-    onClick:() -> Unit
+    onClick: () -> Unit
 ) {
     MindWayAndroidTheme { colors, _ ->
         Row(
@@ -41,7 +39,7 @@ fun MindWayGAuthButton(
                     colors.MAIN,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick = onClick)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_mindway_gauth),
@@ -60,5 +58,5 @@ fun MindWayGAuthButton(
 @Preview
 @Composable
 fun MindWayGAuthButtonPreview() {
-    MindWayGAuthButton{}
+    MindWayGAuthButton {}
 }

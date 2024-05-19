@@ -1,12 +1,7 @@
 package com.chobo.presentation.view.component.bottom_sheet
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,7 +45,7 @@ fun MindWayBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.Black,
-                modifier = Modifier.clickableSingle { topOnClick() }
+                modifier = Modifier.clickableSingle(onClick = topOnClick)
             )
             Spacer(
                 modifier = Modifier
@@ -63,7 +58,7 @@ fun MindWayBottomSheet(
                 style = typography.bodySmall,
                 fontWeight = FontWeight.Normal,
                 color = colors.SYSTEM,
-                modifier = Modifier.clickableSingle { bottomOnCLick() }
+                modifier = Modifier.clickableSingle(onClick = bottomOnCLick)
             )
         }
     }

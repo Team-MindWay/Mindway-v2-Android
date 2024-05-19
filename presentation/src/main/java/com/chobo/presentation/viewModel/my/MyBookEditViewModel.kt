@@ -2,9 +2,7 @@ package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,10 +44,6 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
-    }
-
-    fun editBookOnClick(index: Int) {
-
     }
 
     init {

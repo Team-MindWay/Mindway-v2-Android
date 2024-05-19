@@ -1,15 +1,7 @@
 package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,11 +26,12 @@ data class GoalReadingGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
+    isHasData :Boolean,
     readNumberList: List<GoalReadingGraphData> = listOf(),
     onClick: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (readNumberList.isNotEmpty()) {
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
@@ -69,9 +62,7 @@ fun HomeGoalReadingChart(
                             fontWeight = FontWeight.SemiBold,
                             color = colors.Black,
                         )
-                        ChevronRightIcon(
-                            modifier = Modifier.clickableSingle { onClick() }
-                        )
+                        ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                     }
                     GoalReadingIndicator(
                         numBooksRead = readNumberList.sumOf { it.numBooksRead },
@@ -136,9 +127,7 @@ fun HomeGoalReadingChart(
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
-                Spacer(
-                    modifier = Modifier.height(27.dp)
-                )
+                Spacer(modifier = Modifier.height(27.dp))
             }
         }
     }
@@ -162,6 +151,7 @@ fun HomeGoalReadingChartPreview() {
             GoalReadingGraphData(2, 3, false, "일"),
         ),
         onClick = { },
-        goalBookRead = 14
+        goalBookRead = 14,
+        isHasData = true
     )
 }

@@ -1,12 +1,9 @@
 package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
-import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
+import com.chobo.presentation.view.main.component.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel

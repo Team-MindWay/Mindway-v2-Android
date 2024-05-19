@@ -4,9 +4,7 @@ import com.chobo.data.remote.api.NoticeAPI
 import com.chobo.data.remote.dto.notice.NoticeAll
 import com.chobo.data.util.MindWayAPIHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class RemoteNoticeDataSourceImpl @Inject constructor(

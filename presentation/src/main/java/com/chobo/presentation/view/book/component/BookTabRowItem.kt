@@ -1,16 +1,8 @@
 package com.chobo.presentation.view.book.component
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -21,20 +13,18 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun BookTabRowItem(
-    indexState: Int,
-    index: Int,
     tabName: String,
     onClick: () -> Unit,
+    isCurrentIndex: Boolean,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
-            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(8.dp)
-                .clickableSingle { onClick() }
+                .clickableSingle(onClick = onClick)
         ) {
-            if (indexState == index) {
+            if (isCurrentIndex) {
                 Text(
                     text = tabName,
                     style = typography.bodyLarge,
@@ -58,9 +48,8 @@ fun BookTabRowItem(
 fun BookTabRowItemPreview() {
     var indexState by remember { mutableIntStateOf(0) }
     BookTabRowItem(
-        indexState = 1,
-        index = 1,
         tabName = "이름",
-        onClick = { indexState = 1 }
+        onClick = { indexState = 1 },
+        isCurrentIndex = true
     )
 }

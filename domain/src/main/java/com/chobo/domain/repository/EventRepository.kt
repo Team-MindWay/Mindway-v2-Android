@@ -1,8 +1,6 @@
 package com.chobo.domain.repository
 
-import com.chobo.domain.model.event.response.GetDetailEventResponseModel
-import com.chobo.domain.model.event.response.GetEventDateListResponseModel
-import com.chobo.domain.model.event.response.GetEventListResponseModel
+import com.chobo.domain.model.event.response.*
 import kotlinx.coroutines.flow.Flow
 
 interface EventRepository {

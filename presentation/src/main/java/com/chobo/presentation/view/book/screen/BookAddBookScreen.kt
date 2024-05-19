@@ -2,16 +2,8 @@ package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
@@ -25,9 +17,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
-import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 
@@ -76,12 +70,12 @@ internal fun BookAddBookScreen(
     linkTextStateIsEmpty: Boolean,
     checkBookDialog: Boolean,
     focusManager: FocusManager,
-    navigateToBack: () -> Unit,
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
     toggleCheckBookDialog: () -> Unit,
     checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
@@ -95,7 +89,10 @@ internal fun BookAddBookScreen(
                         }
                     }
             ) {
-                BookRequestTopAppBar(startIconOnClick = { navigateToBack() })
+                MindWayTopAppBar(
+                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                    midText = stringResource(R.string.book_request),
+                )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
@@ -113,7 +110,7 @@ internal fun BookAddBookScreen(
                             )
                         }
                     }
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
@@ -121,7 +118,7 @@ internal fun BookAddBookScreen(
                         updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.writer),
                         textState = writeTextState,
                         placeholder = stringResource(id = R.string.please_enter_the_book_writer),
@@ -129,7 +126,7 @@ internal fun BookAddBookScreen(
                         updateTextValue = updateWriteTextState,
                         isError = writeTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.link),
                         textState = linkTextState,
                         placeholder = stringResource(id = R.string.please_enter_the_link),
@@ -140,10 +137,10 @@ internal fun BookAddBookScreen(
                     Spacer(modifier = modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
+                        onClick = checkButtonOnClick,
                         modifier = modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = checkButtonOnClick
                     )
                 }
             }

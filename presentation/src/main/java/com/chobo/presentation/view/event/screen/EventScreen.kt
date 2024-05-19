@@ -3,12 +3,9 @@ package com.chobo.presentation.view.event.screen
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -16,14 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
-import com.chobo.presentation.view.event.component.EventContent
-import com.chobo.presentation.view.event.component.EventPager
-import com.chobo.presentation.view.event.component.EventsData
+import com.chobo.presentation.view.event.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
-import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+import com.chobo.presentation.viewModel.event.uistate.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -77,22 +70,20 @@ internal fun EventScreen(
         ) {
             EventPager(
                 pagerState = pagerState,
-                tabs = listOf(
-                    stringResource(id = R.string.ongoing_event),
-                    stringResource(id = R.string.past_event)
-                ),
                 onGoingEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_ongoing_event),
                         eventDataList = currentEventsDataList,
+                        eventDataListIsEmpty = currentEventsDataList.isEmpty(),
                         onIconClick = onCurrentEventClick,
-                        navigateToDetailEvent = navigateToDetailEvent
+                        navigateToDetailEvent = navigateToDetailEvent,
                     )
                 },
                 pastEvent = {
                     EventContent(
                         content = stringResource(R.string.is_no_past_event),
                         eventDataList = pastEventsDataList,
+                        eventDataListIsEmpty = currentEventsDataList.isEmpty(),
                         onIconClick = onPastEventClick,
                         navigateToDetailEvent = navigateToDetailEvent
                     )

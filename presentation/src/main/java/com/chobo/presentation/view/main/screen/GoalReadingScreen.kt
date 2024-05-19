@@ -1,28 +1,18 @@
 package com.chobo.presentation.view.main.screen
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -34,14 +24,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.component.customToast.MindWayToast
-import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
-import com.chobo.presentation.view.main.component.GoalReadingChart
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
-import com.chobo.presentation.view.main.component.GoalReadingPlusCard
-import com.chobo.presentation.view.main.component.GoalReadingTopAppBar
+import com.chobo.presentation.view.component.icon.*
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
+import com.chobo.presentation.view.main.component.*
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -55,6 +43,7 @@ internal fun GoalReadingRoute(
     navigateToHomeViewDetail: () -> Unit,
 ) {
     val goalBookRead by goalReadingViewModel.goalBookRead.collectAsStateWithLifecycle()
+    val goalBookReadIsEmpty by goalReadingViewModel.goalBookReadIsEmpty.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
     val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
@@ -67,6 +56,7 @@ internal fun GoalReadingRoute(
     GoalReadingScreen(
         modifier = modifier,
         goalBookRead = goalBookRead,
+        goalBookReadIsEmpty = goalBookReadIsEmpty,
         goalBookReadSetting = goalBookReadSetting,
         goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
         goalReadingGraphDataList = goalReadingGraphDataList,
@@ -88,6 +78,7 @@ internal fun GoalReadingRoute(
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
+    goalBookReadIsEmpty: Boolean,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
     goalReadingGraphDataList: List<GoalReadingGraphData>,
@@ -124,12 +115,19 @@ internal fun GoalReadingScreen(
                             }
                         }
                 ) {
-                    GoalReadingTopAppBar(
-                        startIconOnClick = navigateToBack,
-                        endIconOnClick = {
-                            coroutineScope.launch { sheetState.show() }
-                        },
-                        isData = goalBookRead == 0
+                    MindWayTopAppBar(
+                        startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                        midText = stringResource(R.string.goal_reading),
+                        endIcon = {
+                            if (goalBookReadIsEmpty) {
+                                PlusIcon(
+                                    modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                    tint = MindWayColor.Black
+                                )
+                            } else {
+                                PlusIcon(tint = MindWayColor.GRAY400)
+                            }
+                        }
                     )
                     Box(modifier = Modifier.fillMaxSize()) {
                         LazyColumn(
@@ -146,6 +144,7 @@ internal fun GoalReadingScreen(
                             item {
                                 GoalReadingChart(
                                     goalBookRead = goalBookRead,
+                                    isHasData = goalReadingGraphDataList.isNotEmpty(),
                                     goalReadingGraphData = goalReadingGraphDataList,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -153,12 +152,24 @@ internal fun GoalReadingScreen(
                                 )
                             }
                             item {
-                                GoalReadingPlusCard(
-                                    onClick = navigateToHomeAddBook,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(60.dp)
-                                )
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = modifier
+                                        .shadow(
+                                            elevation = 20.dp,
+                                            spotColor = colors.CardShadow,
+                                            ambientColor = colors.CardShadow
+                                        )
+                                        .background(
+                                            color = colors.WHITE,
+                                            shape = RoundedCornerShape(size = 8.dp)
+                                        )
+                                        .clickableSingle(onClick = navigateToHomeAddBook)
+                                        .padding(16.dp)
+                                ) {
+                                    PlusIcon(modifier = Modifier.fillMaxSize())
+                                }
                             }
                             items(goalReadingListOfBooksReadItemDataList) { item ->
                                 GoalReadingListOfBooksReadItem(
@@ -170,10 +181,6 @@ internal fun GoalReadingScreen(
                         }
                         this@Column.AnimatedVisibility(
                             visible = isToastVisible,
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .offset(y = (-40).dp)
-                                .padding(horizontal = 24.dp),
                             enter = slideInVertically(
                                 initialOffsetY = { it + 110 },
                                 animationSpec = tween(durationMillis = 500)
@@ -181,7 +188,11 @@ internal fun GoalReadingScreen(
                             exit = slideOutVertically(
                                 targetOffsetY = { it + 110 },
                                 animationSpec = tween(durationMillis = 500)
-                            )
+                            ),
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .offset(y = (-40).dp)
+                                .padding(horizontal = 24.dp),
                         ) {
                             MindWayToast(
                                 isSuccess = isSuccess,
@@ -206,6 +217,7 @@ fun GoalReadingScreenPreview() {
         GoalReadingRoute(
             navigateToBack = { },
             navigateToHomeAddBook = { },
-            navigateToHomeViewDetail = { },)
+            navigateToHomeViewDetail = { },
+        )
     }
 }

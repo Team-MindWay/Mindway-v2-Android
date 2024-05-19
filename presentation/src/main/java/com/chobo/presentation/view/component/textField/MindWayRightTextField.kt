@@ -7,33 +7,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun MindWayTextField(
+fun MindWayRightTextField(
     modifier: Modifier = Modifier,
     title: String,
     textState: String,
     placeholder: String,
-    overflowErrorMessage: String = "",
     emptyErrorMessage: String,
     isError: Boolean,
-    lengthLimit: Int = 0,
     updateTextValue: (String) -> Unit,
 ) {
-    val lengthCheck = remember {
-        if (lengthLimit != 0) textState.length >= lengthLimit else false
-    }
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -52,22 +45,6 @@ fun MindWayTextField(
                         fontWeight = FontWeight.Normal,
                         color = colors.GRAY400,
                     )
-                    if (lengthLimit != 0) {
-                        Row {
-                            Text(
-                                text = textState.length.toString(),
-                                style = typography.labelLarge,
-                                fontWeight = FontWeight.Normal,
-                                color = colors.MAIN,
-                            )
-                            Text(
-                                text = stringResource(R.string.slash) + lengthLimit,
-                                style = typography.labelLarge,
-                                fontWeight = FontWeight.Normal,
-                                color = colors.GRAY400,
-                            )
-                        }
-                    }
                 }
                 LazyColumn {
                     item {
@@ -75,7 +52,7 @@ fun MindWayTextField(
                             modifier = Modifier
                                 .border(
                                     width = 1.dp,
-                                    color = if (lengthCheck || isError) colors.SYSTEM else colors.GRAY100,
+                                    color = colors.GRAY100,
                                     shape = RoundedCornerShape(size = 8.dp)
                                 )
                                 .background(
@@ -88,23 +65,22 @@ fun MindWayTextField(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp)
+                                    .padding(
+                                        top = 16.dp,
+                                        bottom = 16.dp,
+                                        start = 16.dp,
+                                        end = 34.dp
+                                    )
                             ) {
                                 BasicTextField(
                                     onValueChange = { newText ->
-                                        if (lengthLimit != 0) {
-                                            if (newText.length <= lengthLimit) {
-                                                updateTextValue(newText)
-                                            }
-                                        } else {
-                                            updateTextValue(newText)
-                                        }
+                                        updateTextValue(newText)
                                     },
                                     value = textState,
                                     textStyle = typography.bodySmall.copy(
                                         fontWeight = FontWeight.Normal,
                                         color = colors.Black,
-                                        textAlign = TextAlign.Start,
+                                        textAlign = TextAlign.End,
                                     ),
                                     cursorBrush = SolidColor(colors.MAIN),
                                     modifier = Modifier.fillMaxWidth()
@@ -112,31 +88,21 @@ fun MindWayTextField(
                             }
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start,
+                                horizontalArrangement = Arrangement.End,
                                 modifier = Modifier
                                     .padding(16.dp)
                                     .fillMaxWidth()
                             ) {
-                                if (textState.isEmpty()) {
-                                    Text(
-                                        text = placeholder,
-                                        style = typography.bodySmall,
-                                        fontWeight = FontWeight.Normal,
-                                        color = colors.GRAY400,
-                                    )
-                                }
+                                Text(
+                                    text = placeholder,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY400,
+                                )
                             }
                         }
                     }
                 }
-            }
-            if (lengthCheck) {
-                Text(
-                    text = overflowErrorMessage,
-                    style = typography.labelLarge,
-                    fontWeight = FontWeight.Normal,
-                    color = colors.SYSTEM
-                )
             }
             if (isError) {
                 Text(
@@ -152,12 +118,11 @@ fun MindWayTextField(
 
 @Preview
 @Composable
-fun MindWayTextFieldPreview() {
-    MindWayTextField(
+fun MindWayRightTextFieldPreview() {
+    MindWayRightTextField(
         title = "제목이다",
         textState = "가나다라",
         placeholder = "힌트다",
-        overflowErrorMessage = "에러니까 고치셈",
         emptyErrorMessage = "비어ㅆ습니다",
         updateTextValue = {},
         isError = true
