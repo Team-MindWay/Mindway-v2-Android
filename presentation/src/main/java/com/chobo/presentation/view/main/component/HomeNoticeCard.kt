@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.chobo.domain.model.notice.NoticeAllModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -24,21 +25,20 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun HomeNoticeCard(
     modifier: Modifier = Modifier,
-    titleText: String,
-    content: String,
     onClick: () -> Unit,
+    noticeAllModel: NoticeAllModel,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
-                .clickableSingle(onClick =  onClick)
+                .clickableSingle(onClick = onClick)
                 .background(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .padding(horizontal = 12.dp,)
+                .padding(horizontal = 12.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic__notice),
@@ -50,13 +50,13 @@ fun HomeNoticeCard(
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
-                    text = titleText,
+                    text = noticeAllModel.title,
                     style = typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
                 )
                 Text(
-                    text = content,
+                    text = noticeAllModel.content,
                     style = TextStyle(
                         fontSize = 12.sp,
                         lineHeight = 18.sp,
@@ -74,11 +74,10 @@ fun HomeNoticeCard(
 @Composable
 fun HomeNoticeCardPreview() {
     HomeNoticeCard(
-        titleText = "제못 텍스트",
-        content = "정말 엄청난 알림",
         modifier = Modifier
             .width(312.dp)
             .height(100.dp),
-        onClick = {  }
+        onClick = { },
+        noticeAllModel = NoticeAllModel(title = "제목제목제목제목", content = "내용")
     )
 }
