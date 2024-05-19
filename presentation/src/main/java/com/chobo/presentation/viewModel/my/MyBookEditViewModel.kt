@@ -1,8 +1,11 @@
 package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.order.OrderRequestBodyModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,9 +49,22 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
     }
 
+    private suspend fun getMyBookData(orderRequestBodyModel: OrderRequestBodyModel) {
+        _titleTextState.value = orderRequestBodyModel.title
+        _writeTextState.value = orderRequestBodyModel.author
+        _linkTextState.value = orderRequestBodyModel.book_url
+    }
+
     init {
-        _titleTextState.value = "임시 데이터입니당"
-        _writeTextState.value = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
-        _linkTextState.value = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
+        viewModelScope.launch {
+            getMyBookData(
+                // TODO: usecase 연결
+                OrderRequestBodyModel(
+                    title = "임시 데이터입니당",
+                    author = "임시 데이터입니당임시 데이터입니당임시 데이터입니당",
+                    book_url = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
+                )
+            )
+        }
     }
 }
