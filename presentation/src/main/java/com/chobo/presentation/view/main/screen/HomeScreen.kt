@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.domain.model.notice.NoticeAllModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.*
@@ -22,17 +23,15 @@ internal fun HomeRoute(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
-    val titleTextState by homeViewModel.titleTextState.collectAsStateWithLifecycle()
-    val contentTextState by homeViewModel.contentTextState.collectAsStateWithLifecycle()
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
+    val noticeAllModel by homeViewModel.noticeData.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
 
     HomeScreen(
         modifier = modifier,
-        titleTextState = titleTextState,
-        contentTextState = contentTextState,
         goalBookRead = goalBookRead,
+        noticeAllModel = noticeAllModel,
         readingGoalGraphDataList = readingGoalGraphDataList,
         bookKingOfTheMonthDataList = bookKingOfTheMonthDataList,
         navigateToGoalReading = navigateToGoalReading,
@@ -43,9 +42,8 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    titleTextState: String,
-    contentTextState: String,
     goalBookRead: Int,
+    noticeAllModel: NoticeAllModel,
     readingGoalGraphDataList: List<GoalReadingGraphData>,
     bookKingOfTheMonthDataList: List<BookKingOfTheMonthData>,
     navigateToGoalReading: () -> Unit,
@@ -63,8 +61,7 @@ internal fun HomeScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 HomeNoticeCard(
-                    titleText = titleTextState,
-                    content = contentTextState,
+                    noticeAllModel = noticeAllModel,
                     onClick = navigateToDetailEvent,
                     modifier = Modifier
                         .height(100.dp)
