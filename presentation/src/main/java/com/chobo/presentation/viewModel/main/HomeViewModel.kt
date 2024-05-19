@@ -1,6 +1,7 @@
 package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
+import com.chobo.domain.model.notice.NoticeAllModel
 import com.chobo.presentation.view.main.component.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -17,11 +18,8 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _bookKingOfTheMonthDataList = MutableStateFlow<List<BookKingOfTheMonthData>>(listOf())
     val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> = _bookKingOfTheMonthDataList.asStateFlow()
 
-    private val _titleTextState = MutableStateFlow("")
-    val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
-
-    private val _contentTextState = MutableStateFlow("")
-    val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
+    private val _noticeData = MutableStateFlow(NoticeAllModel())
+    val noticeData: StateFlow<NoticeAllModel> = _noticeData.asStateFlow()
 
     init {
         _goalBookRead.value = 15
@@ -39,7 +37,6 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             BookKingOfTheMonthData("왕성찬", 15),
             BookKingOfTheMonthData("왕지완", 1),
         )
-        _titleTextState.value = "가을 독서 행사"
-        _contentTextState.value = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다."
+        _noticeData.value = NoticeAllModel(title = "가을 독서 행사", content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.")
     }
 }

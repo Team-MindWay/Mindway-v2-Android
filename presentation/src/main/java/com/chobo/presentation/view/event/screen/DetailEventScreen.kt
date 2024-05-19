@@ -7,12 +7,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
+import com.chobo.domain.model.event.response.GetDetailEventResponseModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
@@ -27,17 +30,10 @@ internal fun DetailEventRoute(
     detailEventViewModel: DetailEventViewModel = viewModel(),
     navigateToBack: () -> Unit,
 ) {
-    val title by detailEventViewModel.title.collectAsStateWithLifecycle()
-    val content by detailEventViewModel.content.collectAsStateWithLifecycle()
-    val date by detailEventViewModel.date.collectAsStateWithLifecycle()
-    val imageRes by detailEventViewModel.imageRes.collectAsStateWithLifecycle()
-
+    val detailData by detailEventViewModel.detailData.collectAsStateWithLifecycle()
     DetailEventScreen(
         modifier = modifier,
-        title = title,
-        content = content,
-        date = date,
-        imageRes = imageRes,
+        detailData = detailData,
         navigateToBack = navigateToBack
     )
 }
@@ -45,10 +41,7 @@ internal fun DetailEventRoute(
 @Composable
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
-    title: String,
-    content: String,
-    date: String,
-    imageRes: Int,
+    detailData: GetDetailEventResponseModel,
     navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
@@ -63,7 +56,7 @@ internal fun DetailEventScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 Image(
-                    painter = painterResource(imageRes),
+                    painter = rememberImagePainter(data = detailData.image),
                     contentDescription = "Event Image",
                     modifier = Modifier
                         .padding(vertical = 20.dp)
@@ -72,9 +65,10 @@ internal fun DetailEventScreen(
                         .clip(shape = RoundedCornerShape(8.dp))
                 )
                 DetailEventContent(
-                    title = title,
-                    content = content,
-                    date = date,
+                    title = detailData.title,
+                    content = detailData.content,
+                    startedAt = detailData.startedAt,
+                    endedAt = detailData.endedAt
                 )
             }
         }
