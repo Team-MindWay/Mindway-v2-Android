@@ -1,8 +1,11 @@
 package com.chobo.presentation.viewModel.book
 
 import androidx.lifecycle.ViewModel
+import com.chobo.domain.model.order.OrderRequestBodyModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,5 +54,17 @@ class BookAddBookViewModel @Inject constructor() : ViewModel() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
+        if (
+            _titleTextState.value.isNotEmpty()
+            && _writeTextState.value.isNotEmpty()
+            && _linkTextState.value.isNotEmpty()
+        ) {
+            // TODO: usecase 연결
+            OrderRequestBodyModel(
+                title = titleTextState.value,
+                author = _writeTextState.value,
+                book_url = linkTextState.value
+            )
+        }
     }
 }
