@@ -1,15 +1,23 @@
 package com.chobo.presentation.viewModel.book
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
+import com.chobo.domain.usecase.order.OrderUploadUseCase
+import com.chobo.presentation.viewModel.util.Event
+import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookAddBookViewModel @Inject constructor() : ViewModel() {
+class BookAddBookViewModel @Inject constructor(
+    private val orderUploadUseCase: OrderUploadUseCase
+) : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
 
@@ -59,12 +67,25 @@ class BookAddBookViewModel @Inject constructor() : ViewModel() {
             && _writeTextState.value.isNotEmpty()
             && _linkTextState.value.isNotEmpty()
         ) {
-            // TODO: usecase 연결
-            OrderRequestBodyModel(
-                title = titleTextState.value,
-                author = _writeTextState.value,
-                book_url = linkTextState.value
-            )
+            viewModelScope.launch {
+                orderUploadUseCase(
+                    body = OrderRequestBodyModel(
+                        title = titleTextState.value,
+                        author = _writeTextState.value,
+                        book_url = linkTextState.value
+                    )
+                )
+                    .onSuccess {
+                        it.catch { remoteError ->
+                            remoteError.errorHandling<Unit>()
+                        }.collect { response ->
+                            Event.Success(data = response)
+                        }
+                    }
+                    .onFailure {
+                        it.errorHandling<Unit>()
+                    }
+            }
         }
     }
 }
