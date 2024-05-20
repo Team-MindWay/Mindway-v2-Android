@@ -2,8 +2,16 @@ package com.chobo.presentation.view.book.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
@@ -13,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -28,7 +36,7 @@ import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 @Composable
 internal fun BookAddBookRoute(
     modifier: Modifier = Modifier,
-    bookAddBookViewModel: BookAddBookViewModel = viewModel(),
+    bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(),
     navigateToBack: () -> Unit
 ) {
     val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
