@@ -63,9 +63,9 @@ class BookAddBookViewModel @Inject constructor(
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
         if (
-            _titleTextState.value.isEmpty()
-            && _writeTextState.value.isEmpty()
-            && _linkTextState.value.isEmpty()
+            _titleTextState.value.isNotEmpty()
+            && _writeTextState.value.isNotEmpty()
+            && _linkTextState.value.isNotEmpty()
         ) {
             viewModelScope.launch {
                 orderUploadUseCase(
