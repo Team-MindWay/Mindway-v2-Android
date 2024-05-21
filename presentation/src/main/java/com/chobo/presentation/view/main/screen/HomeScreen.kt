@@ -13,37 +13,37 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
 import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
+import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 
 @Composable
 internal fun HomeRoute(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel = viewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
-    val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
+    val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
     HomeScreen(
         modifier = modifier,
         goalBookRead = goalBookRead,
         noticeGetUiState = noticeGetUiState,
         readingGoalGraphDataList = readingGoalGraphDataList,
-        bookKingOfTheMonthDataList = bookKingOfTheMonthDataList,
+        getRankUIState = getRankUIState,
         navigateToGoalReading = navigateToGoalReading,
         navigateToDetailEvent = navigateToDetailEvent,
     )
@@ -55,7 +55,7 @@ internal fun HomeScreen(
     goalBookRead: Int,
     noticeGetUiState: NoticeGetUiState,
     readingGoalGraphDataList: List<GoalReadingGraphData>,
-    bookKingOfTheMonthDataList: List<BookKingOfTheMonthData>,
+    getRankUIState: GetRankUIState,
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
@@ -92,13 +92,41 @@ internal fun HomeScreen(
                         .fillMaxWidth()
                         .height(211.dp),
                 )
-                HomeReadersOfTheMonthChart(
-                    bookKingOfTheMonthData = bookKingOfTheMonthDataList,
-                    isHasData = bookKingOfTheMonthDataList.isNotEmpty(),
-                    modifier = Modifier
-                        .height(239.dp)
-                        .fillMaxWidth(),
-                )
+                when(getRankUIState){
+                    is GetRankUIState.Empty -> {
+                        HomeReadersOfTheMonthChart(
+                            isHasData = false,
+                            modifier = Modifier
+                                .height(239.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
+                    is GetRankUIState.Fail -> {
+                        HomeReadersOfTheMonthChart(
+                            isHasData = false,
+                            modifier = Modifier
+                                .height(239.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
+                    is GetRankUIState.Loading -> {
+                        HomeReadersOfTheMonthChart(
+                            isHasData = false,
+                            modifier = Modifier
+                                .height(239.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
+                    is GetRankUIState.Success -> {
+                        HomeReadersOfTheMonthChart(
+                            isHasData = true,
+                            bookKingOfTheMonthData = getRankUIState.data,
+                            modifier = Modifier
+                                .height(239.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
+                }
             }
         }
     }
