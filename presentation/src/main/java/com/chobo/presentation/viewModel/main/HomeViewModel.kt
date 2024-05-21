@@ -29,17 +29,17 @@ class HomeViewModel @Inject constructor(
     private val _bookKingOfTheMonthDataList = MutableStateFlow<List<BookKingOfTheMonthData>>(listOf())
     val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> = _bookKingOfTheMonthDataList.asStateFlow()
 
-    private val _noticeData = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
-    val noticeData: StateFlow<NoticeGetUiState> = _noticeData.asStateFlow()
+    private val _noticeGetUiState = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
+    val noticeData: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
 
     fun getNotice() = viewModelScope.launch {
         getNoticeGetUseCase()
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _noticeData.value = NoticeGetUiState.Loading
-                    is Result.Success -> _noticeData.value = NoticeGetUiState.Success(result.data)
-                    is Result.Fail -> _noticeData.value = NoticeGetUiState.Fail(result.exception)
+                    is Result.Loading -> _noticeGetUiState.value = NoticeGetUiState.Loading
+                    is Result.Success -> _noticeGetUiState.value = NoticeGetUiState.Success(result.data)
+                    is Result.Fail -> _noticeGetUiState.value = NoticeGetUiState.Fail(result.exception)
                 }
             }
     }
