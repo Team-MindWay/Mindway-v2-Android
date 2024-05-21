@@ -8,6 +8,7 @@ import com.chobo.data.remote.api.GoalAPI
 import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.MyAPI
 import com.chobo.data.remote.api.NoticeAPI
+import com.chobo.data.remote.api.RankApi
 import com.chobo.data.remote.api.RecommendAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
@@ -112,4 +113,11 @@ object NetworkModule {
     fun provideEventAPI(retrofit: Retrofit): EventAPI {
         return retrofit.create(EventAPI::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideRankAPI(retrofit: Retrofit): RankApi {
+        return retrofit.create(RankApi::class.java)
+    }
+
 }
