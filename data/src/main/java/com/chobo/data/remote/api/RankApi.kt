@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface RankApi {
     @GET("/api/v2/rank")
-    suspend fun rankGet(): RankResponse
+    suspend fun rankGet(): List<RankResponse>
 }

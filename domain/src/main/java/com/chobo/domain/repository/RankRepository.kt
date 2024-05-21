@@ -4,5 +4,5 @@ import com.chobo.domain.model.rank.RankModel
 import kotlinx.coroutines.flow.Flow
 
 interface RankRepository {
-    suspend fun rankGet(): Flow<RankModel>
+    suspend fun rankGet(): Flow<List<RankModel>>
 }

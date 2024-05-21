@@ -12,9 +12,9 @@ import javax.inject.Inject
 class RemoteRankDataSourceImpl @Inject constructor(
     private val rankApi: RankApi
 ) : RemoteRankDataSource {
-    override suspend fun rankGet(): Flow<RankResponse> = flow {
+    override suspend fun rankGet(): Flow<List<RankResponse>> = flow {
         emit(
-            MindWayAPIHandler<RankResponse>()
+            MindWayAPIHandler<List<RankResponse>>()
                 .httpRequest { rankApi.rankGet() }
                 .sendRequest()
         )
