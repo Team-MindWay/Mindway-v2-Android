@@ -34,7 +34,7 @@ internal fun HomeRoute(
     navigateToDetailEvent: () -> Unit,
 ) {
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
-    val noticeGetUiState by homeViewModel.noticeData.collectAsStateWithLifecycle()
+    val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
 

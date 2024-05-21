@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
     val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> = _bookKingOfTheMonthDataList.asStateFlow()
 
     private val _noticeGetUiState = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
-    val noticeData: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
+    val noticeGetUiState: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
 
     fun getNotice() = viewModelScope.launch {
         getNoticeGetUseCase()
