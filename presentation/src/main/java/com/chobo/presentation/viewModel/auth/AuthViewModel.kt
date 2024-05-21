@@ -15,8 +15,6 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val gAuthLoginUseCase: GAuthLoginUseCase,
     private val saveTokenUseCase: SaveLoginDataUseCase,
-    private val logoutUseCase: LogoutUseCase,
-    private val deleteTokenUseCase: DeleteTokenUseCase
 ) : ViewModel() {
     private val _gAuthLoginRequest = MutableLiveData<Event<GAuthLoginResponseModel>>()
     val gAuthLoginRequest: LiveData<Event<GAuthLoginResponseModel>> get() = _gAuthLoginRequest
@@ -50,15 +48,6 @@ class AuthViewModel @Inject constructor(
                 _saveTokenRequest.value = it.errorHandling()
             }
     }
-
-    fun logout() = viewModelScope.launch {
-        logoutUseCase()
-    }
-
-    fun deleteToken() = viewModelScope.launch {
-        deleteTokenUseCase()
-    }
-
     fun toggleIsClickLoginButton() {
         _isClickLoginButton.value = !_isClickLoginButton.value
     }
