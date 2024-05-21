@@ -132,8 +132,9 @@ internal fun BookScreen(
                             0 -> {
                                 item { Spacer(modifier = modifier.height(28.dp)) }
                                 when (novelDataList) {
-                                    is GetRecommendBookUiState.Error -> {  }
-                                    is GetRecommendBookUiState.Loading -> {  }
+                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Empty -> {}
+                                    is GetRecommendBookUiState.Fail -> {}
                                     is GetRecommendBookUiState.Success -> {
                                         itemsIndexed(novelDataList.data) { _, item ->
                                             BookListItem(data = item)
@@ -145,8 +146,9 @@ internal fun BookScreen(
                             1 -> {
                                 item { Spacer(modifier = modifier.height(28.dp)) }
                                 when (essayDataList) {
-                                    is GetRecommendBookUiState.Error -> {  }
-                                    is GetRecommendBookUiState.Loading -> {  }
+                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Empty -> {}
+                                    is GetRecommendBookUiState.Fail -> {}
                                     is GetRecommendBookUiState.Success -> {
                                         itemsIndexed(essayDataList.data) { _, item ->
                                             BookListItem(data = item)
