@@ -28,8 +28,8 @@ class HomeViewModel @Inject constructor(
     private val _goalReadingGraphDataList = MutableStateFlow<List<GoalReadingGraphData>>(listOf())
     val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> = _goalReadingGraphDataList.asStateFlow()
 
-    private val _GetRankUIState = MutableStateFlow<GetRankUIState>(GetRankUIState.Loading)
-    val getRankUIState: StateFlow<GetRankUIState> = _GetRankUIState.asStateFlow()
+    private val _getRankUIState = MutableStateFlow<GetRankUIState>(GetRankUIState.Loading)
+    val getRankUIState: StateFlow<GetRankUIState> = _getRankUIState.asStateFlow()
 
     private val _noticeGetUiState = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
     val noticeGetUiState: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
@@ -51,13 +51,13 @@ class HomeViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _GetRankUIState.value = GetRankUIState.Loading
+                    is Result.Loading -> _getRankUIState.value = GetRankUIState.Loading
                     is Result.Success -> if(result.data.isEmpty()){
-                        _GetRankUIState.value = GetRankUIState.Empty
+                        _getRankUIState.value = GetRankUIState.Empty
                     }else{
-                        _GetRankUIState.value = GetRankUIState.Success(result.data)
+                        _getRankUIState.value = GetRankUIState.Success(result.data)
                     }
-                    is Result.Fail -> _GetRankUIState.value = GetRankUIState.Fail(result.exception)
+                    is Result.Fail -> _getRankUIState.value = GetRankUIState.Fail(result.exception)
                 }
             }
     }
