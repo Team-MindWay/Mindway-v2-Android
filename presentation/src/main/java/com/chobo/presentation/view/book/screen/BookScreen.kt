@@ -35,9 +35,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
-import com.chobo.presentation.view.book.component.BookListItemData
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.PlusIcon
@@ -73,8 +73,8 @@ internal fun BookRoute(
 @Composable
 internal fun BookScreen(
     modifier: Modifier = Modifier,
-    novelDataList: List<BookListItemData>,
-    essayDataList: List<BookListItemData>,
+    novelDataList: List<RecommendListResponseAllModel>,
+    essayDataList: List<RecommendListResponseAllModel>,
     isToastVisible: Boolean,
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
