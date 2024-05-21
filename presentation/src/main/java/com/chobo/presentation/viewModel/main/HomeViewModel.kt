@@ -1,14 +1,25 @@
 package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
-import com.chobo.domain.model.notice.NoticeAllModel
-import com.chobo.presentation.view.main.component.*
+import androidx.lifecycle.viewModelScope
+import com.chobo.domain.usecase.notice.NoticeGetUseCase
+import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
+import com.chobo.presentation.view.main.component.GoalReadingGraphData
+import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
+import com.chobo.presentation.viewModel.util.result.Result
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val getNoticeGetUseCase: NoticeGetUseCase
+) : ViewModel() {
     private val _goalBookRead = MutableStateFlow(0)
     val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
 
@@ -20,6 +31,8 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _noticeData = MutableStateFlow(NoticeAllModel())
     val noticeData: StateFlow<NoticeAllModel> = _noticeData.asStateFlow()
+    private val _noticeData = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
+    val noticeData: StateFlow<NoticeGetUiState> = _noticeData.asStateFlow()
 
     init {
         _goalBookRead.value = 15
