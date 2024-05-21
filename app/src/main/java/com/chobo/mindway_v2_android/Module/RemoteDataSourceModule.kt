@@ -8,6 +8,8 @@ import com.chobo.data.remote.datasource.event.RemoteEventDataSource
 import com.chobo.data.remote.datasource.event.RemoteEventDataSourceImpl
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSource
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSourceImpl
+import com.chobo.data.remote.datasource.rank.RemoteRankDataSource
+import com.chobo.data.remote.datasource.rank.RemoteRankDataSourceImpl
 import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSource
 import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSourceImpl
 import dagger.Binds
@@ -42,4 +44,9 @@ abstract class RemoteDataSourceModule {
     abstract fun provideRemoteEventDataSource(
         remoteEventDataSourceImpl: RemoteEventDataSourceImpl
     ): RemoteEventDataSource
+
+    @Binds
+    abstract fun provideRemoteRankDataSource(
+        remoteRankDataSourceImpl: RemoteRankDataSourceImpl
+    ): RemoteRankDataSource
 }
