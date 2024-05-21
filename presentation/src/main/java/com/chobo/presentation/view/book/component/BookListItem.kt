@@ -13,13 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-
-data class BookListItemData(
-    val writer: String,
-    val title: String,
-    val content: String,
-)
-
 @Composable
 fun BookListItem(data: RecommendListResponseAllModel) {
     MindWayAndroidTheme { colors, typography ->
