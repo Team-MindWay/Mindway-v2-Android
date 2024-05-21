@@ -11,14 +11,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.rank.RankModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun HomeReadersOfTheMonthGraph(
     modifier: Modifier,
-    bookKingOfTheMonthData: BookKingOfTheMonthData,
+    rankModel: RankModel,
+    maxBook: Int,
 ) {
-    val height = ((78 * bookKingOfTheMonthData.numOfBooks) / 30 + 2).toFloat().dp
+    val height = ((78 * rankModel.total) / maxBook + 2).toFloat().dp
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
@@ -26,7 +28,7 @@ fun HomeReadersOfTheMonthGraph(
             modifier = modifier
         ) {
             Text(
-                text = "${bookKingOfTheMonthData.numOfBooks}권",
+                text = "${rankModel.total}권",
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.GRAY800,
@@ -45,7 +47,7 @@ fun HomeReadersOfTheMonthGraph(
                     )
             )
             Text(
-                text = bookKingOfTheMonthData.name,
+                text = rankModel.username,
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.GRAY800,
@@ -59,10 +61,11 @@ fun HomeReadersOfTheMonthGraph(
 @Composable
 fun HomeReadersOfTheMonthGraphPreview() {
     HomeReadersOfTheMonthGraph(
-        bookKingOfTheMonthData = BookKingOfTheMonthData(
-            name = "이름",
-            numOfBooks = 12
-        ),
-        modifier = Modifier.width(50.dp)
+        modifier = Modifier.width(50.dp),
+        maxBook = 35,
+        rankModel = RankModel(
+            username = "사람",
+            total = 15
+        )
     )
 }
