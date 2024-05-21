@@ -1,5 +1,6 @@
 package com.chobo.data.util
 
+import android.util.Log
 import com.chobo.data.BuildConfig
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.domain.exception.NeedLoginException
@@ -24,6 +25,8 @@ class AuthInterceptor @Inject constructor(
         val currentTime = System.currentTimeMillis().toMindWayDate()
         val path = request.url.encodedPath
 
+        Log.d("Network", "Intercepting request to: ${request.url}")
+
         if (ignorePath.contains(path)) {
             return chain.proceed(request)
         }
@@ -39,7 +42,7 @@ class AuthInterceptor @Inject constructor(
             if (currentTime.after(accessTime.toDate())) {
                 val client = OkHttpClient()
                 val refreshRequest = Request.Builder()
-                    .url(BuildConfig.BASE_URL + "auth")
+                    .url(BuildConfig.BASE_URL + "/api/v2/auth")
                     .patch(chain.request().body ?: RequestBody.create(null, byteArrayOf()))
                     .addHeader(
                     "refreshToken",
@@ -59,6 +62,7 @@ class AuthInterceptor @Inject constructor(
             val accessToken = dataSource.getAccessToken().first().replace("\"", "")
             builder.addHeader(name = "Authorization", value = "Bearer $accessToken")
         }
+        Log.d("Network", "Proceeding with request to: ${builder.build().url}")
         return chain.proceed(builder.build())
     }
 }
