@@ -1,7 +1,12 @@
 package com.chobo.presentation.viewModel.book
 
 import androidx.lifecycle.*
-import com.chobo.presentation.view.book.component.BookListItemData
+import com.chobo.domain.emumtype.OrderRequestBookType
+import com.chobo.domain.emumtype.OrderRequestBookType.*
+import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
+import com.chobo.domain.usecase.recommend.GetRecommendBookUseCase
+import com.chobo.presentation.viewModel.util.Event
+import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -9,12 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookScreenViewModel @Inject constructor() : ViewModel() {
-    private val _novelDataList = MutableStateFlow<List<BookListItemData>>(listOf())
-    val novelDataList: StateFlow<List<BookListItemData>> = _novelDataList.asStateFlow()
+class BookScreenViewModel @Inject constructor(
+    private val getRecommendBookUseCase: GetRecommendBookUseCase
+) : ViewModel() {
+    private val _novelDataList = MutableStateFlow<List<RecommendListResponseAllModel>>(listOf())
+    val novelDataList: StateFlow<List<RecommendListResponseAllModel>> = _novelDataList.asStateFlow()
 
-    private val _essayDataList = MutableStateFlow<List<BookListItemData>>(listOf())
-    val essayDataList: StateFlow<List<BookListItemData>> = _essayDataList.asStateFlow()
+    private val _essayDataList = MutableStateFlow<List<RecommendListResponseAllModel>>(listOf())
+    val essayDataList: StateFlow<List<RecommendListResponseAllModel>> = _essayDataList.asStateFlow()
 
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
@@ -27,20 +34,27 @@ class BookScreenViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun getRecommendBook(type: OrderRequestBookType) = viewModelScope.launch {
+        getRecommendBookUseCase(type = type.name)
+            .onSuccess {
+                it.catch { remoteError ->
+                    remoteError.errorHandling<Unit>()
+                }.collect { response ->
+                    when (type) {
+                        NOVEL -> _novelDataList.value = response
+
+                        ESSAY -> _essayDataList.value = response
+                    }
+                    Event.Success(data = response)
+                }
+            }
+            .onFailure {
+                it.errorHandling<Unit>()
+            }
+    }
+
     init {
-        _novelDataList.value = MutableList(30) { _ ->
-            BookListItemData(
-                writer = "작가이름",
-                title = "제옴ㄹ",
-                content = "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            )
-        }
-        _essayDataList.value = MutableList(30) { _ ->
-            BookListItemData(
-                writer = "gw",
-                title = "제옴ㄹ",
-                content = "czxczxc"
-            )
-        }
+        getRecommendBook(type = NOVEL)
+        getRecommendBook(type = ESSAY)
     }
 }
