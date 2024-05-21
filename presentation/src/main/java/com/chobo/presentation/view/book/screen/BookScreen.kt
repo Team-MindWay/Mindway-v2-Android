@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
@@ -44,6 +43,7 @@ import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookScreenViewModel
+import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -73,8 +73,8 @@ internal fun BookRoute(
 @Composable
 internal fun BookScreen(
     modifier: Modifier = Modifier,
-    novelDataList: List<RecommendListResponseAllModel>,
-    essayDataList: List<RecommendListResponseAllModel>,
+    novelDataList: GetRecommendBookUiState,
+    essayDataList: GetRecommendBookUiState,
     isToastVisible: Boolean,
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
@@ -131,15 +131,27 @@ internal fun BookScreen(
                         when (page) {
                             0 -> {
                                 item { Spacer(modifier = modifier.height(28.dp)) }
-                                itemsIndexed(novelDataList) { _, item ->
-                                    BookListItem(data = item)
+                                when (novelDataList) {
+                                    is GetRecommendBookUiState.Error -> {  }
+                                    is GetRecommendBookUiState.Loading -> {  }
+                                    is GetRecommendBookUiState.Success -> {
+                                        itemsIndexed(novelDataList.data) { _, item ->
+                                            BookListItem(data = item)
+                                        }
+                                    }
                                 }
                             }
 
                             1 -> {
                                 item { Spacer(modifier = modifier.height(28.dp)) }
-                                itemsIndexed(essayDataList) { _, item ->
-                                    BookListItem(data = item)
+                                when (essayDataList) {
+                                    is GetRecommendBookUiState.Error -> {  }
+                                    is GetRecommendBookUiState.Loading -> {  }
+                                    is GetRecommendBookUiState.Success -> {
+                                        itemsIndexed(essayDataList.data) { _, item ->
+                                            BookListItem(data = item)
+                                        }
+                                    }
                                 }
                             }
                         }
