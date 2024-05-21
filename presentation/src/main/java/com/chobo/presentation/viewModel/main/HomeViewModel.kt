@@ -29,10 +29,20 @@ class HomeViewModel @Inject constructor(
     private val _bookKingOfTheMonthDataList = MutableStateFlow<List<BookKingOfTheMonthData>>(listOf())
     val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> = _bookKingOfTheMonthDataList.asStateFlow()
 
-    private val _noticeData = MutableStateFlow(NoticeAllModel())
-    val noticeData: StateFlow<NoticeAllModel> = _noticeData.asStateFlow()
     private val _noticeData = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
     val noticeData: StateFlow<NoticeGetUiState> = _noticeData.asStateFlow()
+
+    fun getNotice() = viewModelScope.launch {
+        getNoticeGetUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _noticeData.value = NoticeGetUiState.Loading
+                    is Result.Success -> _noticeData.value = NoticeGetUiState.Success(result.data)
+                    is Result.Fail -> _noticeData.value = NoticeGetUiState.Fail(result.exception)
+                }
+            }
+    }
 
     init {
         _goalBookRead.value = 15
@@ -50,6 +60,6 @@ class HomeViewModel @Inject constructor(
             BookKingOfTheMonthData("왕성찬", 15),
             BookKingOfTheMonthData("왕지완", 1),
         )
-        _noticeData.value = NoticeAllModel(title = "가을 독서 행사", content = "독서의 계절, 가을을 맞아 \n도서관에서 특별한 이벤트를 준비했습니다.")
+        getNotice()
     }
 }
