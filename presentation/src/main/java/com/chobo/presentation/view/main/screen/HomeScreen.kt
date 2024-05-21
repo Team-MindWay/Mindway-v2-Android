@@ -1,20 +1,30 @@
 package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.chobo.domain.model.notice.NoticeAllModel
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.*
+import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
+import com.chobo.presentation.view.main.component.GoalReadingGraphData
+import com.chobo.presentation.view.main.component.HomeGoalReadingChart
+import com.chobo.presentation.view.main.component.HomeNoticeCard
+import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
+import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 
 @Composable
 internal fun HomeRoute(
@@ -24,14 +34,14 @@ internal fun HomeRoute(
     navigateToDetailEvent: () -> Unit,
 ) {
     val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
-    val noticeAllModel by homeViewModel.noticeData.collectAsStateWithLifecycle()
+    val noticeGetUiState by homeViewModel.noticeData.collectAsStateWithLifecycle()
     val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val bookKingOfTheMonthDataList by homeViewModel.bookKingOfTheMonthDataList.collectAsStateWithLifecycle()
 
     HomeScreen(
         modifier = modifier,
         goalBookRead = goalBookRead,
-        noticeAllModel = noticeAllModel,
+        noticeGetUiState = noticeGetUiState,
         readingGoalGraphDataList = readingGoalGraphDataList,
         bookKingOfTheMonthDataList = bookKingOfTheMonthDataList,
         navigateToGoalReading = navigateToGoalReading,
@@ -43,7 +53,7 @@ internal fun HomeRoute(
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     goalBookRead: Int,
-    noticeAllModel: NoticeAllModel,
+    noticeGetUiState: NoticeGetUiState,
     readingGoalGraphDataList: List<GoalReadingGraphData>,
     bookKingOfTheMonthDataList: List<BookKingOfTheMonthData>,
     navigateToGoalReading: () -> Unit,
@@ -60,13 +70,19 @@ internal fun HomeScreen(
                     .fillMaxSize()
                     .padding(horizontal = 24.dp)
             ) {
-                HomeNoticeCard(
-                    noticeAllModel = noticeAllModel,
-                    onClick = navigateToDetailEvent,
-                    modifier = Modifier
-                        .height(100.dp)
-                        .fillMaxWidth(),
-                )
+                when (noticeGetUiState) {
+                    is NoticeGetUiState.Fail -> {}
+                    is NoticeGetUiState.Loading -> {}
+                    is NoticeGetUiState.Success -> {
+                        HomeNoticeCard(
+                            noticeAllModel = noticeGetUiState.data,
+                            onClick = navigateToDetailEvent,
+                            modifier = Modifier
+                                .height(100.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
+                }
                 HomeGoalReadingChart(
                     goalBookRead = goalBookRead,
                     isHasData = readingGoalGraphDataList.isNotEmpty(),
