@@ -20,15 +20,12 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val builder = request.newBuilder()
-        val ignorePath = listOf("/auth")
-        val ignoreMethod = listOf("POST")
+        val ignorePath = listOf("/api/v2/auth")
         val currentTime = System.currentTimeMillis().toMindWayDate()
         val path = request.url.encodedPath
-        val method = request.method
 
-        ignorePath.forEachIndexed { index, s ->
-            if (s == path && ignoreMethod[index] == method)
-                return chain.proceed(request)
+        if (ignorePath.contains(path)) {
+            return chain.proceed(request)
         }
 
         runBlocking {
