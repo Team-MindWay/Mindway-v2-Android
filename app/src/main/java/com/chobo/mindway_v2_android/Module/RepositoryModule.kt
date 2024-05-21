@@ -3,12 +3,14 @@ package com.chobo.mindway_v2_android.Module
 import com.chobo.data.repository.AuthRepositoryImpl
 import com.chobo.data.repository.BookRepositoryImpl
 import com.chobo.data.repository.EventRepositoryImpl
+import com.chobo.data.repository.NoticeRepositoryImpl
 import com.chobo.data.repository.OrderRepositoryImpl
 import com.chobo.data.repository.RankRepositoryImpl
 import com.chobo.data.repository.RecommendRepositoryImpl
 import com.chobo.domain.repository.AuthRepository
 import com.chobo.domain.repository.BookRepository
 import com.chobo.domain.repository.EventRepository
+import com.chobo.domain.repository.NoticeRepository
 import com.chobo.domain.repository.OrderRepository
 import com.chobo.domain.repository.RankRepository
 import com.chobo.domain.repository.RecommendRepository
@@ -39,6 +41,11 @@ abstract class RepositoryModule {
     abstract fun provideRecommendRepository(
         recommendRepositoryImpl: RecommendRepositoryImpl
     ): RecommendRepository
+
+    @Binds
+    abstract fun provideNoticeRepository(
+        noticeRepositoryImpl: NoticeRepositoryImpl
+    ): NoticeRepository
 
     @Binds
     abstract fun provideEventRepository(
