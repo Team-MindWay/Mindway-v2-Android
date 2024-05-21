@@ -1,6 +1,8 @@
 package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.*
+import com.chobo.domain.usecase.auth.DeleteTokenUseCase
+import com.chobo.domain.usecase.auth.LogoutUseCase
 import com.chobo.presentation.view.my.component.MyBookListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -9,7 +11,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyViewModel @Inject constructor() : ViewModel() {
+class MyViewModel @Inject constructor(
+    private val logoutUseCase: LogoutUseCase,
+    private val deleteTokenUseCase: DeleteTokenUseCase
+) : ViewModel() {
     private val _myBookListItemDataList = MutableStateFlow<List<MyBookListItemData>>(listOf())
     val myBookListItemDataList: StateFlow<List<MyBookListItemData>> =
         _myBookListItemDataList.asStateFlow()
@@ -47,6 +52,11 @@ class MyViewModel @Inject constructor() : ViewModel() {
 
     fun editBookOnClick(index: Int) {
 
+    }
+
+    fun logout() = viewModelScope.launch {
+        logoutUseCase()
+        deleteTokenUseCase()
     }
 
     init {
