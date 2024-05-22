@@ -27,15 +27,3 @@ fun GoalWeekendResponse.toGetGoalWeekendResponseModel(): GetWeekendGoalModel {
         goal_value = goal_value
     )
 }
-
-fun GoalWeekendResponse.toDto(): GoalWeekendResponse = GoalWeekendResponse(
-    mon = mon,
-    tue = tue,
-    wed = wed,
-    thu = thu,
-    fri = fri,
-    sat = sat,
-    sun = sun,
-    now_count = now_count,
-    goal_value = goal_value
-)
