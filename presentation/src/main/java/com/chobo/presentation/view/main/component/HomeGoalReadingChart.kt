@@ -1,19 +1,31 @@
 package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.goal.GetGoalModel
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.getTodayDayOfWeek
+import okhttp3.internal.immutableListOf
 
 data class GoalReadingGraphData(
     val numBooksRead: Int,
@@ -25,11 +37,25 @@ data class GoalReadingGraphData(
 @Composable
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
-    goalBookRead: Int,
-    isHasData :Boolean,
-    readNumberList: List<GoalReadingGraphData> = listOf(),
+    isHasData: Boolean,
+    getGoalModel: GetGoalModel,
     onClick: () -> Unit,
 ) {
+    val weekList = remember { immutableListOf("월", "화", "수", "목", "금", "토", "일") }
+    val dateList = remember {
+        mutableListOf(
+            getGoalModel.mon,
+            getGoalModel.tue,
+            getGoalModel.wed,
+            getGoalModel.thu,
+            getGoalModel.fri,
+            getGoalModel.sat,
+            getGoalModel.sun
+        )
+    }
+    val maxRead = remember { dateList.max() }
+    val currentDate = getTodayDayOfWeek()
+
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
             Column(
@@ -65,8 +91,8 @@ fun HomeGoalReadingChart(
                         ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                     }
                     GoalReadingIndicator(
-                        numBooksRead = readNumberList.sumOf { it.numBooksRead },
-                        goalBookRead = goalBookRead,
+                        numBooksRead = getGoalModel.now_count,
+                        goalBookRead = getGoalModel.goal_value,
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.1840f)
@@ -79,12 +105,12 @@ fun HomeGoalReadingChart(
                         .fillMaxWidth(0.909f)
                         .height(78.dp)
                 ) {
-                    readNumberList.forEach {
+                    weekList.forEachIndexed { index, date ->
                         GoalReadingGraph(
-                            numBooksRead = it.numBooksRead,
-                            maxBooksRead = it.maxBooksRead,
-                            isCurrentDate = it.isCurrentDate,
-                            today = it.today,
+                            numBooksRead = dateList[index],
+                            maxBooksRead = maxRead,
+                            isCurrentDate = currentDate == date,
+                            today = date,
                             modifier = Modifier
                                 .width(16.dp)
                                 .height(78.dp),
@@ -141,17 +167,18 @@ fun HomeGoalReadingChartPreview() {
         modifier = Modifier
             .width(312.dp)
             .height(211.dp),
-        readNumberList = listOf(
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(3, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, true, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-        ),
+        isHasData = true,
         onClick = { },
-        goalBookRead = 14,
-        isHasData = true
+        getGoalModel = GetGoalModel(
+            mon = 32,
+            tue = 43,
+            wed = 56,
+            thu = 1,
+            fri = 24,
+            sat = 34,
+            sun = 45,
+            now_count = 23,
+            goal_value = 300
+        )
     )
 }
