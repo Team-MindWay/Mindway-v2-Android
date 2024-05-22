@@ -22,8 +22,8 @@ import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
-import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUIState
-import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
+import com.chobo.presentation.viewModel.main.uistate.GetRankUiState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 
 @Composable
@@ -50,9 +50,9 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    getWeekendGoalUIState: GetWeekendGoalUIState,
+    getWeekendGoalUIState: GetWeekendGoalUiState,
     noticeGetUiState: NoticeGetUiState,
-    getRankUIState: GetRankUIState,
+    getRankUIState: GetRankUiState,
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
@@ -81,7 +81,7 @@ internal fun HomeScreen(
                     }
                 }
                 when (getWeekendGoalUIState) {
-                    is GetWeekendGoalUIState.Empty -> {
+                    is GetWeekendGoalUiState.Empty -> {
                         HomeGoalReadingChart(
                             isHasData = false,
                             onClick = navigateToGoalReading,
@@ -91,7 +91,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    is GetWeekendGoalUIState.Fail -> {
+                    is GetWeekendGoalUiState.Fail -> {
                         HomeGoalReadingChart(
                             isHasData = false,
                             onClick = navigateToGoalReading,
@@ -101,7 +101,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    is GetWeekendGoalUIState.Loading -> {
+                    is GetWeekendGoalUiState.Loading -> {
                         HomeGoalReadingChart(
                             isHasData = false,
                             onClick = navigateToGoalReading,
@@ -111,7 +111,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    is GetWeekendGoalUIState.Success -> {
+                    is GetWeekendGoalUiState.Success -> {
                         HomeGoalReadingChart(
                             getWeekendGoalModel = getWeekendGoalUIState.data,
                             isHasData = true,
@@ -123,7 +123,7 @@ internal fun HomeScreen(
                     }
                 }
                 when (getRankUIState) {
-                    is GetRankUIState.Empty -> {
+                    is GetRankUiState.Empty -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = false,
                             modifier = Modifier
@@ -132,7 +132,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    is GetRankUIState.Fail -> {
+                    is GetRankUiState.Fail -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = false,
                             modifier = Modifier
@@ -141,7 +141,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    is GetRankUIState.Loading -> {
+                    is GetRankUiState.Loading -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = false,
                             modifier = Modifier
@@ -150,7 +150,7 @@ internal fun HomeScreen(
                         )
                     }
 
-                    is GetRankUIState.Success -> {
+                    is GetRankUiState.Success -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = true,
                             bookKingOfTheMonthData = getRankUIState.data,

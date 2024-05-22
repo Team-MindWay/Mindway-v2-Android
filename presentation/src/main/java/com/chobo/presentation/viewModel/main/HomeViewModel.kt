@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.goal.GetWeekendGoalUseCase
 import com.chobo.domain.usecase.notice.NoticeGetUseCase
 import com.chobo.domain.usecase.rank.GetRankUseCase
-import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
-import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUIState
+import com.chobo.presentation.viewModel.main.uistate.GetRankUiState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
@@ -24,11 +24,11 @@ class HomeViewModel @Inject constructor(
     private val getRankUseCase: GetRankUseCase,
     private val getWeekendGoalUseCase: GetWeekendGoalUseCase
 ) : ViewModel() {
-    private val _getWeekendGoalUIState = MutableStateFlow<GetWeekendGoalUIState>(GetWeekendGoalUIState.Loading)
-    val getWeekendGoalUIState: StateFlow<GetWeekendGoalUIState> = _getWeekendGoalUIState.asStateFlow()
+    private val _getWeekendGoalUiState = MutableStateFlow<GetWeekendGoalUiState>(GetWeekendGoalUiState.Loading)
+    val getWeekendGoalUIState: StateFlow<GetWeekendGoalUiState> = _getWeekendGoalUiState.asStateFlow()
 
-    private val _getRankUIState = MutableStateFlow<GetRankUIState>(GetRankUIState.Loading)
-    val getRankUIState: StateFlow<GetRankUIState> = _getRankUIState.asStateFlow()
+    private val _getRankUiState = MutableStateFlow<GetRankUiState>(GetRankUiState.Loading)
+    val getRankUIState: StateFlow<GetRankUiState> = _getRankUiState.asStateFlow()
 
     private val _noticeGetUiState = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
     val noticeGetUiState: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
@@ -50,14 +50,14 @@ class HomeViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _getRankUIState.value = GetRankUIState.Loading
+                    is Result.Loading -> _getRankUiState.value = GetRankUiState.Loading
                     is Result.Success -> if (result.data.isEmpty()) {
-                        _getRankUIState.value = GetRankUIState.Empty
+                        _getRankUiState.value = GetRankUiState.Empty
                     } else {
-                        _getRankUIState.value = GetRankUIState.Success(result.data)
+                        _getRankUiState.value = GetRankUiState.Success(result.data)
                     }
 
-                    is Result.Fail -> _getRankUIState.value = GetRankUIState.Fail(result.exception)
+                    is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail(result.exception)
                 }
             }
     }
@@ -67,14 +67,14 @@ class HomeViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _getWeekendGoalUIState.value = GetWeekendGoalUIState.Loading
+                    is Result.Loading -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Loading
                     is Result.Success -> if (result.data.now_count + result.data.goal_value == 0) {
-                        _getWeekendGoalUIState.value = GetWeekendGoalUIState.Empty
+                        _getWeekendGoalUiState.value = GetWeekendGoalUiState.Empty
                     } else {
-                        _getWeekendGoalUIState.value = GetWeekendGoalUIState.Success(result.data)
+                        _getWeekendGoalUiState.value = GetWeekendGoalUiState.Success(result.data)
                     }
 
-                    is Result.Fail -> _getWeekendGoalUIState.value = GetWeekendGoalUIState.Fail(result.exception)
+                    is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
                 }
             }
     }
