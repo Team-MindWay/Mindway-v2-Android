@@ -42,20 +42,24 @@ import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 import com.chobo.presentation.viewModel.book.BookScreenViewModel
 import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
+import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun BookRoute(
     modifier: Modifier = Modifier,
+    bookAddBookScreen: BookAddBookViewModel = hiltViewModel(),
     bookScreenViewModel: BookScreenViewModel = hiltViewModel(),
     navigateToBookAddBook: () -> Unit,
 ) {
     val novelDataList by bookScreenViewModel.novelDataList.collectAsStateWithLifecycle()
     val essayDataList by bookScreenViewModel.essayDataList.collectAsStateWithLifecycle()
     val isToastVisible by bookScreenViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val orderUploadUiState by bookAddBookScreen.orderUploadUiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { 2 })
     val coroutineScope = rememberCoroutineScope()
 
@@ -66,6 +70,8 @@ internal fun BookRoute(
         isToastVisible = isToastVisible,
         pagerState = pagerState,
         coroutineScope = coroutineScope,
+        orderUploadUiState = orderUploadUiState,
+        showToast = bookScreenViewModel::showToast,
         navigateToBookAddBook = navigateToBookAddBook
     )
 }
@@ -78,6 +84,8 @@ internal fun BookScreen(
     isToastVisible: Boolean,
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
+    orderUploadUiState: OrderUploadUiState,
+    showToast: () -> Unit,
     navigateToBookAddBook: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
@@ -175,11 +183,35 @@ internal fun BookScreen(
                     .offset(y = -(20).dp)
                     .padding(horizontal = 24.dp),
             ) {
-                MindWayToast(
-                    isSuccess = true,
-                    text = stringResource(R.string.book_request_succes_toast),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                when (orderUploadUiState) {
+                    is OrderUploadUiState.Fail -> {
+                        showToast()
+                        MindWayToast(
+                            isSuccess = false,
+                            text = stringResource(R.string.book_request_fail_toast),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+
+                    is OrderUploadUiState.Loading -> {}
+                    is OrderUploadUiState.RemoteFail -> {
+                        showToast()
+                        MindWayToast(
+                            isSuccess = false,
+                            text = stringResource(R.string.book_request_fail_toast),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+
+                    is OrderUploadUiState.Success -> {
+                        showToast()
+                        MindWayToast(
+                            isSuccess = true,
+                            text = stringResource(R.string.book_request_succes_toast),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
             }
         }
     }
