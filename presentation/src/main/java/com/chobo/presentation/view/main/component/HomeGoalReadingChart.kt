@@ -20,7 +20,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chobo.domain.model.goal.GetGoalModel
+import com.chobo.domain.model.goal.GoalWeekendResponse
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -38,19 +38,19 @@ data class GoalReadingGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
-    getGoalModel: GetGoalModel,
+    goalWeekendResponse: GoalWeekendResponse,
     onClick: () -> Unit,
 ) {
     val weekList = remember { immutableListOf("월", "화", "수", "목", "금", "토", "일") }
     val dateList = remember {
         mutableListOf(
-            getGoalModel.mon,
-            getGoalModel.tue,
-            getGoalModel.wed,
-            getGoalModel.thu,
-            getGoalModel.fri,
-            getGoalModel.sat,
-            getGoalModel.sun
+            goalWeekendResponse.mon,
+            goalWeekendResponse.tue,
+            goalWeekendResponse.wed,
+            goalWeekendResponse.thu,
+            goalWeekendResponse.fri,
+            goalWeekendResponse.sat,
+            goalWeekendResponse.sun
         )
     }
     val maxRead = remember { dateList.max() }
@@ -91,8 +91,8 @@ fun HomeGoalReadingChart(
                         ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                     }
                     GoalReadingIndicator(
-                        numBooksRead = getGoalModel.now_count,
-                        goalBookRead = getGoalModel.goal_value,
+                        numBooksRead = goalWeekendResponse.now_count,
+                        goalBookRead = goalWeekendResponse.goal_value,
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.1840f)
@@ -169,7 +169,7 @@ fun HomeGoalReadingChartPreview() {
             .height(211.dp),
         isHasData = true,
         onClick = { },
-        getGoalModel = GetGoalModel(
+        goalWeekendResponse = GoalWeekendResponse(
             mon = 32,
             tue = 43,
             wed = 56,

@@ -2,7 +2,7 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.goal.GetGoalModel
+import com.chobo.domain.model.goal.GoalWeekendResponse
 import com.chobo.domain.usecase.notice.NoticeGetUseCase
 import com.chobo.domain.usecase.rank.GetRankUseCase
 import com.chobo.presentation.viewModel.main.uistate.GetGoalUIState
@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         _getGoalUIState.value = GetGoalUIState.Success(
-            data = GetGoalModel(
+            data = GoalWeekendResponse(
                 32, 43, 56, 1, 24, 34, 45, 235, 300
             )
         )

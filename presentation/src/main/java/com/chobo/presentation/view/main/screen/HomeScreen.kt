@@ -86,7 +86,7 @@ internal fun HomeScreen(
                     is GetGoalUIState.Loading -> TODO()
                     is GetGoalUIState.Success -> {
                         HomeGoalReadingChart(
-                            getGoalModel = getGoalUIState.data,
+                            goalWeekendResponse = getGoalUIState.data,
                             isHasData = true,
                             onClick = navigateToGoalReading,
                             modifier = Modifier

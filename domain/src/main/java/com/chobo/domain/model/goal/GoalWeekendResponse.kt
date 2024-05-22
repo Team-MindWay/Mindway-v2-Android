@@ -1,5 +1,5 @@
 package com.chobo.domain.model.goal
-data class GetGoalModel(
+data class GoalWeekendResponse(
     val mon: Int,
     val tue: Int,
     val wed: Int,
