@@ -2,11 +2,12 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.goal.GetGoalModel
 import com.chobo.domain.usecase.notice.NoticeGetUseCase
 import com.chobo.domain.usecase.rank.GetRankUseCase
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
-import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
+import com.chobo.presentation.viewModel.main.uistate.GetGoalUIState
 import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
+import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,11 +23,8 @@ class HomeViewModel @Inject constructor(
     private val getNoticeGetUseCase: NoticeGetUseCase,
     private val getRankUseCase: GetRankUseCase,
 ) : ViewModel() {
-    private val _goalBookRead = MutableStateFlow(0)
-    val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
-
-    private val _goalReadingGraphDataList = MutableStateFlow<List<GoalReadingGraphData>>(listOf())
-    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> = _goalReadingGraphDataList.asStateFlow()
+    private val _getGoalUIState = MutableStateFlow<GetGoalUIState>(GetGoalUIState.Loading)
+    val getGoalUIState: StateFlow<GetGoalUIState> = _getGoalUIState.asStateFlow()
 
     private val _getRankUIState = MutableStateFlow<GetRankUIState>(GetRankUIState.Loading)
     val getRankUIState: StateFlow<GetRankUIState> = _getRankUIState.asStateFlow()
@@ -52,26 +50,22 @@ class HomeViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _getRankUIState.value = GetRankUIState.Loading
-                    is Result.Success -> if(result.data.isEmpty()){
+                    is Result.Success -> if (result.data.isEmpty()) {
                         _getRankUIState.value = GetRankUIState.Empty
-                    }else{
+                    } else {
                         _getRankUIState.value = GetRankUIState.Success(result.data)
                     }
+
                     is Result.Fail -> _getRankUIState.value = GetRankUIState.Fail(result.exception)
                 }
             }
     }
 
     init {
-        _goalBookRead.value = 15
-        _goalReadingGraphDataList.value = listOf(
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(3, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, true, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
+        _getGoalUIState.value = GetGoalUIState.Success(
+            data = GetGoalModel(
+                32, 43, 56, 1, 24, 34, 45, 235, 300
+            )
         )
         getRank()
         getNotice()
