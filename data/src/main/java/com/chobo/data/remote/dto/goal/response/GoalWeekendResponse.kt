@@ -1,6 +1,6 @@
 package com.chobo.data.remote.dto.goal.response
 
-data class GoalResponse(
+data class GoalWeekendResponse(
     val mon : Int,
     val tue : Int,
     val wed : Int,
