@@ -1,12 +1,22 @@
 package com.chobo.presentation.viewModel.event
 
-import androidx.lifecycle.*
-import com.chobo.domain.usecase.event.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chobo.domain.emumtype.EventRequestListStatusType
+import com.chobo.domain.usecase.event.GetDetailEventUseCase
+import com.chobo.domain.usecase.event.GetEventDateListUseCase
+import com.chobo.domain.usecase.event.GetEventListUseCase
 import com.chobo.presentation.view.event.component.EventsData
-import com.chobo.presentation.viewModel.event.uistate.*
-import com.chobo.presentation.viewModel.util.result.*
+import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+import com.chobo.presentation.viewModel.util.result.Result
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,18 +41,23 @@ class EventViewModel @Inject constructor(
     private val _getEventDateListUiState = MutableStateFlow<GetEventDateListUiState>(GetEventDateListUiState.Loading)
     val getEventDateListUiState = _getEventDateListUiState.asStateFlow()
 
-    fun getEventList(status: String) = viewModelScope.launch {
-        getEventListUseCase(status = status)
+    fun getEventList(status: EventRequestListStatusType) = viewModelScope.launch {
+        val targetStateFlow = when (status) {
+            EventRequestListStatusType.PENDING -> _getEventListUiState
+            EventRequestListStatusType.PAST -> _getEventListUiState
+            EventRequestListStatusType.NOW -> _getEventListUiState
+        }
+        getEventListUseCase(status = status.name)
             .asResult()
             .collectLatest { result ->
                 when(result) {
-                    is Result.Loading -> _getEventListUiState.value = GetEventListUiState.Loading
+                    is Result.Loading -> targetStateFlow.value = GetEventListUiState.Loading
                     is Result.Success -> if (result.data.isEmpty()) {
-                        _getEventListUiState.value = GetEventListUiState.Empty
+                        targetStateFlow.value = GetEventListUiState.Empty
                     } else {
-                        _getEventListUiState.value = GetEventListUiState.Success(result.data)
+                        targetStateFlow.value = GetEventListUiState.Success(result.data)
                     }
-                    is Result.Fail -> _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
+                    is Result.Fail -> targetStateFlow.value = GetEventListUiState.Fail(result.exception)
                 }
             }
     }
