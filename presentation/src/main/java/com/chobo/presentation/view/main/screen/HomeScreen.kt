@@ -22,7 +22,7 @@ import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
-import com.chobo.presentation.viewModel.main.uistate.GetGoalUIState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUIState
 import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 
@@ -33,13 +33,13 @@ internal fun HomeRoute(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
-    val getGoalUIState by homeViewModel.getGoalUIState.collectAsStateWithLifecycle()
+    val getWeekendGoalUIState by homeViewModel.getWeekendGoalUIState.collectAsStateWithLifecycle()
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
     HomeScreen(
         modifier = modifier,
-        getGoalUIState = getGoalUIState,
+        getWeekendGoalUIState = getWeekendGoalUIState,
         noticeGetUiState = noticeGetUiState,
         getRankUIState = getRankUIState,
         navigateToGoalReading = navigateToGoalReading,
@@ -50,7 +50,7 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    getGoalUIState: GetGoalUIState,
+    getWeekendGoalUIState: GetWeekendGoalUIState,
     noticeGetUiState: NoticeGetUiState,
     getRankUIState: GetRankUIState,
     navigateToGoalReading: () -> Unit,
@@ -80,13 +80,40 @@ internal fun HomeScreen(
                         )
                     }
                 }
-                when (getGoalUIState) {
-                    is GetGoalUIState.Empty -> TODO()
-                    is GetGoalUIState.Fail -> TODO()
-                    is GetGoalUIState.Loading -> TODO()
-                    is GetGoalUIState.Success -> {
+                when (getWeekendGoalUIState) {
+                    is GetWeekendGoalUIState.Empty -> {
                         HomeGoalReadingChart(
-                            goalWeekendResponse = getGoalUIState.data,
+                            isHasData = false,
+                            onClick = navigateToGoalReading,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(211.dp),
+                        )
+                    }
+
+                    is GetWeekendGoalUIState.Fail -> {
+                        HomeGoalReadingChart(
+                            isHasData = false,
+                            onClick = navigateToGoalReading,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(211.dp),
+                        )
+                    }
+
+                    is GetWeekendGoalUIState.Loading -> {
+                        HomeGoalReadingChart(
+                            isHasData = false,
+                            onClick = navigateToGoalReading,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(211.dp),
+                        )
+                    }
+
+                    is GetWeekendGoalUIState.Success -> {
+                        HomeGoalReadingChart(
+                            getWeekendGoalModel = getWeekendGoalUIState.data,
                             isHasData = true,
                             onClick = navigateToGoalReading,
                             modifier = Modifier
