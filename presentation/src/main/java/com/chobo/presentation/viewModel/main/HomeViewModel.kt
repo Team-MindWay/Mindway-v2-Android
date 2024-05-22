@@ -2,11 +2,11 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.goal.GoalWeekendResponse
+import com.chobo.domain.usecase.goal.GetWeekendGoalUseCase
 import com.chobo.domain.usecase.notice.NoticeGetUseCase
 import com.chobo.domain.usecase.rank.GetRankUseCase
-import com.chobo.presentation.viewModel.main.uistate.GetGoalUIState
 import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUIState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
@@ -22,9 +22,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getNoticeGetUseCase: NoticeGetUseCase,
     private val getRankUseCase: GetRankUseCase,
+    private val getWeekendGoalUseCase: GetWeekendGoalUseCase
 ) : ViewModel() {
-    private val _getGoalUIState = MutableStateFlow<GetGoalUIState>(GetGoalUIState.Loading)
-    val getGoalUIState: StateFlow<GetGoalUIState> = _getGoalUIState.asStateFlow()
+    private val _getWeekendGoalUIState = MutableStateFlow<GetWeekendGoalUIState>(GetWeekendGoalUIState.Loading)
+    val getWeekendGoalUIState: StateFlow<GetWeekendGoalUIState> = _getWeekendGoalUIState.asStateFlow()
 
     private val _getRankUIState = MutableStateFlow<GetRankUIState>(GetRankUIState.Loading)
     val getRankUIState: StateFlow<GetRankUIState> = _getRankUIState.asStateFlow()
@@ -61,12 +62,25 @@ class HomeViewModel @Inject constructor(
             }
     }
 
+    fun getWeekendGoal() = viewModelScope.launch {
+        getWeekendGoalUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getWeekendGoalUIState.value = GetWeekendGoalUIState.Loading
+                    is Result.Success -> if (result.data.now_count + result.data.goal_value == 0) {
+                        _getWeekendGoalUIState.value = GetWeekendGoalUIState.Empty
+                    } else {
+                        _getWeekendGoalUIState.value = GetWeekendGoalUIState.Success(result.data)
+                    }
+
+                    is Result.Fail -> _getWeekendGoalUIState.value = GetWeekendGoalUIState.Fail(result.exception)
+                }
+            }
+    }
+
     init {
-        _getGoalUIState.value = GetGoalUIState.Success(
-            data = GoalWeekendResponse(
-                32, 43, 56, 1, 24, 34, 45, 235, 300
-            )
-        )
+        getWeekendGoal()
         getRank()
         getNotice()
     }
