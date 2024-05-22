@@ -1,7 +1,14 @@
 package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,15 +18,14 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.rank.RankModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-
-data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
-    bookKingOfTheMonthData: List<BookKingOfTheMonthData>
+    bookKingOfTheMonthData: List<RankModel> = listOf()
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
@@ -52,9 +58,11 @@ fun HomeReadersOfTheMonthChart(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    val maxBook = bookKingOfTheMonthData.maxOf { it.total }
                     bookKingOfTheMonthData.forEachIndexed { index, it ->
                         HomeReadersOfTheMonthGraph(
-                            bookKingOfTheMonthData = it,
+                            rankModel = it,
+                            maxBook = maxBook,
                             modifier = Modifier.weight(72f)
                         )
 
@@ -107,9 +115,9 @@ fun HomeReadersOfTheMonthChartPreview() {
         modifier = Modifier
             .width(312.dp),
         bookKingOfTheMonthData = listOf(
-            BookKingOfTheMonthData("나다", 12),
-            BookKingOfTheMonthData("나다", 2),
-            BookKingOfTheMonthData("나다", 30),
+            RankModel("나다", 12),
+            RankModel("나다", 2),
+            RankModel("나다", 30),
         )
     )
 }

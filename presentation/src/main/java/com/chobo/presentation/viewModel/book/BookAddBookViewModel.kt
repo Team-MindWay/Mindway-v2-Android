@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.order.OrderUploadUseCase
+import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
 import com.chobo.presentation.viewModel.util.Event
 import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,6 +39,9 @@ class BookAddBookViewModel @Inject constructor(
 
     private val _checkBookDialog = MutableStateFlow(false)
     val checkBookDialog: StateFlow<Boolean> = _checkBookDialog.asStateFlow()
+
+    private val _orderUploadUiState = MutableStateFlow<OrderUploadUiState>(OrderUploadUiState.Loading)
+    val orderUploadUiState: StateFlow<OrderUploadUiState> = _orderUploadUiState.asStateFlow()
 
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
@@ -77,12 +81,15 @@ class BookAddBookViewModel @Inject constructor(
                 )
                     .onSuccess {
                         it.catch { remoteError ->
+                            _orderUploadUiState.value = OrderUploadUiState.RemoteFail(exception = remoteError)
                             remoteError.errorHandling<Unit>()
                         }.collect { response ->
+                            _orderUploadUiState.value = OrderUploadUiState.Success
                             Event.Success(data = response)
                         }
                     }
                     .onFailure {
+                        _orderUploadUiState.value = OrderUploadUiState.RemoteFail(exception = it)
                         it.errorHandling<Unit>()
                     }
             }

@@ -4,7 +4,7 @@ import com.chobo.domain.model.rank.RankModel
 
 data class RankResponse(
     val username: String,
-    val total: String
+    val total: Int
 )
 
 fun RankResponse.toModel(): RankModel = RankModel(

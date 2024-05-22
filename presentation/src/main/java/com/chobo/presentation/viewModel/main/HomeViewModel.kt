@@ -2,9 +2,11 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.usecase.goal.GetWeekendGoalUseCase
 import com.chobo.domain.usecase.notice.NoticeGetUseCase
-import com.chobo.presentation.view.main.component.BookKingOfTheMonthData
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
+import com.chobo.domain.usecase.rank.GetRankUseCase
+import com.chobo.presentation.viewModel.main.uistate.GetRankUiState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
@@ -18,19 +20,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getNoticeGetUseCase: NoticeGetUseCase
+    private val getNoticeGetUseCase: NoticeGetUseCase,
+    private val getRankUseCase: GetRankUseCase,
+    private val getWeekendGoalUseCase: GetWeekendGoalUseCase
 ) : ViewModel() {
-    private val _goalBookRead = MutableStateFlow(0)
-    val goalBookRead: StateFlow<Int> = _goalBookRead.asStateFlow()
+    private val _getWeekendGoalUiState = MutableStateFlow<GetWeekendGoalUiState>(GetWeekendGoalUiState.Loading)
+    val getWeekendGoalUIState: StateFlow<GetWeekendGoalUiState> = _getWeekendGoalUiState.asStateFlow()
 
-    private val _goalReadingGraphDataList = MutableStateFlow<List<GoalReadingGraphData>>(listOf())
-    val goalReadingGraphDataList: StateFlow<List<GoalReadingGraphData>> = _goalReadingGraphDataList.asStateFlow()
-
-    private val _bookKingOfTheMonthDataList = MutableStateFlow<List<BookKingOfTheMonthData>>(listOf())
-    val bookKingOfTheMonthDataList: StateFlow<List<BookKingOfTheMonthData>> = _bookKingOfTheMonthDataList.asStateFlow()
+    private val _getRankUiState = MutableStateFlow<GetRankUiState>(GetRankUiState.Loading)
+    val getRankUIState: StateFlow<GetRankUiState> = _getRankUiState.asStateFlow()
 
     private val _noticeGetUiState = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
-    val noticeData: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
+    val noticeGetUiState: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
 
     fun getNotice() = viewModelScope.launch {
         getNoticeGetUseCase()
@@ -44,22 +45,43 @@ class HomeViewModel @Inject constructor(
             }
     }
 
+    fun getRank() = viewModelScope.launch {
+        getRankUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getRankUiState.value = GetRankUiState.Loading
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getRankUiState.value = GetRankUiState.Empty
+                    } else {
+                        _getRankUiState.value = GetRankUiState.Success(result.data)
+                    }
+
+                    is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail(result.exception)
+                }
+            }
+    }
+
+    fun getWeekendGoal() = viewModelScope.launch {
+        getWeekendGoalUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Loading
+                    is Result.Success -> if (result.data.now_count + result.data.goal_value == 0) {
+                        _getWeekendGoalUiState.value = GetWeekendGoalUiState.Empty
+                    } else {
+                        _getWeekendGoalUiState.value = GetWeekendGoalUiState.Success(result.data)
+                    }
+
+                    is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
+                }
+            }
+    }
+
     init {
-        _goalBookRead.value = 15
-        _goalReadingGraphDataList.value = listOf(
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(3, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, true, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-        )
-        _bookKingOfTheMonthDataList.value = listOf(
-            BookKingOfTheMonthData("왕승황", 29),
-            BookKingOfTheMonthData("왕성찬", 15),
-            BookKingOfTheMonthData("왕지완", 1),
-        )
+        getWeekendGoal()
+        getRank()
         getNotice()
     }
 }
