@@ -17,12 +17,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
+import com.chobo.presentation.viewModel.main.uistate.GetGoalUIState
 import com.chobo.presentation.viewModel.main.uistate.GetRankUIState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 
@@ -33,16 +33,14 @@ internal fun HomeRoute(
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
-    val goalBookRead by homeViewModel.goalBookRead.collectAsStateWithLifecycle()
+    val getGoalUIState by homeViewModel.getGoalUIState.collectAsStateWithLifecycle()
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
-    val readingGoalGraphDataList by homeViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
     HomeScreen(
         modifier = modifier,
-        goalBookRead = goalBookRead,
+        getGoalUIState = getGoalUIState,
         noticeGetUiState = noticeGetUiState,
-        readingGoalGraphDataList = readingGoalGraphDataList,
         getRankUIState = getRankUIState,
         navigateToGoalReading = navigateToGoalReading,
         navigateToDetailEvent = navigateToDetailEvent,
@@ -52,9 +50,8 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    goalBookRead: Int,
+    getGoalUIState: GetGoalUIState,
     noticeGetUiState: NoticeGetUiState,
-    readingGoalGraphDataList: List<GoalReadingGraphData>,
     getRankUIState: GetRankUIState,
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
@@ -83,16 +80,22 @@ internal fun HomeScreen(
                         )
                     }
                 }
-                HomeGoalReadingChart(
-                    goalBookRead = goalBookRead,
-                    isHasData = readingGoalGraphDataList.isNotEmpty(),
-                    readNumberList = readingGoalGraphDataList,
-                    onClick = navigateToGoalReading,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(211.dp),
-                )
-                when(getRankUIState){
+                when (getGoalUIState) {
+                    is GetGoalUIState.Empty -> TODO()
+                    is GetGoalUIState.Fail -> TODO()
+                    is GetGoalUIState.Loading -> TODO()
+                    is GetGoalUIState.Success -> {
+                        HomeGoalReadingChart(
+                            getGoalModel = getGoalUIState.data,
+                            isHasData = true,
+                            onClick = navigateToGoalReading,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(211.dp),
+                        )
+                    }
+                }
+                when (getRankUIState) {
                     is GetRankUIState.Empty -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = false,
@@ -101,6 +104,7 @@ internal fun HomeScreen(
                                 .fillMaxWidth(),
                         )
                     }
+
                     is GetRankUIState.Fail -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = false,
@@ -109,6 +113,7 @@ internal fun HomeScreen(
                                 .fillMaxWidth(),
                         )
                     }
+
                     is GetRankUIState.Loading -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = false,
@@ -117,6 +122,7 @@ internal fun HomeScreen(
                                 .fillMaxWidth(),
                         )
                     }
+
                     is GetRankUIState.Success -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = true,
