@@ -38,7 +38,7 @@ data class GoalReadingGraphData(
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
-    getWeekendGoalModel: GetWeekendGoalModel,
+    getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0,0,0,0,0,0,0,0,0),
     onClick: () -> Unit,
 ) {
     val weekList = remember { immutableListOf("월", "화", "수", "목", "금", "토", "일") }
