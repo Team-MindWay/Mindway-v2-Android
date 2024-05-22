@@ -3,9 +3,12 @@ package com.chobo.presentation.view.event.screen
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -13,10 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
-import com.chobo.presentation.view.event.component.*
+import com.chobo.presentation.view.event.component.EventContent
+import com.chobo.presentation.view.event.component.EventPager
+import com.chobo.presentation.view.event.component.EventsData
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
-import com.chobo.presentation.viewModel.event.uistate.*
+import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -43,7 +50,6 @@ internal fun EventScreenRoute(
         pagerState = pagerState,
         onCurrentEventClick = eventViewModel::onCurrentEventClick,
         onPastEventClick = eventViewModel::onPastEventClick,
-        mainCallBack = { }
     )
 }
 
@@ -57,7 +63,6 @@ internal fun EventScreen(
     pastEventsDataList: List<EventsData>,
     currentEventsDataList: List<EventsData>,
     pagerState: PagerState,
-    mainCallBack: () -> Unit,
     onCurrentEventClick: (Int) -> Unit,
     onPastEventClick: (Int) -> Unit,
     navigateToDetailEvent: () -> Unit,
