@@ -8,6 +8,8 @@ import com.chobo.data.remote.datasource.event.RemoteEventDataSource
 import com.chobo.data.remote.datasource.event.RemoteEventDataSourceImpl
 import com.chobo.data.remote.datasource.my.RemoteMyDataSource
 import com.chobo.data.remote.datasource.my.RemoteMyDataSourceImpl
+import com.chobo.data.remote.datasource.goal.RemoteGoalDataSource
+import com.chobo.data.remote.datasource.goal.RemoteGoalDataSourceImpl
 import com.chobo.data.remote.datasource.notice.RemoteNoticeDataSource
 import com.chobo.data.remote.datasource.notice.RemoteNoticeDataSourceImpl
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSource
@@ -63,4 +65,9 @@ abstract class RemoteDataSourceModule {
     abstract fun provideRemoteMyDataSource(
         remoteMyDataSourceImpl: RemoteMyDataSourceImpl
     ): RemoteMyDataSource
+
+    @Binds
+    abstract fun provideRemoteGoalDataSource(
+        remoteGoalDataSourceImpl: RemoteGoalDataSourceImpl
+    ): RemoteGoalDataSource
 }
