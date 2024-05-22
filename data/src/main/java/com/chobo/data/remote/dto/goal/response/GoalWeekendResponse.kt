@@ -1,5 +1,7 @@
 package com.chobo.data.remote.dto.goal.response
 
+import com.chobo.domain.model.goal.response.GetWeekendGoalModel
+
 data class GoalWeekendResponse(
     val mon : Int,
     val tue : Int,
@@ -10,4 +12,30 @@ data class GoalWeekendResponse(
     val sun : Int,
     val now_count : Int,
     val goal_value : Int,
+)
+
+fun GoalWeekendResponse.toGetGoalWeekendResponseModel(): GetWeekendGoalModel {
+    return GetWeekendGoalModel(
+        mon = mon,
+        tue = tue,
+        wed = wed,
+        thu = thu,
+        fri = fri,
+        sat = sat,
+        sun = sun,
+        now_count = now_count,
+        goal_value = goal_value
+    )
+}
+
+fun GoalWeekendResponse.toDto(): GoalWeekendResponse = GoalWeekendResponse(
+    mon = mon,
+    tue = tue,
+    wed = wed,
+    thu = thu,
+    fri = fri,
+    sat = sat,
+    sun = sun,
+    now_count = now_count,
+    goal_value = goal_value
 )
