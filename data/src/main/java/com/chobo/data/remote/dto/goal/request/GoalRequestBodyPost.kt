@@ -6,6 +6,6 @@ data class GoalRequestBodyPost(
     val goal_count: Int
 )
 
-fun PostGoalRequestModel.toDto(): GoalRequestBodyPost = GoalRequestBodyPost(
+fun PostGoalRequestModel.toDto() = GoalRequestBodyPost(
     goal_count = goal_count
 )
