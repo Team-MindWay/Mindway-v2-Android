@@ -7,7 +7,7 @@ data class RankResponse(
     val total: Int
 )
 
-fun RankResponse.toModel(): RankModel = RankModel(
+fun RankResponse.toModel() = RankModel(
     username = username,
     total = total,
 )

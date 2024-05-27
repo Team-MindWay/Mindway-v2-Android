@@ -10,12 +10,10 @@ data class GetEventDateListResponse(
     val endedAt: String
 )
 
-fun GetEventDateListResponse.toGetEventDateListResponseModel(): GetEventDateListResponseModel {
-    return GetEventDateListResponseModel(
-        title = title,
-        content = content,
-        image = image,
-        startedAt = startedAt,
-        endedAt = endedAt
-    )
-}
+fun GetEventDateListResponse.toModel() = GetEventDateListResponseModel(
+    title = title,
+    content = content,
+    image = image,
+    startedAt = startedAt,
+    endedAt = endedAt
+)

@@ -7,7 +7,7 @@ data class NoticeAll(
     val content: String
 )
 
-fun NoticeAll.toModel(): NoticeAllModel = NoticeAllModel(
+fun NoticeAll.toModel() = NoticeAllModel(
     title = title,
     content = content,
 )

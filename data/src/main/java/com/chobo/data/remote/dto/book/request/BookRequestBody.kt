@@ -7,7 +7,7 @@ data class BookRequestBody(
     val plot: String
 )
 
-fun BookRequestBodyModel.toDto(): BookRequestBody = BookRequestBody(
+fun BookRequestBodyModel.toDto() = BookRequestBody(
     title = title,
     plot = plot
 )

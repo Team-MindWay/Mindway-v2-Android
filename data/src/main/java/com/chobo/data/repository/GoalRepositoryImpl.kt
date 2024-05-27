@@ -2,7 +2,7 @@ package com.chobo.data.repository
 
 import com.chobo.data.remote.datasource.goal.RemoteGoalDataSource
 import com.chobo.data.remote.dto.goal.request.toDto
-import com.chobo.data.remote.dto.goal.response.toGetGoalWeekendResponseModel
+import com.chobo.data.remote.dto.goal.response.toModel
 import com.chobo.domain.model.goal.request.PostGoalRequestModel
 import com.chobo.domain.model.goal.response.GetWeekendGoalModel
 import com.chobo.domain.repository.GoalRepository
@@ -18,6 +18,6 @@ class GoalRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel> {
-        return remoteGoalDataSource.getWeekendGoalResponse().map { it.toGetGoalWeekendResponseModel() }
+        return remoteGoalDataSource.getWeekendGoalResponse().map { it.toModel() }
     }
 }
