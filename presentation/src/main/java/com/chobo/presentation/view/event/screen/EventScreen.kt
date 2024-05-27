@@ -8,17 +8,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.domain.emumtype.EventRequestListStatusType
 import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
-import com.chobo.presentation.view.event.component.EventsData
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
 import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
@@ -35,8 +40,6 @@ internal fun EventScreenRoute(
     val getEventListUiState by eventViewModel.getEventListUiState.collectAsStateWithLifecycle()
     val getDetailEventUiState by eventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
     val getEventDateListUiState by eventViewModel.getEventDateListUiState.collectAsStateWithLifecycle()
-    val pastEventsDataList by eventViewModel.pastEventsDataList.collectAsStateWithLifecycle()
-    val currentEventsDataList by eventViewModel.currentEventsDataList.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState { 2 }
 
     EventScreen(
@@ -45,11 +48,10 @@ internal fun EventScreenRoute(
         getEventListUiState = getEventListUiState,
         getDetailEventUiState = getDetailEventUiState,
         getEventDateListUiState = getEventDateListUiState,
-        pastEventsDataList = pastEventsDataList,
-        currentEventsDataList = currentEventsDataList,
         pagerState = pagerState,
         onCurrentEventClick = eventViewModel::onCurrentEventClick,
         onPastEventClick = eventViewModel::onPastEventClick,
+        getEventList = eventViewModel::getEventList
     )
 }
 
@@ -60,13 +62,24 @@ internal fun EventScreen(
     getEventListUiState: GetEventListUiState,
     getDetailEventUiState: GetDetailEventUiState,
     getEventDateListUiState: GetEventDateListUiState,
-    pastEventsDataList: List<EventsData>,
-    currentEventsDataList: List<EventsData>,
     pagerState: PagerState,
     onCurrentEventClick: (Int) -> Unit,
     onPastEventClick: (Int) -> Unit,
     navigateToDetailEvent: () -> Unit,
+    getEventList: (String) -> Unit
 ) {
+    var storageStatus by remember { mutableStateOf(EventRequestListStatusType.NOW.name) }
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            when (page) {
+                0 -> storageStatus = EventRequestListStatusType.NOW.name
+                1 -> storageStatus = EventRequestListStatusType.PAST.name
+            }
+            getEventList(storageStatus)
+        }
+    }
+
     MindWayAndroidTheme { colors, _ ->
         Box(
             modifier = modifier
@@ -76,22 +89,78 @@ internal fun EventScreen(
             EventPager(
                 pagerState = pagerState,
                 onGoingEvent = {
-                    EventContent(
-                        content = stringResource(R.string.is_no_ongoing_event),
-                        eventDataList = currentEventsDataList,
-                        eventDataListIsEmpty = currentEventsDataList.isEmpty(),
-                        onIconClick = onCurrentEventClick,
-                        navigateToDetailEvent = navigateToDetailEvent,
-                    )
+                    when (getEventListUiState) {
+                        GetEventListUiState.Empty -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_ongoing_event),
+                                eventDataListIsEmpty = false,
+                                onIconClick = onCurrentEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent,
+                            )
+                        }
+                        is GetEventListUiState.Fail -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_ongoing_event),
+                                eventDataListIsEmpty = false,
+                                onIconClick = onCurrentEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent,
+                            )
+                        }
+                        GetEventListUiState.Loading -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_ongoing_event),
+                                eventDataListIsEmpty = false,
+                                onIconClick = onCurrentEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent,
+                            )
+                        }
+                        is GetEventListUiState.Success -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_ongoing_event),
+                                eventDataList = getEventListUiState.getEventListResponse,
+                                eventDataListIsEmpty = true,
+                                onIconClick = onCurrentEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent,
+                            )
+                        }
+                    }
                 },
                 pastEvent = {
-                    EventContent(
-                        content = stringResource(R.string.is_no_past_event),
-                        eventDataList = pastEventsDataList,
-                        eventDataListIsEmpty = currentEventsDataList.isEmpty(),
-                        onIconClick = onPastEventClick,
-                        navigateToDetailEvent = navigateToDetailEvent
-                    )
+                    when (getEventListUiState) {
+                        GetEventListUiState.Empty -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_past_event),
+                                eventDataListIsEmpty = false,
+                                onIconClick = onPastEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent
+                            )
+                        }
+                        is GetEventListUiState.Fail -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_past_event),
+                                eventDataListIsEmpty = false,
+                                onIconClick = onPastEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent
+                            )
+                        }
+                        GetEventListUiState.Loading -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_past_event),
+                                eventDataListIsEmpty = false,
+                                onIconClick = onPastEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent
+                            )
+                        }
+                        is GetEventListUiState.Success -> {
+                            EventContent(
+                                content = stringResource(R.string.is_no_past_event),
+                                eventDataList = getEventListUiState.getEventListResponse,
+                                eventDataListIsEmpty = true,
+                                onIconClick = onPastEventClick,
+                                navigateToDetailEvent = navigateToDetailEvent
+                            )
+                        }
+                    }
                 }
             )
         }
