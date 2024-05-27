@@ -3,13 +3,20 @@ package com.chobo.presentation.viewModel.my
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
+import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
+import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyBookEditViewModel @Inject constructor() : ViewModel() {
+class MyBookEditViewModel @Inject constructor(
+    private val orderModifyByIdUseCase: OrderModifyByIdUseCase,
+) : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
 
@@ -52,16 +59,28 @@ class MyBookEditViewModel @Inject constructor() : ViewModel() {
             && _writeTextState.value.isNotEmpty()
             && _linkTextState.value.isNotEmpty()
         ) {
-            // TODO: usecase 연결
-            OrderRequestBodyModel(
-                title = titleTextState.value,
-                author = _writeTextState.value,
-                book_url = linkTextState.value
-            )
+            viewModelScope.launch {
+                orderModifyByIdUseCase(
+                    body = OrderRequestBodyModel(
+                        title = titleTextState.value,
+                        author = _writeTextState.value,
+                        book_url = linkTextState.value
+                    ),
+                    orderId = "임시 Id"
+                )
+                    .onSuccess {
+                        it.catch { remoteError ->
+                            remoteError.errorHandling<Unit>()
+                        }
+                    }
+                    .onFailure {
+                        it.errorHandling<Unit>()
+                    }
+            }
         }
     }
 
-    private suspend fun getMyBookData(orderRequestBodyModel: OrderRequestBodyModel) {
+    private fun getMyBookData(orderRequestBodyModel: OrderRequestBodyModel) {
         _titleTextState.value = orderRequestBodyModel.title
         _writeTextState.value = orderRequestBodyModel.author
         _linkTextState.value = orderRequestBodyModel.book_url
