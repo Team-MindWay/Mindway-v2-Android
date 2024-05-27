@@ -145,7 +145,16 @@ internal fun BookAddBookScreen(
                     Spacer(modifier = modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
-                        onClick = checkButtonOnClick,
+                        onClick = {
+                            if (
+                                !titleTextStateIsEmpty
+                                && !writeTextStateIsEmpty
+                                && !linkTextStateIsEmpty
+                            ) {
+                                navigateToBack()
+                            }
+                            checkButtonOnClick()
+                        },
                         modifier = modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -159,5 +168,5 @@ internal fun BookAddBookScreen(
 @Preview
 @Composable
 fun PreviewAddBookScreen() {
-    BookAddBookRoute {}
+    BookAddBookRoute(navigateToBack = {})
 }

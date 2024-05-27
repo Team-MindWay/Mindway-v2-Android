@@ -5,9 +5,9 @@ import com.chobo.data.remote.api.AuthAPI
 import com.chobo.data.remote.api.BookAPI
 import com.chobo.data.remote.api.EventAPI
 import com.chobo.data.remote.api.GoalAPI
+import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.MyAPI
 import com.chobo.data.remote.api.NoticeAPI
-import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.RecommendAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig

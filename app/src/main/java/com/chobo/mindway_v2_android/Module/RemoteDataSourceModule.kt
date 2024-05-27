@@ -6,8 +6,16 @@ import com.chobo.data.remote.datasource.book.RemoteBookDataSource
 import com.chobo.data.remote.datasource.book.RemoteBookDataSourceImpl
 import com.chobo.data.remote.datasource.event.RemoteEventDataSource
 import com.chobo.data.remote.datasource.event.RemoteEventDataSourceImpl
+import com.chobo.data.remote.datasource.my.RemoteMyDataSource
+import com.chobo.data.remote.datasource.my.RemoteMyDataSourceImpl
+import com.chobo.data.remote.datasource.goal.RemoteGoalDataSource
+import com.chobo.data.remote.datasource.goal.RemoteGoalDataSourceImpl
+import com.chobo.data.remote.datasource.notice.RemoteNoticeDataSource
+import com.chobo.data.remote.datasource.notice.RemoteNoticeDataSourceImpl
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSource
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSourceImpl
+import com.chobo.data.remote.datasource.rank.RemoteRankDataSource
+import com.chobo.data.remote.datasource.rank.RemoteRankDataSourceImpl
 import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSource
 import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSourceImpl
 import dagger.Binds
@@ -39,7 +47,27 @@ abstract class RemoteDataSourceModule {
     ): RemoteRecommendDataSource
 
     @Binds
+    abstract fun provideRemoteNoticeDataSource(
+        noticeDataSourceImpl: RemoteNoticeDataSourceImpl
+    ): RemoteNoticeDataSource
+
+    @Binds
     abstract fun provideRemoteEventDataSource(
         remoteEventDataSourceImpl: RemoteEventDataSourceImpl
     ): RemoteEventDataSource
+
+    @Binds
+    abstract fun provideRemoteRankDataSource(
+        remoteRankDataSourceImpl: RemoteRankDataSourceImpl
+    ): RemoteRankDataSource
+
+    @Binds
+    abstract fun provideRemoteMyDataSource(
+        remoteMyDataSourceImpl: RemoteMyDataSourceImpl
+    ): RemoteMyDataSource
+
+    @Binds
+    abstract fun provideRemoteGoalDataSource(
+        remoteGoalDataSourceImpl: RemoteGoalDataSourceImpl
+    ): RemoteGoalDataSource
 }
