@@ -1,12 +1,13 @@
 package com.chobo.data.repository
 
 import com.chobo.data.remote.datasource.recommend.RemoteRecommendDataSource
-import com.chobo.data.remote.dto.recommend.request.RecommendAllRequest
-import com.chobo.data.remote.dto.recommend.response.toGetRecommendListResponseModel
+import com.chobo.data.remote.dto.recommend.request.toDto
+import com.chobo.data.remote.dto.recommend.response.toModel
 import com.chobo.domain.model.recommend.request.RecommendRequestAllModel
 import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.domain.repository.RecommendRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RecommendRepositoryImpl @Inject constructor(
@@ -17,11 +18,7 @@ class RecommendRepositoryImpl @Inject constructor(
         type: String
     ): Flow<Unit> {
         return remoteRecommendDataSource.postRecommendBook(
-            body = RecommendAllRequest(
-                title = body.title,
-                content = body.content,
-                author = body.author
-            ),
+            body = body.toDto(),
             type = type
         )
     }
@@ -31,13 +28,12 @@ class RecommendRepositoryImpl @Inject constructor(
             .map { list -> list.map { it.toModel() } }
     }
 
-    override suspend fun patchRecommendBook(body: RecommendRequestAllModel, id: Long): Flow<Unit> {
+    override suspend fun patchRecommendBook(
+        body: RecommendRequestAllModel,
+        id: Long
+    ): Flow<Unit> {
         return remoteRecommendDataSource.patchRecommendBook(
-            body = RecommendAllRequest(
-                title = body.title,
-                content = body.content,
-                author = body.author
-            ),
+            body = body.toDto(),
             id = id
         )
     }
