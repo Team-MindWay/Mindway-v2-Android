@@ -2,7 +2,6 @@ package com.chobo.presentation.viewModel.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.emumtype.EventRequestListStatusType
 import com.chobo.domain.usecase.event.GetDetailEventUseCase
 import com.chobo.domain.usecase.event.GetEventDateListUseCase
 import com.chobo.domain.usecase.event.GetEventListUseCase
@@ -41,23 +40,18 @@ class EventViewModel @Inject constructor(
     private val _getEventDateListUiState = MutableStateFlow<GetEventDateListUiState>(GetEventDateListUiState.Loading)
     val getEventDateListUiState = _getEventDateListUiState.asStateFlow()
 
-    fun getEventList(status: EventRequestListStatusType) = viewModelScope.launch {
-        val targetStateFlow = when (status) {
-            EventRequestListStatusType.PENDING -> _getEventListUiState
-            EventRequestListStatusType.PAST -> _getEventListUiState
-            EventRequestListStatusType.NOW -> _getEventListUiState
-        }
-        getEventListUseCase(status = status.name)
+    fun getEventList(status: String) = viewModelScope.launch {
+        getEventListUseCase(status = status)
             .asResult()
             .collectLatest { result ->
                 when(result) {
-                    is Result.Loading -> targetStateFlow.value = GetEventListUiState.Loading
+                    is Result.Loading -> _getEventListUiState.value = GetEventListUiState.Loading
                     is Result.Success -> if (result.data.isEmpty()) {
-                        targetStateFlow.value = GetEventListUiState.Empty
+                        _getEventListUiState.value = GetEventListUiState.Empty
                     } else {
-                        targetStateFlow.value = GetEventListUiState.Success(result.data)
+                        _getEventListUiState.value = GetEventListUiState.Success(result.data)
                     }
-                    is Result.Fail -> targetStateFlow.value = GetEventListUiState.Fail(result.exception)
+                    is Result.Fail -> _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
                 }
             }
     }
