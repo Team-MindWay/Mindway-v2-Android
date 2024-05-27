@@ -7,8 +7,7 @@ data class MyBookListResponse(
     val author: String,
 )
 
-fun MyBookListResponse.toModel() =
-    MyBookListModel(
-        name = name,
-        author = author
-    )
+fun MyBookListResponse.toModel() = MyBookListModel(
+    name = name,
+    author = author
+)

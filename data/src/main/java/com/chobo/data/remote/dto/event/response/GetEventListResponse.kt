@@ -11,13 +11,11 @@ data class GetEventListResponse(
     val ended_at: String?
 )
 
-fun GetEventListResponse.toGetEventListResponseModel(): GetEventListResponseModel {
-    return GetEventListResponseModel(
-        id = id,
-        title = title,
-        content = content,
-        img_url = img_url,
-        created_at = created_at,
-        ended_at = ended_at
-    )
-}
+fun GetEventListResponse.toModel() = GetEventListResponseModel(
+    id = id,
+    title = title,
+    content = content,
+    img_url = img_url,
+    created_at = created_at,
+    ended_at = ended_at
+)

@@ -8,10 +8,8 @@ data class RecommendAllResponse(
     val author: String
 )
 
-fun RecommendAllResponse.toAllRecommendResponseModel(): RecommendResponseAllModel {
-    return RecommendResponseAllModel(
-        title = title,
-        content = content,
-        author = author
-    )
-}
+fun RecommendAllResponse.toModel() = RecommendResponseAllModel(
+    title = title,
+    content = content,
+    author = author
+)

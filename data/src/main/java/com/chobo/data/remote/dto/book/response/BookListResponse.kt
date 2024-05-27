@@ -8,7 +8,7 @@ data class BookListResponse(
     val created_at: String
 )
 
-fun BookListResponse.toModel(): BookListResponseModel = BookListResponseModel(
+fun BookListResponse.toModel() = BookListResponseModel(
     title = title,
     plot = plot,
     created_at = created_at

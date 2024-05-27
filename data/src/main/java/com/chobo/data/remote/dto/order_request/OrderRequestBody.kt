@@ -7,12 +7,14 @@ data class OrderRequestBody(
     val author: String,
     val book_url: String,
 )
-fun OrderRequestBody.toModel():OrderRequestBodyModel = OrderRequestBodyModel(
+
+fun OrderRequestBody.toModel() = OrderRequestBodyModel(
     title = title,
     author = author,
     book_url = book_url
 )
-fun OrderRequestBodyModel.toDto():OrderRequestBody = OrderRequestBody(
+
+fun OrderRequestBodyModel.toDto() = OrderRequestBody(
     title = title,
     author = author,
     book_url = book_url
