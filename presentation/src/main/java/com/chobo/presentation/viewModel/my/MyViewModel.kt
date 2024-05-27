@@ -1,12 +1,15 @@
 package com.chobo.presentation.viewModel.my
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.LogoutUseCase
 import com.chobo.presentation.view.my.component.MyBookListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +19,7 @@ class MyViewModel @Inject constructor(
     private val deleteTokenUseCase: DeleteTokenUseCase
 ) : ViewModel() {
     private val _myBookListItemDataList = MutableStateFlow<List<MyBookListItemData>>(listOf())
-    val myBookListItemDataList: StateFlow<List<MyBookListItemData>> =
-        _myBookListItemDataList.asStateFlow()
+    val myBookListItemDataList: StateFlow<List<MyBookListItemData>> = _myBookListItemDataList.asStateFlow()
 
     private val _myName = MutableStateFlow("")
     val myName: StateFlow<String> = _myName.asStateFlow()

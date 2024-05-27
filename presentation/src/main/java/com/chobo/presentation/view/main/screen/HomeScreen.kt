@@ -22,8 +22,8 @@ import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeViewModel
-import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.main.uistate.GetRankUiState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 
 @Composable

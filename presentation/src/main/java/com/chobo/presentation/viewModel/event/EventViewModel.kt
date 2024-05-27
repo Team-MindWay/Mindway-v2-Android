@@ -1,12 +1,19 @@
 package com.chobo.presentation.viewModel.event
 
-import androidx.lifecycle.*
-import com.chobo.domain.usecase.event.*
-import com.chobo.presentation.view.event.component.EventsData
-import com.chobo.presentation.viewModel.event.uistate.*
-import com.chobo.presentation.viewModel.util.result.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chobo.domain.usecase.event.GetDetailEventUseCase
+import com.chobo.domain.usecase.event.GetEventDateListUseCase
+import com.chobo.domain.usecase.event.GetEventListUseCase
+import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+import com.chobo.presentation.viewModel.util.result.Result
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,12 +23,6 @@ class EventViewModel @Inject constructor(
     private val getEventDetailUseCase: GetDetailEventUseCase,
     private val getEventDateListUseCase: GetEventDateListUseCase,
 ) : ViewModel() {
-    private val _currentEventsDataList = MutableStateFlow<List<EventsData>>(listOf())
-    val currentEventsDataList: StateFlow<List<EventsData>> = _currentEventsDataList.asStateFlow()
-
-    private val _pastEventsDataList = MutableStateFlow<List<EventsData>>(listOf())
-    val pastEventsDataList: StateFlow<List<EventsData>> = _pastEventsDataList.asStateFlow()
-
     private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getEventListUiState = _getEventListUiState.asStateFlow()
 
@@ -82,25 +83,5 @@ class EventViewModel @Inject constructor(
     }
 
     fun onPastEventClick(index: Int) {
-
-    }
-
-    init {
-        _currentEventsDataList.value =
-            MutableList(30) {
-                EventsData(
-                    title = "가을 독서 행사",
-                    content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 책을 찾아오면 푸짐한 선물뽑기를 할 수 있습니다. 점심시간마다 진행할 예정이니 많은 관심 바랍니다.",
-                    date = "2023년 06월 20일"
-                )
-            }
-        _pastEventsDataList.value =
-            MutableList(30) {
-                EventsData(
-                    title = "가을 독서 행사",
-                    content = "독서의 계절, 가을을 맞아 도서관에서 특별한 이벤트를준비했습니다. 랜덤으로 초성 책 제목이 적혀있는 쪽지를 뽑고, 그에 맞는 책을 찾아오면 푸짐한 선물뽑기를 할 수 있습니다. 점심시간마다 진행할 예정이니 많은 관심 바랍니다.",
-                    date = "2023년 06월 20일"
-                )
-            }
     }
 }
