@@ -9,24 +9,19 @@ import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(
     private val remoteEventDataSource: RemoteEventDataSource
-): EventRepository {
+) : EventRepository {
     override suspend fun getEventList(status: String): Flow<List<GetEventListResponseModel>> {
-        return remoteEventDataSource.getEventList(status = status).map { list ->
-            list.map {
-                it.toGetEventListResponseModel()
-            }
-        }
+        return remoteEventDataSource.getEventList(status = status)
+            .map { list -> list.map { it.toModel() } }
     }
 
     override suspend fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponseModel> {
-        return remoteEventDataSource.getDetailEvent(eventId = eventId).map { it.toGetDetailEventResponseModel() }
+        return remoteEventDataSource.getDetailEvent(eventId = eventId).map { it.toModel() }
     }
 
     override suspend fun getEventDateList(date: String): Flow<List<GetEventDateListResponseModel>> {
         return remoteEventDataSource.getEventDateList(date = date).map { list ->
-            list.map {
-                it.toGetEventDateListResponseModel()
-            }
+            list.map { it.toModel() }
         }
     }
 }

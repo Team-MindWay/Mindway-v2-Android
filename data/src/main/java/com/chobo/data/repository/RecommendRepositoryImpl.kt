@@ -27,11 +27,8 @@ class RecommendRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRecommendBookList(type: String): Flow<List<RecommendListResponseAllModel>> {
-        return remoteRecommendDataSource.getRecommendBookList(type = type).map { list ->
-            list.map {
-                it.toGetRecommendListResponseModel()
-            }
-        }
+        return remoteRecommendDataSource.getRecommendBookList(type = type)
+            .map { list -> list.map { it.toModel() } }
     }
 
     override suspend fun patchRecommendBook(body: RecommendRequestAllModel, id: Long): Flow<Unit> {

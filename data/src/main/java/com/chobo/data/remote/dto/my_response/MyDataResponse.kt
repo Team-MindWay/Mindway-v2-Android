@@ -7,8 +7,7 @@ data class MyDataResponse(
     val authority: String,
 )
 
-fun MyDataResponse.toModel() =
-    MyDataModel(
-        name = name,
-        authority = authority
-    )
+fun MyDataResponse.toModel() = MyDataModel(
+    name = name,
+    authority = authority
+)
