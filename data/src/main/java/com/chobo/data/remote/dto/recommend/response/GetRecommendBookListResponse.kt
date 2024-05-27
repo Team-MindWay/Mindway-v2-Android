@@ -8,10 +8,8 @@ data class GetRecommendBookListResponse(
     val author: String
 )
 
-fun GetRecommendBookListResponse.toGetRecommendListResponseModel(): RecommendListResponseAllModel {
-    return RecommendListResponseAllModel(
-        title = title,
-        content = content,
-        author = author
-    )
-}
+fun GetRecommendBookListResponse.toModel() = RecommendListResponseAllModel(
+    title = title,
+    content = content,
+    author = author
+)

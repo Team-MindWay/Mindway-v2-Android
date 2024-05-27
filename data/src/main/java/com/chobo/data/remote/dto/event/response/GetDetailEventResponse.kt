@@ -10,12 +10,10 @@ data class GetDetailEventResponse(
     val endedAt: String
 )
 
-fun GetDetailEventResponse.toGetDetailEventResponseModel(): GetDetailEventResponseModel {
-    return GetDetailEventResponseModel(
-        title = title,
-        content = content,
-        image = image,
-        startedAt = startedAt,
-        endedAt = endedAt
-    )
-}
+fun GetDetailEventResponse.toModel() = GetDetailEventResponseModel(
+    title = title,
+    content = content,
+    image = image,
+    startedAt = startedAt,
+    endedAt = endedAt
+)
