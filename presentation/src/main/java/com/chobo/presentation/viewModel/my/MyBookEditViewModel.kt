@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
-import com.chobo.presentation.viewModel.my.uistate.OrderModifyByIdUiState
-import com.chobo.presentation.viewModel.util.Event
 import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,9 +34,6 @@ class MyBookEditViewModel @Inject constructor(
 
     private val _linkTextStateIsEmpty = MutableStateFlow(false)
     val linkTextStateIsEmpty: StateFlow<Boolean> = _linkTextStateIsEmpty.asStateFlow()
-
-    private val _orderModifyByIdUiState = MutableStateFlow<OrderModifyByIdUiState>(OrderModifyByIdUiState.Loading)
-    val orderModifyByIdUiState: StateFlow<OrderModifyByIdUiState> = _orderModifyByIdUiState.asStateFlow()
 
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
@@ -75,15 +70,10 @@ class MyBookEditViewModel @Inject constructor(
                 )
                     .onSuccess {
                         it.catch { remoteError ->
-                            _orderModifyByIdUiState.value = OrderModifyByIdUiState.RemoteFail(exception = remoteError)
                             remoteError.errorHandling<Unit>()
-                        }.collect { response ->
-                            _orderModifyByIdUiState.value = OrderModifyByIdUiState.Success
-                            Event.Success(data = response)
                         }
                     }
                     .onFailure {
-                        _orderModifyByIdUiState.value = OrderModifyByIdUiState.RemoteFail(exception = it)
                         it.errorHandling<Unit>()
                     }
             }
