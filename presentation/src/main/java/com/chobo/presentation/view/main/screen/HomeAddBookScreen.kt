@@ -1,24 +1,35 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
-import com.chobo.presentation.view.component.textField.*
+import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
@@ -26,7 +37,7 @@ import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 @Composable
 internal fun HomeAddBookRoute(
     modifier: Modifier = Modifier,
-    homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
+    homeAddBookViewModel: HomeAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit
 ) {
     val titleTextState by homeAddBookViewModel.titleTextState.collectAsStateWithLifecycle()

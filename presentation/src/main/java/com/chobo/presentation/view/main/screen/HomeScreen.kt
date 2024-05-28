@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,7 +31,7 @@ import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 @Composable
 internal fun HomeRoute(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToGoalReading: () -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
