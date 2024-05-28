@@ -24,8 +24,8 @@ class EventViewModel @Inject constructor(
     private val getEventDetailUseCase: GetDetailEventUseCase,
     private val getEventDateListUseCase: GetEventDateListUseCase,
 ) : ViewModel() {
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+    private val _swipeRefreshLoading = MutableStateFlow(false)
+    val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
 
     private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getEventListUiState = _getEventListUiState.asStateFlow()
@@ -42,9 +42,9 @@ class EventViewModel @Inject constructor(
 
     fun loadStuff() {
         viewModelScope.launch {
-            _isLoading.value = true
+            _swipeRefreshLoading.value = true
             delay(1500L)
-            _isLoading.value = false
+            _swipeRefreshLoading.value = false
         }
     }
 

@@ -45,8 +45,8 @@ internal fun EventScreenRoute(
     val getEventListUiState by eventViewModel.getEventListUiState.collectAsStateWithLifecycle()
     val getDetailEventUiState by eventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
     val getEventDateListUiState by eventViewModel.getEventDateListUiState.collectAsStateWithLifecycle()
-    val isLoading by eventViewModel.isLoading.collectAsStateWithLifecycle()
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
+    val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
     val pagerState = rememberPagerState { 2 }
 
     EventScreen(
