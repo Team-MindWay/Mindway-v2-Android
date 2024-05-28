@@ -28,7 +28,6 @@ import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
-import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
 import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -42,7 +41,6 @@ internal fun EventScreenRoute(
     eventViewModel: EventViewModel = viewModel(LocalContext.current as ComponentActivity)
 ) {
     val getEventListUiState by eventViewModel.getEventListUiState.collectAsStateWithLifecycle()
-    val getDetailEventUiState by eventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
     val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
     val pagerState = rememberPagerState { 2 }
@@ -51,7 +49,6 @@ internal fun EventScreenRoute(
         modifier = modifier,
         navigateToDetailEvent = navigateToDetailEvent,
         getEventListUiState = getEventListUiState,
-        getDetailEventUiState = getDetailEventUiState,
         swipeRefreshState = swipeRefreshState,
         pagerState = pagerState,
         onCurrentEventClick = eventViewModel::onCurrentEventClick,
@@ -67,7 +64,6 @@ internal fun EventScreenRoute(
 internal fun EventScreen(
     modifier: Modifier = Modifier,
     getEventListUiState: GetEventListUiState,
-    getDetailEventUiState: GetDetailEventUiState,
     swipeRefreshState: SwipeRefreshState,
     pagerState: PagerState,
     onCurrentEventClick: (Int) -> Unit,
