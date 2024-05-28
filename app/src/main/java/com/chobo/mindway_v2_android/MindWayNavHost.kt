@@ -32,7 +32,6 @@ import com.chobo.presentation.view.my.navigation.navigationToMyBookEdit
 fun MindWayNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String,
-    eventId: Long
 ) {
     val topDestination = remember {
         mutableStateOf(MindWayNavBarItemType.HOME)
@@ -68,10 +67,7 @@ fun MindWayNavHost(
 
         homeEditBook(navigateToBack = navController::popBackStack)
 
-        detailEventScreen(
-            navigateToBack = navController::popBackStack,
-            eventId = eventId
-        )
+        detailEventScreen(navigateToBack = navController::popBackStack,)
 
         bookAddBook(navigateToBack = navController::popBackStack)
 
