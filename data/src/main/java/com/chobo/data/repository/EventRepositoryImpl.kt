@@ -18,10 +18,4 @@ class EventRepositoryImpl @Inject constructor(
     override suspend fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponseModel> {
         return remoteEventDataSource.getDetailEvent(eventId = eventId).map { it.toModel() }
     }
-
-    override suspend fun getEventDateList(date: String): Flow<List<GetEventDateListResponseModel>> {
-        return remoteEventDataSource.getEventDateList(date = date).map { list ->
-            list.map { it.toModel() }
-        }
-    }
 }

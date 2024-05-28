@@ -28,8 +28,6 @@ import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
-import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
 import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -43,8 +41,6 @@ internal fun EventScreenRoute(
     eventViewModel: EventViewModel = viewModel(LocalContext.current as ComponentActivity)
 ) {
     val getEventListUiState by eventViewModel.getEventListUiState.collectAsStateWithLifecycle()
-    val getDetailEventUiState by eventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
-    val getEventDateListUiState by eventViewModel.getEventDateListUiState.collectAsStateWithLifecycle()
     val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
     val pagerState = rememberPagerState { 2 }
@@ -53,15 +49,14 @@ internal fun EventScreenRoute(
         modifier = modifier,
         navigateToDetailEvent = navigateToDetailEvent,
         getEventListUiState = getEventListUiState,
-        getDetailEventUiState = getDetailEventUiState,
-        getEventDateListUiState = getEventDateListUiState,
         swipeRefreshState = swipeRefreshState,
         pagerState = pagerState,
         onCurrentEventClick = eventViewModel::onCurrentEventClick,
         onPastEventClick = eventViewModel::onPastEventClick,
         getEventList = eventViewModel::getEventList,
         getEventPastList = eventViewModel::getEventPastList,
-        loadStuff = eventViewModel::loadStuff
+        loadStuff = eventViewModel::loadStuff,
+        saveEventId = eventViewModel::saveEventId,
     )
 }
 
@@ -70,8 +65,6 @@ internal fun EventScreenRoute(
 internal fun EventScreen(
     modifier: Modifier = Modifier,
     getEventListUiState: GetEventListUiState,
-    getDetailEventUiState: GetDetailEventUiState,
-    getEventDateListUiState: GetEventDateListUiState,
     swipeRefreshState: SwipeRefreshState,
     pagerState: PagerState,
     onCurrentEventClick: (Int) -> Unit,
@@ -79,7 +72,8 @@ internal fun EventScreen(
     navigateToDetailEvent: () -> Unit,
     getEventList: (String) -> Unit,
     getEventPastList: (String) -> Unit,
-    loadStuff: () -> Unit
+    loadStuff: () -> Unit,
+    saveEventId: (Long) -> Unit
 ) {
     var storageNowStatus by remember { mutableStateOf(EventRequestListStatusType.NOW.name) }
     val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST.name) }
@@ -127,27 +121,27 @@ internal fun EventScreen(
                                     eventDataListIsEmpty = false,
                                     onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = {}
                                 )
                             }
-
                             is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = false,
                                     onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = {}
                                 )
                             }
-
-                            GetEventListUiState.Loading -> {
+                            is GetEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = false,
                                     onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = {}
                                 )
                             }
-
                             is GetEventListUiState.Success -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
@@ -155,6 +149,7 @@ internal fun EventScreen(
                                     eventDataListIsEmpty = true,
                                     onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = saveEventId
                                 )
                             }
                         }
@@ -166,35 +161,36 @@ internal fun EventScreen(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
                                     onIconClick = onPastEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = {}
                                 )
                             }
-
                             is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
                                     onIconClick = onPastEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = {}
                                 )
                             }
-
-                            GetEventListUiState.Loading -> {
+                            is GetEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
                                     onIconClick = onPastEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = {}
                                 )
                             }
-
                             is GetEventListUiState.Success -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataList = getEventListUiState.getEventListResponse,
                                     eventDataListIsEmpty = true,
                                     onIconClick = onPastEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                    onEventClick = saveEventId
                                 )
                             }
                         }

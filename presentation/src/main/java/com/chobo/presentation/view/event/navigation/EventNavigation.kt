@@ -12,7 +12,7 @@ fun NavController.navigationToDetailEvent() {
 }
 
 fun NavGraphBuilder.detailEventScreen(
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
 ) {
     composable(detailEventRoute) {
         DetailEventRoute(navigateToBack = navigateToBack)

@@ -27,6 +27,7 @@ fun EventContent(
     eventDataList: List<GetEventListResponseModel> = listOf(),
     eventDataListIsEmpty: Boolean,
     onIconClick: (Int) -> Unit,
+    onEventClick: (Long) -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -39,7 +40,10 @@ fun EventContent(
                 itemsIndexed(eventDataList) { index, item ->
                     Events(
                         eventsData = item,
-                        onClick = { onIconClick(index) },
+                        onClick = {
+                            onIconClick(index)
+                            onEventClick(item.id)
+                        },
                         navigateToDetailEvent = navigateToDetailEvent
                     )
                 }
@@ -73,5 +77,6 @@ fun EventContentPreview() {
         onIconClick = {},
         eventDataListIsEmpty = true,
         navigateToDetailEvent = {},
+        onEventClick = {}
     )
 }
