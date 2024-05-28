@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MindWayCombinationView(
+    modifier: Modifier = Modifier,
     topDestination: MutableState<MindWayNavBarItemType>,
     myViewModel: MyViewModel = viewModel(LocalContext.current as ComponentActivity),
     navigateToDetailEvent: () -> Unit,
@@ -68,7 +69,7 @@ fun MindWayCombinationView(
                 )
             }
         ) { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues)) {
+            Box(modifier = modifier.padding(paddingValues)) {
                 when (topDestination.value) {
                     HOME -> HomeRoute(
                         navigateToGoalReading = navigateToGoalReading,
