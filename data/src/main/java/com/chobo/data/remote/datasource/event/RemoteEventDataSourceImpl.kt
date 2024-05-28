@@ -1,10 +1,13 @@
 package com.chobo.data.remote.datasource.event
 
 import com.chobo.data.remote.api.EventAPI
-import com.chobo.data.remote.dto.event.response.*
+import com.chobo.data.remote.dto.event.response.GetDetailEventResponse
+import com.chobo.data.remote.dto.event.response.GetEventListResponse
 import com.chobo.data.util.MindWayAPIHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class RemoteEventDataSourceImpl @Inject constructor(
@@ -28,19 +31,6 @@ class RemoteEventDataSourceImpl @Inject constructor(
                 .httpRequest {
                     eventService.getDetailEvent(
                         eventId = eventId
-                    )
-                }
-                .sendRequest()
-        )
-    }.flowOn(Dispatchers.IO)
-
-
-    override suspend fun getEventDateList(date: String): Flow<List<GetEventDateListResponse>> = flow {
-        emit(
-            MindWayAPIHandler<List<GetEventDateListResponse>>()
-                .httpRequest {
-                    eventService.getEventDate(
-                        date = date
                     )
                 }
                 .sendRequest()

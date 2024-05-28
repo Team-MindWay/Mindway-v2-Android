@@ -3,10 +3,8 @@ package com.chobo.presentation.viewModel.event
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.event.GetDetailEventUseCase
-import com.chobo.domain.usecase.event.GetEventDateListUseCase
 import com.chobo.domain.usecase.event.GetEventListUseCase
 import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
-import com.chobo.presentation.viewModel.event.uistate.GetEventDateListUiState
 import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
@@ -22,7 +20,6 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val getEventListUseCase: GetEventListUseCase,
     private val getEventDetailUseCase: GetDetailEventUseCase,
-    private val getEventDateListUseCase: GetEventDateListUseCase,
 ) : ViewModel() {
     private val _swipeRefreshLoading = MutableStateFlow(false)
     val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
@@ -32,9 +29,6 @@ class EventViewModel @Inject constructor(
 
     private val _getDetailEventUiState = MutableStateFlow<GetDetailEventUiState>(GetDetailEventUiState.Loading)
     val getDetailEventUiState = _getDetailEventUiState.asStateFlow()
-
-    private val _getEventDateListUiState = MutableStateFlow<GetEventDateListUiState>(GetEventDateListUiState.Loading)
-    val getEventDateListUiState = _getEventDateListUiState.asStateFlow()
 
     init {
         loadStuff()
@@ -88,25 +82,6 @@ class EventViewModel @Inject constructor(
                     is Result.Loading -> _getDetailEventUiState.value = GetDetailEventUiState.Loading
                     is Result.Success -> _getDetailEventUiState.value = GetDetailEventUiState.Success(result.data)
                     is Result.Fail -> _getDetailEventUiState.value = GetDetailEventUiState.Fail(result.exception)
-                }
-            }
-    }
-
-    fun getEventDataList(date: String) = viewModelScope.launch {
-        getEventDateListUseCase(date = date)
-            .asResult()
-            .collectLatest { result ->
-                when(result) {
-                    is Result.Loading -> _getEventDateListUiState.value = GetEventDateListUiState.Loading
-                    is Result.Success -> {
-                        if (result.data.isEmpty()) {
-                            _getEventDateListUiState.value = GetEventDateListUiState.Empty
-                        } else {
-                            _getEventDateListUiState.value =
-                                GetEventDateListUiState.Success(result.data)
-                        }
-                    }
-                    is Result.Fail -> _getEventDateListUiState.value = GetEventDateListUiState.Fail(result.exception)
                 }
             }
     }

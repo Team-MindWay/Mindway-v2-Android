@@ -1,6 +1,5 @@
 package com.chobo.domain.usecase.recommend
 
-import com.chobo.domain.model.event.response.GetEventDateListResponseModel
 import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.domain.repository.RecommendRepository
 import kotlinx.coroutines.flow.Flow
