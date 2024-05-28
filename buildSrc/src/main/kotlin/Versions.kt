@@ -37,4 +37,6 @@ object Versions {
     const val GAUTH = "v1.0.7"
 
     const val PREFERENCES = "1.0.0"
+
+    const val SWIPE_REFRESH = "0.27.0"
 }

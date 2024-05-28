@@ -82,6 +82,8 @@ dependencies {
     implementation(Dependency.Coil.COIL)
 
     implementation(Dependency.Gauth.GAUTH)
+
+    implementation(Dependency.Google.SWIPE_REFRESH)
 }
 
 fun getApiKey(propertyKey: String): String {
