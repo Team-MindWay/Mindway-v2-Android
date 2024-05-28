@@ -14,15 +14,11 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun MindWayBottomSheetDialog(
     modifier: Modifier = Modifier,
     sheetShape: Shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-    sheetContent: @Composable ColumnScope.() -> Unit,
-    content: @Composable (sheetState: ModalBottomSheetState) -> Unit
+    sheetState: ModalBottomSheetState,
+    sheetContent: @Composable() (ColumnScope.() -> Unit),
+    content: @Composable (sheetState: ModalBottomSheetState) -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
-        val sheetState = rememberModalBottomSheetState(
-            initialValue = ModalBottomSheetValue.Hidden,
-            skipHalfExpanded = true
-        )
-
         ModalBottomSheetLayout(
             modifier = modifier,
             sheetState = sheetState,
