@@ -43,7 +43,7 @@ class EventViewModel @Inject constructor(
     fun loadStuff() {
         viewModelScope.launch {
             _swipeRefreshLoading.value = true
-            delay(1500L)
+            delay(1000L)
             _swipeRefreshLoading.value = false
         }
     }
