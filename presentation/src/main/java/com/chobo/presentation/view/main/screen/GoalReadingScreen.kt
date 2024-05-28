@@ -19,6 +19,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -112,6 +114,10 @@ internal fun GoalReadingScreen(
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
 ) {
+    val sheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
 
     MindWayBottomSheetDialog(
         sheetContent = {
@@ -121,8 +127,9 @@ internal fun GoalReadingScreen(
                 onclick = goalBookReadSettingOnClick,
                 updateTextValue = updateGoalBookReadSetting
             )
-        }
-    ) { sheetState ->
+        },
+        sheetState = sheetState
+    ) {
         MindWayAndroidTheme { colors, _ ->
             CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
                 Column(
@@ -135,7 +142,13 @@ internal fun GoalReadingScreen(
                         }
                 ) {
                     MindWayTopAppBar(
-                        startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                        startIcon = {
+                            ChevronLeftIcon(
+                                modifier = Modifier.clickableSingle(
+                                    onClick = navigateToBack
+                                )
+                            )
+                        },
                         midText = stringResource(R.string.goal_reading),
                         endIcon = {
                             if (goalBookReadIsEmpty) {
@@ -172,7 +185,10 @@ internal fun GoalReadingScreen(
                             }
                             item {
                                 Column(
-                                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                    verticalArrangement = Arrangement.spacedBy(
+                                        8.dp,
+                                        Alignment.CenterVertically
+                                    ),
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = modifier
                                         .shadow(

@@ -16,11 +16,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,8 +30,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
-import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheet
-import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
@@ -41,16 +37,13 @@ import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun MyRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
-    navigateToIntro: () -> Unit,
-    navigateToLogin: () -> Unit,
 ) {
     val myName by myViewModel.myName.collectAsStateWithLifecycle()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
@@ -70,14 +63,11 @@ internal fun MyRoute(
         toggleBookDeleteDialogIsVisible = myViewModel::toggleBookDeleteDialogIsVisible,
         setSelectedIndex = myViewModel::setSelectedIndex,
         editBookOnClick = myViewModel::editBookOnClick,
-        logout = myViewModel::logout,
-        navigateToIntro = navigateToIntro,
-        navigateToLogin = navigateToLogin,
+        showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
@@ -87,109 +77,92 @@ fun MyScreen(
     selectedBookTitle: String,
     bookDeleteDialogIsVisible: Boolean,
     selectedIndex: Int,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     toggleBookDeleteDialogIsVisible: () -> Unit,
     setSelectedIndex: (Int) -> Unit,
     editBookOnClick: (Int) -> Unit,
-    logout: () -> Unit,
-    navigateToIntro: () -> Unit,
-    navigateToLogin: () -> Unit,
+    showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        MindWayBottomSheetDialog(
-            sheetContent = {
-                MindWayBottomSheet(
-                    topText = stringResource(R.string.mindway_intro),
-                    bottomText = stringResource(R.string.logout),
-                    topOnClick = navigateToIntro,
-                    bottomOnCLick = {
-                        logout()
-                        navigateToLogin()
-                    },
-                )
-            }
-        ) { sheetState ->
-            Box(modifier = modifier.background(color = colors.WHITE)) {
-                Column {
-                    if (bookDeleteDialogIsVisible) {
-                        Dialog(onDismissRequest = toggleBookDeleteDialogIsVisible) {
-                            MyBookDeletePopUp(
-                                title = selectedBookTitle,
-                                cancelOnclick = toggleBookDeleteDialogIsVisible,
-                                checkOnclick = {
-                                    if (selectedIndex != -1)
-                                        setSelectedIndex(-1)
-                                    toggleBookDeleteDialogIsVisible()
-                                }
-                            )
-                        }
-                    }
-                    MyNameCard(
-                        name = myName,
-                        onClick = { coroutineScope.launch { sheetState.show() } },
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 24.dp)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(R.string.book_request_list),
-                            style = typography.labelLarge,
-                            fontWeight = FontWeight.Normal,
-                            color = colors.GRAY400,
+        Box(modifier = modifier.background(color = colors.WHITE)) {
+            Column {
+                if (bookDeleteDialogIsVisible) {
+                    Dialog(onDismissRequest = toggleBookDeleteDialogIsVisible) {
+                        MyBookDeletePopUp(
+                            title = selectedBookTitle,
+                            cancelOnclick = toggleBookDeleteDialogIsVisible,
+                            checkOnclick = {
+                                if (selectedIndex != -1)
+                                    setSelectedIndex(-1)
+                                toggleBookDeleteDialogIsVisible()
+                            }
                         )
                     }
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(
-                                horizontal = 24.dp,
-                                vertical = 16.dp
-                            )
-                    ) {
-                        itemsIndexed(myBookListItemDataList) { index, item ->
-                            MyBookListItem(
-                                title = item.title,
-                                writer = item.writer,
-                                editOnclick = {
-                                    editBookOnClick(index)
-                                    navigateToMyBookEdit()
-                                },
-                                trashCanOnclick = {
-                                    item.trashCanOnclick
-                                    toggleBookDeleteDialogIsVisible()
-                                    setSelectedIndex(index)
-                                }
-                            )
-                        }
-                    }
                 }
-                AnimatedVisibility(
-                    visible = isToastVisible,
-                    enter = slideInVertically(
-                        initialOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    exit = slideOutVertically(
-                        targetOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
+                MyNameCard(
+                    name = myName,
+                    onClick = showSheet,
+                )
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .offset(y = (-50).dp)
-                        .padding(horizontal = 24.dp),
+                        .padding(horizontal = 24.dp)
+                        .fillMaxWidth()
                 ) {
-                    MindWayToast(
-                        isSuccess = true,
-                        text = stringResource(R.string.book_request_succes_toast),
-                        modifier = Modifier.fillMaxWidth()
+                    Text(
+                        text = stringResource(R.string.book_request_list),
+                        style = typography.labelLarge,
+                        fontWeight = FontWeight.Normal,
+                        color = colors.GRAY400,
                     )
                 }
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            horizontal = 24.dp,
+                            vertical = 16.dp
+                        )
+                ) {
+                    itemsIndexed(myBookListItemDataList) { index, item ->
+                        MyBookListItem(
+                            title = item.title,
+                            writer = item.writer,
+                            editOnclick = {
+                                editBookOnClick(index)
+                                navigateToMyBookEdit()
+                            },
+                            trashCanOnclick = {
+                                item.trashCanOnclick
+                                toggleBookDeleteDialogIsVisible()
+                                setSelectedIndex(index)
+                            }
+                        )
+                    }
+                }
+            }
+            AnimatedVisibility(
+                visible = isToastVisible,
+                enter = slideInVertically(
+                    initialOffsetY = { it + 110 },
+                    animationSpec = tween(durationMillis = 500)
+                ),
+                exit = slideOutVertically(
+                    targetOffsetY = { it + 110 },
+                    animationSpec = tween(durationMillis = 500)
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-50).dp)
+                    .padding(horizontal = 24.dp),
+            ) {
+                MindWayToast(
+                    isSuccess = true,
+                    text = stringResource(R.string.book_request_succes_toast),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
@@ -198,9 +171,9 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
+
     MyRoute(
-        navigateToMyBookEdit = { },
-        navigateToIntro = { },
-        navigateToLogin = { }
+        navigateToMyBookEdit = {},
+        showSheet = {}
     )
 }

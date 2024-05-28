@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,6 +37,7 @@ import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
@@ -44,6 +48,10 @@ internal fun ViewDetailRoute(
     val titleTextState by viewDetailViewModel.titleTextState.collectAsStateWithLifecycle()
     val contentTextState by viewDetailViewModel.contentTextState.collectAsStateWithLifecycle()
     val checkBookDialogIsVisible by viewDetailViewModel.checkBookDialogIsVisible.collectAsStateWithLifecycle()
+    val sheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
     val coroutineScope = rememberCoroutineScope()
 
     ViewDetailScreen(
@@ -52,6 +60,7 @@ internal fun ViewDetailRoute(
         contentTextState = contentTextState,
         coroutineScope = coroutineScope,
         checkBookDialogIsVisible = checkBookDialogIsVisible,
+        sheetState = sheetState,
         checkOnclick = viewDetailViewModel::checkOnclick,
         toggleCheckBookDialogIsVisible = viewDetailViewModel::toggleCheckBookDialogIsVisible,
         navigateToBack = navigateToBack,
@@ -67,6 +76,7 @@ internal fun ViewDetailScreen(
     contentTextState: String,
     coroutineScope: CoroutineScope,
     checkBookDialogIsVisible: Boolean,
+    sheetState: ModalBottomSheetState,
     checkOnclick: () -> Unit,
     toggleCheckBookDialogIsVisible: () -> Unit,
     navigateToBack: () -> Unit,
@@ -81,8 +91,9 @@ internal fun ViewDetailScreen(
                     topOnClick = navigateToHomeEditBook,
                     bottomOnCLick = toggleCheckBookDialogIsVisible,
                 )
-            }
-        ) { sheetState ->
+            },
+            sheetState = sheetState
+        ) {
             Column(
                 modifier = modifier
                     .fillMaxSize()
