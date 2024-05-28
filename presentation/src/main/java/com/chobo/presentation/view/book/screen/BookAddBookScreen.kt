@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.book.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +38,7 @@ import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 @Composable
 internal fun BookAddBookRoute(
     modifier: Modifier = Modifier,
-    bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(),
+    bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit
 ) {
     val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()

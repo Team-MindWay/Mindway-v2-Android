@@ -1,23 +1,34 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
-import com.chobo.presentation.view.component.bottom_sheet.*
-import com.chobo.presentation.view.component.icon.*
+import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheet
+import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.OptionIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
-import com.chobo.presentation.view.main.component.*
+import com.chobo.presentation.view.main.component.ViewDetailPopUp
+import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +37,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
-    viewDetailViewModel: ViewDetailViewModel = viewModel(),
+    viewDetailViewModel: ViewDetailViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: () -> Unit,
 ) {

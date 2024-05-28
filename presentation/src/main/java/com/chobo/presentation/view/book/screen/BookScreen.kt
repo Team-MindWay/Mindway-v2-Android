@@ -2,6 +2,7 @@
 
 package com.chobo.presentation.view.book.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -30,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,8 +54,8 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun BookRoute(
     modifier: Modifier = Modifier,
-    bookAddBookScreen: BookAddBookViewModel = hiltViewModel(),
-    bookScreenViewModel: BookScreenViewModel = hiltViewModel(),
+    bookAddBookScreen: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    bookScreenViewModel: BookScreenViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBookAddBook: () -> Unit,
 ) {
     val novelDataList by bookScreenViewModel.novelDataList.collectAsStateWithLifecycle()
