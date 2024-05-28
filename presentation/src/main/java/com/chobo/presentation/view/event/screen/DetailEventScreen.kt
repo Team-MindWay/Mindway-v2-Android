@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,27 +29,38 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.DetailEventViewModel
+import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
 
 @Composable
 internal fun DetailEventRoute(
     modifier: Modifier = Modifier,
     detailEventViewModel: DetailEventViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
+    eventId: Long
 ) {
-    val detailData by detailEventViewModel.detailData.collectAsStateWithLifecycle()
+    val getDetailEventUiState by detailEventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
+
     DetailEventScreen(
         modifier = modifier,
-        detailData = detailData,
-        navigateToBack = navigateToBack
+        getDetailEventUiState = getDetailEventUiState,
+        getDetailEvent = detailEventViewModel::getDetailEvent,
+        navigateToBack = navigateToBack,
+        eventId = eventId
     )
 }
 
 @Composable
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
-    detailData: GetDetailEventResponseModel,
+    getDetailEventUiState: GetDetailEventUiState,
+    getDetailEvent: (Long) -> Unit,
     navigateToBack: () -> Unit,
+    eventId: Long
 ) {
+    LaunchedEffect(eventId) {
+        getDetailEvent(eventId)
+    }
+
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
@@ -60,21 +72,27 @@ internal fun DetailEventScreen(
                     .fillMaxSize()
                     .padding(horizontal = 24.dp)
             ) {
-                Image(
-                    painter = rememberImagePainter(data = detailData.image),
-                    contentDescription = "Event Image",
-                    modifier = Modifier
-                        .padding(vertical = 20.dp)
-                        .fillMaxWidth()
-                        .height(264.dp)
-                        .clip(shape = RoundedCornerShape(8.dp))
-                )
-                DetailEventContent(
-                    title = detailData.title,
-                    content = detailData.content,
-                    startedAt = detailData.startedAt,
-                    endedAt = detailData.endedAt
-                )
+                when (getDetailEventUiState) {
+                    is GetDetailEventUiState.Fail -> Unit
+                    is GetDetailEventUiState.Loading -> Unit
+                    is GetDetailEventUiState.Success -> {
+                        Image(
+                            painter = rememberImagePainter(data = getDetailEventUiState.getDetailEventResponse.image),
+                            contentDescription = "Event Image",
+                            modifier = Modifier
+                                .padding(vertical = 20.dp)
+                                .fillMaxWidth()
+                                .height(264.dp)
+                                .clip(shape = RoundedCornerShape(8.dp))
+                        )
+                        DetailEventContent(
+                            title = getDetailEventUiState.getDetailEventResponse.title,
+                            content = getDetailEventUiState.getDetailEventResponse.content,
+                            startedAt = getDetailEventUiState.getDetailEventResponse.startedAt,
+                            endedAt = getDetailEventUiState.getDetailEventResponse.endedAt
+                        )
+                    }
+                }
             }
         }
     }
@@ -83,5 +101,17 @@ internal fun DetailEventScreen(
 @Preview(showBackground = true)
 @Composable
 fun DetailEventScreenPre() {
-    DetailEventRoute(navigateToBack = { })
+    val exampleEventResponse = GetDetailEventResponseModel(
+        image = "https://example.com/image.jpg",
+        title = "Sample Event",
+        content = "This is a sample event description.",
+        startedAt = "2024-01-01T00:00:00Z",
+        endedAt = "2024-01-02T00:00:00Z"
+    )
+    DetailEventScreen(
+        getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
+        getDetailEvent = {},
+        navigateToBack = { /*TODO*/ },
+        eventId = 1L
+    )
 }
