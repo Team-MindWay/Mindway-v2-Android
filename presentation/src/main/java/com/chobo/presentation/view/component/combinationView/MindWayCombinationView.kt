@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.screen.BookRoute
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 fun MindWayCombinationView(
     modifier: Modifier = Modifier,
     topDestination: MutableState<MindWayNavBarItemType>,
-    myViewModel: MyViewModel = viewModel(LocalContext.current as ComponentActivity),
+    myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToDetailEvent: () -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
