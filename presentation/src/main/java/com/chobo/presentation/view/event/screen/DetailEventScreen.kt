@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +35,6 @@ internal fun DetailEventRoute(
     modifier: Modifier = Modifier,
     detailEventViewModel: DetailEventViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
-    eventId: Long
 ) {
     val getDetailEventUiState by detailEventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
 
@@ -44,8 +42,7 @@ internal fun DetailEventRoute(
         modifier = modifier,
         getDetailEventUiState = getDetailEventUiState,
         getDetailEvent = detailEventViewModel::getDetailEvent,
-        navigateToBack = navigateToBack,
-        eventId = eventId
+        navigateToBack = navigateToBack
     )
 }
 
@@ -55,12 +52,7 @@ internal fun DetailEventScreen(
     getDetailEventUiState: GetDetailEventUiState,
     getDetailEvent: (Long) -> Unit,
     navigateToBack: () -> Unit,
-    eventId: Long
 ) {
-    LaunchedEffect(eventId) {
-        getDetailEvent(eventId)
-    }
-
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
@@ -111,7 +103,6 @@ fun DetailEventScreenPre() {
     DetailEventScreen(
         getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
         getDetailEvent = {},
-        navigateToBack = { /*TODO*/ },
-        eventId = 1L
+        navigateToBack = {},
     )
 }
