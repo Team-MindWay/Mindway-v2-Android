@@ -24,6 +24,12 @@ class EventViewModel @Inject constructor(
     private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getEventListUiState = _getEventListUiState.asStateFlow()
 
+    private var eventId: Long = -1
+
+    fun saveEventId(eventId: Long) {
+        this.eventId = eventId
+    }
+
     init {
         loadStuff()
     }
