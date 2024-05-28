@@ -104,7 +104,11 @@ internal fun EventScreen(
             state = swipeRefreshState,
             onRefresh = {
                 loadStuff()
-                getEventList(storageNowStatus)
+                if (storageNowStatus == EventRequestListStatusType.PAST.name) {
+                    getEventPastList(storagePastStatus)
+                } else {
+                    getEventList(storageNowStatus)
+                }
             }
         ) {
             Box(
