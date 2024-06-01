@@ -27,7 +27,9 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.TabRow
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -35,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -44,6 +47,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.customToast.MindWayToast
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -105,7 +109,7 @@ internal fun BookScreen(
     showToast: () -> Unit,
     navigateToBookAddBook: () -> Unit,
 ) {
-    MindWayAndroidTheme { colors, _ ->
+    MindWayAndroidTheme { colors, typography ->
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
@@ -118,10 +122,7 @@ internal fun BookScreen(
                 )
             }
         ) {
-            Box(
-                modifier = modifier
-                    .background(color = colors.WHITE)
-            ) {
+            Box(modifier = modifier.background(color = colors.WHITE)) {
                 Column {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -161,35 +162,85 @@ internal fun BookScreen(
                         )
                     }
                     HorizontalPager(state = pagerState) { page ->
-                        LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                            horizontalAlignment = Alignment.Start,
-                            modifier = Modifier
-                                .padding(horizontal = 24.dp)
-                                .fillMaxSize()
-                        ) {
-                            when (page) {
-                                0 -> {
-                                    item { Spacer(modifier = modifier.height(28.dp)) }
-                                    when (novelDataList) {
-                                        is GetRecommendBookUiState.Loading -> {}
-                                        is GetRecommendBookUiState.Empty -> {}
-                                        is GetRecommendBookUiState.Fail -> {}
-                                        is GetRecommendBookUiState.Success -> {
+                        when (page) {
+                            0 -> {
+                                when (novelDataList) {
+                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Empty -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = "등록된 소설이 없습니다",
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Success -> {
+                                        LazyColumn(
+                                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .padding(horizontal = 24.dp)
+                                                .fillMaxSize()
+                                        ) {
+                                            item { Spacer(modifier = modifier.height(28.dp)) }
                                             itemsIndexed(novelDataList.data) { _, item ->
                                                 BookListItem(data = item)
                                             }
                                         }
                                     }
                                 }
+                            }
 
-                                1 -> {
-                                    item { Spacer(modifier = modifier.height(28.dp)) }
-                                    when (essayDataList) {
-                                        is GetRecommendBookUiState.Loading -> {}
-                                        is GetRecommendBookUiState.Empty -> {}
-                                        is GetRecommendBookUiState.Fail -> {}
-                                        is GetRecommendBookUiState.Success -> {
+                            1 -> {
+                                when (essayDataList) {
+                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Empty -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = "등록된 에세이가 없습니다",
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Success -> {
+                                        LazyColumn(
+                                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .padding(horizontal = 24.dp)
+                                                .fillMaxSize()
+                                        ) {
+                                            item { Spacer(modifier = modifier.height(28.dp)) }
                                             itemsIndexed(essayDataList.data) { _, item ->
                                                 BookListItem(data = item)
                                             }
@@ -198,6 +249,7 @@ internal fun BookScreen(
                                 }
                             }
                         }
+
                     }
                 }
                 AnimatedVisibility(
