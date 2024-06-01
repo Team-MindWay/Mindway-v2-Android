@@ -47,10 +47,10 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
 import com.chobo.presentation.view.main.component.GoalReadingChart
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
+import com.chobo.presentation.viewModel.goal.uistate.GetBookListUiState
 import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -64,9 +64,9 @@ internal fun GoalReadingRoute(
     navigateToHomeViewDetail: () -> Unit,
 ) {
     val getWeekendGoalUiState by goalReadingViewModel.getWeekendGoalUiState.collectAsStateWithLifecycle()
+    val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
-    val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsStateWithLifecycle()
     val isToastVisible by goalReadingViewModel.isToastVisible.collectAsStateWithLifecycle()
     val isSuccess by goalReadingViewModel.isSuccess.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
@@ -77,7 +77,7 @@ internal fun GoalReadingRoute(
         getWeekendGoalUiState = getWeekendGoalUiState,
         goalBookReadSetting = goalBookReadSetting,
         goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
-        goalReadingListOfBooksReadItemDataList = goalReadingListOfBooksReadItemDataList,
+        getBookListUiState = getBookListUiState,
         isToastVisible = isToastVisible,
         isSuccess = isSuccess,
         coroutineScope = coroutineScope,
@@ -97,7 +97,7 @@ internal fun GoalReadingScreen(
     getWeekendGoalUiState: GetWeekendGoalUiState,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
-    goalReadingListOfBooksReadItemDataList: List<GoalReadingListOfBooksReadItemData>,
+    getBookListUiState: GetBookListUiState,
     isToastVisible: Boolean,
     isSuccess: Boolean,
     coroutineScope: CoroutineScope,
@@ -210,7 +210,10 @@ internal fun GoalReadingScreen(
                             item {
                                 if (getWeekendGoalUiState != GetWeekendGoalUiState.Empty) {
                                     Column(
-                                        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                        verticalArrangement = Arrangement.spacedBy(
+                                            8.dp,
+                                            Alignment.CenterVertically
+                                        ),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         modifier = modifier
                                             .shadow(
@@ -229,12 +232,19 @@ internal fun GoalReadingScreen(
                                     }
                                 }
                             }
-                            items(goalReadingListOfBooksReadItemDataList) { item ->
-                                GoalReadingListOfBooksReadItem(
-                                    data = item,
-                                    onClick = navigateToHomeViewDetail,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
+                            when (getBookListUiState) {
+                                is GetBookListUiState.Empty -> TODO()
+                                is GetBookListUiState.Fail -> TODO()
+                                is GetBookListUiState.Loading -> TODO()
+                                is GetBookListUiState.Success -> {
+                                    items(getBookListUiState.data) { item ->
+                                        GoalReadingListOfBooksReadItem(
+                                            data = item,
+                                            onClick = navigateToHomeViewDetail,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
                             }
                         }
                         this@Column.AnimatedVisibility(

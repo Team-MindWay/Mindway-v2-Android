@@ -1,32 +1,39 @@
 package com.chobo.presentation.viewModel.goal
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.book.response.BookListResponseModel
+import com.chobo.domain.usecase.book.GetBookListUseCase
 import com.chobo.domain.usecase.goal.GetWeekendGoalUseCase
-import com.chobo.presentation.view.main.component.*
+import com.chobo.presentation.viewModel.goal.uistate.GetBookListUiState
 import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GoalReadingViewModel @Inject constructor(
-    private val getWeekendGoalUseCase: GetWeekendGoalUseCase
+    private val getWeekendGoalUseCase: GetWeekendGoalUseCase,
+    private val getBookListUseCase: GetBookListUseCase,
 ) : ViewModel() {
     private val _getWeekendGoalUiState = MutableStateFlow<GetWeekendGoalUiState>(GetWeekendGoalUiState.Loading)
     val getWeekendGoalUiState: StateFlow<GetWeekendGoalUiState> = _getWeekendGoalUiState.asStateFlow()
+
+    private val _getBookListUiState = MutableStateFlow<GetBookListUiState>(GetBookListUiState.Loading)
+    val getBookListUiState: StateFlow<GetBookListUiState> = _getBookListUiState.asStateFlow()
 
     private val _goalBookReadSetting = MutableStateFlow("")
     val goalBookReadSetting: StateFlow<String> = _goalBookReadSetting.asStateFlow()
 
     private val _goalBookReadSettingIsEmpty = MutableStateFlow(false)
     val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
-
-    private val _goalReadingListOfBooksReadItemDataList = MutableStateFlow<List<GoalReadingListOfBooksReadItemData>>(listOf())
-    val goalReadingListOfBooksReadItemDataList: StateFlow<List<GoalReadingListOfBooksReadItemData>> = _goalReadingListOfBooksReadItemDataList.asStateFlow()
 
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
@@ -68,14 +75,14 @@ class GoalReadingViewModel @Inject constructor(
     }
 
     init {
-        _goalReadingListOfBooksReadItemDataList.value =
-            MutableList(30) {
-                GoalReadingListOfBooksReadItemData(
-                    12,
-                    12,
-                    "제목",
-                    "내용입니다 그렇ewjiofhowehfluieifnhcielhuferhwiegir습니다"
+        _getBookListUiState.value = GetBookListUiState.Success(
+            data = MutableList(30) {
+                BookListResponseModel(
+                    created_at = "1월 2일",
+                    plot = "efrgetgefgrethryj",
+                    title = "제목",
                 )
             }
+        )
     }
 }
