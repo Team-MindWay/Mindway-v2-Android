@@ -18,7 +18,7 @@ class OrderRepositoryImpl @Inject constructor(
         return remoteNoticeDataSource.orderListGet().map { list -> list.map { it.toModel() } }
     }
 
-    override suspend fun orderModifyById(body: OrderRequestBodyModel, orderId: String): Flow<Unit> {
+    override suspend fun orderModifyById(body: OrderRequestBodyModel, orderId: Long): Flow<Unit> {
         return remoteNoticeDataSource.orderModifyById(body = body.toDto(), orderId = orderId)
     }
 
