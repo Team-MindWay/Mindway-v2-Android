@@ -33,7 +33,6 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
-import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
@@ -49,6 +48,7 @@ internal fun MyRoute(
 ) {
     val myNameUiState by myViewModel.getMyInformationUiState.collectAsStateWithLifecycle()
     val getMyBookListUiState by myViewModel.getMyBookListUiState.collectAsStateWithLifecycle()
+    val isCommunicationSuccess by myViewModel.isCommunicationSuccess.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
     val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
     val bookDeleteDialogIsVisible by myViewModel.bookDeleteDialogIsVisible.collectAsStateWithLifecycle()
@@ -58,6 +58,7 @@ internal fun MyRoute(
         modifier = modifier,
         myNameUiState = myNameUiState,
         getMyBookListUiState = getMyBookListUiState,
+        isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
         selectedBookTitle = selectedBookTitle,
         bookDeleteDialogIsVisible = bookDeleteDialogIsVisible,
@@ -75,6 +76,7 @@ fun MyScreen(
     modifier: Modifier = Modifier,
     myNameUiState: GetMyInformationUiState,
     getMyBookListUiState: GetMyBookListUiState,
+    isCommunicationSuccess: Boolean,
     isToastVisible: Boolean,
     selectedBookTitle: String,
     bookDeleteDialogIsVisible: Boolean,
@@ -155,26 +157,50 @@ fun MyScreen(
                     }
                 }
             }
-            AnimatedVisibility(
-                visible = isToastVisible,
-                enter = slideInVertically(
-                    initialOffsetY = { it + 110 },
-                    animationSpec = tween(durationMillis = 500)
-                ),
-                exit = slideOutVertically(
-                    targetOffsetY = { it + 110 },
-                    animationSpec = tween(durationMillis = 500)
-                ),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-50).dp)
-                    .padding(horizontal = 24.dp),
-            ) {
-                MindWayToast(
-                    isSuccess = true,
-                    text = stringResource(R.string.book_request_succes_toast),
-                    modifier = Modifier.fillMaxWidth()
-                )
+            if (isCommunicationSuccess){
+                AnimatedVisibility(
+                    visible = isToastVisible,
+                    enter = slideInVertically(
+                        initialOffsetY = { it + 110 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    exit = slideOutVertically(
+                        targetOffsetY = { it + 110 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .offset(y = (-50).dp)
+                        .padding(horizontal = 24.dp),
+                ) {
+                    MindWayToast(
+                        isSuccess = true,
+                        text = stringResource(R.string.order_delete_success),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }else{
+                AnimatedVisibility(
+                    visible = isToastVisible,
+                    enter = slideInVertically(
+                        initialOffsetY = { it + 110 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    exit = slideOutVertically(
+                        targetOffsetY = { it + 110 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .offset(y = (-50).dp)
+                        .padding(horizontal = 24.dp),
+                ) {
+                    MindWayToast(
+                        isSuccess = false,
+                        text = stringResource(R.string.order_delete_fail),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
