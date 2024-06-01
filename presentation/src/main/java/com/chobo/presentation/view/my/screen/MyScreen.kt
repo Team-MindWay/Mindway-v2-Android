@@ -37,6 +37,7 @@ import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
+import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
 import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
 
 @Composable
@@ -47,7 +48,7 @@ internal fun MyRoute(
     navigateToMyBookEdit: () -> Unit,
 ) {
     val myNameUiState by myViewModel.getMyInformationUiState.collectAsStateWithLifecycle()
-    val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
+    val getMyBookListUiState by myViewModel.getMyBookListUiState.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
     val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
     val bookDeleteDialogIsVisible by myViewModel.bookDeleteDialogIsVisible.collectAsStateWithLifecycle()
@@ -56,7 +57,7 @@ internal fun MyRoute(
     MyScreen(
         modifier = modifier,
         myNameUiState = myNameUiState,
-        myBookListItemDataList = myBookListItemDataList,
+        getMyBookListUiState = getMyBookListUiState,
         isToastVisible = isToastVisible,
         selectedBookTitle = selectedBookTitle,
         bookDeleteDialogIsVisible = bookDeleteDialogIsVisible,
@@ -73,7 +74,7 @@ internal fun MyRoute(
 fun MyScreen(
     modifier: Modifier = Modifier,
     myNameUiState: GetMyInformationUiState,
-    myBookListItemDataList: List<MyBookListItemData>,
+    getMyBookListUiState: GetMyBookListUiState,
     isToastVisible: Boolean,
     selectedBookTitle: String,
     bookDeleteDialogIsVisible: Boolean,
@@ -122,29 +123,35 @@ fun MyScreen(
                         color = colors.GRAY400,
                     )
                 }
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 16.dp
-                        )
-                ) {
-                    itemsIndexed(myBookListItemDataList) { index, item ->
-                        MyBookListItem(
-                            title = item.title,
-                            writer = item.writer,
-                            editOnclick = {
-                                editBookOnClick(index)
-                                navigateToMyBookEdit()
-                            },
-                            trashCanOnclick = {
-                                item.trashCanOnclick
-                                toggleBookDeleteDialogIsVisible()
-                                setSelectedIndex(index)
+                when (getMyBookListUiState) {
+                    is GetMyBookListUiState.Empty -> {}
+                    is GetMyBookListUiState.Fail -> {}
+                    is GetMyBookListUiState.Loading -> {}
+                    is GetMyBookListUiState.Success -> {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(
+                                    horizontal = 24.dp,
+                                    vertical = 16.dp
+                                )
+                        ) {
+                            itemsIndexed(getMyBookListUiState.data) { index, item ->
+                                MyBookListItem(
+                                    title = item.name,
+                                    writer = item.author,
+                                    editOnclick = {
+                                        editBookOnClick(index)
+                                        navigateToMyBookEdit()
+                                    },
+                                    trashCanOnclick = {
+                                        toggleBookDeleteDialogIsVisible()
+                                        setSelectedIndex(index)
+                                    }
+                                )
                             }
-                        )
+                        }
                     }
                 }
             }

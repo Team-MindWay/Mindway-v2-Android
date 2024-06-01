@@ -2,12 +2,12 @@ package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.LogoutUseCase
-import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
+import com.chobo.domain.usecase.my.GetMyBookListUseCase
 import com.chobo.domain.usecase.my.GetMyInformationUseCase
-import com.chobo.presentation.view.my.component.MyBookListItemData
-import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
+import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
 import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
@@ -25,9 +25,10 @@ class MyViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
     private val deleteTokenUseCase: DeleteTokenUseCase,
     private val getMyInformationUseCase: GetMyInformationUseCase,
+    private val getMyBookListUseCase: GetMyBookListUseCase,
 ) : ViewModel() {
-    private val _myBookListItemDataList = MutableStateFlow<List<MyBookListItemData>>(listOf())
-    val myBookListItemDataList: StateFlow<List<MyBookListItemData>> = _myBookListItemDataList.asStateFlow()
+    private val _getMyBookListUiState = MutableStateFlow<GetMyBookListUiState>(GetMyBookListUiState.Loading)
+    val getMyBookListUiState: StateFlow<GetMyBookListUiState> = _getMyBookListUiState.asStateFlow()
 
     private val _getMyInformationUiState = MutableStateFlow<GetMyInformationUiState>(GetMyInformationUiState.Loading)
     val getMyInformationUiState: StateFlow<GetMyInformationUiState> = _getMyInformationUiState.asStateFlow()
@@ -66,6 +67,21 @@ class MyViewModel @Inject constructor(
             }
     }
 
+    fun getMyBookList() = viewModelScope.launch {
+        getMyInformationUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getMyInformationUiState.value = GetMyInformationUiState.Loading
+
+                    is Result.Success -> _getMyInformationUiState.value = GetMyInformationUiState.Success(result.data)
+
+                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail(result.exception)
+                }
+            }
+    }
+
+
     fun toggleBookDeleteDialogIsVisible() {
         _bookDeleteDialogIsVisible.value = !_bookDeleteDialogIsVisible.value
     }
@@ -86,13 +102,13 @@ class MyViewModel @Inject constructor(
 
     init {
         getMyInformation()
-        _myBookListItemDataList.value =
-            MutableList(10) {
-                MyBookListItemData(
-                    title = "제목입니다",
-                    writer = "작가입니다",
-                    trashCanOnclick = { },
+        _getMyBookListUiState.value = GetMyBookListUiState.Success(
+            data = MutableList(10) {
+                MyBookListModel(
+                    name = "제목입니다",
+                    author = "작가입니다",
                 )
             }
+        )
     }
 }
