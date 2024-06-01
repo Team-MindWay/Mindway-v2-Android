@@ -54,22 +54,17 @@ class BookScreenViewModel @Inject constructor(
                 when (result) {
                     is Result.Loading -> {
                         targetStateFlow.value = GetRecommendBookUiState.Loading
-                        _swipeRefreshLoading.value = true
                     }
                     is Result.Success -> if (result.data.isEmpty()) {
                         targetStateFlow.value = GetRecommendBookUiState.Empty
-                        _swipeRefreshLoading.value = false
                     } else {
                         targetStateFlow.value = GetRecommendBookUiState.Success(result.data)
-                        _swipeRefreshLoading.value = false
                     }
-
                     is Result.Fail -> {
                         targetStateFlow.value = GetRecommendBookUiState.Fail(result.exception)
-                        _swipeRefreshLoading.value = false
                     }
                 }
-
+                _swipeRefreshLoading.value = false
             }
     }
 
