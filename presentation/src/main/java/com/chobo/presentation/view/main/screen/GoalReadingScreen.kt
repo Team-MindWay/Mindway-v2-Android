@@ -208,26 +208,25 @@ internal fun GoalReadingScreen(
                                 }
                             }
                             item {
-                                Column(
-                                    verticalArrangement = Arrangement.spacedBy(
-                                        8.dp,
-                                        Alignment.CenterVertically
-                                    ),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = modifier
-                                        .shadow(
-                                            elevation = 20.dp,
-                                            spotColor = colors.CardShadow,
-                                            ambientColor = colors.CardShadow
-                                        )
-                                        .background(
-                                            color = colors.WHITE,
-                                            shape = RoundedCornerShape(size = 8.dp)
-                                        )
-                                        .clickableSingle(onClick = navigateToHomeAddBook)
-                                        .padding(16.dp)
-                                ) {
-                                    PlusIcon(modifier = Modifier.fillMaxSize())
+                                if (getWeekendGoalUiState != GetWeekendGoalUiState.Empty) {
+                                    Column(
+                                        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = modifier
+                                            .shadow(
+                                                elevation = 20.dp,
+                                                spotColor = colors.CardShadow,
+                                                ambientColor = colors.CardShadow
+                                            )
+                                            .background(
+                                                color = colors.WHITE,
+                                                shape = RoundedCornerShape(size = 8.dp)
+                                            )
+                                            .clickableSingle(onClick = navigateToHomeAddBook)
+                                            .padding(16.dp)
+                                    ) {
+                                        PlusIcon(modifier = Modifier.fillMaxSize())
+                                    }
                                 }
                             }
                             items(goalReadingListOfBooksReadItemDataList) { item ->
