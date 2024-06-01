@@ -68,15 +68,19 @@ class MyViewModel @Inject constructor(
     }
 
     fun getMyBookList() = viewModelScope.launch {
-        getMyInformationUseCase()
+        getMyBookListUseCase()
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _getMyInformationUiState.value = GetMyInformationUiState.Loading
+                    is Result.Loading -> _getMyBookListUiState.value = GetMyBookListUiState.Loading
 
-                    is Result.Success -> _getMyInformationUiState.value = GetMyInformationUiState.Success(result.data)
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getMyBookListUiState.value = GetMyBookListUiState.Empty
+                    } else {
+                        _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data)
+                    }
 
-                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail(result.exception)
+                    is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail(result.exception)
                 }
             }
     }
