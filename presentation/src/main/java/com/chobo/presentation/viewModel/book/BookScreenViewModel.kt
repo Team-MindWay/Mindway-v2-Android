@@ -22,6 +22,9 @@ import javax.inject.Inject
 class BookScreenViewModel @Inject constructor(
     private val getRecommendBookUseCase: GetRecommendBookUseCase
 ) : ViewModel() {
+    private val _swipeRefreshLoading = MutableStateFlow(false)
+    val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
+
     private val _novelDataList = MutableStateFlow<GetRecommendBookUiState>(GetRecommendBookUiState.Loading)
     val novelDataList: StateFlow<GetRecommendBookUiState> = _novelDataList.asStateFlow()
 
@@ -40,6 +43,7 @@ class BookScreenViewModel @Inject constructor(
     }
 
     fun getRecommendBook(type: OrderRequestBookType) = viewModelScope.launch {
+        _swipeRefreshLoading.value = true
         val targetStateFlow = when (type) {
             NOVEL -> _novelDataList
             ESSAY -> _essayDataList
@@ -48,18 +52,19 @@ class BookScreenViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> targetStateFlow.value = GetRecommendBookUiState.Loading
+                    is Result.Loading -> {
+                        targetStateFlow.value = GetRecommendBookUiState.Loading
+                    }
                     is Result.Success -> if (result.data.isEmpty()) {
                         targetStateFlow.value = GetRecommendBookUiState.Empty
                     } else {
                         targetStateFlow.value = GetRecommendBookUiState.Success(result.data)
                     }
-
                     is Result.Fail -> {
                         targetStateFlow.value = GetRecommendBookUiState.Fail(result.exception)
                     }
                 }
-
+                _swipeRefreshLoading.value = false
             }
     }
 
