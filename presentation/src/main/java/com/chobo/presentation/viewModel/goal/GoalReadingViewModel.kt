@@ -57,6 +57,25 @@ class GoalReadingViewModel @Inject constructor(
                 }
             }
     }
+
+    fun getBookList() = viewModelScope.launch {
+        getBookListUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getBookListUiState.value = GetBookListUiState.Loading
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getBookListUiState.value = GetBookListUiState.Empty
+                    } else {
+                        _getBookListUiState.value = GetBookListUiState.Success(result.data)
+                    }
+
+                    is Result.Fail -> _getBookListUiState.value =
+                        GetBookListUiState.Fail(result.exception)
+                }
+            }
+    }
+
     fun updateGoalBookReadSetting(input: String) {
         _goalBookReadSettingIsEmpty.value = false
         _goalBookReadSetting.value = input
