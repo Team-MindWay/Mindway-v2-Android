@@ -37,6 +37,7 @@ import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
+import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
 
 @Composable
 internal fun MyRoute(
@@ -45,7 +46,7 @@ internal fun MyRoute(
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
-    val myName by myViewModel.myName.collectAsStateWithLifecycle()
+    val myNameUiState by myViewModel.getMyInformationUiState.collectAsStateWithLifecycle()
     val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
     val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
@@ -54,7 +55,7 @@ internal fun MyRoute(
 
     MyScreen(
         modifier = modifier,
-        myName = myName,
+        myNameUiState = myNameUiState,
         myBookListItemDataList = myBookListItemDataList,
         isToastVisible = isToastVisible,
         selectedBookTitle = selectedBookTitle,
@@ -71,7 +72,7 @@ internal fun MyRoute(
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
-    myName: String,
+    myNameUiState: GetMyInformationUiState,
     myBookListItemDataList: List<MyBookListItemData>,
     isToastVisible: Boolean,
     selectedBookTitle: String,
@@ -100,7 +101,11 @@ fun MyScreen(
                     }
                 }
                 MyNameCard(
-                    name = myName,
+                    name = when (myNameUiState) {
+                        is GetMyInformationUiState.Fail -> ""
+                        is GetMyInformationUiState.Loading -> ""
+                        is GetMyInformationUiState.Success -> myNameUiState.data.name
+                    },
                     onClick = showSheet,
                 )
                 Row(
