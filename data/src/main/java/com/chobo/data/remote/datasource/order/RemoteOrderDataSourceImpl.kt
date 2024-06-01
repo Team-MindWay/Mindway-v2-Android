@@ -34,7 +34,7 @@ class RemoteOrderDataSourceImpl @Inject constructor(
             )
         }.flowOn(Dispatchers.IO)
 
-    override suspend fun orderDeleteById(orderId: String): Flow<Unit> = flow {
+    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> = flow {
         emit(
             MindWayAPIHandler<Unit>()
                 .httpRequest { orderAPI.orderDeleteById(orderId = orderId) }

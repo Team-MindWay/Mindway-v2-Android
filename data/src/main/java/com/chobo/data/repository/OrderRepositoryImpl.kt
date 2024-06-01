@@ -22,7 +22,7 @@ class OrderRepositoryImpl @Inject constructor(
         return remoteNoticeDataSource.orderModifyById(body = body.toDto(), orderId = orderId)
     }
 
-    override suspend fun orderDeleteById(orderId: String): Flow<Unit> {
+    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> {
         return remoteNoticeDataSource.orderDeleteById(orderId = orderId)
     }
 }

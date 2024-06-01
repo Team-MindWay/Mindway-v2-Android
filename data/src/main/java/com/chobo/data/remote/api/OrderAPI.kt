@@ -20,6 +20,6 @@ interface OrderAPI {
 
     @DELETE("/api/v2/order/{order_id}")
     suspend fun orderDeleteById(
-        @Path("order_id") orderId: String,
+        @Path("order_id") orderId: Long,
     )
 }

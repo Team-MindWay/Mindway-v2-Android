@@ -7,5 +7,5 @@ interface RemoteOrderDataSource {
     suspend fun orderUpload(body: OrderRequestBody): Flow<Unit>
     suspend fun orderListGet(): Flow<List<OrderRequestBody>>
     suspend fun orderModifyById(body: OrderRequestBody, orderId: String): Flow<Unit>
-    suspend fun orderDeleteById(orderId: String): Flow<Unit>
+    suspend fun orderDeleteById(orderId: Long): Flow<Unit>
 }
