@@ -3,11 +3,13 @@ package com.chobo.presentation.viewModel.my
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.my.MyBookListModel
+import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.LogoutUseCase
 import com.chobo.domain.usecase.my.GetMyBookListUseCase
 import com.chobo.domain.usecase.my.GetMyInformationUseCase
 import com.chobo.domain.usecase.order.OrderDeleteByIdUseCase
+import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
 import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
 import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
 import com.chobo.presentation.viewModel.util.result.Result
@@ -28,6 +30,7 @@ class MyViewModel @Inject constructor(
     private val getMyInformationUseCase: GetMyInformationUseCase,
     private val getMyBookListUseCase: GetMyBookListUseCase,
     private val orderDeleteByIdUseCase: OrderDeleteByIdUseCase,
+    private val orderModifyByIdUseCase: OrderModifyByIdUseCase,
 ) : ViewModel() {
     private val _getMyBookListUiState = MutableStateFlow<GetMyBookListUiState>(GetMyBookListUiState.Loading)
     val getMyBookListUiState: StateFlow<GetMyBookListUiState> = _getMyBookListUiState.asStateFlow()
@@ -93,6 +96,21 @@ class MyViewModel @Inject constructor(
 
     fun orderDeleteById(id: Long) = viewModelScope.launch {
         orderDeleteByIdUseCase(orderId = id)
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _isCommunicationSuccess.value = false
+
+                    is Result.Success -> _isCommunicationSuccess.value = true
+
+                    is Result.Fail -> _isCommunicationSuccess.value = false
+                }
+            }
+        showToast()
+    }
+
+    fun orderModifyById(id: Long, body: OrderRequestBodyModel) = viewModelScope.launch {
+        orderModifyByIdUseCase(orderId = id, body = body)
             .asResult()
             .collectLatest { result ->
                 when (result) {
