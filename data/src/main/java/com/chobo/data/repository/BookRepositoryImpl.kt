@@ -2,6 +2,7 @@ package com.chobo.data.repository
 
 import com.chobo.data.remote.datasource.book.RemoteBookDataSource
 import com.chobo.data.remote.dto.book.request.toDto
+import com.chobo.data.remote.dto.book.request.toModel
 import com.chobo.data.remote.dto.book.response.toModel
 import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.model.book.response.BookListResponseModel
@@ -20,7 +21,7 @@ class BookRepositoryImpl @Inject constructor(
         return bookDataSource.bookListGet().map { list -> list.map { it.toModel() } }
     }
 
-    override suspend fun bookGetById(bookId: Long): Flow<BookListResponseModel> {
+    override suspend fun bookGetById(bookId: Long): Flow<BookRequestBodyModel> {
         return bookDataSource.bookGetById(bookId = bookId).map { it.toModel() }
     }
 

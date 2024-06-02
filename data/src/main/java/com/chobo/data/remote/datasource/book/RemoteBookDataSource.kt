@@ -9,7 +9,7 @@ interface RemoteBookDataSource {
 
     suspend fun bookListGet(): Flow<List<BookListResponse>>
 
-    suspend fun bookGetById(bookId: Long): Flow<BookListResponse>
+    suspend fun bookGetById(bookId: Long): Flow<BookRequestBody>
 
     suspend fun bookModify(
         body: BookRequestBody,
