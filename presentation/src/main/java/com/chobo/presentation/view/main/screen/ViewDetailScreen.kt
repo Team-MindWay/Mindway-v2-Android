@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.main.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,7 +40,8 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
-    viewDetailViewModel: ViewDetailViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    viewDetailViewModel: ViewDetailViewModel = hiltViewModel(),
+    id: Long,
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: () -> Unit,
 ) {
@@ -57,9 +56,11 @@ internal fun ViewDetailRoute(
     ViewDetailScreen(
         modifier = modifier,
         getBookByIdUiState = getBookByIdUiState,
+        id = id,
         coroutineScope = coroutineScope,
         checkBookDialogIsVisible = checkBookDialogIsVisible,
         sheetState = sheetState,
+        getBookById = viewDetailViewModel::getBookById,
         checkOnclick = viewDetailViewModel::checkOnclick,
         toggleCheckBookDialogIsVisible = viewDetailViewModel::toggleCheckBookDialogIsVisible,
         navigateToBack = navigateToBack,
@@ -72,14 +73,17 @@ internal fun ViewDetailRoute(
 internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     getBookByIdUiState: GetBookByIdUiState,
+    id: Long,
     coroutineScope: CoroutineScope,
     checkBookDialogIsVisible: Boolean,
     sheetState: ModalBottomSheetState,
+    getBookById: (Long) -> Unit,
     checkOnclick: () -> Unit,
     toggleCheckBookDialogIsVisible: () -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: () -> Unit,
 ) {
+    getBookById(id)
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
@@ -149,5 +153,6 @@ fun ViewDetailScreenPreview() {
     ViewDetailRoute(
         navigateToBack = { },
         navigateToHomeEditBook = { },
+        id = 0,
     )
 }

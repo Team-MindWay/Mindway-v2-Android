@@ -17,14 +17,13 @@ import javax.inject.Inject
 class ViewDetailViewModel @Inject constructor(
     private val getBookByIdUseCase: GetBookByIdUseCase,
 ) : ViewModel() {
-    private val _getBookByIdUiState =
-        MutableStateFlow<GetBookByIdUiState>(GetBookByIdUiState.Loading)
+    private val _getBookByIdUiState = MutableStateFlow<GetBookByIdUiState>(GetBookByIdUiState.Loading)
     val getBookByIdUiState: StateFlow<GetBookByIdUiState> = _getBookByIdUiState.asStateFlow()
 
     private val _checkBookDialogIsVisible = MutableStateFlow(false)
     val checkBookDialogIsVisible: StateFlow<Boolean> = _checkBookDialogIsVisible.asStateFlow()
 
-    fun bookGetById(id: Long) = viewModelScope.launch {
+    fun getBookById(id: Long) = viewModelScope.launch {
         getBookByIdUseCase(bookId = id)
             .asResult()
             .collectLatest { result ->
