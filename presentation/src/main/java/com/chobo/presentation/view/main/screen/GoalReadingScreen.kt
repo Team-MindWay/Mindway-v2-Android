@@ -61,7 +61,7 @@ internal fun GoalReadingRoute(
     goalReadingViewModel: GoalReadingViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: () -> Unit,
+    navigateToHomeViewDetail: (Long) -> Unit,
 ) {
     val getWeekendGoalUiState by goalReadingViewModel.getWeekendGoalUiState.collectAsStateWithLifecycle()
     val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
@@ -104,7 +104,7 @@ internal fun GoalReadingScreen(
     focusManager: FocusManager,
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: () -> Unit,
+    navigateToHomeViewDetail: (Long) -> Unit,
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
 ) {
@@ -240,7 +240,7 @@ internal fun GoalReadingScreen(
                                     items(getBookListUiState.data) { item ->
                                         GoalReadingListOfBooksReadItem(
                                             data = item,
-                                            onClick = navigateToHomeViewDetail,
+                                            onClick = { navigateToHomeViewDetail(item.id) },
                                             modifier = Modifier.fillMaxWidth()
                                         )
                                     }
