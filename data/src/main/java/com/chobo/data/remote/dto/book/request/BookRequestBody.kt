@@ -12,3 +12,7 @@ fun BookRequestBodyModel.toDto() = BookRequestBody(
     plot = plot
 )
 
+fun BookRequestBody.toModel() = BookRequestBodyModel(
+    title = title,
+    plot = plot
+)
