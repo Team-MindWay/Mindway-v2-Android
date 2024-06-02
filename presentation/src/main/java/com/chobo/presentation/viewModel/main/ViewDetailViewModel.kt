@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewDetailViewModel @Inject constructor() : ViewModel() {
-    private val _titleTextState = MutableStateFlow("")
-    val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
-
-    private val _contentTextState = MutableStateFlow("")
-    val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
+class ViewDetailViewModel @Inject constructor(
+    private val getBookByIdUseCase: GetBookByIdUseCase,
+) : ViewModel() {
+    private val _getBookByIdUiState =
+        MutableStateFlow<GetBookByIdUiState>(GetBookByIdUiState.Loading)
+    val getBookByIdUiState: StateFlow<GetBookByIdUiState> = _getBookByIdUiState.asStateFlow()
 
     private val _checkBookDialogIsVisible = MutableStateFlow(false)
     val checkBookDialogIsVisible: StateFlow<Boolean> = _checkBookDialogIsVisible.asStateFlow()
