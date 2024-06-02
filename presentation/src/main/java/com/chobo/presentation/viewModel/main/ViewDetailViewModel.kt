@@ -2,6 +2,7 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.model.book.response.BookListResponseModel
 import com.chobo.domain.usecase.book.GetBookByIdUseCase
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
@@ -29,11 +30,8 @@ class ViewDetailViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _getBookByIdUiState.value = GetBookByIdUiState.Loading
-                    is Result.Success -> _getBookByIdUiState.value =
-                        GetBookByIdUiState.Success(data = result.data)
-
-                    is Result.Fail -> _getBookByIdUiState.value =
-                        GetBookByIdUiState.Fail(result.exception)
+                    is Result.Success -> _getBookByIdUiState.value = GetBookByIdUiState.Success(data = result.data)
+                    is Result.Fail -> _getBookByIdUiState.value = GetBookByIdUiState.Fail(result.exception)
                 }
             }
     }
@@ -48,11 +46,9 @@ class ViewDetailViewModel @Inject constructor(
 
     init {
         _getBookByIdUiState.value = GetBookByIdUiState.Success(
-            data = BookListResponseModel(
-                id = 0,
+            data = BookRequestBodyModel(
                 title = "임시데이터 임시데이터 임시데이터",
                 plot = "임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터",
-                created_at = LocalDateTime.now()
             )
         )
     }
