@@ -43,7 +43,7 @@ internal fun ViewDetailRoute(
     viewDetailViewModel: ViewDetailViewModel = hiltViewModel(),
     id: Long,
     navigateToBack: () -> Unit,
-    navigateToHomeEditBook: () -> Unit,
+    navigateToHomeEditBook: (Long) -> Unit,
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
     val checkBookDialogIsVisible by viewDetailViewModel.checkBookDialogIsVisible.collectAsStateWithLifecycle()
@@ -81,7 +81,7 @@ internal fun ViewDetailScreen(
     checkOnclick: () -> Unit,
     toggleCheckBookDialogIsVisible: () -> Unit,
     navigateToBack: () -> Unit,
-    navigateToHomeEditBook: () -> Unit,
+    navigateToHomeEditBook: (Long) -> Unit,
 ) {
     getBookById(id)
     MindWayAndroidTheme { colors, _ ->
@@ -90,7 +90,7 @@ internal fun ViewDetailScreen(
                 MindWayBottomSheet(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
-                    topOnClick = navigateToHomeEditBook,
+                    topOnClick = { navigateToHomeEditBook(id) },
                     bottomOnCLick = toggleCheckBookDialogIsVisible,
                 )
             },

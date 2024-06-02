@@ -28,30 +28,32 @@ import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
+import com.chobo.presentation.viewModel.main.HomeBookEditViewModel
 
 @Composable
 internal fun HomeEditBookRoute(
     modifier: Modifier = Modifier,
-    homeAddBookViewModel: HomeAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    navigateToBack: () -> Unit
+    homeBookEditViewModel: HomeBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    id: Long,
+    navigateToBack: () -> Unit,
 ) {
-    val titleTextState by homeAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
-    val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
-    val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
-    val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
-    val contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength
+    val titleTextState by homeBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
+    val contentTextState by homeBookEditViewModel.plotTextState.collectAsStateWithLifecycle()
+    val titleTextStateIsEmpty by homeBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextStateIsEmpty by homeBookEditViewModel.plotTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextMaxLength = homeBookEditViewModel.plotTextMaxLength
 
     HomeEditBookScreen(
         modifier = modifier,
+        id = id,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
         contentTextMaxLength = contentTextMaxLength,
-        updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
-        updateContentTextState = homeAddBookViewModel::updateContentTextState,
-        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick,
+        updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
+        updateContentTextState = homeBookEditViewModel::updatePlotTextState,
+        checkButtonOnClick = homeBookEditViewModel::checkButtonOnClick,
         navigateToBack = navigateToBack,
     )
 }
@@ -59,6 +61,7 @@ internal fun HomeEditBookRoute(
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
+    id: Long,
     titleTextState: String,
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
@@ -66,7 +69,7 @@ internal fun HomeEditBookScreen(
     contentTextMaxLength: Int,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
-    checkButtonOnClick: () -> Unit,
+    checkButtonOnClick: (Long) -> Unit,
     navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
@@ -112,7 +115,7 @@ internal fun HomeEditBookScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(R.string.check),
-                        onClick = checkButtonOnClick,
+                        onClick = { checkButtonOnClick(id) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
@@ -126,5 +129,5 @@ internal fun HomeEditBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeBookEditScreenPreview() {
-    HomeEditBookRoute(navigateToBack = { })
+    HomeEditBookRoute(navigateToBack = { }, id = 0)
 }
