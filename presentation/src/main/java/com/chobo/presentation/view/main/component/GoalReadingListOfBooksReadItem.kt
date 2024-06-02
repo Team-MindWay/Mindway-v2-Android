@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.book.response.BookListResponseModel
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.localDateTimeMonthDateFormat
+import java.time.LocalDateTime
 
 @Composable
 fun GoalReadingListOfBooksReadItem(
@@ -54,7 +56,7 @@ fun GoalReadingListOfBooksReadItem(
                     color = colors.Black,
                 )
                 Text(
-                    text = data.created_at,
+                    text = localDateTimeMonthDateFormat(data.created_at),
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
@@ -75,9 +77,10 @@ fun GoalReadingListOfBooksReadItem(
 fun GoalReadingListOfBooksReadItemPreview() {
     GoalReadingListOfBooksReadItem(
         data = BookListResponseModel(
-            created_at = "1월 2일",
+            id = 0,
+            created_at = LocalDateTime.now(),
             plot = "efrgetgefgrethryj",
             title = "제목",
         )
-    ){}
+    ) {}
 }

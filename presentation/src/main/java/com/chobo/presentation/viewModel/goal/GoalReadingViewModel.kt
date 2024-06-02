@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,8 +71,7 @@ class GoalReadingViewModel @Inject constructor(
                         _getBookListUiState.value = GetBookListUiState.Success(result.data)
                     }
 
-                    is Result.Fail -> _getBookListUiState.value =
-                        GetBookListUiState.Fail(result.exception)
+                    is Result.Fail -> _getBookListUiState.value = GetBookListUiState.Fail(result.exception)
                 }
             }
     }
@@ -97,7 +97,8 @@ class GoalReadingViewModel @Inject constructor(
         _getBookListUiState.value = GetBookListUiState.Success(
             data = MutableList(30) {
                 BookListResponseModel(
-                    created_at = "1월 2일",
+                    id = 0,
+                    created_at = LocalDateTime.now(),
                     plot = "efrgetgefgrethryj",
                     title = "제목",
                 )
