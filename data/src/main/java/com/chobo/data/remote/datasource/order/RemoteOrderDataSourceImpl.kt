@@ -26,7 +26,7 @@ class RemoteOrderDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun orderModifyById(body: OrderRequestBody, orderId: String): Flow<Unit> = flow {
+    override suspend fun orderModifyById(body: OrderRequestBody, orderId: Long): Flow<Unit> = flow {
             emit(
                 MindWayAPIHandler<Unit>()
                     .httpRequest { orderAPI.orderModifyById(body = body, orderId = orderId) }

@@ -15,7 +15,7 @@ interface OrderAPI {
     @PATCH("/api/v2/order/{order_id}")
     suspend fun orderModifyById(
         @Body body: OrderRequestBody,
-        @Path("order_id") orderId: String,
+        @Path("order_id") orderId: Long,
     )
 
     @DELETE("/api/v2/order/{order_id}")

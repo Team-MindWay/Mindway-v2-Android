@@ -7,7 +7,7 @@ import javax.inject.Inject
 class OrderModifyByIdUseCase @Inject constructor(
     private val orderRepository: OrderRepository
 ) {
-    suspend operator fun invoke(body: OrderRequestBodyModel, orderId: String) = runCatching {
+    suspend operator fun invoke(body: OrderRequestBodyModel, orderId: Long) = runCatching {
         orderRepository.orderModifyById(body = body, orderId = orderId)
     }
 }

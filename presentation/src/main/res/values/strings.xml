@@ -9,7 +9,7 @@
     <string name="my">마이</string>
     <string name="period">기간</string>
     <string name="month_day">%d월 %02d일</string>
-    <string name="wave">%d ~ %d</string>
+    <string name="wave">%s ~ %s</string>
     <string name="check">확인</string>
     <string name="goal_reading_error">목표 독서량을 입력해주세요</string>
     <string name="view_detail">자세히 보기</string>

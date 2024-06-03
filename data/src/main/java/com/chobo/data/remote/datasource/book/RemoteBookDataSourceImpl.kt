@@ -30,9 +30,9 @@ class RemoteBookDataSourceImpl @Inject constructor(
 
     override suspend fun bookGetById(
         bookId: Long
-    ): Flow<BookListResponse> = flow {
+    ): Flow<BookRequestBody> = flow {
         emit(
-            MindWayAPIHandler<BookListResponse>()
+            MindWayAPIHandler<BookRequestBody>()
                 .httpRequest { bookAPI.bookGetById(bookId = bookId) }
                 .sendRequest()
         )

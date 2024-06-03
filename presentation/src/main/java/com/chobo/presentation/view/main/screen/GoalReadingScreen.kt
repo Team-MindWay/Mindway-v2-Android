@@ -46,12 +46,12 @@ import com.chobo.presentation.view.component.multipleEventsCutterManager.clickab
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
 import com.chobo.presentation.view.main.component.GoalReadingChart
-import com.chobo.presentation.view.main.component.GoalReadingGraphData
 import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItem
-import com.chobo.presentation.view.main.component.GoalReadingListOfBooksReadItemData
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
+import com.chobo.presentation.viewModel.goal.uistate.GetBookListUiState
+import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -61,14 +61,12 @@ internal fun GoalReadingRoute(
     goalReadingViewModel: GoalReadingViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: () -> Unit,
+    navigateToHomeViewDetail: (Long) -> Unit,
 ) {
-    val goalBookRead by goalReadingViewModel.goalBookRead.collectAsStateWithLifecycle()
-    val goalBookReadIsEmpty by goalReadingViewModel.goalBookReadIsEmpty.collectAsStateWithLifecycle()
+    val getWeekendGoalUiState by goalReadingViewModel.getWeekendGoalUiState.collectAsStateWithLifecycle()
+    val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
-    val goalReadingGraphDataList by goalReadingViewModel.goalReadingGraphDataList.collectAsStateWithLifecycle()
-    val goalReadingListOfBooksReadItemDataList by goalReadingViewModel.goalReadingListOfBooksReadItemDataList.collectAsStateWithLifecycle()
     val isToastVisible by goalReadingViewModel.isToastVisible.collectAsStateWithLifecycle()
     val isSuccess by goalReadingViewModel.isSuccess.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
@@ -76,21 +74,19 @@ internal fun GoalReadingRoute(
 
     GoalReadingScreen(
         modifier = modifier,
-        goalBookRead = goalBookRead,
-        goalBookReadIsEmpty = goalBookReadIsEmpty,
+        getWeekendGoalUiState = getWeekendGoalUiState,
         goalBookReadSetting = goalBookReadSetting,
         goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
-        goalReadingGraphDataList = goalReadingGraphDataList,
-        goalReadingListOfBooksReadItemDataList = goalReadingListOfBooksReadItemDataList,
+        getBookListUiState = getBookListUiState,
         isToastVisible = isToastVisible,
         isSuccess = isSuccess,
         coroutineScope = coroutineScope,
         focusManager = focusManager,
+        goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
+        updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting,
         navigateToBack = navigateToBack,
         navigateToHomeAddBook = navigateToHomeAddBook,
         navigateToHomeViewDetail = navigateToHomeViewDetail,
-        goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
-        updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting
     )
 }
 
@@ -98,21 +94,19 @@ internal fun GoalReadingRoute(
 @Composable
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
-    goalBookRead: Int,
-    goalBookReadIsEmpty: Boolean,
+    getWeekendGoalUiState: GetWeekendGoalUiState,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
-    goalReadingGraphDataList: List<GoalReadingGraphData>,
-    goalReadingListOfBooksReadItemDataList: List<GoalReadingListOfBooksReadItemData>,
+    getBookListUiState: GetBookListUiState,
     isToastVisible: Boolean,
     isSuccess: Boolean,
     coroutineScope: CoroutineScope,
     focusManager: FocusManager,
-    navigateToBack: () -> Unit,
-    navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: () -> Unit,
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
+    navigateToBack: () -> Unit,
+    navigateToHomeAddBook: () -> Unit,
+    navigateToHomeViewDetail: (Long) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
@@ -151,7 +145,7 @@ internal fun GoalReadingScreen(
                         },
                         midText = stringResource(R.string.goal_reading),
                         endIcon = {
-                            if (goalBookReadIsEmpty) {
+                            if (getWeekendGoalUiState == GetWeekendGoalUiState.Empty) {
                                 PlusIcon(
                                     modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                     tint = MindWayColor.Black
@@ -174,44 +168,76 @@ internal fun GoalReadingScreen(
                                 .fillMaxSize()
                         ) {
                             item {
-                                GoalReadingChart(
-                                    goalBookRead = goalBookRead,
-                                    isHasData = goalReadingGraphDataList.isNotEmpty(),
-                                    goalReadingGraphData = goalReadingGraphDataList,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(180.dp),
-                                )
-                            }
-                            item {
-                                Column(
-                                    verticalArrangement = Arrangement.spacedBy(
-                                        8.dp,
-                                        Alignment.CenterVertically
-                                    ),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = modifier
-                                        .shadow(
-                                            elevation = 20.dp,
-                                            spotColor = colors.CardShadow,
-                                            ambientColor = colors.CardShadow
+                                when (getWeekendGoalUiState) {
+                                    is GetWeekendGoalUiState.Empty -> {
+                                        GoalReadingChart(
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
                                         )
-                                        .background(
-                                            color = colors.WHITE,
-                                            shape = RoundedCornerShape(size = 8.dp)
+                                    }
+
+                                    is GetWeekendGoalUiState.Fail -> {
+                                        GoalReadingChart(
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
                                         )
-                                        .clickableSingle(onClick = navigateToHomeAddBook)
-                                        .padding(16.dp)
-                                ) {
-                                    PlusIcon(modifier = Modifier.fillMaxSize())
+                                    }
+
+                                    is GetWeekendGoalUiState.Loading -> {
+                                        GoalReadingChart(
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                    }
+
+                                    is GetWeekendGoalUiState.Success -> {
+                                        GoalReadingChart(
+                                            isHasData = true,
+                                            getWeekendGoalModel = getWeekendGoalUiState.data,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                        Column(
+                                            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = modifier
+                                                .shadow(
+                                                    elevation = 20.dp,
+                                                    spotColor = colors.CardShadow,
+                                                    ambientColor = colors.CardShadow
+                                                )
+                                                .background(
+                                                    color = colors.WHITE,
+                                                    shape = RoundedCornerShape(size = 8.dp)
+                                                )
+                                                .clickableSingle(onClick = navigateToHomeAddBook)
+                                                .padding(16.dp)
+                                        ) {
+                                            PlusIcon(modifier = Modifier.fillMaxSize())
+                                        }
+                                    }
                                 }
                             }
-                            items(goalReadingListOfBooksReadItemDataList) { item ->
-                                GoalReadingListOfBooksReadItem(
-                                    data = item,
-                                    onClick = navigateToHomeViewDetail,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
+                            when (getBookListUiState) {
+                                is GetBookListUiState.Empty -> {}
+                                is GetBookListUiState.Fail -> {}
+                                is GetBookListUiState.Loading -> {}
+                                is GetBookListUiState.Success -> {
+                                    items(getBookListUiState.data) { item ->
+                                        GoalReadingListOfBooksReadItem(
+                                            data = item,
+                                            onClick = navigateToHomeViewDetail,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
                             }
                         }
                         this@Column.AnimatedVisibility(
