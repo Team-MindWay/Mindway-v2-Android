@@ -5,14 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookModifyUseCase
 import com.chobo.domain.usecase.book.GetBookByIdUseCase
-import com.chobo.presentation.viewModel.util.errorHandling
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -66,25 +64,17 @@ class HomeBookEditViewModel @Inject constructor(
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _plotTextStateIsEmpty.value = _plotTextState.value.isEmpty()
         if (
-            _titleTextStateIsEmpty.value
-            && _plotTextStateIsEmpty.value
+            !_titleTextStateIsEmpty.value
+            && !_plotTextStateIsEmpty.value
         ) {
             viewModelScope.launch {
                 bookModifyUseCase(
                     bookRequestBodyModel = BookRequestBodyModel(
-                        title = titleTextState.value,
+                        title = _titleTextState.value,
                         plot = _plotTextState.value,
                     ),
                     bookId = id
-                )
-                    .onSuccess {
-                        it.catch { remoteError ->
-                            remoteError.errorHandling<Unit>()
-                        }
-                    }
-                    .onFailure {
-                        it.errorHandling<Unit>()
-                    }
+                ).asResult().collectLatest { }
             }
         }
     }
