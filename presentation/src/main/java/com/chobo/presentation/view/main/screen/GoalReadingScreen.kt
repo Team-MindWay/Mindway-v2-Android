@@ -233,7 +233,7 @@ internal fun GoalReadingScreen(
                                     items(getBookListUiState.data) { item ->
                                         GoalReadingListOfBooksReadItem(
                                             data = item,
-                                            onClick = { navigateToHomeViewDetail(item.id) },
+                                            onClick = navigateToHomeViewDetail,
                                             modifier = Modifier.fillMaxWidth()
                                         )
                                     }
