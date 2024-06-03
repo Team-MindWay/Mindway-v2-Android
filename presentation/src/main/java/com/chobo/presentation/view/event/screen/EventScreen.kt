@@ -3,12 +3,15 @@ package com.chobo.presentation.view.event.screen
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,14 +19,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.domain.emumtype.EventRequestListStatusType
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -93,7 +100,7 @@ internal fun EventScreen(
         getEventPastList(storagePastStatus)
     }
 
-    MindWayAndroidTheme { colors, _ ->
+    MindWayAndroidTheme { colors, typography ->
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
@@ -107,7 +114,6 @@ internal fun EventScreen(
         ) {
             Box(
                 modifier = modifier
-                    .verticalScroll(scrollState)
                     .fillMaxSize()
                     .background(color = colors.WHITE)
             ) {
@@ -116,13 +122,25 @@ internal fun EventScreen(
                     onGoingEvent = {
                         when (getEventListUiState) {
                             GetEventListUiState.Empty -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataListIsEmpty = false,
-                                    onIconClick = onCurrentEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = {}
-                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .verticalScroll(scrollState),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Column(
+                                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                    ) {
+                                        BookImage()
+                                        Text(
+                                            text = stringResource(R.string.is_no_ongoing_event),
+                                            style = typography.bodyMedium,
+                                            fontWeight = FontWeight.Normal,
+                                            color = colors.GRAY500,
+                                        )
+                                    }
+                                }
                             }
                             is GetEventListUiState.Fail -> {
                                 EventContent(
@@ -143,27 +161,40 @@ internal fun EventScreen(
                                 )
                             }
                             is GetEventListUiState.Success -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataList = getEventListUiState.getEventListResponse,
-                                    eventDataListIsEmpty = true,
-                                    onIconClick = onCurrentEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = saveEventId
-                                )
+                                Box(modifier = modifier.verticalScroll(scrollState)) {
+                                    EventContent(
+                                        content = stringResource(R.string.is_no_ongoing_event),
+                                        eventDataList = getEventListUiState.getEventListResponse,
+                                        eventDataListIsEmpty = true,
+                                        onIconClick = onCurrentEventClick,
+                                        navigateToDetailEvent = navigateToDetailEvent,
+                                        onEventClick = saveEventId
+                                    )
+                                }
                             }
                         }
                     },
                     pastEvent = {
                         when (getEventListUiState) {
-                            GetEventListUiState.Empty -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_past_event),
-                                    eventDataListIsEmpty = false,
-                                    onIconClick = onPastEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = {}
-                                )
+                            GetEventListUiState.Empty -> {Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .verticalScroll(scrollState),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    BookImage()
+                                    Text(
+                                        text = stringResource(R.string.is_no_past_event),
+                                        style = typography.bodyMedium,
+                                        fontWeight = FontWeight.Normal,
+                                        color = colors.GRAY500,
+                                    )
+                                }
+                            }
                             }
                             is GetEventListUiState.Fail -> {
                                 EventContent(
@@ -184,14 +215,16 @@ internal fun EventScreen(
                                 )
                             }
                             is GetEventListUiState.Success -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_past_event),
-                                    eventDataList = getEventListUiState.getEventListResponse,
-                                    eventDataListIsEmpty = true,
-                                    onIconClick = onPastEventClick,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = saveEventId
-                                )
+                                Box(modifier = modifier.verticalScroll(scrollState)) {
+                                    EventContent(
+                                        content = stringResource(R.string.is_no_past_event),
+                                        eventDataList = getEventListUiState.getEventListResponse,
+                                        eventDataListIsEmpty = true,
+                                        onIconClick = onPastEventClick,
+                                        navigateToDetailEvent = navigateToDetailEvent,
+                                        onEventClick = saveEventId
+                                    )
+                                }
                             }
                         }
                     }
