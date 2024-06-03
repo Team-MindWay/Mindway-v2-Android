@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,6 +55,7 @@ internal fun HomeEditBookRoute(
         updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
         updateContentTextState = homeBookEditViewModel::updatePlotTextState,
         checkButtonOnClick = homeBookEditViewModel::checkButtonOnClick,
+        getBookById = homeBookEditViewModel::getBookById,
         navigateToBack = navigateToBack,
     )
 }
@@ -70,8 +72,12 @@ internal fun HomeEditBookScreen(
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
     checkButtonOnClick: (Long) -> Unit,
+    getBookById: (Long) -> Unit,
     navigateToBack: () -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        getBookById(id)
+    }
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(

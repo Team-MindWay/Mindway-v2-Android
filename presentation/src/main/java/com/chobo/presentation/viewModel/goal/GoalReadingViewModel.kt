@@ -2,7 +2,6 @@ package com.chobo.presentation.viewModel.goal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.book.response.BookListResponseModel
 import com.chobo.domain.usecase.book.GetBookListUseCase
 import com.chobo.domain.usecase.goal.GetWeekendGoalUseCase
 import com.chobo.presentation.viewModel.goal.uistate.GetBookListUiState
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -94,15 +92,7 @@ class GoalReadingViewModel @Inject constructor(
     }
 
     init {
-        _getBookListUiState.value = GetBookListUiState.Success(
-            data = MutableList(30) {
-                BookListResponseModel(
-                    id = 0,
-                    created_at = LocalDateTime.now(),
-                    plot = "efrgetgefgrethryj",
-                    title = "제목",
-                )
-            }
-        )
+        getBookList()
+        getWeekendGoal()
     }
 }

@@ -4,17 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookModifyUseCase
+import com.chobo.domain.usecase.book.GetBookByIdUseCase
 import com.chobo.presentation.viewModel.util.errorHandling
+import com.chobo.presentation.viewModel.util.result.Result
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeBookEditViewModel @Inject constructor(
+    private val getBookByIdUseCase: GetBookByIdUseCase,
     private val bookModifyUseCase: BookModifyUseCase,
 ) : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
@@ -40,6 +45,21 @@ class HomeBookEditViewModel @Inject constructor(
     fun updatePlotTextState(input: String) {
         _plotTextStateIsEmpty.value = false
         _plotTextState.value = input
+    }
+
+    fun getBookById(id: Long) = viewModelScope.launch {
+        getBookByIdUseCase(bookId = id)
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> {}
+                    is Result.Success -> {
+                        _titleTextState.value = result.data.title
+                        _plotTextState.value = result.data.plot
+                    }
+                    is Result.Fail -> {}
+                }
+            }
     }
 
     fun checkButtonOnClick(id: Long) {
