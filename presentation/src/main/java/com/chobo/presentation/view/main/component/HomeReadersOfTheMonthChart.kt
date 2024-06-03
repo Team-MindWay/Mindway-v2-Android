@@ -18,17 +18,17 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.rank.RankModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-
-data class BookKingOfTheMonthData(val name: String, val numOfBooks: Int)
 
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
-    bookKingOfTheMonthData: List<BookKingOfTheMonthData>
+    isHasData: Boolean,
+    bookKingOfTheMonthData: List<RankModel> = listOf()
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (bookKingOfTheMonthData.isNotEmpty()) {
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -58,13 +58,15 @@ fun HomeReadersOfTheMonthChart(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    val maxBook = bookKingOfTheMonthData.maxOf { it.total }
                     bookKingOfTheMonthData.forEachIndexed { index, it ->
                         HomeReadersOfTheMonthGraph(
-                            bookKingOfTheMonthData = it,
+                            rankModel = it,
+                            maxBook = maxBook,
                             modifier = Modifier.weight(72f)
                         )
 
-                        if (index < bookKingOfTheMonthData.size - 1) {
+                        if (index < bookKingOfTheMonthData.size - 1) { // TODO: 상태 호이스팅
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         }
                     }
@@ -109,12 +111,13 @@ fun HomeReadersOfTheMonthChart(
 @Composable
 fun HomeReadersOfTheMonthChartPreview() {
     HomeReadersOfTheMonthChart(
+        isHasData = true,
         modifier = Modifier
             .width(312.dp),
         bookKingOfTheMonthData = listOf(
-            BookKingOfTheMonthData("나다", 12),
-            BookKingOfTheMonthData("나다", 2),
-            BookKingOfTheMonthData("나다", 30),
+            RankModel("나다", 12),
+            RankModel("나다", 2),
+            RankModel("나다", 30),
         )
     )
 }

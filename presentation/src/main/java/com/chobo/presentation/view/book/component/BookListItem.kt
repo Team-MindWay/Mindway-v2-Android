@@ -1,14 +1,7 @@
 package com.chobo.presentation.view.book.component
 
-import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,16 +11,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-
-data class BookListItemData(
-    val writer: String,
-    val title: String,
-    val content: String,
-)
-
 @Composable
-fun BookListItem(data: BookListItemData) {
+fun BookListItem(data: RecommendListResponseAllModel) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
@@ -59,7 +46,7 @@ fun BookListItem(data: BookListItemData) {
                 )
             }
             Text(
-                text = data.writer,
+                text = data.author,
                 style = typography.labelLarge,
                 fontWeight = FontWeight.Normal,
                 color = colors.GRAY400,
@@ -72,8 +59,8 @@ fun BookListItem(data: BookListItemData) {
 @Composable
 fun BookListItemPreview() {
     BookListItem(
-        data = BookListItemData(
-            writer = "저자",
+        data = RecommendListResponseAllModel(
+            author = "저자",
             title = "제목",
             content = "ㅇㄴ머왲ㅂ옱ㄹ촣퍼ㅗㅠㅏㅓㅟㅡㅌㅇㄹㅎ촣퍼ㅗㅠㅏㅓㅟㅏㅡㅓㅜㅠㅏㅗ펗촗ㅌㅇㄹㅊㅎ퍼ㅗㅠㅓㅏㅜㅏㅣ"
         )

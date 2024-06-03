@@ -58,6 +58,7 @@ dependencies {
 
     implementation(Dependency.Compose.ACTIVITY_COMPOSE)
     implementation(platform(Dependency.Compose.COMPOSE_BOM))
+    implementation(Dependency.AndroidX.COMPOSE_LIFECYCLE)
     implementation(Dependency.Compose.COMPOSE)
     implementation(Dependency.Compose.COMPOSE_GRAPHICS)
     implementation(Dependency.Compose.COMPOSE_PREVIEW)
@@ -78,7 +79,11 @@ dependencies {
     androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
 
+    implementation(Dependency.Coil.COIL)
+
     implementation(Dependency.Gauth.GAUTH)
+
+    implementation(Dependency.Google.SWIPE_REFRESH)
 }
 
 fun getApiKey(propertyKey: String): String {

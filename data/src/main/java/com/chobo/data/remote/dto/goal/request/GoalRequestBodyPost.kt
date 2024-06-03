@@ -1,8 +1,11 @@
 package com.chobo.data.remote.dto.goal.request
 
-import com.google.gson.annotations.SerializedName
+import com.chobo.domain.model.goal.request.PostGoalRequestModel
 
 data class GoalRequestBodyPost(
-    @SerializedName("goal_count")
     val goal_count: Int
+)
+
+fun PostGoalRequestModel.toDto() = GoalRequestBodyPost(
+    goal_count = goal_count
 )

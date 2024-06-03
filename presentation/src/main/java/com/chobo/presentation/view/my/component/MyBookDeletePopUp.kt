@@ -2,11 +2,7 @@ package com.chobo.presentation.view.my.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -67,7 +63,10 @@ fun MyBookDeletePopUp(
                     )
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        10.dp,
+                        Alignment.CenterHorizontally
+                    ),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -95,19 +94,19 @@ fun MyBookDeletePopUp(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 MindWayButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(vertical = 12.dp),
                     text = stringResource(R.string.cancel),
                     onClick = cancelOnclick,
-                    buttonColor = colors.GRAY600
-                )
-                MindWayButton(
+                    buttonColor = colors.GRAY600,
                     modifier = Modifier
                         .weight(1f)
                         .padding(vertical = 12.dp),
+                )
+                MindWayButton(
                     text = stringResource(R.string.check),
-                    onClick = checkOnclick
+                    onClick = checkOnclick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(vertical = 12.dp),
                 )
             }
         }

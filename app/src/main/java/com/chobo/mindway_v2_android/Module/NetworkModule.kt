@@ -3,10 +3,13 @@ package com.chobo.mindway_v2_android.Module
 import android.util.Log
 import com.chobo.data.remote.api.AuthAPI
 import com.chobo.data.remote.api.BookAPI
+import com.chobo.data.remote.api.EventAPI
 import com.chobo.data.remote.api.GoalAPI
 import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.api.MyAPI
 import com.chobo.data.remote.api.NoticeAPI
+import com.chobo.data.remote.api.RankApi
+import com.chobo.data.remote.api.RecommendAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
 import dagger.Module
@@ -98,4 +101,23 @@ object NetworkModule {
     fun provideNoticeAPI(retrofit: Retrofit): NoticeAPI {
         return retrofit.create(NoticeAPI::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideRecommendAPI(retrofit: Retrofit): RecommendAPI {
+        return retrofit.create(RecommendAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventAPI(retrofit: Retrofit): EventAPI {
+        return retrofit.create(EventAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRankAPI(retrofit: Retrofit): RankApi {
+        return retrofit.create(RankApi::class.java)
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.my.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -9,79 +10,98 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
+import com.chobo.presentation.view.my.component.MyBookListItemData
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.MyBookEditViewModel
-import com.chobo.presentation.viewModel.MyViewModel
+import com.chobo.presentation.viewModel.my.MyViewModel
+
+@Composable
+internal fun MyRoute(
+    modifier: Modifier = Modifier,
+    myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    showSheet: () -> Unit,
+    navigateToMyBookEdit: () -> Unit,
+) {
+    val myName by myViewModel.myName.collectAsStateWithLifecycle()
+    val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsStateWithLifecycle()
+    val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
+    val bookDeleteDialogIsVisible by myViewModel.bookDeleteDialogIsVisible.collectAsStateWithLifecycle()
+    val selectedIndex by myViewModel.selectedIndex.collectAsStateWithLifecycle()
+
+    MyScreen(
+        modifier = modifier,
+        myName = myName,
+        myBookListItemDataList = myBookListItemDataList,
+        isToastVisible = isToastVisible,
+        selectedBookTitle = selectedBookTitle,
+        bookDeleteDialogIsVisible = bookDeleteDialogIsVisible,
+        selectedIndex = selectedIndex,
+        toggleBookDeleteDialogIsVisible = myViewModel::toggleBookDeleteDialogIsVisible,
+        setSelectedIndex = myViewModel::setSelectedIndex,
+        editBookOnClick = myViewModel::editBookOnClick,
+        showSheet = showSheet,
+        navigateToMyBookEdit = navigateToMyBookEdit,
+    )
+}
 
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
-    myViewModel: MyViewModel = viewModel(),
-    myBookEditViewModel: MyBookEditViewModel = viewModel(),
-    onClick: () -> Unit,
+    myName: String,
+    myBookListItemDataList: List<MyBookListItemData>,
+    isToastVisible: Boolean,
+    selectedBookTitle: String,
+    bookDeleteDialogIsVisible: Boolean,
+    selectedIndex: Int,
+    toggleBookDeleteDialogIsVisible: () -> Unit,
+    setSelectedIndex: (Int) -> Unit,
+    editBookOnClick: (Int) -> Unit,
+    showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
-    val myName by myViewModel.myName.collectAsState()
-    val myBookListItemDataList by myViewModel.myBookListItemDataList.collectAsState()
-    val isToastVisible by myViewModel.isToastVisible.collectAsState()
-    var bookDeleteDialog by remember { mutableStateOf(false) }
-    var selectedIndex by remember { mutableIntStateOf(-1) }
-    var selectedBookTitle by remember { mutableStateOf("") }
-
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
             Column {
-                if (bookDeleteDialog) {
-                    Dialog(onDismissRequest = { bookDeleteDialog = false }) {
+                if (bookDeleteDialogIsVisible) {
+                    Dialog(onDismissRequest = toggleBookDeleteDialogIsVisible) {
                         MyBookDeletePopUp(
                             title = selectedBookTitle,
-                            cancelOnclick = {
-                                bookDeleteDialog = false
-                                selectedBookTitle = ""
-                            },
+                            cancelOnclick = toggleBookDeleteDialogIsVisible,
                             checkOnclick = {
-                                if (selectedIndex != -1) {
-                                    myViewModel.removeBookItem(selectedIndex)
-                                    selectedIndex = -1
-                                }
-                                bookDeleteDialog = false
-                                selectedBookTitle = ""
+                                if (selectedIndex != -1)
+                                    setSelectedIndex(-1)
+                                toggleBookDeleteDialogIsVisible()
                             }
                         )
                     }
                 }
                 MyNameCard(
                     name = myName,
-                    onClick = onClick,
+                    onClick = showSheet,
                 )
                 Row(
                     horizontalArrangement = Arrangement.Start,
@@ -111,14 +131,13 @@ fun MyScreen(
                             title = item.title,
                             writer = item.writer,
                             editOnclick = {
-                                myBookEditViewModel.editBookOnClick(index = index)
+                                editBookOnClick(index)
                                 navigateToMyBookEdit()
                             },
                             trashCanOnclick = {
                                 item.trashCanOnclick
-                                bookDeleteDialog = true
-                                selectedIndex = index
-                                selectedBookTitle = item.title
+                                toggleBookDeleteDialogIsVisible()
+                                setSelectedIndex(index)
                             }
                         )
                     }
@@ -126,10 +145,6 @@ fun MyScreen(
             }
             AnimatedVisibility(
                 visible = isToastVisible,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-50).dp)
-                    .padding(horizontal = 24.dp),
                 enter = slideInVertically(
                     initialOffsetY = { it + 110 },
                     animationSpec = tween(durationMillis = 500)
@@ -137,7 +152,11 @@ fun MyScreen(
                 exit = slideOutVertically(
                     targetOffsetY = { it + 110 },
                     animationSpec = tween(durationMillis = 500)
-                )
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-50).dp)
+                    .padding(horizontal = 24.dp),
             ) {
                 MindWayToast(
                     isSuccess = true,
@@ -152,8 +171,9 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen(
-        onClick = { },
-        navigateToMyBookEdit = { }
+
+    MyRoute(
+        navigateToMyBookEdit = {},
+        showSheet = {}
     )
 }

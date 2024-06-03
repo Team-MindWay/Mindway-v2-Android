@@ -1,15 +1,8 @@
 package com.chobo.presentation.view.main.component
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,9 +17,9 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun GoalReadingIndicator(
     modifier: Modifier = Modifier,
     numBooksRead: Int,
-    goalBookRead:Int
+    goalBookRead: Int
 ) {
-    val readProgress = if (numBooksRead < 30) numBooksRead else 30
+    val readProgress: (Int, Int) -> Int = { limit, input -> if (input < limit) input else limit }
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -34,7 +27,7 @@ fun GoalReadingIndicator(
             modifier = modifier,
         ) {
             LinearProgressIndicator(
-                progress = (readProgress) / goalBookRead.toFloat(),
+                progress = (readProgress(goalBookRead, numBooksRead)) / goalBookRead.toFloat(),
                 trackColor = colors.GRAY100,
                 color = colors.MAIN,
                 modifier = Modifier
@@ -44,9 +37,9 @@ fun GoalReadingIndicator(
                     .clip(RoundedCornerShape(5.dp)),
             )
             Row(
-                modifier = Modifier.fillMaxHeight(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxHeight(),
             ) {
                 Text(
                     text = numBooksRead.toString(),
@@ -56,9 +49,9 @@ fun GoalReadingIndicator(
                     textAlign = TextAlign.Center,
                 )
                 Row(
-                    modifier = Modifier.height(30.dp),
                     horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.height(30.dp),
                 ) {
                     Text(
                         text = "/",

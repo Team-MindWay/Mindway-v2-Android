@@ -2,18 +2,10 @@ package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -24,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.textField.MindWayRightTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -84,12 +76,11 @@ fun GoalReadingBottomSheet(
                             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
                             verticalAlignment = Alignment.Top,
                         ) {
-                            val textList = listOf(
+                            listOf(
                                 stringResource(id = R.string.month_day, 3, 24),
                                 stringResource(id = R.string.wave),
                                 stringResource(id = R.string.month_day, 3, 21)
-                            )
-                            textList.forEach {
+                            ).forEach {
                                 Text(
                                     text = it,
                                     style = typography.bodyMedium,
@@ -99,25 +90,22 @@ fun GoalReadingBottomSheet(
                             }
                         }
                     }
-                    MindWayTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(119.dp),
+                    MindWayRightTextField(
                         title = stringResource(id = R.string.goal_reading),
                         textState = textState,
                         placeholder = "권",
-                        isTextRight = true,
                         emptyErrorMessage = stringResource(R.string.goal_reading_error),
                         updateTextValue = updateTextValue,
                         isError = isError,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(119.dp),
                     )
                 }
                 MindWayButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
                     text = stringResource(id = R.string.check),
-                    onClick = onclick
+                    onClick = onclick,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }

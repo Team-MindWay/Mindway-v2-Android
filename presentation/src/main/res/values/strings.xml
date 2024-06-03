@@ -9,7 +9,7 @@
     <string name="my">마이</string>
     <string name="period">기간</string>
     <string name="month_day">%d월 %02d일</string>
-    <string name="wave">~</string>
+    <string name="wave">%d ~ %d</string>
     <string name="check">확인</string>
     <string name="goal_reading_error">목표 독서량을 입력해주세요</string>
     <string name="view_detail">자세히 보기</string>
@@ -25,6 +25,7 @@
     <string name="book_request_succes_toast">도서 신청이 완료되었어요!</string>
     <string name="book_request_cancle_success_toast">신청 도서 삭제가 완료되었어요!</string>
     <string name="book_request_modify_succes_toast">신청 도서 수정이 완료되었어요!</string>
+    <string name="book_request_fail_toast">도서 신청을 실패했어요!</string>
     <string name="goal_reading_fail_toast">목표 독서량 설정이 실패했어요</string>
     <string name="ongoing_event">진행 중인 이벤트</string>
     <string name="past_event">지난 이벤트</string>

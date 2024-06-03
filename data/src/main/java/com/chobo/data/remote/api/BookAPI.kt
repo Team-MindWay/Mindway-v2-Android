@@ -2,30 +2,30 @@ package com.chobo.data.remote.api
 
 import com.chobo.data.remote.dto.book.request.BookRequestBody
 import com.chobo.data.remote.dto.book.response.BookListResponse
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface BookAPI {
     @POST("/api/v2/book")
-    fun bookPost(
+    suspend fun bookUpload(
         @Body body: BookRequestBody,
     )
 
     @GET("/api/v2/book")
-    fun bookGet(): List<BookListResponse>
+    suspend fun bookListGet(): List<BookListResponse>
+
+    @GET("/api/v2/book/{book_id}")
+    suspend fun bookGetById(
+        @Path("book_id") bookId: Long
+    ): BookListResponse
 
     @PATCH("/api/v2/book/{book_id}")
-    fun bookPatch(
+    suspend fun bookModify(
         @Body body: BookRequestBody,
         @Path("book_id") bookId: Long
     )
 
     @DELETE("/api/v2/book/{book_id}")
-    fun bookDelete(
+    suspend fun bookDeleteById(
         @Path("book_id") bookId: Long
     )
 }

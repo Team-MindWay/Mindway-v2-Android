@@ -1,0 +1,31 @@
+package com.chobo.presentation.viewModel.main
+
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+
+@HiltViewModel
+class ViewDetailViewModel @Inject constructor() : ViewModel() {
+    private val _titleTextState = MutableStateFlow("")
+    val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
+
+    private val _contentTextState = MutableStateFlow("")
+    val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
+
+    private val _checkBookDialogIsVisible = MutableStateFlow(false)
+    val checkBookDialogIsVisible: StateFlow<Boolean> = _checkBookDialogIsVisible.asStateFlow()
+
+    fun checkOnclick() {
+
+    }
+
+    fun toggleCheckBookDialogIsVisible() {
+        _checkBookDialogIsVisible.value = !_checkBookDialogIsVisible.value
+    }
+
+    init {
+        _titleTextState.value = "임시데이터 임시데이터 임시데이터"
+        _contentTextState.value = "임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터"
+    }
+}

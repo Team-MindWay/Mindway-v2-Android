@@ -2,7 +2,7 @@ package com.chobo.data.repository
 
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.data.remote.datasource.auth.RemoteAuthDataSource
-import com.chobo.data.remote.dto.auth.request.GAuthLoginRequestBody
+import com.chobo.data.remote.dto.auth.request.toDto
 import com.chobo.data.remote.dto.auth.response.toLoginModel
 import com.chobo.domain.model.auth.request.GAuthLoginRequestModel
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
@@ -14,13 +14,9 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val localAuthDataSource: LocalAuthDataSource,
     private val remoteAuthDataSource: RemoteAuthDataSource
-): AuthRepository {
+) : AuthRepository {
     override suspend fun gAuthLogin(body: GAuthLoginRequestModel): Flow<GAuthLoginResponseModel> {
-        return remoteAuthDataSource.GuauthLogin(
-            body = GAuthLoginRequestBody(
-                code = body.code
-            )
-        ).map { it.toLoginModel() }
+        return remoteAuthDataSource.GuauthLogin(body = body.toDto()).map { it.toLoginModel() }
     }
 
     override suspend fun saveLoginData(data: GAuthLoginResponseModel) {

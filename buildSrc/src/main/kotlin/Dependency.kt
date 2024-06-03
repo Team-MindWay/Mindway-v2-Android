@@ -9,6 +9,7 @@ object Dependency {
     object AndroidX {
         const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
         const val LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE}"
+        const val COMPOSE_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.COMPOSE_LIFECYCLE}"
         const val APPCOMPAT = "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
         const val SPLASH = "androidx.core:core-splashscreen:${Versions.SPLASH}"
     }
@@ -31,6 +32,8 @@ object Dependency {
 
         const val GOOGLE_SERVICES_PLUGIN = "com.google.gms.google-services"
         // FIREBASE
+
+        const val SWIPE_REFRESH ="com.google.accompanist:accompanist-swiperefresh:${Versions.SWIPE_REFRESH}"
     }
 
     object Coil {

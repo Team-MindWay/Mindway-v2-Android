@@ -2,18 +2,12 @@ package com.chobo.presentation.view.component.textField
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
@@ -34,7 +28,6 @@ fun MindWayTextField(
     overflowErrorMessage: String = "",
     emptyErrorMessage: String,
     isError: Boolean,
-    isTextRight: Boolean = false,
     lengthLimit: Int = 0,
     updateTextValue: (String) -> Unit,
 ) {
@@ -95,15 +88,7 @@ fun MindWayTextField(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .then(
-                                        if (isTextRight) Modifier.padding(
-                                            top = 16.dp,
-                                            bottom = 16.dp,
-                                            start = 16.dp,
-                                            end = 34.dp
-                                        )
-                                        else Modifier.padding(16.dp)
-                                    )
+                                    .padding(16.dp)
                             ) {
                                 BasicTextField(
                                     onValueChange = { newText ->
@@ -119,28 +104,20 @@ fun MindWayTextField(
                                     textStyle = typography.bodySmall.copy(
                                         fontWeight = FontWeight.Normal,
                                         color = colors.Black,
-                                        textAlign = if (isTextRight) TextAlign.End else TextAlign.Start,
+                                        textAlign = TextAlign.Start,
                                     ),
                                     cursorBrush = SolidColor(colors.MAIN),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth()
                                 )
                             }
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = if (isTextRight) Arrangement.End else Arrangement.Start,
+                                horizontalArrangement = Arrangement.Start,
                                 modifier = Modifier
                                     .padding(16.dp)
                                     .fillMaxWidth()
                             ) {
-                                if (isTextRight) {
-                                    Text(
-                                        text = placeholder,
-                                        style = typography.bodySmall,
-                                        fontWeight = FontWeight.Normal,
-                                        color = colors.GRAY400,
-                                    )
-                                } else if (textState.isEmpty()) {
+                                if (textState.isEmpty()) {
                                     Text(
                                         text = placeholder,
                                         style = typography.bodySmall,
@@ -175,12 +152,11 @@ fun MindWayTextField(
 
 @Preview
 @Composable
-fun Preview() {
+fun MindWayTextFieldPreview() {
     MindWayTextField(
         title = "제목이다",
         textState = "가나다라",
         placeholder = "힌트다",
-        isTextRight = false,
         overflowErrorMessage = "에러니까 고치셈",
         emptyErrorMessage = "비어ㅆ습니다",
         updateTextValue = {},

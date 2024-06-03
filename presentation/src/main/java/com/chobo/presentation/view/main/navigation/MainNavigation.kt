@@ -3,10 +3,10 @@ package com.chobo.presentation.view.main.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.chobo.presentation.view.main.screen.GoalReadingScreen
-import com.chobo.presentation.view.main.screen.HomeAddBookScreen
-import com.chobo.presentation.view.main.screen.HomeEditBookScreen
-import com.chobo.presentation.view.main.screen.ViewDetailScreen
+import com.chobo.presentation.view.main.screen.GoalReadingRoute
+import com.chobo.presentation.view.main.screen.HomeAddBookRoute
+import com.chobo.presentation.view.main.screen.HomeEditBookRoute
+import com.chobo.presentation.view.main.screen.ViewDetailRoute
 
 const val homeAddBookRoute = "home_add_book_route"
 const val viewDetailRoute = "view_detail_route"
@@ -35,7 +35,7 @@ fun NavGraphBuilder.goalReading(
     navigateToHomeViewDetail: () -> Unit
 ) {
     composable(goalReadingRoute) {
-        GoalReadingScreen(
+        GoalReadingRoute(
             navigateToBack = navigateToBack,
             navigateToHomeAddBook = navigateToHomeAddBook,
             navigateToHomeViewDetail = navigateToHomeViewDetail,
@@ -48,21 +48,21 @@ fun NavGraphBuilder.viewDetail(
     navigateToHomeEditBook: () -> Unit
 ) {
     composable(viewDetailRoute) {
-        ViewDetailScreen(
+        ViewDetailRoute(
             navigateToBack = navigateToBack,
-            navigateToHomeEditBook = navigateToHomeEditBook
+            navigateToHomeEditBook = navigateToHomeEditBook,
         )
     }
 }
 
 fun NavGraphBuilder.homeAddBook(navigateToBack: () -> Unit) {
     composable(homeAddBookRoute) {
-        HomeAddBookScreen(navigateToBack = navigateToBack)
+        HomeAddBookRoute(navigateToBack = navigateToBack)
     }
 }
 
 fun NavGraphBuilder.homeEditBook(navigateToBack: () -> Unit) {
     composable(homeEditBookRoute) {
-        HomeEditBookScreen(navigateToBack = navigateToBack)
+        HomeEditBookRoute(navigateToBack = navigateToBack)
     }
 }

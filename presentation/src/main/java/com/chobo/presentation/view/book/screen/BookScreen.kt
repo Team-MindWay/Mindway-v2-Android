@@ -1,10 +1,14 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.chobo.presentation.view.book.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,132 +24,279 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.TabRow
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.chobo.domain.emumtype.OrderRequestBookType
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.customToast.MindWayToast
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.BookScreenViewModel
-import kotlinx.coroutines.delay
+import com.chobo.presentation.viewModel.book.BookAddBookViewModel
+import com.chobo.presentation.viewModel.book.BookScreenViewModel
+import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
+import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookScreen(
+internal fun BookRoute(
     modifier: Modifier = Modifier,
-    bookScreenViewModel: BookScreenViewModel = viewModel(),
+    bookAddBookScreen: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    bookScreenViewModel: BookScreenViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBookAddBook: () -> Unit,
 ) {
-    val novelDataList by bookScreenViewModel.novelDataList.collectAsState()
-    val essayDataList by bookScreenViewModel.essayDataList.collectAsState()
-    val isToastVisible by bookScreenViewModel.isToastVisible.collectAsState()
-
+    val novelDataList by bookScreenViewModel.novelDataList.collectAsStateWithLifecycle()
+    val essayDataList by bookScreenViewModel.essayDataList.collectAsStateWithLifecycle()
+    val isToastVisible by bookScreenViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val orderUploadUiState by bookAddBookScreen.orderUploadUiState.collectAsStateWithLifecycle()
+    val swipeRefreshLoading by bookScreenViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { 2 })
-    val tabNames = listOf(
-        stringResource(R.string.novel),
-        stringResource(R.string.essay),
-    )
+    val scrollState = rememberScrollState()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
     val coroutineScope = rememberCoroutineScope()
 
-    MindWayAndroidTheme { colors, _ ->
-        Box(modifier = modifier.background(color = colors.WHITE)) {
-            Column {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(
-                            start = 24.dp,
-                            top = 20.dp,
-                            end = 24.dp
-                        )
-                        .fillMaxWidth()
-                ) {
-                    TabRow(
-                        modifier = Modifier.width(166.dp),
-                        selectedTabIndex = pagerState.currentPage,
-                        contentColor = colors.MAIN,
-                        backgroundColor = colors.WHITE
-                    ) {
-                        tabNames.forEachIndexed { index, tabName ->
-                            BookTabRowItem(
-                                indexState = pagerState.currentPage,
-                                index = index,
-                                tabName = tabName,
-                                onClick = {
-                                    coroutineScope.launch {
-                                        pagerState.animateScrollToPage(index)
-                                    }
-                                }
-                            )
-                        }
+    BookScreen(
+        modifier = modifier,
+        novelDataList = novelDataList,
+        essayDataList = essayDataList,
+        isToastVisible = isToastVisible,
+        pagerState = pagerState,
+        scrollState = scrollState,
+        coroutineScope = coroutineScope,
+        swipeRefreshState = swipeRefreshState,
+        orderUploadUiState = orderUploadUiState,
+        getRecommendBook = bookScreenViewModel::getRecommendBook,
+        showToast = bookScreenViewModel::showToast,
+        navigateToBookAddBook = navigateToBookAddBook
+    )
+}
+
+@Composable
+internal fun BookScreen(
+    modifier: Modifier = Modifier,
+    novelDataList: GetRecommendBookUiState,
+    essayDataList: GetRecommendBookUiState,
+    isToastVisible: Boolean,
+    pagerState: PagerState,
+    scrollState: ScrollState,
+    coroutineScope: CoroutineScope,
+    swipeRefreshState: SwipeRefreshState,
+    orderUploadUiState: OrderUploadUiState,
+    getRecommendBook: (OrderRequestBookType) -> Unit,
+    showToast: () -> Unit,
+    navigateToBookAddBook: () -> Unit,
+) {
+    MindWayAndroidTheme { colors, typography ->
+        SwipeRefresh(
+            state = swipeRefreshState,
+            onRefresh = {
+                getRecommendBook(
+                    if (pagerState.currentPage == 1) {
+                        OrderRequestBookType.ESSAY
+                    } else {
+                        OrderRequestBookType.NOVEL
                     }
-                    PlusIcon(
-                        modifier = Modifier.clickableSingle { navigateToBookAddBook() },
-                        tint = colors.Black
-                    )
-                }
-                HorizontalPager(state = pagerState) { page ->
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.Start,
+                )
+            }
+        ) {
+            Box(modifier = modifier.background(color = colors.WHITE)) {
+                Column {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .padding(horizontal = 24.dp)
-                            .fillMaxSize()
+                            .padding(
+                                start = 24.dp,
+                                top = 20.dp,
+                                end = 24.dp
+                            )
+                            .fillMaxWidth()
                     ) {
+                        TabRow(
+                            selectedTabIndex = pagerState.currentPage,
+                            contentColor = colors.MAIN,
+                            backgroundColor = colors.WHITE,
+                            modifier = Modifier.width(166.dp),
+                        ) {
+                            listOf(
+                                stringResource(R.string.novel),
+                                stringResource(R.string.essay),
+                            ).forEachIndexed { index, tabName ->
+                                BookTabRowItem(
+                                    isCurrentIndex = index == pagerState.currentPage,
+                                    tabName = tabName,
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            pagerState.animateScrollToPage(index)
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                        PlusIcon(
+                            tint = colors.Black,
+                            modifier = Modifier.clickableSingle(onClick = navigateToBookAddBook),
+                        )
+                    }
+                    HorizontalPager(state = pagerState) { page ->
                         when (page) {
                             0 -> {
-                                item { Spacer(modifier = modifier.height(28.dp)) }
-                                itemsIndexed(novelDataList) { _, item ->
-                                    BookListItem(data = item)
+                                when (novelDataList) {
+                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Empty -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = "등록된 소설이 없습니다",
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Success -> {
+                                        LazyColumn(
+                                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .padding(horizontal = 24.dp)
+                                                .fillMaxSize()
+                                        ) {
+                                            item { Spacer(modifier = modifier.height(28.dp)) }
+                                            itemsIndexed(novelDataList.data) { _, item ->
+                                                BookListItem(data = item)
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
                             1 -> {
-                                item { Spacer(modifier = modifier.height(28.dp)) }
-                                itemsIndexed(essayDataList) { _, item ->
-                                    BookListItem(data = item)
+                                when (essayDataList) {
+                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Empty -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = "등록된 에세이가 없습니다",
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Success -> {
+                                        LazyColumn(
+                                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .padding(horizontal = 24.dp)
+                                                .fillMaxSize()
+                                        ) {
+                                            item { Spacer(modifier = modifier.height(28.dp)) }
+                                            itemsIndexed(essayDataList.data) { _, item ->
+                                                BookListItem(data = item)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
+
                     }
                 }
-            }
-            AnimatedVisibility(
-                visible = isToastVisible,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = -(20).dp)
-                    .padding(horizontal = 24.dp),
-                enter = slideInVertically(
-                    initialOffsetY = { it + 55 },
-                    animationSpec = tween(durationMillis = 500)
-                ),
-                exit = slideOutVertically(
-                    targetOffsetY = { it + 55 },
-                    animationSpec = tween(durationMillis = 500)
-                )
-            ) {
-                MindWayToast(
-                    isSuccess = true,
-                    text = stringResource(R.string.book_request_succes_toast),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                AnimatedVisibility(
+                    visible = isToastVisible,
+                    enter = slideInVertically(
+                        initialOffsetY = { it + 55 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    exit = slideOutVertically(
+                        targetOffsetY = { it + 55 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .offset(y = -(20).dp)
+                        .padding(horizontal = 24.dp),
+                ) {
+                    when (orderUploadUiState) {
+                        is OrderUploadUiState.Fail -> {
+                            showToast()
+                            MindWayToast(
+                                isSuccess = false,
+                                text = stringResource(R.string.book_request_fail_toast),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
+                        is OrderUploadUiState.Loading -> {}
+                        is OrderUploadUiState.RemoteFail -> {
+                            showToast()
+                            MindWayToast(
+                                isSuccess = false,
+                                text = stringResource(R.string.book_request_fail_toast),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
+                        is OrderUploadUiState.Success -> {
+                            showToast()
+                            MindWayToast(
+                                isSuccess = true,
+                                text = stringResource(R.string.book_request_succes_toast),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -154,5 +305,5 @@ fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookScreen(navigateToBookAddBook = { })
+    BookRoute { }
 }

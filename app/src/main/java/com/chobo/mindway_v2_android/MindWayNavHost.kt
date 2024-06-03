@@ -3,19 +3,18 @@ package com.chobo.mindway_v2_android
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.chobo.presentation.view.book.navigation.bookAddBook
 import com.chobo.presentation.view.book.navigation.navigationToBookAddBook
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
-import com.chobo.presentation.view.component.compostionView.CompostionView
-import com.chobo.presentation.view.component.compostionView.navigationToCompostionView
+import com.chobo.presentation.view.component.combinationView.combinationView
+import com.chobo.presentation.view.component.combinationView.navigationToCombinationView
 import com.chobo.presentation.view.event.navigation.detailEventScreen
-import com.chobo.presentation.view.event.navigation.eventScreen
 import com.chobo.presentation.view.event.navigation.navigationToDetailEvent
 import com.chobo.presentation.view.login.navigation.loginScreen
+import com.chobo.presentation.view.login.navigation.navigationToLogin
 import com.chobo.presentation.view.main.navigation.goalReading
 import com.chobo.presentation.view.main.navigation.homeAddBook
 import com.chobo.presentation.view.main.navigation.homeEditBook
@@ -32,9 +31,8 @@ import com.chobo.presentation.view.my.navigation.navigationToMyBookEdit
 @Composable
 fun MindWayNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String
+    startDestination: String,
 ) {
-    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val topDestination = remember {
         mutableStateOf(MindWayNavBarItemType.HOME)
     }
@@ -42,15 +40,16 @@ fun MindWayNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        loginScreen(navigateToHome = navController::navigationToCompostionView)
+        loginScreen(navigateToHome = navController::navigationToCombinationView)
 
-        CompostionView(
+        combinationView(
             topDestination = topDestination,
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
             navigateToBookAddBook = navController::navigationToBookAddBook,
             navigateToIntro = navController::navigationToIntro,
             navigateToMyBookEdit = navController::navigationToMyBookEdit,
+            navigateToLogin = navController::navigationToLogin
         )
 
         goalReading(
@@ -68,9 +67,7 @@ fun MindWayNavHost(
 
         homeEditBook(navigateToBack = navController::popBackStack)
 
-        eventScreen(navigateToDetailEvent = navController::navigationToDetailEvent)
-
-        detailEventScreen(navigateToBack = navController::popBackStack)
+        detailEventScreen(navigateToBack = navController::popBackStack,)
 
         bookAddBook(navigateToBack = navController::popBackStack)
 

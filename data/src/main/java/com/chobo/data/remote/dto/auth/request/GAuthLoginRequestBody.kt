@@ -1,8 +1,9 @@
 package com.chobo.data.remote.dto.auth.request
 
-import com.google.gson.annotations.SerializedName
+import com.chobo.domain.model.auth.request.GAuthLoginRequestModel
 
 data class GAuthLoginRequestBody(
-    @SerializedName("code")
     val code: String
 )
+
+fun GAuthLoginRequestModel.toDto() = GAuthLoginRequestBody(code = this.code)

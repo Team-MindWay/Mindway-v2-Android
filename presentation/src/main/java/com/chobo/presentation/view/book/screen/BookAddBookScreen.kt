@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.book.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -12,42 +13,80 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
-import com.chobo.presentation.view.book.component.BookRequestTopAppBar
 import com.chobo.presentation.view.component.button.MindWayButton
-import com.chobo.presentation.view.component.textField.MindWayTextField
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.BookAddBookViewModel
+import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 
 @Composable
-fun BookAddBookScreen(
+internal fun BookAddBookRoute(
     modifier: Modifier = Modifier,
-    bookAddBookViewModel: BookAddBookViewModel = viewModel(),
+    bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit
 ) {
-    val titleTextState by bookAddBookViewModel.titleTextState.collectAsState()
-    val writeTextState by bookAddBookViewModel.writeTextState.collectAsState()
-    val linkTextState by bookAddBookViewModel.linkTextState.collectAsState()
-    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsState()
-    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsState()
-    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsState()
-    var checkBookDialog by remember { mutableStateOf(false) }
+    val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
+    val writeTextState by bookAddBookViewModel.writeTextState.collectAsStateWithLifecycle()
+    val linkTextState by bookAddBookViewModel.linkTextState.collectAsStateWithLifecycle()
+    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
+    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
+    val checkBookDialog by bookAddBookViewModel.checkBookDialog.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
+    BookAddBookScreen(
+        modifier = modifier,
+        titleTextState = titleTextState,
+        writeTextState = writeTextState,
+        linkTextState = linkTextState,
+        titleTextStateIsEmpty = titleTextStateIsEmpty,
+        writeTextStateIsEmpty = writeTextStateIsEmpty,
+        linkTextStateIsEmpty = linkTextStateIsEmpty,
+        checkBookDialog = checkBookDialog,
+        focusManager = focusManager,
+        updateTitleTextState = bookAddBookViewModel::updateTitleTextState,
+        updateWriteTextState = bookAddBookViewModel::updateWriteTextState,
+        updateLinkTextState = bookAddBookViewModel::updateLinkTextState,
+        toggleCheckBookDialog = bookAddBookViewModel::toggleCheckBookDialog,
+        checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
+        navigateToBack = navigateToBack,
+    )
+}
+
+@Composable
+internal fun BookAddBookScreen(
+    modifier: Modifier = Modifier,
+    titleTextState: String,
+    writeTextState: String,
+    linkTextState: String,
+    titleTextStateIsEmpty: Boolean,
+    writeTextStateIsEmpty: Boolean,
+    linkTextStateIsEmpty: Boolean,
+    checkBookDialog: Boolean,
+    focusManager: FocusManager,
+    updateTitleTextState: (String) -> Unit,
+    updateWriteTextState: (String) -> Unit,
+    updateLinkTextState: (String) -> Unit,
+    toggleCheckBookDialog: () -> Unit,
+    checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
             Column(
@@ -60,9 +99,9 @@ fun BookAddBookScreen(
                         }
                     }
             ) {
-                BookRequestTopAppBar(
-                    startIconOnClick = { navigateToBack() },
-                    endIconOnClick = { checkBookDialog = true }
+                MindWayTopAppBar(
+                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                    midText = stringResource(R.string.book_request),
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
@@ -75,43 +114,52 @@ fun BookAddBookScreen(
                         )
                 ) {
                     if (checkBookDialog) {
-                        Dialog(onDismissRequest = { checkBookDialog = false }) {
+                        Dialog(onDismissRequest = toggleCheckBookDialog) {
                             BookPopUp(
-                                onDismiss = { checkBookDialog = false }
+                                onDismiss = toggleCheckBookDialog
                             )
                         }
                     }
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = bookAddBookViewModel::updateTitleTextState,
+                        updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.writer),
                         textState = writeTextState,
                         placeholder = stringResource(id = R.string.please_enter_the_book_writer),
                         emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
-                        updateTextValue = bookAddBookViewModel::updateWriteTextState,
+                        updateTextValue = updateWriteTextState,
                         isError = writeTextStateIsEmpty
                     )
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(id = R.string.link),
                         textState = linkTextState,
                         placeholder = stringResource(id = R.string.please_enter_the_link),
                         emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
-                        updateTextValue = bookAddBookViewModel::updateLinkTextState,
+                        updateTextValue = updateLinkTextState,
                         isError = linkTextStateIsEmpty
                     )
                     Spacer(modifier = modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
+                        onClick = {
+                            if (
+                                !titleTextStateIsEmpty
+                                && !writeTextStateIsEmpty
+                                && !linkTextStateIsEmpty
+                            ) {
+                                navigateToBack()
+                            }
+                            checkButtonOnClick()
+                        },
                         modifier = modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        onClick = bookAddBookViewModel::checkButtonOnClick
                     )
                 }
             }
@@ -122,5 +170,5 @@ fun BookAddBookScreen(
 @Preview
 @Composable
 fun PreviewAddBookScreen() {
-    BookAddBookScreen(navigateToBack = { })
+    BookAddBookRoute(navigateToBack = {})
 }

@@ -2,14 +2,7 @@ package com.chobo.presentation.view.my.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,17 +18,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.my.component.MindWayIntroTopAppBar
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun MindWayIntroScreen(
+internal fun MindWayIntroRoute(
+    modifier: Modifier = Modifier,
+    navigateToBack: () -> Unit
+) {
+    MindWayIntroScreen(
+        modifier = modifier,
+        navigateToBack = navigateToBack
+    )
+}
+
+@Composable
+internal fun MindWayIntroScreen(
     modifier: Modifier = Modifier,
     navigateToBack: () -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            MindWayIntroTopAppBar(startIconOnClick = { navigateToBack() })
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.mindway_intro),
+            )
             Box(modifier = Modifier.fillMaxSize()) {
                 Column {
                     Column(
@@ -103,5 +112,5 @@ fun MindWayIntroScreen(
 @Preview(showBackground = true)
 @Composable
 fun MindWayIntroScreenPreview() {
-    MindWayIntroScreen(navigateToBack = {})
+    MindWayIntroRoute(navigateToBack = {})
 }

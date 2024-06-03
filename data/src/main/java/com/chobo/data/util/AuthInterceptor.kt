@@ -7,8 +7,12 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import javax.inject.Inject
-import okhttp3.*
 
 class AuthInterceptor @Inject constructor(
     private val dataSource: LocalAuthDataSource
@@ -16,15 +20,12 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val builder = request.newBuilder()
-        val ignorePath = listOf("/auth")
-        val ignoreMethod = listOf("POST")
+        val ignorePath = listOf("/api/v2/auth")
         val currentTime = System.currentTimeMillis().toMindWayDate()
         val path = request.url.encodedPath
-        val method = request.method
 
-        ignorePath.forEachIndexed { index, s ->
-            if (s == path && ignoreMethod[index] == method)
-                return chain.proceed(request)
+        if (ignorePath.contains(path)) {
+            return chain.proceed(request)
         }
 
         runBlocking {

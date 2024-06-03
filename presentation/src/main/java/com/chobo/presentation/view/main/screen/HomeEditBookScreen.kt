@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.main.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,35 +10,72 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
+import com.chobo.presentation.view.component.icon.ChevronLeftIcon
+import com.chobo.presentation.view.component.icon.InfoIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextField
-import com.chobo.presentation.view.main.component.AddBookTopAppBar
+import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
+import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.HomeAddBookViewModel
+import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 
 @Composable
-fun HomeEditBookScreen(
+internal fun HomeEditBookRoute(
     modifier: Modifier = Modifier,
-    homeAddBookViewModel: HomeAddBookViewModel = viewModel(),
+    homeAddBookViewModel: HomeAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit
 ) {
-    val titleTextState by homeAddBookViewModel.titleTextState.collectAsState()
-    val contentTextState by homeAddBookViewModel.contentTextState.collectAsState()
-    val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsState()
-    val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsState()
+    val titleTextState by homeAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
+    val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
+    val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength
 
+    HomeEditBookScreen(
+        modifier = modifier,
+        titleTextState = titleTextState,
+        contentTextState = contentTextState,
+        titleTextStateIsEmpty = titleTextStateIsEmpty,
+        contentTextStateIsEmpty = contentTextStateIsEmpty,
+        contentTextMaxLength = contentTextMaxLength,
+        updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
+        updateContentTextState = homeAddBookViewModel::updateContentTextState,
+        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick,
+        navigateToBack = navigateToBack,
+    )
+}
+
+@Composable
+internal fun HomeEditBookScreen(
+    modifier: Modifier = Modifier,
+    titleTextState: String,
+    contentTextState: String,
+    titleTextStateIsEmpty: Boolean,
+    contentTextStateIsEmpty: Boolean,
+    contentTextMaxLength: Int,
+    updateTitleTextState: (String) -> Unit,
+    updateContentTextState: (String) -> Unit,
+    checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
-            AddBookTopAppBar(startIconOnClick = { navigateToBack() })
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },
+                midText = stringResource(R.string.book_modify),
+            )
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.Start,
@@ -53,13 +91,12 @@ fun HomeEditBookScreen(
                         )
                         .fillMaxWidth()
                 ) {
-                    MindWayTextField(
+                    MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.title),
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
-                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = homeAddBookViewModel::updateTitleTextState,
+                        updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
                     MindWayTextField(
@@ -68,17 +105,17 @@ fun HomeEditBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_content),
                         overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = homeAddBookViewModel.contentTextMaxLength,
-                        updateTextValue = homeAddBookViewModel::updateContentTextState,
+                        lengthLimit = contentTextMaxLength,
+                        updateTextValue = updateContentTextState,
                         isError = contentTextStateIsEmpty
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(R.string.check),
+                        onClick = checkButtonOnClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
-                        onClick = { homeAddBookViewModel.checkButton() }
                     )
                 }
             }
@@ -89,5 +126,5 @@ fun HomeEditBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeBookEditScreenPreview() {
-    HomeEditBookScreen(navigateToBack = { })
+    HomeEditBookRoute(navigateToBack = { })
 }

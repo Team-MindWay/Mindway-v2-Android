@@ -1,27 +1,19 @@
 package com.chobo.presentation.view.event.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.*
 import androidx.compose.material.TabRowDefaults
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
+import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -29,13 +21,10 @@ import kotlinx.coroutines.launch
 fun EventPager(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    tabs: List<String>,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onGoingEvent: @Composable (ColumnScope.() -> Unit),
     pastEvent: @Composable (ColumnScope.() -> Unit)
 ) {
-
-    val coroutineScope = rememberCoroutineScope()
-
     MindWayAndroidTheme { colors, _ ->
         Column(
             modifier = modifier.fillMaxSize(),
@@ -46,31 +35,34 @@ fun EventPager(
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                         color = colors.MAIN,
+                        modifier = modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                     )
                 },
                 divider = {},
                 containerColor = colors.WHITE,
                 contentColor = colors.GRAY400,
             ) {
-                tabs.forEachIndexed { index, title ->
+                listOf(
+                    stringResource(id = R.string.ongoing_event),
+                    stringResource(id = R.string.past_event)
+                ).forEachIndexed { index, title ->
                     Tab(
                         text = {
                             Text(
-                                title,
-                                color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400
+                                text = title,
+                                color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400 // TODO: 상태 호이스팅
                             )
                         },
                         selected = pagerState.currentPage == index,
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .weight(1f),
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
-                        }
+                        },
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f),
                     )
                 }
             }
@@ -91,16 +83,11 @@ fun EventPager(
 @Preview
 @Composable
 fun EventPagerPre() {
-    val tabs = listOf(
-        stringResource(id = R.string.ongoing_event),
-        stringResource(id = R.string.past_event)
-    )
     val pagerState = rememberPagerState {
-        tabs.size
+        2
     }
     EventPager(
         pagerState = pagerState,
-        tabs = tabs,
         onGoingEvent = { },
         pastEvent = { }
     )

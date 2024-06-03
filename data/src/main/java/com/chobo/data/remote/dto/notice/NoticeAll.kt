@@ -1,10 +1,13 @@
 package com.chobo.data.remote.dto.notice
 
-import com.google.gson.annotations.SerializedName
+import com.chobo.domain.model.notice.NoticeAllModel
 
 data class NoticeAll(
-    @SerializedName("title")
     val title: String,
-    @SerializedName("content")
     val content: String
+)
+
+fun NoticeAll.toModel() = NoticeAllModel(
+    title = title,
+    content = content,
 )

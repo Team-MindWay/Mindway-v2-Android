@@ -1,8 +1,6 @@
 package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,14 +13,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.goal.response.GetWeekendGoalModel
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
+import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.getTodayDayOfWeek
+import okhttp3.internal.immutableListOf
 
 data class GoalReadingGraphData(
     val numBooksRead: Int,
@@ -34,12 +37,27 @@ data class GoalReadingGraphData(
 @Composable
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
-    goalBookRead: Int,
-    readNumberList: List<GoalReadingGraphData> = listOf(),
+    isHasData: Boolean,
+    getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0,0,0,0,0,0,0,0,0),
     onClick: () -> Unit,
 ) {
+    val weekList = remember { immutableListOf("월", "화", "수", "목", "금", "토", "일") }
+    val dateList = remember {
+        mutableListOf(
+            getWeekendGoalModel.mon,
+            getWeekendGoalModel.tue,
+            getWeekendGoalModel.wed,
+            getWeekendGoalModel.thu,
+            getWeekendGoalModel.fri,
+            getWeekendGoalModel.sat,
+            getWeekendGoalModel.sun
+        )
+    }
+    val maxRead = remember { dateList.max() }
+    val currentDate = getTodayDayOfWeek()
+
     MindWayAndroidTheme { colors, typography ->
-        if (readNumberList.isNotEmpty()) {
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
@@ -70,17 +88,11 @@ fun HomeGoalReadingChart(
                             fontWeight = FontWeight.SemiBold,
                             color = colors.Black,
                         )
-                        ChevronRightIcon(
-                            modifier = Modifier
-                                .clickable(
-                                    interactionSource = MutableInteractionSource(),
-                                    indication = null
-                                ) { onClick() }
-                        )
+                        ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                     }
                     GoalReadingIndicator(
-                        numBooksRead = readNumberList.sumOf { it.numBooksRead },
-                        goalBookRead = goalBookRead,
+                        numBooksRead = getWeekendGoalModel.now_count,
+                        goalBookRead = getWeekendGoalModel.goal_value,
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.1840f)
@@ -93,12 +105,12 @@ fun HomeGoalReadingChart(
                         .fillMaxWidth(0.909f)
                         .height(78.dp)
                 ) {
-                    readNumberList.forEach {
+                    weekList.forEachIndexed { index, date ->
                         GoalReadingGraph(
-                            numBooksRead = it.numBooksRead,
-                            maxBooksRead = it.maxBooksRead,
-                            isCurrentDate = it.isCurrentDate,
-                            today = it.today,
+                            numBooksRead = dateList[index],
+                            maxBooksRead = maxRead,
+                            isCurrentDate = currentDate == date,
+                            today = date,
                             modifier = Modifier
                                 .width(16.dp)
                                 .height(78.dp),
@@ -141,9 +153,7 @@ fun HomeGoalReadingChart(
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
                 )
-                Spacer(
-                    modifier = Modifier.height(27.dp)
-                )
+                Spacer(modifier = Modifier.height(27.dp))
             }
         }
     }
@@ -157,16 +167,18 @@ fun HomeGoalReadingChartPreview() {
         modifier = Modifier
             .width(312.dp)
             .height(211.dp),
-        readNumberList = listOf(
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(3, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, true, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-            GoalReadingGraphData(1, 3, false, "일"),
-            GoalReadingGraphData(2, 3, false, "일"),
-        ),
+        isHasData = true,
         onClick = { },
-        goalBookRead = 14
+        getWeekendGoalModel = GetWeekendGoalModel(
+            mon = 32,
+            tue = 43,
+            wed = 56,
+            thu = 1,
+            fri = 24,
+            sat = 34,
+            sun = 45,
+            now_count = 23,
+            goal_value = 300
+        )
     )
 }

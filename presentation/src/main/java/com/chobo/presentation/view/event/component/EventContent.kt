@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.domain.model.event.response.GetEventListResponseModel
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
@@ -23,12 +24,14 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun EventContent(
     modifier: Modifier = Modifier,
     content: String,
-    eventDataList: List<EventsData> = listOf(),
+    eventDataList: List<GetEventListResponseModel> = listOf(),
+    eventDataListIsEmpty: Boolean,
     onIconClick: (Int) -> Unit,
+    onEventClick: (Long) -> Unit,
     navigateToDetailEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (eventDataList.isNotEmpty()) {
+        if (eventDataListIsEmpty) {
             LazyColumn(
                 modifier = modifier
                     .background(color = colors.WHITE)
@@ -37,8 +40,12 @@ fun EventContent(
                 itemsIndexed(eventDataList) { index, item ->
                     Events(
                         eventsData = item,
-                        onClick = { onIconClick(index) },
-                        navigateToDetailEvent = { navigateToDetailEvent() })
+                        onClick = {
+                            onIconClick(index)
+                            onEventClick(item.id)
+                        },
+                        navigateToDetailEvent = navigateToDetailEvent
+                    )
                 }
             }
         } else {
@@ -68,6 +75,8 @@ fun EventContentPreview() {
     EventContent(
         content = "리뷰 정말 감사합니다 임시 데이터 입니다",
         onIconClick = {},
+        eventDataListIsEmpty = true,
         navigateToDetailEvent = {},
+        onEventClick = {}
     )
 }

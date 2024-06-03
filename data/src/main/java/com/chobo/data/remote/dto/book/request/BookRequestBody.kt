@@ -1,10 +1,14 @@
 package com.chobo.data.remote.dto.book.request
 
-import com.google.gson.annotations.SerializedName
+import com.chobo.domain.model.book.request.BookRequestBodyModel
 
 data class BookRequestBody(
-    @SerializedName("title")
     val title: String,
-    @SerializedName("plot")
     val plot: String
 )
+
+fun BookRequestBodyModel.toDto() = BookRequestBody(
+    title = title,
+    plot = plot
+)
+

@@ -1,38 +1,50 @@
 package com.chobo.presentation.view.login.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
-import com.chobo.presentation.viewModel.AuthViewModel
-import com.chobo.presentation.BuildConfig
+import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.auth.AuthViewModel
 import com.msg.gauthsignin.GAuthSigninWebView
 
 @Composable
-fun LoginScreen(
+internal fun LoginRoute(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel = viewModel(LocalContext.current as ComponentActivity)
 ) {
-    var isClicked by remember { mutableStateOf(false) }
+    val isClickLoginButton by authViewModel.isClickLoginButton.collectAsStateWithLifecycle()
+
+    LoginScreen(
+        modifier = modifier,
+        isClickLoginButton = isClickLoginButton,
+        gAuthLogin = authViewModel::gAuthLogin,
+        toggleIsClickLoginButton = authViewModel::toggleIsClickLoginButton,
+        navigateToHome = navigateToHome,
+    )
+}
+
+@Composable
+internal fun LoginScreen(
+    modifier: Modifier = Modifier,
+    isClickLoginButton: Boolean,
+    gAuthLogin: (String) -> Unit,
+    toggleIsClickLoginButton: () -> Unit,
+    navigateToHome: () -> Unit,
+) {
 
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -48,24 +60,24 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(302.dp))
             Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 MindWayGAuthButton(
+                    onClick = toggleIsClickLoginButton,
                     modifier = Modifier.height(48.dp),
-                    onClick = { isClicked = true }
                 )
             }
         }
     }
-    if (isClicked) {
+    if (isClickLoginButton) {
         GAuthSigninWebView(
             clientId = BuildConfig.CLIENT_ID,
             redirectUri = BuildConfig.REDIRECT_URI,
         ) { code ->
-            authViewModel.gAuthLogin(code)
+            gAuthLogin(code)
             navigateToHome()
         }
     }
@@ -74,5 +86,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(navigateToHome = { })
+    LoginRoute(navigateToHome = { })
 }
