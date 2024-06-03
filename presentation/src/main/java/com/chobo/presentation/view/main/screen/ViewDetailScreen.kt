@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.main.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,11 +11,11 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +32,7 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.ViewDetailPopUp
 import com.chobo.presentation.view.main.component.ViewDetailTextCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -41,12 +41,12 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
-    viewDetailViewModel: ViewDetailViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    viewDetailViewModel: ViewDetailViewModel = hiltViewModel(),
+    id: Long,
     navigateToBack: () -> Unit,
-    navigateToHomeEditBook: () -> Unit,
+    navigateToHomeEditBook: (Long) -> Unit,
 ) {
-    val titleTextState by viewDetailViewModel.titleTextState.collectAsStateWithLifecycle()
-    val contentTextState by viewDetailViewModel.contentTextState.collectAsStateWithLifecycle()
+    val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
     val checkBookDialogIsVisible by viewDetailViewModel.checkBookDialogIsVisible.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
@@ -56,12 +56,13 @@ internal fun ViewDetailRoute(
 
     ViewDetailScreen(
         modifier = modifier,
-        titleTextState = titleTextState,
-        contentTextState = contentTextState,
+        getBookByIdUiState = getBookByIdUiState,
+        id = id,
         coroutineScope = coroutineScope,
         checkBookDialogIsVisible = checkBookDialogIsVisible,
         sheetState = sheetState,
-        checkOnclick = viewDetailViewModel::checkOnclick,
+        getBookById = viewDetailViewModel::getBookById,
+        bookDeleteById = viewDetailViewModel::bookDeleteById,
         toggleCheckBookDialogIsVisible = viewDetailViewModel::toggleCheckBookDialogIsVisible,
         navigateToBack = navigateToBack,
         navigateToHomeEditBook = navigateToHomeEditBook,
@@ -72,23 +73,27 @@ internal fun ViewDetailRoute(
 @Composable
 internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
-    titleTextState: String,
-    contentTextState: String,
+    getBookByIdUiState: GetBookByIdUiState,
+    id: Long,
     coroutineScope: CoroutineScope,
     checkBookDialogIsVisible: Boolean,
     sheetState: ModalBottomSheetState,
-    checkOnclick: () -> Unit,
+    getBookById: (Long) -> Unit,
+    bookDeleteById:(Long)-> Unit,
     toggleCheckBookDialogIsVisible: () -> Unit,
     navigateToBack: () -> Unit,
-    navigateToHomeEditBook: () -> Unit,
+    navigateToHomeEditBook: (Long) -> Unit,
 ) {
+    LaunchedEffect(Unit){
+        getBookById(id)
+    }
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
                 MindWayBottomSheet(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
-                    topOnClick = navigateToHomeEditBook,
+                    topOnClick = { navigateToHomeEditBook(id) },
                     bottomOnCLick = toggleCheckBookDialogIsVisible,
                 )
             },
@@ -104,8 +109,8 @@ internal fun ViewDetailScreen(
                         ViewDetailPopUp(
                             cancelOnclick = toggleCheckBookDialogIsVisible,
                             checkOnclick = {
-                                checkOnclick()
                                 toggleCheckBookDialogIsVisible()
+                                bookDeleteById(id)
                             },
                         )
                     }
@@ -115,24 +120,30 @@ internal fun ViewDetailScreen(
                     endIcon = { OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } })) },
                     midText = stringResource(R.string.view_detail),
                 )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            vertical = 24.dp,
-                            horizontal = 28.dp,
-                        )
-                ) {
-                    ViewDetailTextCard(
-                        title = stringResource(R.string.title),
-                        content = titleTextState,
-                    )
-                    ViewDetailTextCard(
-                        title = stringResource(R.string.content),
-                        content = contentTextState,
-                    )
+                when (getBookByIdUiState) {
+                    is GetBookByIdUiState.Fail -> {}
+                    is GetBookByIdUiState.Loading -> {}
+                    is GetBookByIdUiState.Success -> {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            horizontalAlignment = Alignment.Start,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    vertical = 24.dp,
+                                    horizontal = 28.dp,
+                                )
+                        ) {
+                            ViewDetailTextCard(
+                                title = stringResource(R.string.title),
+                                content = getBookByIdUiState.data.title,
+                            )
+                            ViewDetailTextCard(
+                                title = stringResource(R.string.content),
+                                content = getBookByIdUiState.data.plot,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -145,5 +156,6 @@ fun ViewDetailScreenPreview() {
     ViewDetailRoute(
         navigateToBack = { },
         navigateToHomeEditBook = { },
+        id = 0,
     )
 }

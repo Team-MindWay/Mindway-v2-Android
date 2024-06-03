@@ -55,18 +55,18 @@ class MyBookEditViewModel @Inject constructor(
         _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
         _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
         if (
-            _titleTextState.value.isNotEmpty()
-            && _writeTextState.value.isNotEmpty()
-            && _linkTextState.value.isNotEmpty()
+            _titleTextStateIsEmpty.value
+            && _writeTextStateIsEmpty.value
+            && _linkTextStateIsEmpty.value
         ) {
             viewModelScope.launch {
                 orderModifyByIdUseCase(
                     body = OrderRequestBodyModel(
-                        title = titleTextState.value,
+                        title = _titleTextState.value,
                         author = _writeTextState.value,
-                        book_url = linkTextState.value
+                        book_url = _linkTextState.value
                     ),
-                    orderId = "임시 Id"
+                    orderId = 0
                 )
                     .onSuccess {
                         it.catch { remoteError ->

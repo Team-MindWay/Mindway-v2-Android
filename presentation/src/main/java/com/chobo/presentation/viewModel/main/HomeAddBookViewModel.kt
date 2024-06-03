@@ -1,12 +1,22 @@
 package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.book.request.BookRequestBodyModel
+import com.chobo.domain.usecase.book.BookUploadUseCase
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeAddBookViewModel @Inject constructor() : ViewModel() {
+class HomeAddBookViewModel @Inject constructor(
+    private val bookUploadUseCase: BookUploadUseCase,
+) : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
 
@@ -35,5 +45,13 @@ class HomeAddBookViewModel @Inject constructor() : ViewModel() {
     fun checkButtonOnClick() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _contentTextStateIsEmpty.value = _contentTextState.value.isEmpty()
+       viewModelScope.launch {
+            bookUploadUseCase(
+                body = BookRequestBodyModel(
+                    title = _titleTextState.value,
+                    plot = _contentTextState.value
+                )
+            ).asResult().collectLatest {  }
+        }
     }
 }

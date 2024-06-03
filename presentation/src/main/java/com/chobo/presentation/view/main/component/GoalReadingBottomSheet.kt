@@ -18,6 +18,10 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayRightTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.localDateTimeMonthDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDateTime
+import java.time.temporal.TemporalAdjusters
 
 @Composable
 fun GoalReadingBottomSheet(
@@ -76,18 +80,19 @@ fun GoalReadingBottomSheet(
                             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
                             verticalAlignment = Alignment.Top,
                         ) {
-                            listOf(
-                                stringResource(id = R.string.month_day, 3, 24),
-                                stringResource(id = R.string.wave),
-                                stringResource(id = R.string.month_day, 3, 21)
-                            ).forEach {
-                                Text(
-                                    text = it,
-                                    style = typography.bodyMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = colors.Black,
-                                )
-                            }
+                            val now = LocalDateTime.now()
+                            val startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+                            val endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+
+                            Text(
+                                text = stringResource(
+                                    id = R.string.wave, localDateTimeMonthDateFormat(startOfWeek),
+                                    localDateTimeMonthDateFormat(endOfWeek)
+                                ),
+                                style = typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colors.Black,
+                            )
                         }
                     }
                     MindWayRightTextField(
