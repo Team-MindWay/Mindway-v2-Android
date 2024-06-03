@@ -62,7 +62,7 @@ internal fun ViewDetailRoute(
         checkBookDialogIsVisible = checkBookDialogIsVisible,
         sheetState = sheetState,
         getBookById = viewDetailViewModel::getBookById,
-        checkOnclick = viewDetailViewModel::checkOnclick,
+        bookDeleteById = viewDetailViewModel::bookDeleteById,
         toggleCheckBookDialogIsVisible = viewDetailViewModel::toggleCheckBookDialogIsVisible,
         navigateToBack = navigateToBack,
         navigateToHomeEditBook = navigateToHomeEditBook,
@@ -79,7 +79,7 @@ internal fun ViewDetailScreen(
     checkBookDialogIsVisible: Boolean,
     sheetState: ModalBottomSheetState,
     getBookById: (Long) -> Unit,
-    checkOnclick: () -> Unit,
+    bookDeleteById:(Long)-> Unit,
     toggleCheckBookDialogIsVisible: () -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
@@ -109,8 +109,8 @@ internal fun ViewDetailScreen(
                         ViewDetailPopUp(
                             cancelOnclick = toggleCheckBookDialogIsVisible,
                             checkOnclick = {
-                                checkOnclick()
                                 toggleCheckBookDialogIsVisible()
+                                bookDeleteById(id)
                             },
                         )
                     }

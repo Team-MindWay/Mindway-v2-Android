@@ -3,20 +3,23 @@ package com.chobo.presentation.viewModel.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.book.request.BookRequestBodyModel
-import com.chobo.domain.model.book.response.BookListResponseModel
+import com.chobo.domain.usecase.book.BookDeleteByIdUseCase
 import com.chobo.domain.usecase.book.GetBookByIdUseCase
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewDetailViewModel @Inject constructor(
     private val getBookByIdUseCase: GetBookByIdUseCase,
+    private val bookDeleteByIdUseCase: BookDeleteByIdUseCase,
 ) : ViewModel() {
     private val _getBookByIdUiState = MutableStateFlow<GetBookByIdUiState>(GetBookByIdUiState.Loading)
     val getBookByIdUiState: StateFlow<GetBookByIdUiState> = _getBookByIdUiState.asStateFlow()
@@ -36,8 +39,8 @@ class ViewDetailViewModel @Inject constructor(
             }
     }
 
-    fun checkOnclick() {
-
+    fun bookDeleteById(id: Long) = viewModelScope.launch {
+        bookDeleteByIdUseCase(bookId = id).asResult().collectLatest { }
     }
 
     fun toggleCheckBookDialogIsVisible() {
