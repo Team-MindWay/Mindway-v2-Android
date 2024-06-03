@@ -82,11 +82,11 @@ internal fun GoalReadingRoute(
         isSuccess = isSuccess,
         coroutineScope = coroutineScope,
         focusManager = focusManager,
+        goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
+        updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting,
         navigateToBack = navigateToBack,
         navigateToHomeAddBook = navigateToHomeAddBook,
         navigateToHomeViewDetail = navigateToHomeViewDetail,
-        goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
-        updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting
     )
 }
 
@@ -102,11 +102,11 @@ internal fun GoalReadingScreen(
     isSuccess: Boolean,
     coroutineScope: CoroutineScope,
     focusManager: FocusManager,
+    goalBookReadSettingOnClick: () -> Unit,
+    updateGoalBookReadSetting: (String) -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
     navigateToHomeViewDetail: (Long) -> Unit,
-    goalBookReadSettingOnClick: () -> Unit,
-    updateGoalBookReadSetting: (String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
