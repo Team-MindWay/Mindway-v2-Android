@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
 import com.chobo.presentation.viewModel.util.errorHandling
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -67,15 +69,7 @@ class MyBookEditViewModel @Inject constructor(
                         book_url = _linkTextState.value
                     ),
                     orderId = 0
-                )
-                    .onSuccess {
-                        it.catch { remoteError ->
-                            remoteError.errorHandling<Unit>()
-                        }
-                    }
-                    .onFailure {
-                        it.errorHandling<Unit>()
-                    }
+                ).asResult().collectLatest { }
             }
         }
     }
