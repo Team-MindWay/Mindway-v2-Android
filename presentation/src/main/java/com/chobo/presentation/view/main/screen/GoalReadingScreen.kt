@@ -198,44 +198,37 @@ internal fun GoalReadingScreen(
 
                                     is GetWeekendGoalUiState.Success -> {
                                         GoalReadingChart(
-                                            isHasData = false,
+                                            isHasData = true,
                                             getWeekendGoalModel = getWeekendGoalUiState.data,
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .height(180.dp),
                                         )
-                                    }
-                                }
-                            }
-                            item {
-                                if (getWeekendGoalUiState != GetWeekendGoalUiState.Empty) {
-                                    Column(
-                                        verticalArrangement = Arrangement.spacedBy(
-                                            8.dp,
-                                            Alignment.CenterVertically
-                                        ),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = modifier
-                                            .shadow(
-                                                elevation = 20.dp,
-                                                spotColor = colors.CardShadow,
-                                                ambientColor = colors.CardShadow
-                                            )
-                                            .background(
-                                                color = colors.WHITE,
-                                                shape = RoundedCornerShape(size = 8.dp)
-                                            )
-                                            .clickableSingle(onClick = navigateToHomeAddBook)
-                                            .padding(16.dp)
-                                    ) {
-                                        PlusIcon(modifier = Modifier.fillMaxSize())
+                                        Column(
+                                            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = modifier
+                                                .shadow(
+                                                    elevation = 20.dp,
+                                                    spotColor = colors.CardShadow,
+                                                    ambientColor = colors.CardShadow
+                                                )
+                                                .background(
+                                                    color = colors.WHITE,
+                                                    shape = RoundedCornerShape(size = 8.dp)
+                                                )
+                                                .clickableSingle(onClick = navigateToHomeAddBook)
+                                                .padding(16.dp)
+                                        ) {
+                                            PlusIcon(modifier = Modifier.fillMaxSize())
+                                        }
                                     }
                                 }
                             }
                             when (getBookListUiState) {
-                                is GetBookListUiState.Empty -> TODO()
-                                is GetBookListUiState.Fail -> TODO()
-                                is GetBookListUiState.Loading -> TODO()
+                                is GetBookListUiState.Empty -> {}
+                                is GetBookListUiState.Fail -> {}
+                                is GetBookListUiState.Loading -> {}
                                 is GetBookListUiState.Success -> {
                                     items(getBookListUiState.data) { item ->
                                         GoalReadingListOfBooksReadItem(
