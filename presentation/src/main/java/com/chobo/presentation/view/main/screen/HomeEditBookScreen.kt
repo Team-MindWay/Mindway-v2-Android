@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.main.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +32,7 @@ import com.chobo.presentation.viewModel.main.HomeBookEditViewModel
 @Composable
 internal fun HomeEditBookRoute(
     modifier: Modifier = Modifier,
-    homeBookEditViewModel: HomeBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    homeBookEditViewModel: HomeBookEditViewModel = hiltViewModel(),
     id: Long,
     navigateToBack: () -> Unit,
 ) {
@@ -121,7 +119,10 @@ internal fun HomeEditBookScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(R.string.check),
-                        onClick = { checkButtonOnClick(id) },
+                        onClick = {
+                            checkButtonOnClick(id)
+                            navigateToBack()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
