@@ -11,6 +11,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -83,7 +84,9 @@ internal fun ViewDetailScreen(
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
 ) {
-    getBookById(id)
+    LaunchedEffect(Unit){
+        getBookById(id)
+    }
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
