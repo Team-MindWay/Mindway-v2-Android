@@ -66,7 +66,7 @@ fun NavGraphBuilder.homeAddBook(navigateToBack: () -> Unit) {
 }
 
 fun NavGraphBuilder.homeEditBook(navigateToBack: () -> Unit) {
-    composable("${homeEditBookRoute}/${id}") { backStackEntry ->
+    composable("${homeEditBookRoute}/{id}") { backStackEntry ->
         val id = backStackEntry.arguments?.getString("id")?.toLongOrNull()
         if (id != null) {
             HomeEditBookRoute(
