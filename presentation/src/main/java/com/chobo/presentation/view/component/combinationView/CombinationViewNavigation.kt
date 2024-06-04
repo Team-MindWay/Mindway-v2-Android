@@ -14,7 +14,7 @@ fun NavController.navigationToCombinationView() {
 
 fun NavGraphBuilder.combinationView(
     topDestination: MutableState<MindWayNavBarItemType>,
-    navigateToDetailEvent: () -> Unit,
+    navigateToDetailEvent: (Long) -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,

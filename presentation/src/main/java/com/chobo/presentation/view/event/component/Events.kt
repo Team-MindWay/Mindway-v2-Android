@@ -20,14 +20,12 @@ import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
-data class EventsData(val title: String, val content: String, val date: String)
-
 @Composable
 fun Events(
     modifier: Modifier = Modifier,
     eventsData: GetEventListResponseModel,
     onClick: () -> Unit,
-    navigateToDetailEvent: () -> Unit
+    navigateToDetailEvent: (Long) -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
         Surface(
@@ -63,7 +61,7 @@ fun Events(
                     ChevronRightIcon(
                         modifier = Modifier.clickableSingle {
                             onClick()
-                            navigateToDetailEvent()
+                            navigateToDetailEvent(eventsData.id)
                         }
                     )
                 }
