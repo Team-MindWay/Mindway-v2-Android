@@ -63,7 +63,6 @@ internal fun EventScreenRoute(
         getEventList = eventViewModel::getEventList,
         getEventPastList = eventViewModel::getEventPastList,
         loadStuff = eventViewModel::loadStuff,
-        saveEventId = eventViewModel::saveEventId,
     )
 }
 
@@ -76,11 +75,10 @@ internal fun EventScreen(
     pagerState: PagerState,
     onCurrentEventClick: (Int) -> Unit,
     onPastEventClick: (Int) -> Unit,
-    navigateToDetailEvent: () -> Unit,
+    navigateToDetailEvent: (Long) -> Unit,
     getEventList: (String) -> Unit,
     getEventPastList: (String) -> Unit,
     loadStuff: () -> Unit,
-    saveEventId: (Long) -> Unit
 ) {
     var storageNowStatus by remember { mutableStateOf(EventRequestListStatusType.NOW.name) }
     val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST.name) }
@@ -148,7 +146,6 @@ internal fun EventScreen(
                                     eventDataListIsEmpty = false,
                                     onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = {}
                                 )
                             }
                             is GetEventListUiState.Loading -> {
@@ -157,7 +154,6 @@ internal fun EventScreen(
                                     eventDataListIsEmpty = false,
                                     onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = {}
                                 )
                             }
                             is GetEventListUiState.Success -> {
@@ -168,7 +164,6 @@ internal fun EventScreen(
                                         eventDataListIsEmpty = true,
                                         onIconClick = onCurrentEventClick,
                                         navigateToDetailEvent = navigateToDetailEvent,
-                                        onEventClick = saveEventId
                                     )
                                 }
                             }
@@ -176,7 +171,8 @@ internal fun EventScreen(
                     },
                     pastEvent = {
                         when (getEventListUiState) {
-                            GetEventListUiState.Empty -> {Box(
+                            GetEventListUiState.Empty -> {
+                            Box(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .verticalScroll(scrollState),
@@ -202,7 +198,6 @@ internal fun EventScreen(
                                     eventDataListIsEmpty = false,
                                     onIconClick = onPastEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = {}
                                 )
                             }
                             is GetEventListUiState.Loading -> {
@@ -211,7 +206,6 @@ internal fun EventScreen(
                                     eventDataListIsEmpty = false,
                                     onIconClick = onPastEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
-                                    onEventClick = {}
                                 )
                             }
                             is GetEventListUiState.Success -> {
@@ -222,7 +216,6 @@ internal fun EventScreen(
                                         eventDataListIsEmpty = true,
                                         onIconClick = onPastEventClick,
                                         navigateToDetailEvent = navigateToDetailEvent,
-                                        onEventClick = saveEventId
                                     )
                                 }
                             }
