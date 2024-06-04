@@ -35,6 +35,7 @@ fun EventContent(
                 modifier = modifier
                     .background(color = colors.WHITE)
                     .padding(horizontal = 24.dp)
+                    .fillMaxSize()
             ) {
                 itemsIndexed(eventDataList) { index, item ->
                     Events(
