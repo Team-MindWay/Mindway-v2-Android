@@ -13,5 +13,5 @@ fun BookListResponse.toModel() = BookListResponseModel(
     id = id,
     title = title,
     plot = plot,
-    date = created_at
+    created_at = created_at
 )
