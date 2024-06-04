@@ -4,5 +4,5 @@ data class BookListResponseModel(
     val id: Long,
     val title: String,
     val plot: String,
-    val date: String,
+    val created_at: String,
 )

@@ -6,12 +6,12 @@ data class BookListResponse(
     val id: Long,
     val title: String,
     val plot: String,
-    val date: String,
+    val created_at: String,
 )
 
 fun BookListResponse.toModel() = BookListResponseModel(
     id = id,
     title = title,
     plot = plot,
-    date = date
+    date = created_at
 )
