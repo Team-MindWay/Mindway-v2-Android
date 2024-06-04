@@ -1,5 +1,6 @@
 package com.chobo.presentation.viewModel.event
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.event.GetEventListUseCase
@@ -23,12 +24,6 @@ class EventViewModel @Inject constructor(
 
     private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getEventListUiState = _getEventListUiState.asStateFlow()
-
-    private var eventId: Long = -1
-
-    fun saveEventId(eventId: Long) {
-        this.eventId = eventId
-    }
 
     init {
         loadStuff()
@@ -59,18 +54,25 @@ class EventViewModel @Inject constructor(
     }
 
     fun getEventList(status: String) = viewModelScope.launch {
+        Log.d("EventViewModel", "getEventPastList called with status: $status")
         getEventListUseCase(status = status)
             .asResult()
             .collectLatest { result ->
                 when(result) {
                     is Result.Loading -> _getEventListUiState.value = GetEventListUiState.Loading
-                    is Result.Success -> if (result.data.isEmpty()) {
-                        _getEventListUiState.value = GetEventListUiState.Empty
-                    } else {
-                        _getEventListUiState.value = GetEventListUiState.Success(result.data)
+                    is Result.Success -> {
+                        Log.d("EventViewModel Success", "getEventList: Success with data: ${result.data}")
+                        if (result.data.isEmpty()) {
+                            _getEventListUiState.value = GetEventListUiState.Empty
+                        } else {
+                            _getEventListUiState.value = GetEventListUiState.Success(result.data)
+                        }
                     }
-                    is Result.Fail -> _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
-                }
+                        is Result.Fail -> {
+                            Log.d("EventViewModel Fail", "getEventList: Fail with exception: ${result.exception}")
+                            _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
+                        }
+                    }
             }
     }
 
