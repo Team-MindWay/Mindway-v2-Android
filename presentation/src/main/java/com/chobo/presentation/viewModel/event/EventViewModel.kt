@@ -23,10 +23,12 @@ class EventViewModel @Inject constructor(
     private val _swipeRefreshLoading = MutableStateFlow(false)
     val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
 
-    private val _getNowEventListUiState = MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
+    private val _getNowEventListUiState =
+        MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
     val getNowEventListUiState = _getNowEventListUiState.asStateFlow()
 
-    private val _getPastEventListUiState = MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
+    private val _getPastEventListUiState =
+        MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
     val getPastEventListUiState = _getPastEventListUiState.asStateFlow()
 
     init {
@@ -47,8 +49,7 @@ class EventViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _getPastEventListUiState.value = GetPastEventListUiState.Loading
-                    is Result.Success -> if (result.data.isEmpty()) {
-                        _getPastEventListUiState.value = GetPastEventListUiState.Empty
+                    is Result.Success -> if (result.data.isEmpty()) { _getPastEventListUiState.value = GetPastEventListUiState.Empty
                     } else {
                         _getPastEventListUiState.value = GetPastEventListUiState.Success(result.data)
                     }
@@ -62,21 +63,15 @@ class EventViewModel @Inject constructor(
         getEventListUseCase(status = status)
             .asResult()
             .collectLatest { result ->
-                when(result) {
+                when (result) {
                     is Result.Loading -> _getNowEventListUiState.value = GetNowEventListUiState.Loading
-                    is Result.Success -> {
-                        Log.d("EventViewModel Success", "getEventList: Success with data: ${result.data}")
-                        if (result.data.isEmpty()) {
-                            _getNowEventListUiState.value = GetNowEventListUiState.Empty
-                        } else {
-                            _getNowEventListUiState.value = GetNowEventListUiState.Success(result.data)
-                        }
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getNowEventListUiState.value = GetNowEventListUiState.Empty
+                    } else {
+                        _getNowEventListUiState.value = GetNowEventListUiState.Success(result.data)
                     }
-                        is Result.Fail -> {
-                            Log.d("EventViewModel Fail", "getEventList: Fail with exception: ${result.exception}")
-                            _getNowEventListUiState.value = GetNowEventListUiState.Fail(result.exception)
-                        }
-                    }
+                    is Result.Fail -> _getNowEventListUiState.value = GetNowEventListUiState.Fail(result.exception)
+                }
             }
     }
 
