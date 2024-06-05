@@ -1,8 +1,8 @@
 package com.chobo.presentation.viewModel.my
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.LogoutUseCase
@@ -44,14 +44,14 @@ class MyViewModel @Inject constructor(
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
-    private val _isCommunicationSuccess = MutableStateFlow(false)
+    private val _isCommunicationSuccess = MutableStateFlow(true)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
     private val _bookDeleteDialogIsVisible = MutableStateFlow(false)
     val bookDeleteDialogIsVisible: StateFlow<Boolean> = _bookDeleteDialogIsVisible.asStateFlow()
 
-    private val _selectedIndex = MutableStateFlow(-1)
-    val selectedIndex: StateFlow<Int> = _selectedIndex.asStateFlow()
+    private val _selectedId = MutableStateFlow(0L)
+    val selectedId: StateFlow<Long> = _selectedId.asStateFlow()
 
     fun showToast() {
         _isToastVisible.value = true
@@ -99,7 +99,7 @@ class MyViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _isCommunicationSuccess.value = false
+                    is Result.Loading -> _isCommunicationSuccess.value = true
 
                     is Result.Success -> _isCommunicationSuccess.value = true
 
@@ -107,6 +107,7 @@ class MyViewModel @Inject constructor(
                 }
             }
         showToast()
+        getMyBookList()
     }
 
     fun orderModifyById(id: Long, body: OrderRequestBodyModel) = viewModelScope.launch {
@@ -128,13 +129,16 @@ class MyViewModel @Inject constructor(
         _bookDeleteDialogIsVisible.value = !_bookDeleteDialogIsVisible.value
     }
 
-    fun setSelectedIndex(index: Int) {
-        _selectedIndex.value = index
+    fun setSelectedId(index: Long) {
+        _selectedId.value = index
     }
 
-    fun editBookOnClick(index: Int) {
 
+    fun setSelectedBookTitle(title: String) {
+        _selectedBookTitle.value = title
     }
+
+
 
     fun logout() = viewModelScope.launch {
         logoutUseCase()
@@ -144,14 +148,6 @@ class MyViewModel @Inject constructor(
 
     init {
         getMyInformation()
-        orderDeleteById(id = 0)
-        _getMyBookListUiState.value = GetMyBookListUiState.Success(
-            data = MutableList(10) {
-                MyBookListModel(
-                    name = "제목입니다",
-                    author = "작가입니다",
-                )
-            }
-        )
+        getMyBookList()
     }
 }

@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,7 +52,7 @@ internal fun MyRoute(
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
     val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
     val bookDeleteDialogIsVisible by myViewModel.bookDeleteDialogIsVisible.collectAsStateWithLifecycle()
-    val selectedIndex by myViewModel.selectedIndex.collectAsStateWithLifecycle()
+    val selectedIndex by myViewModel.selectedId.collectAsStateWithLifecycle()
 
     MyScreen(
         modifier = modifier,
@@ -64,8 +64,9 @@ internal fun MyRoute(
         bookDeleteDialogIsVisible = bookDeleteDialogIsVisible,
         selectedIndex = selectedIndex,
         toggleBookDeleteDialogIsVisible = myViewModel::toggleBookDeleteDialogIsVisible,
-        setSelectedIndex = myViewModel::setSelectedIndex,
-        editBookOnClick = myViewModel::editBookOnClick,
+        setSelectedIndex = myViewModel::setSelectedId,
+        setSelectedBookTitle = myViewModel::setSelectedBookTitle,
+        orderDeleteById = myViewModel::orderDeleteById,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
@@ -80,24 +81,24 @@ fun MyScreen(
     isToastVisible: Boolean,
     selectedBookTitle: String,
     bookDeleteDialogIsVisible: Boolean,
-    selectedIndex: Int,
+    selectedIndex: Long,
     toggleBookDeleteDialogIsVisible: () -> Unit,
-    setSelectedIndex: (Int) -> Unit,
-    editBookOnClick: (Int) -> Unit,
+    setSelectedIndex: (Long) -> Unit,
+    setSelectedBookTitle: (String) -> Unit,
+    orderDeleteById: (Long) -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
-            Column {
+            Column (modifier = modifier.fillMaxSize()){
                 if (bookDeleteDialogIsVisible) {
                     Dialog(onDismissRequest = toggleBookDeleteDialogIsVisible) {
                         MyBookDeletePopUp(
                             title = selectedBookTitle,
                             cancelOnclick = toggleBookDeleteDialogIsVisible,
                             checkOnclick = {
-                                if (selectedIndex != -1)
-                                    setSelectedIndex(-1)
+                                orderDeleteById(selectedIndex)
                                 toggleBookDeleteDialogIsVisible()
                             }
                         )
@@ -139,17 +140,17 @@ fun MyScreen(
                                     vertical = 16.dp
                                 )
                         ) {
-                            itemsIndexed(getMyBookListUiState.data) { index, item ->
+                            items(getMyBookListUiState.data) {item ->
                                 MyBookListItem(
-                                    title = item.name,
+                                    title = item.title,
                                     writer = item.author,
                                     editOnclick = {
-                                        editBookOnClick(index)
-                                        navigateToMyBookEdit()
+                                        navigateToMyBookEdit( /*TODO()*/ )
                                     },
                                     trashCanOnclick = {
+                                        setSelectedIndex(item.id)
+                                        setSelectedBookTitle(item.title)
                                         toggleBookDeleteDialogIsVisible()
-                                        setSelectedIndex(index)
                                     }
                                 )
                             }
@@ -157,29 +158,7 @@ fun MyScreen(
                     }
                 }
             }
-            if (isCommunicationSuccess){
-                AnimatedVisibility(
-                    visible = isToastVisible,
-                    enter = slideInVertically(
-                        initialOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    exit = slideOutVertically(
-                        targetOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .offset(y = (-50).dp)
-                        .padding(horizontal = 24.dp),
-                ) {
-                    MindWayToast(
-                        isSuccess = true,
-                        text = stringResource(R.string.order_delete_success),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }else{
+            if (isCommunicationSuccess) {
                 AnimatedVisibility(
                     visible = isToastVisible,
                     enter = slideInVertically(
@@ -198,6 +177,28 @@ fun MyScreen(
                     MindWayToast(
                         isSuccess = false,
                         text = stringResource(R.string.order_delete_fail),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            } else {
+                AnimatedVisibility(
+                    visible = isToastVisible,
+                    enter = slideInVertically(
+                        initialOffsetY = { it + 110 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    exit = slideOutVertically(
+                        targetOffsetY = { it + 110 },
+                        animationSpec = tween(durationMillis = 500)
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .offset(y = (-50).dp)
+                        .padding(horizontal = 24.dp),
+                ) {
+                    MindWayToast(
+                        isSuccess = true,
+                        text = stringResource(R.string.order_delete_success),
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
