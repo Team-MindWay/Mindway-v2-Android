@@ -4,12 +4,12 @@ import com.chobo.domain.model.my.MyBookListModel
 
 data class MyBookListResponse(
     val id: Long,
-    val name: String,
+    val title: String,
     val author: String,
 )
 
 fun MyBookListResponse.toModel() = MyBookListModel(
     id = id,
-    name = name,
+    title = title,
     author = author
 )
