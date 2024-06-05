@@ -4,7 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.chobo.data.local.key.AuthDataStoreKey
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LocalAuthDataSourceImpl @Inject constructor(
@@ -71,22 +72,6 @@ class LocalAuthDataSourceImpl @Inject constructor(
     override suspend fun deleteRefreshTime() {
         dataStore.edit {
             it.remove(AuthDataStoreKey.REFRESH_TIME)
-        }
-    }
-
-    override suspend fun getRoleInfo(): Flow<String> = dataStore.data.map {
-        it[AuthDataStoreKey.ROLE] ?: ""
-    }
-
-    override suspend fun setRoleInfo(role: String) {
-        dataStore.edit {
-            it[AuthDataStoreKey.ROLE] = role
-        }
-    }
-
-    override suspend fun deleteRoleInfo() {
-        dataStore.edit {
-            it.remove(AuthDataStoreKey.ROLE)
         }
     }
 }
