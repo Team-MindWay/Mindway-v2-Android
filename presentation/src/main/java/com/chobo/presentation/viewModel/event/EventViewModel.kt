@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.event.GetEventListUseCase
-import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetNowEventListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,8 +23,11 @@ class EventViewModel @Inject constructor(
     private val _swipeRefreshLoading = MutableStateFlow(false)
     val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
 
-    private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
-    val getEventListUiState = _getEventListUiState.asStateFlow()
+    private val _getNowEventListUiState = MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
+    val getNowEventListUiState = _getNowEventListUiState.asStateFlow()
+
+    private val _getPastEventListUiState = MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
+    val getPastEventListUiState = _getPastEventListUiState.asStateFlow()
 
     init {
         loadStuff()
@@ -42,35 +46,35 @@ class EventViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _getEventListUiState.value = GetEventListUiState.Loading
+                    is Result.Loading -> _getPastEventListUiState.value = GetPastEventListUiState.Loading
                     is Result.Success -> if (result.data.isEmpty()) {
-                        _getEventListUiState.value = GetEventListUiState.Empty
+                        _getPastEventListUiState.value = GetPastEventListUiState.Empty
                     } else {
-                        _getEventListUiState.value = GetEventListUiState.Success(result.data)
+                        _getPastEventListUiState.value = GetPastEventListUiState.Success(result.data)
                     }
-                    is Result.Fail -> _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
+                    is Result.Fail -> _getPastEventListUiState.value = GetPastEventListUiState.Fail(result.exception)
                 }
             }
     }
 
-    fun getEventList(status: String) = viewModelScope.launch {
+    fun getEventNowList(status: String) = viewModelScope.launch {
         Log.d("EventViewModel", "getEventPastList called with status: $status")
         getEventListUseCase(status = status)
             .asResult()
             .collectLatest { result ->
                 when(result) {
-                    is Result.Loading -> _getEventListUiState.value = GetEventListUiState.Loading
+                    is Result.Loading -> _getNowEventListUiState.value = GetNowEventListUiState.Loading
                     is Result.Success -> {
                         Log.d("EventViewModel Success", "getEventList: Success with data: ${result.data}")
                         if (result.data.isEmpty()) {
-                            _getEventListUiState.value = GetEventListUiState.Empty
+                            _getNowEventListUiState.value = GetNowEventListUiState.Empty
                         } else {
-                            _getEventListUiState.value = GetEventListUiState.Success(result.data)
+                            _getNowEventListUiState.value = GetNowEventListUiState.Success(result.data)
                         }
                     }
                         is Result.Fail -> {
                             Log.d("EventViewModel Fail", "getEventList: Fail with exception: ${result.exception}")
-                            _getEventListUiState.value = GetEventListUiState.Fail(result.exception)
+                            _getNowEventListUiState.value = GetNowEventListUiState.Fail(result.exception)
                         }
                     }
             }
