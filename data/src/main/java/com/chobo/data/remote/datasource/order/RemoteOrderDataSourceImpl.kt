@@ -18,14 +18,6 @@ class RemoteOrderDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun orderListGet(): Flow<List<OrderRequestBody>> = flow {
-        emit(
-            MindWayAPIHandler<List<OrderRequestBody>>()
-                .httpRequest { orderAPI.orderListGet() }
-                .sendRequest()
-        )
-    }.flowOn(Dispatchers.IO)
-
     override suspend fun orderModifyById(body: OrderRequestBody, orderId: Long): Flow<Unit> = flow {
             emit(
                 MindWayAPIHandler<Unit>()
@@ -33,12 +25,4 @@ class RemoteOrderDataSourceImpl @Inject constructor(
                     .sendRequest()
             )
         }.flowOn(Dispatchers.IO)
-
-    override suspend fun orderDeleteById(orderId: String): Flow<Unit> = flow {
-        emit(
-            MindWayAPIHandler<Unit>()
-                .httpRequest { orderAPI.orderDeleteById(orderId = orderId) }
-                .sendRequest()
-        )
-    }.flowOn(Dispatchers.IO)
 }
