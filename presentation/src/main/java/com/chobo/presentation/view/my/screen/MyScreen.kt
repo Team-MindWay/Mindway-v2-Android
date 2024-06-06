@@ -44,7 +44,7 @@ internal fun MyRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     showSheet: () -> Unit,
-    navigateToMyBookEdit: () -> Unit,
+    navigateToMyBookEdit: (Long) -> Unit,
 ) {
     val myNameUiState by myViewModel.getMyInformationUiState.collectAsStateWithLifecycle()
     val getMyBookListUiState by myViewModel.getMyBookListUiState.collectAsStateWithLifecycle()
@@ -87,7 +87,7 @@ fun MyScreen(
     setSelectedBookTitle: (String) -> Unit,
     orderDeleteById: (Long) -> Unit,
     showSheet: () -> Unit,
-    navigateToMyBookEdit: () -> Unit,
+    navigateToMyBookEdit: (Long) -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
@@ -145,7 +145,7 @@ fun MyScreen(
                                     title = item.title,
                                     writer = item.author,
                                     editOnclick = {
-                                        navigateToMyBookEdit( /*TODO()*/ )
+                                        navigateToMyBookEdit(item.id)
                                     },
                                     trashCanOnclick = {
                                         setSelectedIndex(item.id)

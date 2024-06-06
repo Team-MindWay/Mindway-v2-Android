@@ -36,7 +36,7 @@ fun MindWayCombinationView(
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
-    navigateToMyBookEdit: () -> Unit,
+    navigateToMyBookEdit: (Long) -> Unit,
     navigateToLogin: () -> Unit,
 ) {
     val coroutine = rememberCoroutineScope()

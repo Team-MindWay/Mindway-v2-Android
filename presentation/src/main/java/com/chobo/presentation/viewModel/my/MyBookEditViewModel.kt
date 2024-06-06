@@ -2,15 +2,14 @@ package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
-import com.chobo.presentation.viewModel.util.errorHandling
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -74,22 +73,9 @@ class MyBookEditViewModel @Inject constructor(
         }
     }
 
-    private fun getMyBookData(orderRequestBodyModel: OrderRequestBodyModel) {
-        _titleTextState.value = orderRequestBodyModel.title
-        _writeTextState.value = orderRequestBodyModel.author
-        _linkTextState.value = orderRequestBodyModel.book_url
-    }
-
-    init {
-        viewModelScope.launch {
-            getMyBookData(
-                // TODO: usecase 연결
-                OrderRequestBodyModel(
-                    title = "임시 데이터입니당",
-                    author = "임시 데이터입니당임시 데이터입니당임시 데이터입니당",
-                    book_url = "임시 데이터입니당임시 데이터입니당임시 데이터입니당"
-                )
-            )
-        }
+    fun setMyBookData(myBookListModel: MyBookListModel) {
+        _titleTextState.value = myBookListModel.title
+        _titleTextState.value = myBookListModel.title
+        _titleTextState.value = myBookListModel.title
     }
 }

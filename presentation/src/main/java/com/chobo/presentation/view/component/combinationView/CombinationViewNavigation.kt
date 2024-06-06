@@ -18,7 +18,7 @@ fun NavGraphBuilder.combinationView(
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
-    navigateToMyBookEdit: () -> Unit,
+    navigateToMyBookEdit: (Long) -> Unit,
     navigateToLogin: () -> Unit,
 ) {
     composable(CombinationViewRoute) {

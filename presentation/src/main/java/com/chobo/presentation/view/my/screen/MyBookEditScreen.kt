@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.my.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +36,9 @@ import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 @Composable
 internal fun MyBookEditRoute(
     modifier: Modifier = Modifier,
+    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(),
+    id: Long,
     navigateToBack: () -> Unit,
-    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
 ) {
     val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
     val writeTextState by myBookEditViewModel.writeTextState.collectAsStateWithLifecycle()
@@ -51,8 +50,8 @@ internal fun MyBookEditRoute(
 
     MyBookEditScreen(
         modifier = modifier,
-        navigateToBack = navigateToBack,
         focusManager = focusManager,
+        id = id,
         titleTextState = titleTextState,
         writeTextState = writeTextState,
         linkTextState = linkTextState,
@@ -62,15 +61,16 @@ internal fun MyBookEditRoute(
         updateTitleTextState = myBookEditViewModel::updateTitleTextState,
         updateWriteTextState = myBookEditViewModel::updateWriteTextState,
         updateLinkTextState = myBookEditViewModel::updateLinkTextState,
-        checkButtonOnClick = myBookEditViewModel::checkButtonOnClick
+        checkButtonOnClick = myBookEditViewModel::checkButtonOnClick,
+        navigateToBack = navigateToBack,
     )
 }
 
 @Composable
 internal fun MyBookEditScreen(
     modifier: Modifier = Modifier,
-    navigateToBack: () -> Unit,
     focusManager: FocusManager,
+    id: Long,
     titleTextState: String,
     writeTextState: String,
     linkTextState: String,
@@ -80,7 +80,8 @@ internal fun MyBookEditScreen(
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    checkButtonOnClick: () -> Unit
+    checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
@@ -149,5 +150,8 @@ internal fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditRoute(navigateToBack = { })
+    MyBookEditRoute(
+        id = 0,
+        navigateToBack = { },
+    )
 }
