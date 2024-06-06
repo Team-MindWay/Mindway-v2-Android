@@ -1,15 +1,22 @@
 package com.chobo.presentation.view.component.combinationView
 
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.screen.BookRoute
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBar
@@ -32,7 +39,7 @@ fun MindWayCombinationView(
     modifier: Modifier = Modifier,
     topDestination: MutableState<MindWayNavBarItemType>,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    navigateToDetailEvent: () -> Unit,
+    navigateToDetailEvent: (Long) -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
@@ -72,15 +79,9 @@ fun MindWayCombinationView(
         ) { paddingValues ->
             Box(modifier = modifier.padding(paddingValues)) {
                 when (topDestination.value) {
-                    HOME -> HomeRoute(
-                        navigateToGoalReading = navigateToGoalReading,
-                        navigateToDetailEvent = navigateToDetailEvent,
-                    )
-
+                    HOME -> HomeRoute(navigateToGoalReading = navigateToGoalReading)
                     EVENT -> EventScreenRoute(navigateToDetailEvent = navigateToDetailEvent)
-
                     BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
-
                     MY -> MyRoute(
                         showSheet = { coroutine.launch { sheetState.show() } },
                         navigateToMyBookEdit = navigateToMyBookEdit,
@@ -105,6 +106,6 @@ fun MindWayCombinationViewPreview() {
         navigateToBookAddBook = { },
         navigateToIntro = { },
         navigateToMyBookEdit = { },
-        navigateToLogin = { }
+        navigateToLogin = { },
     )
 }

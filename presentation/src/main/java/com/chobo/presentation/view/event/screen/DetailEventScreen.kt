@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +34,7 @@ import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
 @Composable
 internal fun DetailEventRoute(
     modifier: Modifier = Modifier,
+    id: Long,
     detailEventViewModel: DetailEventViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
@@ -40,6 +42,7 @@ internal fun DetailEventRoute(
 
     DetailEventScreen(
         modifier = modifier,
+        id = id,
         getDetailEventUiState = getDetailEventUiState,
         getDetailEvent = detailEventViewModel::getDetailEvent,
         navigateToBack = navigateToBack
@@ -51,8 +54,13 @@ internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
     getDetailEventUiState: GetDetailEventUiState,
     getDetailEvent: (Long) -> Unit,
+    id: Long,
     navigateToBack: () -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        getDetailEvent(id)
+    }
+
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
@@ -104,5 +112,6 @@ fun DetailEventScreenPre() {
         getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
         getDetailEvent = {},
         navigateToBack = {},
+        id = 0
     )
 }
