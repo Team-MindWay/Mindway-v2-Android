@@ -58,7 +58,7 @@ fun HomeReadersOfTheMonthChart(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    val maxBook = bookKingOfTheMonthData.maxOf { it.total }
+                    val maxBook = bookKingOfTheMonthData.maxOf { it.accrue }
                     bookKingOfTheMonthData.forEachIndexed { index, it ->
                         HomeReadersOfTheMonthGraph(
                             rankModel = it,
