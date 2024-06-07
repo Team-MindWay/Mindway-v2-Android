@@ -9,14 +9,13 @@ internal interface MultipleEventsCutter {
 internal fun MultipleEventsCutter.Companion.get(): MultipleEventsCutter = MultipleEventsCutterImpl()
 
 private class MultipleEventsCutterImpl : MultipleEventsCutter {
-    private val now = System.currentTimeMillis()
-
     private var lastEventTimeMs: Long = 0
 
     override fun processEvent(event: () -> Unit) {
+        val now = System.currentTimeMillis()
         if (now - lastEventTimeMs >= 400L) {
             event.invoke()
+            lastEventTimeMs = now
         }
-        lastEventTimeMs = now
     }
 }
