@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.customToast.MindWayToast
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
 import com.chobo.presentation.view.my.component.MyNameCard
@@ -127,7 +128,25 @@ fun MyScreen(
                     )
                 }
                 when (getMyBookListUiState) {
-                    is GetMyBookListUiState.Empty -> {}
+                    is GetMyBookListUiState.Empty -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                BookImage()
+                                Text(
+                                    text = stringResource(R.string.is_no_past_event),
+                                    style = typography.bodyMedium,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY500,
+                                )
+                            }
+                        }
+                    }
                     is GetMyBookListUiState.Fail -> {}
                     is GetMyBookListUiState.Loading -> {}
                     is GetMyBookListUiState.Success -> {
