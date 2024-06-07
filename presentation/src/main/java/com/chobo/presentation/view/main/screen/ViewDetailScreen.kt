@@ -7,12 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +38,6 @@ import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
@@ -47,11 +47,6 @@ internal fun ViewDetailRoute(
     navigateToHomeEditBook: (Long) -> Unit,
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
-    val sheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-    val coroutineScope = rememberCoroutineScope()
 
     ViewDetailScreen(
         modifier = modifier,
@@ -70,15 +65,19 @@ internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     getBookByIdUiState: GetBookByIdUiState,
     id: Long,
-    coroutineScope: CoroutineScope,
-    checkBookDialogIsVisible: Boolean,
-    sheetState: ModalBottomSheetState,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     getBookById: (Long) -> Unit,
-    bookDeleteById:(Long)-> Unit,
+    bookDeleteById: (Long) -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
 ) {
-    LaunchedEffect(Unit){
+    val (isDialogOpen, setIsDialogOpen) = remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+
+    LaunchedEffect(Unit) {
         getBookById(id)
     }
     MindWayAndroidTheme { colors, _ ->
@@ -88,7 +87,7 @@ internal fun ViewDetailScreen(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
                     topOnClick = { navigateToHomeEditBook(id) },
-                    bottomOnCLick = toggleCheckBookDialogIsVisible,
+                    bottomOnCLick = { setIsDialogOpen(true) },
                 )
             },
             sheetState = sheetState
@@ -98,12 +97,12 @@ internal fun ViewDetailScreen(
                     .fillMaxSize()
                     .background(color = colors.WHITE)
             ) {
-                if (checkBookDialogIsVisible) {
-                    Dialog(onDismissRequest = toggleCheckBookDialogIsVisible) {
+                if (isDialogOpen) {
+                    Dialog(onDismissRequest = { setIsDialogOpen(false) }) {
                         ViewDetailPopUp(
-                            cancelOnclick = toggleCheckBookDialogIsVisible,
+                            cancelOnclick = { setIsDialogOpen(false) },
                             checkOnclick = {
-                                toggleCheckBookDialogIsVisible()
+                                setIsDialogOpen(false)
                                 bookDeleteById(id)
                             },
                         )
