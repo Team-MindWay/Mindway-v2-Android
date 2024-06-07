@@ -47,7 +47,6 @@ internal fun ViewDetailRoute(
     navigateToHomeEditBook: (Long) -> Unit,
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
-    val checkBookDialogIsVisible by viewDetailViewModel.checkBookDialogIsVisible.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -58,12 +57,8 @@ internal fun ViewDetailRoute(
         modifier = modifier,
         getBookByIdUiState = getBookByIdUiState,
         id = id,
-        coroutineScope = coroutineScope,
-        checkBookDialogIsVisible = checkBookDialogIsVisible,
-        sheetState = sheetState,
         getBookById = viewDetailViewModel::getBookById,
         bookDeleteById = viewDetailViewModel::bookDeleteById,
-        toggleCheckBookDialogIsVisible = viewDetailViewModel::toggleCheckBookDialogIsVisible,
         navigateToBack = navigateToBack,
         navigateToHomeEditBook = navigateToHomeEditBook,
     )
@@ -80,7 +75,6 @@ internal fun ViewDetailScreen(
     sheetState: ModalBottomSheetState,
     getBookById: (Long) -> Unit,
     bookDeleteById:(Long)-> Unit,
-    toggleCheckBookDialogIsVisible: () -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
 ) {
