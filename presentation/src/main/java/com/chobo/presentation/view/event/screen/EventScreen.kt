@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -75,14 +74,14 @@ internal fun EventScreen(
     getEventPastList: (String) -> Unit,
     loadStuff: () -> Unit,
 ) {
-    var storageNowStatus by remember { mutableStateOf(EventRequestListStatusType.NOW.name) }
+    val (storageNowStatus, setStorageNowStatus) = remember { mutableStateOf(EventRequestListStatusType.NOW.name) }
     val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST.name) }
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             when (page) {
-                0 -> storageNowStatus = EventRequestListStatusType.NOW.name
-                1 -> storageNowStatus = EventRequestListStatusType.PAST.name
+                0 -> setStorageNowStatus(EventRequestListStatusType.NOW.name)
+                1 -> setStorageNowStatus(EventRequestListStatusType.PAST.name)
             }
         }
     }
