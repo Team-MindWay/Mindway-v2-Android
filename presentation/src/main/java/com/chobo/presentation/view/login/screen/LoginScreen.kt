@@ -30,6 +30,7 @@ import kotlinx.coroutines.runBlocking
 @Composable
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = viewModel(LocalContext.current as ComponentActivity),
     navigateToHome: () -> Unit,
 ) {
     LoginScreen(
