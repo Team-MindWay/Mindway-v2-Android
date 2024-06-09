@@ -8,7 +8,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,8 +37,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun MindWayCombinationView(
     modifier: Modifier = Modifier,
-    topDestination: MutableState<MindWayNavBarItemType>,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    currentDestination: MindWayNavBarItemType,
+    setCurrentDestination: (MindWayNavBarItemType) -> Unit,
     navigateToDetailEvent: (Long) -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
@@ -69,16 +70,13 @@ fun MindWayCombinationView(
         Scaffold(
             bottomBar = {
                 MindWayNavBar(
-                    currentDestination = topDestination,
-                    navigateToHome = { topDestination.value = HOME },
-                    navigateToEvent = { topDestination.value = EVENT },
-                    navigateToBooks = { topDestination.value = BOOKS },
-                    navigateToMy = { topDestination.value = MY }
+                    currentDestination = currentDestination,
+                    setCurrentDestination = setCurrentDestination,
                 )
             }
         ) { paddingValues ->
             Box(modifier = modifier.padding(paddingValues)) {
-                when (topDestination.value) {
+                when (currentDestination) {
                     HOME -> HomeRoute(navigateToGoalReading = navigateToGoalReading)
                     EVENT -> EventScreenRoute(navigateToDetailEvent = navigateToDetailEvent)
                     BOOKS -> BookRoute(navigateToBookAddBook = navigateToBookAddBook)
@@ -96,16 +94,17 @@ fun MindWayCombinationView(
 @Preview
 @Composable
 fun MindWayCombinationViewPreview() {
-    val topDestination = remember {
+    val topDestination by remember {
         mutableStateOf(HOME)
     }
     MindWayCombinationView(
-        topDestination = topDestination,
+        currentDestination = topDestination,
         navigateToDetailEvent = { },
         navigateToGoalReading = { },
         navigateToBookAddBook = { },
         navigateToIntro = { },
         navigateToMyBookEdit = { },
         navigateToLogin = { },
+        setCurrentDestination = { },
     )
 }

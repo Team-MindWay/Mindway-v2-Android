@@ -27,10 +27,6 @@ class AuthViewModel @Inject constructor(
 
     private val _saveTokenRequest = MutableLiveData<Event<Nothing>>()
     val saveTokenRequest: LiveData<Event<Nothing>> get() = _saveTokenRequest
-
-    private val _isClickLoginButton = MutableStateFlow(false)
-    val isClickLoginButton: StateFlow<Boolean> = _isClickLoginButton
-
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
             .onSuccess {
@@ -54,8 +50,5 @@ class AuthViewModel @Inject constructor(
             .onFailure {
                 _saveTokenRequest.value = it.errorHandling()
             }
-    }
-    fun toggleIsClickLoginButton() {
-        _isClickLoginButton.value = !_isClickLoginButton.value
     }
 }

@@ -15,6 +15,6 @@ fun NavGraphBuilder.loginScreen(
     navigateToHome: () -> Unit
 ) {
     composable(loginRoute) {
-        LoginRoute(navigateToHome = { navigateToHome() })
+        LoginRoute(navigateToHome = navigateToHome)
     }
 }

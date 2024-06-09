@@ -34,8 +34,8 @@ import com.chobo.presentation.viewModel.event.uistate.GetDetailEventUiState
 @Composable
 internal fun DetailEventRoute(
     modifier: Modifier = Modifier,
-    id: Long,
     detailEventViewModel: DetailEventViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    id: Long,
     navigateToBack: () -> Unit,
 ) {
     val getDetailEventUiState by detailEventViewModel.getDetailEventUiState.collectAsStateWithLifecycle()
@@ -53,8 +53,8 @@ internal fun DetailEventRoute(
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
     getDetailEventUiState: GetDetailEventUiState,
-    getDetailEvent: (Long) -> Unit,
     id: Long,
+    getDetailEvent: (Long) -> Unit,
     navigateToBack: () -> Unit,
 ) {
     LaunchedEffect(Unit) {

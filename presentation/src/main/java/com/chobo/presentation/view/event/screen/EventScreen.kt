@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -75,21 +74,21 @@ internal fun EventScreen(
     getEventPastList: (String) -> Unit,
     loadStuff: () -> Unit,
 ) {
-    var storageNowStatus by remember { mutableStateOf(EventRequestListStatusType.NOW.name) }
-    val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST.name) }
+    val (storageNowStatus, setStorageNowStatus) = remember { mutableStateOf(EventRequestListStatusType.NOW) }
+    val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST) }
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             when (page) {
-                0 -> storageNowStatus = EventRequestListStatusType.NOW.name
-                1 -> storageNowStatus = EventRequestListStatusType.PAST.name
+                0 -> setStorageNowStatus(EventRequestListStatusType.NOW)
+                1 -> setStorageNowStatus(EventRequestListStatusType.PAST)
             }
         }
     }
 
     LaunchedEffect(Unit) {
-        getEventNowList(storageNowStatus)
-        getEventPastList(storagePastStatus)
+        getEventNowList(storageNowStatus.name)
+        getEventPastList(storagePastStatus.name)
     }
 
     MindWayAndroidTheme { colors, typography ->
@@ -97,10 +96,10 @@ internal fun EventScreen(
             state = swipeRefreshState,
             onRefresh = {
                 loadStuff()
-                if (storageNowStatus == EventRequestListStatusType.PAST.name) {
-                    getEventPastList(storagePastStatus)
+                if (storageNowStatus == EventRequestListStatusType.PAST) {
+                    getEventPastList(storagePastStatus.name)
                 } else {
-                    getEventNowList(storageNowStatus)
+                    getEventNowList(storageNowStatus.name)
                 }
             }
         ) {
