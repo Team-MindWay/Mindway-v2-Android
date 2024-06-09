@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,11 +25,8 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayNavBar(
     modifier: Modifier = Modifier,
-    currentDestination: MutableState<MindWayNavBarItemType>,
-    navigateToHome: () -> Unit,
-    navigateToEvent: () -> Unit,
-    navigateToBooks: () -> Unit,
-    navigateToMy: () -> Unit,
+    currentDestination: MindWayNavBarItemType,
+    setCurrentDestination: (MindWayNavBarItemType) -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Row(
@@ -46,7 +43,7 @@ fun MindWayNavBar(
                 MY
             ).forEach { item ->
                 MindWayNavBarItem(
-                    colors = if (currentDestination.value != item) colors.GRAY400 else colors.Black,
+                    colors = if (currentDestination != item) colors.GRAY400 else colors.Black,
                     text = when (item) {
                         HOME -> stringResource(id = R.string.home)
                         EVENT -> stringResource(id = R.string.event)
@@ -57,28 +54,28 @@ fun MindWayNavBar(
                         when (item) {
                             HOME -> {
                                 HomeIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = currentDestination == item,
                                     modifier = modifier,
                                 )
                             }
 
                             EVENT -> {
                                 HeartIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = currentDestination == item,
                                     modifier = modifier,
                                 )
                             }
 
                             BOOKS -> {
                                 BookIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = currentDestination == item,
                                     modifier = modifier,
                                 )
                             }
 
                             MY -> {
                                 ProfileIcon(
-                                    isSelected = currentDestination.value == item,
+                                    isSelected = currentDestination == item,
                                     modifier = modifier,
                                 )
                             }
@@ -86,20 +83,10 @@ fun MindWayNavBar(
                     },
                     modifier = modifier
                         .then(
-                            if (currentDestination.value == item) {
+                            if (currentDestination == item) {
                                 Modifier
                             } else {
-                                Modifier.clickableSingle(
-                                    onClick = {
-                                        currentDestination.value = item
-                                        when (item) {
-                                            HOME -> navigateToHome()
-                                            EVENT -> navigateToEvent()
-                                            BOOKS -> navigateToBooks()
-                                            MY -> navigateToMy()
-                                        }
-                                    }
-                                )
+                                Modifier.clickableSingle(onClick = { setCurrentDestination(item) })
                             }
                         )
                 )
@@ -111,14 +98,11 @@ fun MindWayNavBar(
 @Preview(showBackground = true)
 @Composable
 fun MindWayNavBarPre() {
-    val topDestination = remember {
+    val topDestination by remember {
         mutableStateOf(HOME)
     }
     MindWayNavBar(
-        navigateToHome = {},
-        navigateToEvent = {},
-        navigateToBooks = {},
-        navigateToMy = {},
-        currentDestination = topDestination
+        currentDestination = topDestination,
+        setCurrentDestination = {  }
     )
 }

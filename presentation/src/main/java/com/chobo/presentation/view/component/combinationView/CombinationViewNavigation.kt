@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.component.combinationView
 
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -13,8 +12,9 @@ fun NavController.navigationToCombinationView() {
 }
 
 fun NavGraphBuilder.combinationView(
-    topDestination: MutableState<MindWayNavBarItemType>,
-    navigateToDetailEvent: () -> Unit,
+    currentDestination: MindWayNavBarItemType,
+    setCurrentDestination: (MindWayNavBarItemType) -> Unit,
+    navigateToDetailEvent: (Long) -> Unit,
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
@@ -23,7 +23,8 @@ fun NavGraphBuilder.combinationView(
 ) {
     composable(CombinationViewRoute) {
         MindWayCombinationView(
-            topDestination = topDestination,
+            currentDestination = currentDestination,
+            setCurrentDestination = setCurrentDestination,
             navigateToDetailEvent = navigateToDetailEvent,
             navigateToGoalReading = navigateToGoalReading,
             navigateToBookAddBook = navigateToBookAddBook,

@@ -13,9 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -39,7 +40,7 @@ import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 internal fun BookAddBookRoute(
     modifier: Modifier = Modifier,
     bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
 ) {
     val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
     val writeTextState by bookAddBookViewModel.writeTextState.collectAsStateWithLifecycle()
@@ -47,8 +48,6 @@ internal fun BookAddBookRoute(
     val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
     val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
-    val checkBookDialog by bookAddBookViewModel.checkBookDialog.collectAsStateWithLifecycle()
-    val focusManager = LocalFocusManager.current
 
     BookAddBookScreen(
         modifier = modifier,
@@ -58,12 +57,9 @@ internal fun BookAddBookRoute(
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
-        checkBookDialog = checkBookDialog,
-        focusManager = focusManager,
         updateTitleTextState = bookAddBookViewModel::updateTitleTextState,
         updateWriteTextState = bookAddBookViewModel::updateWriteTextState,
         updateLinkTextState = bookAddBookViewModel::updateLinkTextState,
-        toggleCheckBookDialog = bookAddBookViewModel::toggleCheckBookDialog,
         checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
         navigateToBack = navigateToBack,
     )
@@ -78,15 +74,15 @@ internal fun BookAddBookScreen(
     titleTextStateIsEmpty: Boolean,
     writeTextStateIsEmpty: Boolean,
     linkTextStateIsEmpty: Boolean,
-    checkBookDialog: Boolean,
-    focusManager: FocusManager,
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    toggleCheckBookDialog: () -> Unit,
     checkButtonOnClick: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+    val (checkBookDialog, toggleCheckBookDialog) = remember { mutableStateOf(false) }
+
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
             Column(
@@ -114,9 +110,9 @@ internal fun BookAddBookScreen(
                         )
                 ) {
                     if (checkBookDialog) {
-                        Dialog(onDismissRequest = toggleCheckBookDialog) {
+                        Dialog(onDismissRequest = { toggleCheckBookDialog(false) }) {
                             BookPopUp(
-                                onDismiss = toggleCheckBookDialog
+                                onDismiss = { toggleCheckBookDialog(false) }
                             )
                         }
                     }

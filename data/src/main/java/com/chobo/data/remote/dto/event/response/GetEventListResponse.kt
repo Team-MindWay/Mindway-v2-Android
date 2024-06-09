@@ -7,8 +7,8 @@ data class GetEventListResponse(
     val title: String,
     val content: String,
     val img_url: String,
-    val created_at: String,
-    val ended_at: String?
+    val started_at: String,
+    val ended_at: String
 )
 
 fun GetEventListResponse.toModel() = GetEventListResponseModel(
@@ -16,6 +16,6 @@ fun GetEventListResponse.toModel() = GetEventListResponseModel(
     title = title,
     content = content,
     img_url = img_url,
-    created_at = created_at,
+    started_at = started_at,
     ended_at = ended_at
 )

@@ -19,8 +19,4 @@ interface LocalAuthDataSource {
     suspend fun getRefreshTime(): Flow<String>
     suspend fun setRefreshTime(refreshToken: String)
     suspend fun deleteRefreshTime()
-
-    suspend fun getRoleInfo(): Flow<String>
-    suspend fun setRoleInfo(role: String)
-    suspend fun deleteRoleInfo()
 }

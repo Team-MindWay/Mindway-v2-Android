@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -14,22 +15,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.event.response.GetEventListResponseModel
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
-data class EventsData(val title: String, val content: String, val date: String)
-
 @Composable
 fun Events(
     modifier: Modifier = Modifier,
     eventsData: GetEventListResponseModel,
     onClick: () -> Unit,
-    navigateToDetailEvent: () -> Unit
+    navigateToDetailEvent: (Long) -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
+        Spacer(modifier = modifier.height(28.dp))
         Surface(
             color = colors.WHITE,
             shape = RoundedCornerShape(8.dp),
@@ -63,7 +64,7 @@ fun Events(
                     ChevronRightIcon(
                         modifier = Modifier.clickableSingle {
                             onClick()
-                            navigateToDetailEvent()
+                            navigateToDetailEvent(eventsData.id)
                         }
                     )
                 }
@@ -82,4 +83,20 @@ fun Events(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun EventsPreview() {
+    Events(
+        eventsData = GetEventListResponseModel(
+            id = 0,
+            title = "adsf",
+            content = "asDf",
+            img_url = "asdf",
+            started_at = "asdlf",
+            ended_at = "asdfasd"
+        ),
+        onClick = {}
+    ){}
 }
