@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id(Dependency.Gradle.APPLICATION)
@@ -23,7 +23,21 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "BASE_URL", getApiKey("BASE_URL"))
+        flavorDimensions.add("url")
+        productFlavors {
+            create("dev") {
+                dimension="url"
+                buildConfigField(
+                    "String",
+                    "BASE_URL",
+                    getApiKey("BASE_URL")
+                )
+            }
+            create("distribute") {
+                dimension="url"
+                //todo(buildConfigField)
+            }
+        }
     }
 
     buildTypes {
