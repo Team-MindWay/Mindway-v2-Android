@@ -31,15 +31,10 @@ import kotlinx.coroutines.runBlocking
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
-    authViewModel: AuthViewModel = viewModel(LocalContext.current as ComponentActivity)
 ) {
-    val isClickLoginButton by authViewModel.isClickLoginButton.collectAsStateWithLifecycle()
-
     LoginScreen(
         modifier = modifier,
-        isClickLoginButton = isClickLoginButton,
         gAuthLogin = authViewModel::gAuthLogin,
-        toggleIsClickLoginButton = authViewModel::toggleIsClickLoginButton,
         navigateToHome = navigateToHome,
     )
 }
@@ -47,9 +42,7 @@ internal fun LoginRoute(
 @Composable
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
-    isClickLoginButton: Boolean,
     gAuthLogin: (String) -> Unit,
-    toggleIsClickLoginButton: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
 
