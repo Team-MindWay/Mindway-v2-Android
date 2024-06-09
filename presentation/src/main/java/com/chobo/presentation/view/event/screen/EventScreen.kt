@@ -91,7 +91,7 @@ internal fun EventScreen(
         getEventPastList(storagePastStatus.name)
     }
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
