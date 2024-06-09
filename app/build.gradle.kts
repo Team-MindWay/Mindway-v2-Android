@@ -26,17 +26,14 @@ android {
         flavorDimensions.add("url")
         productFlavors {
             create("dev") {
-                dimension="url"
+                dimension = "url"
                 buildConfigField(
                     "String",
                     "BASE_URL",
                     getApiKey("BASE_URL")
                 )
             }
-            create("distribute") {
-                dimension="url"
-                //todo(buildConfigField)
-            }
+            // TODO: 본서버 
         }
     }
 
