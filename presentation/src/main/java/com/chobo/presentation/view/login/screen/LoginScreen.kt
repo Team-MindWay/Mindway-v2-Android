@@ -10,14 +10,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
@@ -46,6 +46,7 @@ internal fun LoginScreen(
     gAuthLogin: (String) -> Unit,
     navigateToHome: () -> Unit,
 ) {
+    val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
         Column(
@@ -67,7 +68,7 @@ internal fun LoginScreen(
                     .padding(horizontal = 24.dp),
             ) {
                 MindWayGAuthButton(
-                    onClick = toggleIsClickLoginButton,
+                    onClick = { toggleIsClickLoginButton(true) },
                     modifier = Modifier.height(48.dp),
                 )
             }
