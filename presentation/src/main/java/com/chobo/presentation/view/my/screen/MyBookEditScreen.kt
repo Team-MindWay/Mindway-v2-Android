@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.domain.model.my.MyBookListModel
-import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
@@ -89,10 +89,12 @@ internal fun MyBookEditScreen(
     orderModifyById: (Long, MyBookListModel) -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    myBookItem?.let {
-        updateTitleTextState(it.title)
-        updateWriteTextState(it.author)
-        updateLinkTextState(it.bookUrl)
+    LaunchedEffect(Unit) {
+        myBookItem?.let { book ->
+            updateTitleTextState(book.title)
+            updateWriteTextState(book.author)
+            updateLinkTextState(book.bookUrl)
+        }
     }
 
     MindWayAndroidTheme { colors, _ ->
