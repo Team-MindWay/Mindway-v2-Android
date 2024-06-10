@@ -1,5 +1,6 @@
 package com.chobo.data.remote.api
 
+import com.chobo.data.remote.dto.my_response.MyBookListResponse
 import com.chobo.data.remote.dto.order_request.OrderRequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -15,7 +16,7 @@ interface OrderAPI {
 
     @PATCH("/api/v2/order/{order_id}")
     suspend fun orderModifyById(
-        @Body body: OrderRequestBody,
+        @Body body: MyBookListResponse,
         @Path("order_id") orderId: Long,
     )
 

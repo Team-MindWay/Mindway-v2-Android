@@ -1,7 +1,9 @@
 package com.chobo.data.repository
 
 import com.chobo.data.remote.datasource.order.RemoteOrderDataSource
+import com.chobo.data.remote.dto.my_response.toDto
 import com.chobo.data.remote.dto.order_request.toDto
+import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +16,7 @@ class OrderRepositoryImpl @Inject constructor(
         return remoteNoticeDataSource.orderUpload(body = body.toDto())
     }
 
-    override suspend fun orderModifyById(body: OrderRequestBodyModel, orderId: Long): Flow<Unit> {
+    override suspend fun orderModifyById(body: MyBookListModel, orderId: Long): Flow<Unit> {
         return remoteNoticeDataSource.orderModifyById(body = body.toDto(), orderId = orderId)
     }
 

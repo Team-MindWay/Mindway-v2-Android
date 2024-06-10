@@ -1,10 +1,13 @@
 package com.chobo.data.remote.datasource.order
 
 import com.chobo.data.remote.api.OrderAPI
+import com.chobo.data.remote.dto.my_response.MyBookListResponse
 import com.chobo.data.remote.dto.order_request.OrderRequestBody
 import com.chobo.data.util.MindWayAPIHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class RemoteOrderDataSourceImpl @Inject constructor(
@@ -18,7 +21,7 @@ class RemoteOrderDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun orderModifyById(body: OrderRequestBody, orderId: Long): Flow<Unit> = flow {
+    override suspend fun orderModifyById(body: MyBookListResponse, orderId: Long): Flow<Unit> = flow {
         emit(
             MindWayAPIHandler<Unit>()
                 .httpRequest { orderAPI.orderModifyById(body = body, orderId = orderId) }
