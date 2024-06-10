@@ -17,3 +17,11 @@ fun MyBookListResponse.toModel() = MyBookListModel(
     author = author,
     bookUrl = bookUrl
 )
+
+fun MyBookListModel.toDto() = MyBookListResponse(
+    id = id,
+    title = title,
+    author = author,
+    bookUrl = bookUrl
+)
+
