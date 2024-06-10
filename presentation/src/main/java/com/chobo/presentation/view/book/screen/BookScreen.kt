@@ -179,7 +179,7 @@ internal fun BookScreen(
                                             ) {
                                                 BookImage()
                                                 Text(
-                                                    text = "등록된 소설이 없습니다",
+                                                    text = stringResource(R.string.not_book),
                                                     style = typography.bodyMedium,
                                                     fontWeight = FontWeight.Normal,
                                                     color = colors.GRAY500,
@@ -222,7 +222,7 @@ internal fun BookScreen(
                                             ) {
                                                 BookImage()
                                                 Text(
-                                                    text = "등록된 에세이가 없습니다",
+                                                    text = stringResource(R.string.not_essay),
                                                     style = typography.bodyMedium,
                                                     fontWeight = FontWeight.Normal,
                                                     color = colors.GRAY500,

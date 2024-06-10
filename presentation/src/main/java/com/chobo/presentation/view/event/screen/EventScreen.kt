@@ -51,8 +51,6 @@ internal fun EventScreenRoute(
         getEventPastListUiState = getEventPastListUiState,
         swipeRefreshState = swipeRefreshState,
         pagerState = pagerState,
-        onCurrentEventClick = eventViewModel::onCurrentEventClick,
-        onPastEventClick = eventViewModel::onPastEventClick,
         getEventNowList = eventViewModel::getEventNowList,
         getEventPastList = eventViewModel::getEventPastList,
         loadStuff = eventViewModel::loadStuff,
@@ -67,8 +65,6 @@ internal fun EventScreen(
     getEventPastListUiState: GetPastEventListUiState,
     swipeRefreshState: SwipeRefreshState,
     pagerState: PagerState,
-    onCurrentEventClick: (Int) -> Unit,
-    onPastEventClick: (Int) -> Unit,
     navigateToDetailEvent: (Long) -> Unit,
     getEventNowList: (String) -> Unit,
     getEventPastList: (String) -> Unit,
@@ -91,7 +87,7 @@ internal fun EventScreen(
         getEventPastList(storagePastStatus.name)
     }
 
-    MindWayAndroidTheme { colors, typography ->
+    MindWayAndroidTheme { colors, _ ->
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
@@ -116,15 +112,13 @@ internal fun EventScreen(
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = false,
-                                    onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
                             is GetNowEventListUiState.Fail -> {
                                 EventContent(
-                                    content = stringResource(R.string.is_on_oevent_error),
+                                    content = stringResource(R.string.is_on_error),
                                     eventDataListIsEmpty = false,
-                                    onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -132,7 +126,6 @@ internal fun EventScreen(
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = false,
-                                    onIconClick = onCurrentEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -141,7 +134,6 @@ internal fun EventScreen(
                                         content = stringResource(R.string.is_no_ongoing_event),
                                         eventDataList = getEventNowListUiState.getEventListResponse,
                                         eventDataListIsEmpty = true,
-                                        onIconClick = onCurrentEventClick,
                                         navigateToDetailEvent = navigateToDetailEvent,
                                     )
                             }
@@ -153,15 +145,13 @@ internal fun EventScreen(
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
-                                    onIconClick = onPastEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent
                                 )
                             }
                             is GetPastEventListUiState.Fail -> {
                                 EventContent(
-                                    content = stringResource(R.string.is_on_oevent_error),
+                                    content = stringResource(R.string.is_on_error),
                                     eventDataListIsEmpty = false,
-                                    onIconClick = onPastEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -169,7 +159,6 @@ internal fun EventScreen(
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
-                                    onIconClick = onPastEventClick,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -178,7 +167,6 @@ internal fun EventScreen(
                                         content = stringResource(R.string.is_no_past_event),
                                         eventDataList = getEventPastListUiState.getEventListResponse,
                                         eventDataListIsEmpty = true,
-                                        onIconClick = onPastEventClick,
                                         navigateToDetailEvent = navigateToDetailEvent,
                                     )
                             }
