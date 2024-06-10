@@ -13,8 +13,8 @@ fun NavController.navigationToIntro() {
     this.navigate(introRoute)
 }
 
-fun NavController.navigationToMyBookEdit(id: Long) {
-    this.navigate("${myBookEditRoute}/${id}")
+fun NavController.navigationToMyBookEdit() {
+    this.navigate(myBookEditRoute)
 }
 
 
@@ -25,13 +25,7 @@ fun NavGraphBuilder.introScreen(navigateToBack: () -> Unit) {
 }
 
 fun NavGraphBuilder.myBookEditScreen(navigateToBack: () -> Unit) {
-    composable("${myBookEditRoute}/{id}") { backStackEntry ->
-        val id = backStackEntry.arguments?.getString("id")?.toLongOrNull()
-        if (id != null) {
-            MyBookEditRoute(
-                id = id,
-                navigateToBack = navigateToBack
-            )
-        }
+    composable(myBookEditRoute) {
+            MyBookEditRoute(navigateToBack = navigateToBack)
     }
 }
