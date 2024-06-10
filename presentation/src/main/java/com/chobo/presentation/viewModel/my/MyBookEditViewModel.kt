@@ -1,23 +1,14 @@
 package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.my.MyBookListModel
-import com.chobo.domain.model.order.OrderRequestBodyModel
-import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
-import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyBookEditViewModel @Inject constructor(
-    private val orderModifyByIdUseCase: OrderModifyByIdUseCase,
-) : ViewModel() {
+class MyBookEditViewModel @Inject constructor() : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
 
@@ -49,33 +40,5 @@ class MyBookEditViewModel @Inject constructor(
     fun updateLinkTextState(input: String) {
         _linkTextStateIsEmpty.value = false
         _linkTextState.value = input
-    }
-
-    fun checkButtonOnClick() {
-        _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
-        _writeTextStateIsEmpty.value = _writeTextState.value.isEmpty()
-        _linkTextStateIsEmpty.value = _linkTextState.value.isEmpty()
-        if (
-            _titleTextStateIsEmpty.value
-            && _writeTextStateIsEmpty.value
-            && _linkTextStateIsEmpty.value
-        ) {
-            viewModelScope.launch {
-                orderModifyByIdUseCase(
-                    body = OrderRequestBodyModel(
-                        title = _titleTextState.value,
-                        author = _writeTextState.value,
-                        book_url = _linkTextState.value
-                    ),
-                    orderId = 0
-                ).asResult().collectLatest { }
-            }
-        }
-    }
-
-    fun setMyBookData(myBookListModel: MyBookListModel) {
-        _titleTextState.value = myBookListModel.title
-        _titleTextState.value = myBookListModel.title
-        _titleTextState.value = myBookListModel.title
     }
 }
