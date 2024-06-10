@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.BookImage
@@ -62,6 +63,7 @@ internal fun MyRoute(
         isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
         orderDeleteById = myViewModel::orderDeleteById,
+        setBook = myViewModel::setBook,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
@@ -75,6 +77,7 @@ fun MyScreen(
     isCommunicationSuccess: Boolean,
     isToastVisible: Boolean,
     orderDeleteById: (Long) -> Unit,
+    setBook: (MyBookListModel) -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: (Long) -> Unit,
 ) {
@@ -158,6 +161,7 @@ fun MyScreen(
                                     writer = item.author,
                                     editOnclick = {
                                         navigateToMyBookEdit(item.id)
+                                        setBook(item)
                                     },
                                     trashCanOnclick = {
                                         setSelectedIndex(item.id)
