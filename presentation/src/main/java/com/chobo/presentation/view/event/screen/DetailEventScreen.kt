@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.event.screen
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -66,7 +65,6 @@ internal fun DetailEventScreen(
 ) {
     LaunchedEffect(Unit) {
         getDetailEvent(id)
-        Log.d("DetailEventScreen", "getDetailEvent called with id: $id")
     }
 
     MindWayAndroidTheme { colors, typography ->
@@ -83,7 +81,6 @@ internal fun DetailEventScreen(
                 when (getDetailEventUiState) {
                     is GetDetailEventUiState.Fail -> {
                         val fail = getDetailEventUiState.exception
-                        Log.d("DetailEventScreen", "UI State: Fail, ${fail.message}")
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
@@ -102,10 +99,8 @@ internal fun DetailEventScreen(
                             }
                         }
                     }
-                    is GetDetailEventUiState.Loading -> Log.d("DetailEventScreen", "UI State: Loading")
+                    is GetDetailEventUiState.Loading -> Unit
                     is GetDetailEventUiState.Success -> {
-                        Log.d("DetailEventScreen", "UI State Success")
-                        Log.d("DetailEventScreen", "Event Data: ${getDetailEventUiState.getDetailEventResponse}")
                         Image(
                             painter = rememberImagePainter(data = getDetailEventUiState.getDetailEventResponse.img_url),
                             contentDescription = "Event Image",
