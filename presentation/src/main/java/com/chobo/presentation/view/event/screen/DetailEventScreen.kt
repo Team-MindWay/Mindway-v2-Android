@@ -1,21 +1,27 @@
 package com.chobo.presentation.view.event.screen
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberImagePainter
 import com.chobo.domain.model.event.response.GetDetailEventResponseModel
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
@@ -59,9 +66,10 @@ internal fun DetailEventScreen(
 ) {
     LaunchedEffect(Unit) {
         getDetailEvent(id)
+        Log.d("DetailEventScreen", "getDetailEvent called with id: $id")
     }
 
-    MindWayAndroidTheme { colors, _ ->
+    MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
@@ -73,11 +81,33 @@ internal fun DetailEventScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 when (getDetailEventUiState) {
-                    is GetDetailEventUiState.Fail -> Unit
-                    is GetDetailEventUiState.Loading -> Unit
+                    is GetDetailEventUiState.Fail -> {
+                        val fail = getDetailEventUiState.exception
+                        Log.d("DetailEventScreen", "UI State: Fail, ${fail.message}")
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                BookImage()
+                                Text(
+                                    text = stringResource(R.string.missing_data),
+                                    style = typography.bodyMedium,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY500,
+                                )
+                            }
+                        }
+                    }
+                    is GetDetailEventUiState.Loading -> Log.d("DetailEventScreen", "UI State: Loading")
                     is GetDetailEventUiState.Success -> {
+                        Log.d("DetailEventScreen", "UI State Success")
+                        Log.d("DetailEventScreen", "Event Data: ${getDetailEventUiState.getDetailEventResponse}")
                         Image(
-                            painter = rememberImagePainter(data = getDetailEventUiState.getDetailEventResponse.image),
+                            painter = rememberImagePainter(data = getDetailEventUiState.getDetailEventResponse.img_url),
                             contentDescription = "Event Image",
                             modifier = Modifier
                                 .padding(vertical = 20.dp)
@@ -88,8 +118,8 @@ internal fun DetailEventScreen(
                         DetailEventContent(
                             title = getDetailEventUiState.getDetailEventResponse.title,
                             content = getDetailEventUiState.getDetailEventResponse.content,
-                            startedAt = getDetailEventUiState.getDetailEventResponse.startedAt,
-                            endedAt = getDetailEventUiState.getDetailEventResponse.endedAt
+                            startedAt = getDetailEventUiState.getDetailEventResponse.started_at,
+                            endedAt = getDetailEventUiState.getDetailEventResponse.ended_at
                         )
                     }
                 }
@@ -102,11 +132,11 @@ internal fun DetailEventScreen(
 @Composable
 fun DetailEventScreenPre() {
     val exampleEventResponse = GetDetailEventResponseModel(
-        image = "https://example.com/image.jpg",
+        img_url = "https://example.com/image.jpg",
         title = "Sample Event",
         content = "This is a sample event description.",
-        startedAt = "2024-01-01T00:00:00Z",
-        endedAt = "2024-01-02T00:00:00Z"
+        started_at = "2024-01-01T00:00:00Z",
+        ended_at = "2024-01-02T00:00:00Z"
     )
     DetailEventScreen(
         getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
