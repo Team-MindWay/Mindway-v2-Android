@@ -42,7 +42,7 @@ import com.chobo.presentation.viewModel.my.MyViewModel
 internal fun MyBookEditRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(),
+    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
     val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()

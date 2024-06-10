@@ -26,6 +26,6 @@ fun NavGraphBuilder.introScreen(navigateToBack: () -> Unit) {
 
 fun NavGraphBuilder.myBookEditScreen(navigateToBack: () -> Unit) {
     composable(myBookEditRoute) {
-            MyBookEditRoute(navigateToBack = navigateToBack)
+        MyBookEditRoute(navigateToBack = navigateToBack)
     }
 }
