@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType
+import kotlin.reflect.KFunction0
 
 const val CombinationViewRoute = "combination_view_route"
 
@@ -18,7 +19,7 @@ fun NavGraphBuilder.combinationView(
     navigateToGoalReading: () -> Unit,
     navigateToBookAddBook: () -> Unit,
     navigateToIntro: () -> Unit,
-    navigateToMyBookEdit: (Long) -> Unit,
+    navigateToMyBookEdit: () -> Unit,
     navigateToLogin: () -> Unit,
 ) {
     composable(CombinationViewRoute) {

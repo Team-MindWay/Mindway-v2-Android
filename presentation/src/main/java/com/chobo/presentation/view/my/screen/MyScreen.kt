@@ -49,7 +49,7 @@ internal fun MyRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     showSheet: () -> Unit,
-    navigateToMyBookEdit: (Long) -> Unit,
+    navigateToMyBookEdit: () -> Unit,
 ) {
     val myNameUiState by myViewModel.getMyInformationUiState.collectAsStateWithLifecycle()
     val getMyBookListUiState by myViewModel.getMyBookListUiState.collectAsStateWithLifecycle()
@@ -79,7 +79,7 @@ fun MyScreen(
     orderDeleteById: (Long) -> Unit,
     setBook: (MyBookListModel) -> Unit,
     showSheet: () -> Unit,
-    navigateToMyBookEdit: (Long) -> Unit,
+    navigateToMyBookEdit: () -> Unit,
 ) {
     val (bookDeleteDialogIsVisible, setBookDeleteDialogIsVisible) = remember { mutableStateOf(false) }
     val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
@@ -160,8 +160,8 @@ fun MyScreen(
                                     title = item.title,
                                     writer = item.author,
                                     editOnclick = {
-                                        navigateToMyBookEdit(item.id)
                                         setBook(item)
+                                        navigateToMyBookEdit()
                                     },
                                     trashCanOnclick = {
                                         setSelectedIndex(item.id)
