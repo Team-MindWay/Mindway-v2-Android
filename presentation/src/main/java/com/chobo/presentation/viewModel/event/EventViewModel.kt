@@ -75,9 +75,9 @@ class EventViewModel @Inject constructor(
             }
     }
 
-    fun onCurrentEventClick(index: Int) {
+    fun onCurrentEventClick(id: Long) {
     }
 
-    fun onPastEventClick(index: Int) {
+    fun onPastEventClick(id: Long) {
     }
 }
