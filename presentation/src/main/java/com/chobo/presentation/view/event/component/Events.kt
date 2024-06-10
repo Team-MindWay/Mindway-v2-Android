@@ -26,7 +26,6 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 fun Events(
     modifier: Modifier = Modifier,
     eventsData: GetEventListResponseModel,
-    onClick: () -> Unit,
     navigateToDetailEvent: (Long) -> Unit
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -63,7 +62,6 @@ fun Events(
                     Spacer(modifier = modifier.weight(1f))
                     ChevronRightIcon(
                         modifier = Modifier.clickableSingle {
-                            onClick()
                             navigateToDetailEvent(eventsData.id)
                         }
                     )
@@ -97,6 +95,5 @@ fun EventsPreview() {
             started_at = "asdlf",
             ended_at = "asdfasd"
         ),
-        onClick = {}
     ){}
 }
