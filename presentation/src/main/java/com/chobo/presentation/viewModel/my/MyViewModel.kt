@@ -1,6 +1,5 @@
 package com.chobo.presentation.viewModel.my
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
@@ -38,20 +37,11 @@ class MyViewModel @Inject constructor(
     private val _getMyInformationUiState = MutableStateFlow<GetMyInformationUiState>(GetMyInformationUiState.Loading)
     val getMyInformationUiState: StateFlow<GetMyInformationUiState> = _getMyInformationUiState.asStateFlow()
 
-    private val _selectedBookTitle = MutableStateFlow("")
-    val selectedBookTitle: StateFlow<String> = _selectedBookTitle.asStateFlow()
-
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
     private val _isCommunicationSuccess = MutableStateFlow(true)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
-
-    private val _bookDeleteDialogIsVisible = MutableStateFlow(false)
-    val bookDeleteDialogIsVisible: StateFlow<Boolean> = _bookDeleteDialogIsVisible.asStateFlow()
-
-    private val _selectedId = MutableStateFlow(0L)
-    val selectedId: StateFlow<Long> = _selectedId.asStateFlow()
 
     fun showToast() {
         _isToastVisible.value = true
@@ -124,21 +114,6 @@ class MyViewModel @Inject constructor(
             }
         showToast()
     }
-
-    fun toggleBookDeleteDialogIsVisible() {
-        _bookDeleteDialogIsVisible.value = !_bookDeleteDialogIsVisible.value
-    }
-
-    fun setSelectedId(index: Long) {
-        _selectedId.value = index
-    }
-
-
-    fun setSelectedBookTitle(title: String) {
-        _selectedBookTitle.value = title
-    }
-
-
 
     fun logout() = viewModelScope.launch {
         logoutUseCase()

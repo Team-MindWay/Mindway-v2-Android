@@ -19,6 +19,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -51,9 +54,6 @@ internal fun MyRoute(
     val getMyBookListUiState by myViewModel.getMyBookListUiState.collectAsStateWithLifecycle()
     val isCommunicationSuccess by myViewModel.isCommunicationSuccess.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
-    val selectedBookTitle by myViewModel.selectedBookTitle.collectAsStateWithLifecycle()
-    val bookDeleteDialogIsVisible by myViewModel.bookDeleteDialogIsVisible.collectAsStateWithLifecycle()
-    val selectedIndex by myViewModel.selectedId.collectAsStateWithLifecycle()
 
     MyScreen(
         modifier = modifier,
@@ -61,12 +61,6 @@ internal fun MyRoute(
         getMyBookListUiState = getMyBookListUiState,
         isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
-        selectedBookTitle = selectedBookTitle,
-        bookDeleteDialogIsVisible = bookDeleteDialogIsVisible,
-        selectedIndex = selectedIndex,
-        toggleBookDeleteDialogIsVisible = myViewModel::toggleBookDeleteDialogIsVisible,
-        setSelectedIndex = myViewModel::setSelectedId,
-        setSelectedBookTitle = myViewModel::setSelectedBookTitle,
         orderDeleteById = myViewModel::orderDeleteById,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
@@ -80,27 +74,25 @@ fun MyScreen(
     getMyBookListUiState: GetMyBookListUiState,
     isCommunicationSuccess: Boolean,
     isToastVisible: Boolean,
-    selectedBookTitle: String,
-    bookDeleteDialogIsVisible: Boolean,
-    selectedIndex: Long,
-    toggleBookDeleteDialogIsVisible: () -> Unit,
-    setSelectedIndex: (Long) -> Unit,
-    setSelectedBookTitle: (String) -> Unit,
     orderDeleteById: (Long) -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: (Long) -> Unit,
 ) {
+    val (bookDeleteDialogIsVisible, setBookDeleteDialogIsVisible) = remember { mutableStateOf(false) }
+    val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
+    val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
+
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
-            Column (modifier = modifier.fillMaxSize()){
+            Column(modifier = modifier.fillMaxSize()) {
                 if (bookDeleteDialogIsVisible) {
-                    Dialog(onDismissRequest = toggleBookDeleteDialogIsVisible) {
+                    Dialog(onDismissRequest = { setBookDeleteDialogIsVisible(false) }) {
                         MyBookDeletePopUp(
                             title = selectedBookTitle,
-                            cancelOnclick = toggleBookDeleteDialogIsVisible,
+                            cancelOnclick = { setBookDeleteDialogIsVisible(false) },
                             checkOnclick = {
                                 orderDeleteById(selectedIndex)
-                                toggleBookDeleteDialogIsVisible()
+                                setBookDeleteDialogIsVisible(false)
                             }
                         )
                     }
@@ -147,6 +139,7 @@ fun MyScreen(
                             }
                         }
                     }
+
                     is GetMyBookListUiState.Fail -> {}
                     is GetMyBookListUiState.Loading -> {}
                     is GetMyBookListUiState.Success -> {
@@ -159,7 +152,7 @@ fun MyScreen(
                                     vertical = 16.dp
                                 )
                         ) {
-                            items(getMyBookListUiState.data) {item ->
+                            items(getMyBookListUiState.data) { item ->
                                 MyBookListItem(
                                     title = item.title,
                                     writer = item.author,
@@ -169,7 +162,7 @@ fun MyScreen(
                                     trashCanOnclick = {
                                         setSelectedIndex(item.id)
                                         setSelectedBookTitle(item.title)
-                                        toggleBookDeleteDialogIsVisible()
+                                        setBookDeleteDialogIsVisible(true)
                                     }
                                 )
                             }
