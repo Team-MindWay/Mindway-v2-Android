@@ -67,8 +67,8 @@ internal fun HomeScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 when (noticeGetUiState) {
-                    is NoticeGetUiState.Fail -> {}
-                    is NoticeGetUiState.Loading -> {}
+                    is NoticeGetUiState.Fail -> Unit
+                    is NoticeGetUiState.Loading -> Unit
                     is NoticeGetUiState.Success -> {
                         HomeNoticeCard(
                             noticeAllModel = noticeGetUiState.data,

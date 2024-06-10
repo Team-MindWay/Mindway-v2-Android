@@ -143,8 +143,8 @@ fun MyScreen(
                         }
                     }
 
-                    is GetMyBookListUiState.Fail -> {}
-                    is GetMyBookListUiState.Loading -> {}
+                    is GetMyBookListUiState.Fail -> Unit
+                    is GetMyBookListUiState.Loading -> Unit
                     is GetMyBookListUiState.Success -> {
                         LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
