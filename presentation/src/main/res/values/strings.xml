@@ -32,7 +32,8 @@
     <string name="year_month_day">%04d년 %02d월 %02d일</string>
     <string name="is_no_ongoing_event">진행 중인 이벤트가 없습니다</string>
     <string name="is_no_past_event">지난 이벤트가 없습니다</string>
-    <string name="is_on_oevent_error">통신이 원활하지 않습니다</string>
+    <string name="is_on_error">통신이 원활하지 않습니다</string>
+    <string name="missing_data">데이터를 불러오지 못했습니다</string>
     <string name="novel">Novel</string>
     <string name="essay">Essay</string>
     <string name="link">링크</string>
