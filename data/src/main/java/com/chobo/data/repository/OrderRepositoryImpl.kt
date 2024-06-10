@@ -17,4 +17,8 @@ class OrderRepositoryImpl @Inject constructor(
     override suspend fun orderModifyById(body: OrderRequestBodyModel, orderId: Long): Flow<Unit> {
         return remoteNoticeDataSource.orderModifyById(body = body.toDto(), orderId = orderId)
     }
+
+    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> {
+        return remoteNoticeDataSource.orderDeleteById(orderId = orderId)
+    }
 }

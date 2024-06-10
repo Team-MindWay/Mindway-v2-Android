@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface OrderRepository {
     suspend fun orderUpload(body: OrderRequestBodyModel): Flow<Unit>
     suspend fun orderModifyById(body: OrderRequestBodyModel, orderId: Long): Flow<Unit>
+    suspend fun orderDeleteById(orderId: Long): Flow<Unit>
 }
