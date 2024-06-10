@@ -134,7 +134,7 @@ fun MyScreen(
                             ) {
                                 BookImage()
                                 Text(
-                                    text = stringResource(R.string.is_no_past_event),
+                                    text = stringResource(R.string.thereIsNoOrderBook),
                                     style = typography.bodyMedium,
                                     fontWeight = FontWeight.Normal,
                                     color = colors.GRAY500,
