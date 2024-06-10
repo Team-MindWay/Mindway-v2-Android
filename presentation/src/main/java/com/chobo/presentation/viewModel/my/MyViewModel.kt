@@ -2,39 +2,54 @@ package com.chobo.presentation.viewModel.my
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.model.my.MyBookListModel
+import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.LogoutUseCase
-import com.chobo.presentation.view.my.component.MyBookListItemData
+import com.chobo.domain.usecase.my.GetMyBookListUseCase
+import com.chobo.domain.usecase.my.GetMyInformationUseCase
+import com.chobo.domain.usecase.order.OrderDeleteByIdUseCase
+import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
+import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
+import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
+import com.chobo.presentation.viewModel.util.result.Result
+import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
-    private val deleteTokenUseCase: DeleteTokenUseCase
+    private val deleteTokenUseCase: DeleteTokenUseCase,
+    private val getMyInformationUseCase: GetMyInformationUseCase,
+    private val getMyBookListUseCase: GetMyBookListUseCase,
+    private val orderDeleteByIdUseCase: OrderDeleteByIdUseCase,
+    private val orderModifyByIdUseCase: OrderModifyByIdUseCase,
 ) : ViewModel() {
-    private val _myBookListItemDataList = MutableStateFlow<List<MyBookListItemData>>(listOf())
-    val myBookListItemDataList: StateFlow<List<MyBookListItemData>> = _myBookListItemDataList.asStateFlow()
+    private val _getMyBookListUiState = MutableStateFlow<GetMyBookListUiState>(GetMyBookListUiState.Loading)
+    val getMyBookListUiState: StateFlow<GetMyBookListUiState> = _getMyBookListUiState.asStateFlow()
 
-    private val _myName = MutableStateFlow("")
-    val myName: StateFlow<String> = _myName.asStateFlow()
-
-    private val _selectedBookTitle = MutableStateFlow("")
-    val selectedBookTitle: StateFlow<String> = _selectedBookTitle.asStateFlow()
+    private val _getMyInformationUiState = MutableStateFlow<GetMyInformationUiState>(GetMyInformationUiState.Loading)
+    val getMyInformationUiState: StateFlow<GetMyInformationUiState> = _getMyInformationUiState.asStateFlow()
 
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
-    private val _bookDeleteDialogIsVisible = MutableStateFlow(false)
-    val bookDeleteDialogIsVisible: StateFlow<Boolean> = _bookDeleteDialogIsVisible.asStateFlow()
+    private val _isCommunicationSuccess = MutableStateFlow(true)
+    val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
-    private val _selectedIndex = MutableStateFlow(-1)
-    val selectedIndex: StateFlow<Int> = _selectedIndex.asStateFlow()
+    private val _myBookItem = MutableStateFlow<MyBookListModel?>(null)
+    val myBookItem: StateFlow<MyBookListModel?> = _myBookItem.asStateFlow()
+
+    fun setBook(book: MyBookListModel) {
+        _myBookItem.value = book
+    }
 
     fun showToast() {
         _isToastVisible.value = true
@@ -44,16 +59,67 @@ class MyViewModel @Inject constructor(
         }
     }
 
-    fun toggleBookDeleteDialogIsVisible() {
-        _bookDeleteDialogIsVisible.value = !_bookDeleteDialogIsVisible.value
+    fun getMyInformation() = viewModelScope.launch {
+        getMyInformationUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getMyInformationUiState.value = GetMyInformationUiState.Loading
+
+                    is Result.Success -> _getMyInformationUiState.value = GetMyInformationUiState.Success(result.data)
+
+                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail(result.exception)
+                }
+            }
     }
 
-    fun setSelectedIndex(index: Int) {
-        _selectedIndex.value = index
+    fun getMyBookList() = viewModelScope.launch {
+        getMyBookListUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _getMyBookListUiState.value = GetMyBookListUiState.Loading
+
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getMyBookListUiState.value = GetMyBookListUiState.Empty
+                    } else {
+                        _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data)
+                    }
+
+                    is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail(result.exception)
+                }
+            }
     }
 
-    fun editBookOnClick(index: Int) {
+    fun orderDeleteById(id: Long) = viewModelScope.launch {
+        orderDeleteByIdUseCase(orderId = id)
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _isCommunicationSuccess.value = true
 
+                    is Result.Success -> _isCommunicationSuccess.value = true
+
+                    is Result.Fail -> _isCommunicationSuccess.value = false
+                }
+            }
+        showToast()
+        getMyBookList()
+    }
+
+    fun orderModifyById(id: Long, body: MyBookListModel) = viewModelScope.launch {
+        orderModifyByIdUseCase(orderId = id, body = body)
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Loading -> _isCommunicationSuccess.value = false
+
+                    is Result.Success -> _isCommunicationSuccess.value = true
+
+                    is Result.Fail -> _isCommunicationSuccess.value = false
+                }
+            }
+        showToast()
     }
 
     fun logout() = viewModelScope.launch {
@@ -62,14 +128,7 @@ class MyViewModel @Inject constructor(
     }
 
     init {
-        _myName.value = "내이름"
-        _myBookListItemDataList.value =
-            MutableList(10) {
-                MyBookListItemData(
-                    title = "제목입니다",
-                    writer = "작가입니다",
-                    trashCanOnclick = { },
-                )
-            }
+        getMyInformation()
+        getMyBookList()
     }
 }

@@ -165,7 +165,7 @@ internal fun BookScreen(
                         when (page) {
                             0 -> {
                                 when (novelDataList) {
-                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Loading -> Unit
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -188,7 +188,7 @@ internal fun BookScreen(
                                         }
                                     }
 
-                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Fail -> Unit
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
                                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -208,7 +208,7 @@ internal fun BookScreen(
 
                             1 -> {
                                 when (essayDataList) {
-                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Loading -> Unit
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -231,7 +231,7 @@ internal fun BookScreen(
                                         }
                                     }
 
-                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Fail -> Unit
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
                                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -277,7 +277,7 @@ internal fun BookScreen(
                             )
                         }
 
-                        is OrderUploadUiState.Loading -> {}
+                        is OrderUploadUiState.Loading -> Unit
                         is OrderUploadUiState.RemoteFail -> {
                             showToast()
                             MindWayToast(

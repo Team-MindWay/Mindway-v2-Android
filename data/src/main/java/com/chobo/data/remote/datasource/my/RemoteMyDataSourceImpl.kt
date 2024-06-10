@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class RemoteMyDataSourceImpl @Inject constructor(
-    private val myAPI: MyAPI
+    private val myAPI: MyAPI,
 ) : RemoteMyDataSource {
     override suspend fun getMyInformation(): Flow<MyDataResponse> = flow {
         emit(
@@ -23,9 +23,9 @@ class RemoteMyDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getMyBookList(): Flow<MyBookListResponse> = flow {
+    override suspend fun getMyBookList(): Flow<List<MyBookListResponse>> = flow {
         emit(
-            MindWayAPIHandler<MyBookListResponse>()
+            MindWayAPIHandler<List<MyBookListResponse>>()
                 .httpRequest {
                     myAPI.myBookListGet()
                 }

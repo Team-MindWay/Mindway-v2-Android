@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
@@ -34,12 +36,14 @@ import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyBookEditViewModel
+import com.chobo.presentation.viewModel.my.MyViewModel
 
 @Composable
 internal fun MyBookEditRoute(
     modifier: Modifier = Modifier,
+    myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
-    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
 ) {
     val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
     val writeTextState by myBookEditViewModel.writeTextState.collectAsStateWithLifecycle()
@@ -47,12 +51,13 @@ internal fun MyBookEditRoute(
     val titleTextStateIsEmpty by myBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val writeTextStateIsEmpty by myBookEditViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
     val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
+    val myBookItem by myViewModel.myBookItem.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
     MyBookEditScreen(
         modifier = modifier,
-        navigateToBack = navigateToBack,
         focusManager = focusManager,
+        myBookItem = myBookItem,
         titleTextState = titleTextState,
         writeTextState = writeTextState,
         linkTextState = linkTextState,
@@ -62,15 +67,16 @@ internal fun MyBookEditRoute(
         updateTitleTextState = myBookEditViewModel::updateTitleTextState,
         updateWriteTextState = myBookEditViewModel::updateWriteTextState,
         updateLinkTextState = myBookEditViewModel::updateLinkTextState,
-        checkButtonOnClick = myBookEditViewModel::checkButtonOnClick
+        orderModifyById = myViewModel::orderModifyById,
+        navigateToBack = navigateToBack,
     )
 }
 
 @Composable
 internal fun MyBookEditScreen(
     modifier: Modifier = Modifier,
-    navigateToBack: () -> Unit,
     focusManager: FocusManager,
+    myBookItem: MyBookListModel?,
     titleTextState: String,
     writeTextState: String,
     linkTextState: String,
@@ -80,8 +86,17 @@ internal fun MyBookEditScreen(
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    checkButtonOnClick: () -> Unit
+    orderModifyById: (Long, MyBookListModel) -> Unit,
+    navigateToBack: () -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        myBookItem?.let { book ->
+            updateTitleTextState(book.title)
+            updateWriteTextState(book.author)
+            updateLinkTextState(book.bookUrl)
+        }
+    }
+
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
             Column(modifier = modifier
@@ -135,7 +150,18 @@ internal fun MyBookEditScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
-                        onClick = checkButtonOnClick,
+                        onClick = {
+                            if (myBookItem != null)
+                                orderModifyById(
+                                    myBookItem.id,
+                                    MyBookListModel(
+                                        id = myBookItem.id,
+                                        title = titleTextState,
+                                        author = writeTextState,
+                                        bookUrl = linkTextState,
+                                    )
+                                )
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -149,5 +175,7 @@ internal fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditRoute(navigateToBack = { })
+    MyBookEditRoute(
+        navigateToBack = { },
+    )
 }

@@ -9,5 +9,5 @@ interface MyAPI {
     suspend fun myInformationGet(): MyDataResponse
 
     @GET("/api/v2/my/book")
-    suspend fun myBookListGet(): MyBookListResponse
+    suspend fun myBookListGet(): List<MyBookListResponse>
 }

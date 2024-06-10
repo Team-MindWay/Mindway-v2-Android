@@ -226,9 +226,9 @@ internal fun GoalReadingScreen(
                                 }
                             }
                             when (getBookListUiState) {
-                                is GetBookListUiState.Empty -> {}
-                                is GetBookListUiState.Fail -> {}
-                                is GetBookListUiState.Loading -> {}
+                                is GetBookListUiState.Empty -> Unit
+                                is GetBookListUiState.Fail -> Unit
+                                is GetBookListUiState.Loading -> Unit
                                 is GetBookListUiState.Success -> {
                                     items(getBookListUiState.data) { item ->
                                         GoalReadingListOfBooksReadItem(
