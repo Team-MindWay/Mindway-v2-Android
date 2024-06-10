@@ -18,8 +18,8 @@ fun DetailEventContent(
     modifier: Modifier = Modifier,
     title: String,
     content: String,
-    startedAt: String?,
-    endedAt: String?
+    startedAt: String,
+    endedAt: String
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(

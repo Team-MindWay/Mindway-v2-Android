@@ -102,7 +102,7 @@ internal fun DetailEventScreen(
                     is GetDetailEventUiState.Loading -> Unit
                     is GetDetailEventUiState.Success -> {
                         Image(
-                            painter = rememberImagePainter(data = getDetailEventUiState.getDetailEventResponse.img_url),
+                            painter = rememberImagePainter(data = getDetailEventUiState.data.img_url),
                             contentDescription = "Event Image",
                             modifier = Modifier
                                 .padding(vertical = 20.dp)
@@ -111,10 +111,10 @@ internal fun DetailEventScreen(
                                 .clip(shape = RoundedCornerShape(8.dp))
                         )
                         DetailEventContent(
-                            title = getDetailEventUiState.getDetailEventResponse.title,
-                            content = getDetailEventUiState.getDetailEventResponse.content,
-                            startedAt = getDetailEventUiState.getDetailEventResponse.started_at,
-                            endedAt = getDetailEventUiState.getDetailEventResponse.ended_at
+                            title = getDetailEventUiState.data.title,
+                            content = getDetailEventUiState.data.content,
+                            startedAt = getDetailEventUiState.data.started_at,
+                            endedAt = getDetailEventUiState.data.ended_at
                         )
                     }
                 }
