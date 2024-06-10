@@ -4,4 +4,4 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun localDateTimeMonthDateFormat(localDateTime: LocalDateTime): String =
-    localDateTime.format(DateTimeFormatter.ofPattern("M월 d일"))
+    localDateTime.format(DateTimeFormatter.ofPattern("MM월 dd일"))

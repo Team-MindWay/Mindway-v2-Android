@@ -1,6 +1,8 @@
 package com.chobo.domain.model.my
 
 data class MyBookListModel(
-    val name: String,
+    val id: Long,
+    val title: String,
     val author: String,
+    val bookUrl: String
 )

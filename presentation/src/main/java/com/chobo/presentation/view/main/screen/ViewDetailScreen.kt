@@ -114,8 +114,8 @@ internal fun ViewDetailScreen(
                     midText = stringResource(R.string.view_detail),
                 )
                 when (getBookByIdUiState) {
-                    is GetBookByIdUiState.Fail -> {}
-                    is GetBookByIdUiState.Loading -> {}
+                    is GetBookByIdUiState.Fail -> Unit
+                    is GetBookByIdUiState.Loading -> Unit
                     is GetBookByIdUiState.Success -> {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),

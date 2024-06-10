@@ -9,7 +9,6 @@ import com.chobo.presentation.view.my.screen.MyBookEditRoute
 const val introRoute = "intro_route"
 const val myBookEditRoute = "my_book_edit_route"
 
-
 fun NavController.navigationToIntro() {
     this.navigate(introRoute)
 }
