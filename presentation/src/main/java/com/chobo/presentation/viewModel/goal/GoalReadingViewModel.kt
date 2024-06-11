@@ -37,7 +37,7 @@ class GoalReadingViewModel @Inject constructor(
     private val _goalBookReadSettingIsEmpty = MutableStateFlow(false)
     val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
 
-    private val _isToastVisible = MutableStateFlow(false) // TODO: 사게 
+    private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
     private val _isSuccess = MutableStateFlow(false)

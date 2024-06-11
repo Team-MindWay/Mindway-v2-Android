@@ -28,13 +28,6 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val _authUiState = MutableStateFlow<AuthUiState>(AuthUiState.Loading)
     val authUiState: StateFlow<AuthUiState> = _authUiState.asStateFlow()
-
-    private val _gAuthLoginRequest = MutableLiveData<Event<GAuthLoginResponseModel>>()
-    val gAuthLoginRequest: LiveData<Event<GAuthLoginResponseModel>> get() = _gAuthLoginRequest
-
-    private val _saveTokenRequest = MutableLiveData<Event<Nothing>>()
-    val saveTokenRequest: LiveData<Event<Nothing>> get() = _saveTokenRequest // TODO: 삭제 
-
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
             .asResult()
@@ -52,11 +45,7 @@ class AuthViewModel @Inject constructor(
 
     fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
         saveTokenUseCase(data = data)
-            .onSuccess {
-                _saveTokenRequest.value = Event.Success()
-            }
-            .onFailure {
-                _saveTokenRequest.value = it.errorHandling()
-            }
+            .onSuccess {}
+            .onFailure {}
     }
 }
