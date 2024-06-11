@@ -23,9 +23,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.chobo.presentation.viewModel.util.formatServerDate
 
 @Composable
 fun Events(
@@ -33,11 +31,6 @@ fun Events(
     eventsData: GetEventListResponseModel,
     navigateToDetailEvent: (Long) -> Unit
 ) {
-    val serverDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val desiredDateFormat = SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault())
-
-    val startDate: Date = serverDateFormat.parse(eventsData.started_at)
-    val endDate: Date = serverDateFormat.parse(eventsData.ended_at)
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(28.dp))
         Surface(
@@ -84,8 +77,8 @@ fun Events(
                 Text(
                     text = stringResource(
                         R.string.wave,
-                        startDate.let { desiredDateFormat.format(it) },
-                        endDate.let { desiredDateFormat.format(it) }
+                        formatServerDate(eventsData.started_at),
+                        formatServerDate(eventsData.ended_at)
                     ),
                     style = typography.labelLarge,
                     color = colors.GRAY400,
