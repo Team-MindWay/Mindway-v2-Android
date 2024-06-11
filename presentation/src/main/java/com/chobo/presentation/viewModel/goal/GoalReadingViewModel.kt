@@ -84,7 +84,8 @@ class GoalReadingViewModel @Inject constructor(
 
     fun goalBookReadSettingOnClick() {
         _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
-        if (!_goalBookReadSettingIsEmpty.value
+        if (
+            !_goalBookReadSettingIsEmpty.value
             && _goalBookReadSetting.value.toIntOrNull() != null
         ) {
             viewModelScope.launch {
