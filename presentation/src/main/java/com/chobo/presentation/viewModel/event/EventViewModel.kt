@@ -74,10 +74,4 @@ class EventViewModel @Inject constructor(
                 }
             }
     }
-
-    fun onCurrentEventClick(id: Long) {
-    }
-
-    fun onPastEventClick(id: Long) {
-    }
 }
