@@ -8,6 +8,7 @@ import com.chobo.domain.model.auth.request.GAuthLoginRequestModel
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.usecase.auth.GAuthLoginUseCase
 import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
+import com.chobo.presentation.viewModel.auth.uistate.AuthUiState
 import com.chobo.presentation.viewModel.util.Event
 import com.chobo.presentation.viewModel.util.errorHandling
 import com.chobo.presentation.viewModel.util.result.Result

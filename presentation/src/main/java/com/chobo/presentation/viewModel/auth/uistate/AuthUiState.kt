@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel.auth
+package com.chobo.presentation.viewModel.auth.uistate
 
 sealed interface AuthUiState {
     object Loading : AuthUiState
