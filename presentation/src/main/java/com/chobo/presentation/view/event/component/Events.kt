@@ -14,13 +14,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.event.response.GetEventListResponseModel
+import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.formatServerDate
 
 @Composable
 fun Events(
@@ -60,7 +63,10 @@ fun Events(
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = modifier.weight(1f))
-                    ChevronRightIcon(modifier = Modifier.clickableSingle { navigateToDetailEvent(eventsData.id) })
+                    ChevronRightIcon(
+                        modifier = Modifier.clickableSingle { navigateToDetailEvent(eventsData.id) },
+                        tint = colors.GRAY400
+                    )
                 }
                 Text(
                     text = eventsData.content,
@@ -69,7 +75,11 @@ fun Events(
                     fontWeight = FontWeight.Normal
                 )
                 Text(
-                    text = eventsData.content,
+                    text = stringResource(
+                        R.string.wave,
+                        formatServerDate(eventsData.started_at),
+                        formatServerDate(eventsData.ended_at)
+                    ),
                     style = typography.labelLarge,
                     color = colors.GRAY400,
                     fontWeight = FontWeight.Normal

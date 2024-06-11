@@ -14,9 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.chobo.presentation.viewModel.util.formatServerDate
 
 @Composable
 fun DetailEventContent(
@@ -26,12 +24,6 @@ fun DetailEventContent(
     startedAt: String,
     endedAt: String
 ) {
-    val serverDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val desiredDateFormat = SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault())
-
-    val startDate: Date = serverDateFormat.parse(startedAt)
-    val endDate: Date = serverDateFormat.parse(endedAt)
-
     MindWayAndroidTheme { colors, typography ->
         Column(
             modifier = modifier
@@ -55,8 +47,8 @@ fun DetailEventContent(
             Text(
                 text = stringResource(
                     R.string.wave,
-                    startDate.let { desiredDateFormat.format(it) },
-                    endDate.let { desiredDateFormat.format(it) }
+                    formatServerDate(startedAt),
+                    formatServerDate(endedAt)
                 ),
                 style = typography.labelLarge,
                 color = colors.GRAY400,
