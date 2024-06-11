@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,10 +26,9 @@ import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.auth.AuthUiState
+import com.chobo.presentation.viewModel.auth.uistate.AuthUiState
 import com.chobo.presentation.viewModel.auth.AuthViewModel
 import com.msg.gauthsignin.GAuthSigninWebView
-import kotlinx.coroutines.runBlocking
 
 @Composable
 internal fun LoginRoute(
@@ -53,10 +53,10 @@ internal fun LoginScreen(
     gAuthLogin: (String) -> Unit,
     navigateToHome: () -> Unit,
 ) {
-    when (authUiState) {
-        is AuthUiState.Fail -> Unit
-        is AuthUiState.Loading -> Unit
-        is AuthUiState.Success -> { navigateToHome() }
+    LaunchedEffect(authUiState) {
+        if (authUiState is AuthUiState.Success) {
+            navigateToHome()
+        }
     }
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
 
