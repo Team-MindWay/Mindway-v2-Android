@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,14 +20,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.auth.uistate.AuthUiState
 import com.chobo.presentation.viewModel.auth.AuthViewModel
 import com.msg.gauthsignin.GAuthSigninWebView
-import kotlinx.coroutines.runBlocking
 
 @Composable
 internal fun LoginRoute(
@@ -33,8 +36,11 @@ internal fun LoginRoute(
     authViewModel: AuthViewModel = viewModel(LocalContext.current as ComponentActivity),
     navigateToHome: () -> Unit,
 ) {
+    val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
+
     LoginScreen(
         modifier = modifier,
+        authUiState = authUiState,
         gAuthLogin = authViewModel::gAuthLogin,
         navigateToHome = navigateToHome,
     )
@@ -43,9 +49,15 @@ internal fun LoginRoute(
 @Composable
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
+    authUiState: AuthUiState,
     gAuthLogin: (String) -> Unit,
     navigateToHome: () -> Unit,
 ) {
+    LaunchedEffect(authUiState) {
+        if (authUiState is AuthUiState.Success) {
+            navigateToHome()
+        }
+    }
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
@@ -79,10 +91,7 @@ internal fun LoginScreen(
             clientId = BuildConfig.CLIENT_ID,
             redirectUri = BuildConfig.REDIRECT_URI,
         ) { code ->
-            runBlocking {
-                gAuthLogin(code)
-            }
-            navigateToHome()
+            gAuthLogin(code)
         }
     }
 }
