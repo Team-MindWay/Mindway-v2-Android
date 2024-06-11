@@ -188,7 +188,27 @@ internal fun BookScreen(
                                         }
                                     }
 
-                                    is GetRecommendBookUiState.Fail -> Unit
+                                    is GetRecommendBookUiState.Fail -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = stringResource(R.string.is_on_error),
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
                                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -231,7 +251,27 @@ internal fun BookScreen(
                                         }
                                     }
 
-                                    is GetRecommendBookUiState.Fail -> Unit
+                                    is GetRecommendBookUiState.Fail -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = stringResource(R.string.is_on_error),
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
                                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
