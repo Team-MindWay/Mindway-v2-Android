@@ -197,7 +197,7 @@ internal fun BookScreen(
                                                 .padding(horizontal = 24.dp)
                                                 .fillMaxSize()
                                         ) {
-                                            item { Spacer(modifier = modifier.height(28.dp)) }
+                                            item { Spacer(modifier = Modifier.height(8.dp)) }
                                             itemsIndexed(novelDataList.data) { _, item ->
                                                 BookListItem(data = item)
                                             }
@@ -240,7 +240,7 @@ internal fun BookScreen(
                                                 .padding(horizontal = 24.dp)
                                                 .fillMaxSize()
                                         ) {
-                                            item { Spacer(modifier = modifier.height(28.dp)) }
+                                            item { Spacer(modifier = modifier.height(8.dp)) }
                                             itemsIndexed(essayDataList.data) { _, item ->
                                                 BookListItem(data = item)
                                             }
