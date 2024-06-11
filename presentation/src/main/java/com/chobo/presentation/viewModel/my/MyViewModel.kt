@@ -38,7 +38,7 @@ class MyViewModel @Inject constructor(
     private val _getMyInformationUiState = MutableStateFlow<GetMyInformationUiState>(GetMyInformationUiState.Loading)
     val getMyInformationUiState: StateFlow<GetMyInformationUiState> = _getMyInformationUiState.asStateFlow()
 
-    private val _isToastVisible = MutableStateFlow(false)
+    private val _isToastVisible = MutableStateFlow(false) // TODO: 삭제 
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
     private val _isCommunicationSuccess = MutableStateFlow(true)

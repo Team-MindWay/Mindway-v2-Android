@@ -33,7 +33,7 @@ class AuthViewModel @Inject constructor(
     val gAuthLoginRequest: LiveData<Event<GAuthLoginResponseModel>> get() = _gAuthLoginRequest
 
     private val _saveTokenRequest = MutableLiveData<Event<Nothing>>()
-    val saveTokenRequest: LiveData<Event<Nothing>> get() = _saveTokenRequest
+    val saveTokenRequest: LiveData<Event<Nothing>> get() = _saveTokenRequest // TODO: 삭제 
 
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
