@@ -145,13 +145,28 @@ internal fun GoalReadingScreen(
                         },
                         midText = stringResource(R.string.goal_reading),
                         endIcon = {
-                            if (getWeekendGoalUiState == GetWeekendGoalUiState.Empty) {
-                                PlusIcon(
-                                    modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                    tint = MindWayColor.Black
-                                )
-                            } else {
-                                PlusIcon(tint = MindWayColor.GRAY400)
+                            when (getWeekendGoalUiState) {
+                                is GetWeekendGoalUiState.Empty -> {
+                                    PlusIcon(
+                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                        tint = MindWayColor.Black
+                                    )
+                                }
+                                is GetWeekendGoalUiState.Fail -> {
+                                    PlusIcon(
+                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                        tint = MindWayColor.Black
+                                    )
+                                }
+                                is GetWeekendGoalUiState.Loading -> {
+                                    PlusIcon(
+                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                        tint = MindWayColor.Black
+                                    )
+                                }
+                                is GetWeekendGoalUiState.Success -> {
+                                    PlusIcon(tint = MindWayColor.GRAY400)
+                                }
                             }
                         }
                     )
