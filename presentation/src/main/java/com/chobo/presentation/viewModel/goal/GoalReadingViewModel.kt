@@ -23,7 +23,7 @@ import javax.inject.Inject
 class GoalReadingViewModel @Inject constructor(
     private val getWeekendGoalUseCase: GetWeekendGoalUseCase,
     private val getBookListUseCase: GetBookListUseCase,
-    private val postGoalRequestUseCase: PostGoalRequestUseCase
+    private val postGoalRequestUseCase: PostGoalRequestUseCase,
 ) : ViewModel() {
     private val _getWeekendGoalUiState = MutableStateFlow<GetWeekendGoalUiState>(GetWeekendGoalUiState.Loading)
     val getWeekendGoalUiState: StateFlow<GetWeekendGoalUiState> = _getWeekendGoalUiState.asStateFlow()
@@ -37,7 +37,7 @@ class GoalReadingViewModel @Inject constructor(
     private val _goalBookReadSettingIsEmpty = MutableStateFlow(false)
     val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
 
-    private val _isToastVisible = MutableStateFlow(false)
+    private val _isToastVisible = MutableStateFlow(false) // TODO: 사게 
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
     private val _isSuccess = MutableStateFlow(false)
@@ -77,10 +77,6 @@ class GoalReadingViewModel @Inject constructor(
             }
     }
 
-    fun setGoal(goal: String) = viewModelScope.launch {
-        postGoalRequestUseCase(body = PostGoalRequestModel(goal_count = goal.toInt())).asResult()
-    }
-
     fun updateGoalBookReadSetting(input: String) {
         _goalBookReadSettingIsEmpty.value = false
         _goalBookReadSetting.value = input
@@ -88,9 +84,17 @@ class GoalReadingViewModel @Inject constructor(
 
     fun goalBookReadSettingOnClick() {
         _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
-        if(!_goalBookReadSettingIsEmpty.value
-            && _goalBookReadSetting.value.toIntOrNull() != null){
-            setGoal(goal = _goalBookReadSetting.value)
+        if (
+            !_goalBookReadSettingIsEmpty.value
+            && _goalBookReadSetting.value.toIntOrNull() != null
+        ) {
+            viewModelScope.launch {
+                postGoalRequestUseCase(
+                    body = PostGoalRequestModel(goal_count = _goalBookReadSetting.value.toInt())
+                )
+                    .asResult()
+                    .collectLatest { }
+            }
         }
     }
 

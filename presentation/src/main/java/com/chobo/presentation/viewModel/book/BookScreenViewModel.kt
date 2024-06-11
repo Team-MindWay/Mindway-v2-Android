@@ -31,7 +31,7 @@ class BookScreenViewModel @Inject constructor(
     private val _essayDataList = MutableStateFlow<GetRecommendBookUiState>(GetRecommendBookUiState.Loading)
     val essayDataList: StateFlow<GetRecommendBookUiState> = _essayDataList.asStateFlow()
 
-    private val _isToastVisible = MutableStateFlow(false)
+    private val _isToastVisible = MutableStateFlow(false) // TODO: 삭제 
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
     fun showToast() {

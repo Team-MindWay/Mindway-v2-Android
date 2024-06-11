@@ -23,12 +23,10 @@ class EventViewModel @Inject constructor(
     private val _swipeRefreshLoading = MutableStateFlow(false)
     val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
 
-    private val _getNowEventListUiState =
-        MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
+    private val _getNowEventListUiState = MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
     val getNowEventListUiState = _getNowEventListUiState.asStateFlow()
 
-    private val _getPastEventListUiState =
-        MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
+    private val _getPastEventListUiState = MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
     val getPastEventListUiState = _getPastEventListUiState.asStateFlow()
 
     init {
