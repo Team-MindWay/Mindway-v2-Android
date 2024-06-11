@@ -14,13 +14,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.event.response.GetEventListResponseModel
+import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun Events(
@@ -28,6 +33,11 @@ fun Events(
     eventsData: GetEventListResponseModel,
     navigateToDetailEvent: (Long) -> Unit
 ) {
+    val serverDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val desiredDateFormat = SimpleDateFormat("yyyy년 M월 d일", Locale.getDefault())
+
+    val startDate: Date = serverDateFormat.parse(eventsData.started_at)
+    val endDate: Date = serverDateFormat.parse(eventsData.ended_at)
     MindWayAndroidTheme { colors, typography ->
         Spacer(modifier = modifier.height(28.dp))
         Surface(
@@ -69,7 +79,11 @@ fun Events(
                     fontWeight = FontWeight.Normal
                 )
                 Text(
-                    text = eventsData.content,
+                    text = stringResource(
+                        R.string.wave,
+                        startDate.let { desiredDateFormat.format(it) },
+                        endDate.let { desiredDateFormat.format(it) }
+                    ),
                     style = typography.labelLarge,
                     color = colors.GRAY400,
                     fontWeight = FontWeight.Normal
