@@ -70,7 +70,10 @@ fun Events(
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = modifier.weight(1f))
-                    ChevronRightIcon(modifier = Modifier.clickableSingle { navigateToDetailEvent(eventsData.id) })
+                    ChevronRightIcon(
+                        modifier = Modifier.clickableSingle { navigateToDetailEvent(eventsData.id) },
+                        tint = colors.GRAY400
+                    )
                 }
                 Text(
                     text = eventsData.content,
