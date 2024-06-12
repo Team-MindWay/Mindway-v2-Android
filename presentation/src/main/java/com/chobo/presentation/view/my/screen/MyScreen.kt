@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -63,10 +64,11 @@ internal fun MyRoute(
         isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
         orderDeleteById = myViewModel::orderDeleteById,
+        getMyBookList = myViewModel::getMyBookList,
         setBook = myViewModel::setBook,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
-    )
+        )
 }
 
 @Composable
@@ -77,6 +79,7 @@ fun MyScreen(
     isCommunicationSuccess: Boolean,
     isToastVisible: Boolean,
     orderDeleteById: (Long) -> Unit,
+    getMyBookList: () -> Unit,
     setBook: (MyBookListModel) -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
@@ -84,6 +87,10 @@ fun MyScreen(
     val (bookDeleteDialogIsVisible, setBookDeleteDialogIsVisible) = remember { mutableStateOf(false) }
     val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
     val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
+
+    LaunchedEffect(Unit) {
+        getMyBookList()
+    }
 
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
@@ -142,7 +149,6 @@ fun MyScreen(
                             }
                         }
                     }
-
                     is GetMyBookListUiState.Fail -> Unit
                     is GetMyBookListUiState.Loading -> Unit
                     is GetMyBookListUiState.Success -> {
