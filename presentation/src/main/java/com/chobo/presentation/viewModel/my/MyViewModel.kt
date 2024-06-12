@@ -3,7 +3,6 @@ package com.chobo.presentation.viewModel.my
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.my.MyBookListModel
-import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.auth.DeleteTokenUseCase
 import com.chobo.domain.usecase.auth.LogoutUseCase
 import com.chobo.domain.usecase.my.GetMyBookListUseCase
@@ -46,7 +45,7 @@ class MyViewModel @Inject constructor(
 
     private val _myBookItem = MutableStateFlow<MyBookListModel?>(null)
     val myBookItem: StateFlow<MyBookListModel?> = _myBookItem.asStateFlow()
-
+    
     fun setBook(book: MyBookListModel) {
         _myBookItem.value = book
     }
@@ -65,9 +64,7 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _getMyInformationUiState.value = GetMyInformationUiState.Loading
-
                     is Result.Success -> _getMyInformationUiState.value = GetMyInformationUiState.Success(result.data)
-
                     is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail(result.exception)
                 }
             }
@@ -79,13 +76,11 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _getMyBookListUiState.value = GetMyBookListUiState.Loading
-
                     is Result.Success -> if (result.data.isEmpty()) {
                         _getMyBookListUiState.value = GetMyBookListUiState.Empty
                     } else {
                         _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail(result.exception)
                 }
             }
@@ -97,9 +92,7 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _isCommunicationSuccess.value = true
-
                     is Result.Success -> _isCommunicationSuccess.value = true
-
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
@@ -113,9 +106,7 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _isCommunicationSuccess.value = false
-
                     is Result.Success -> _isCommunicationSuccess.value = true
-
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
