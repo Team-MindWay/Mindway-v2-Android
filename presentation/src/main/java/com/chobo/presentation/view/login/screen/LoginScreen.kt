@@ -26,9 +26,8 @@ import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.auth.uistate.AuthUiState
 import com.chobo.presentation.viewModel.auth.AuthViewModel
-import com.chobo.presentation.viewModel.auth.uistate.SaveTokenUiState
+import com.chobo.presentation.viewModel.auth.uistate.AuthUiState
 import com.msg.gauthsignin.GAuthSigninWebView
 
 @Composable
@@ -53,14 +52,14 @@ internal fun LoginRoute(
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
     authUiState: AuthUiState,
-    saveLoginDataUiState: SaveTokenUiState,
+    saveLoginDataUiState: Boolean,
     gAuthLogin: (String) -> Unit,
     navigateToHome: () -> Unit,
 ) {
     LaunchedEffect(authUiState, saveLoginDataUiState) {
         if (
             authUiState is AuthUiState.Success
-            && saveLoginDataUiState == SaveTokenUiState.Success
+            && saveLoginDataUiState
         ) {
             navigateToHome()
         }
