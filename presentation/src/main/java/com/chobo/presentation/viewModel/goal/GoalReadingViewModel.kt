@@ -25,6 +25,9 @@ class GoalReadingViewModel @Inject constructor(
     private val getBookListUseCase: GetBookListUseCase,
     private val postGoalRequestUseCase: PostGoalRequestUseCase,
 ) : ViewModel() {
+    private val _swipeRefreshLoading = MutableStateFlow(false)
+    val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
+
     private val _getWeekendGoalUiState = MutableStateFlow<GetWeekendGoalUiState>(GetWeekendGoalUiState.Loading)
     val getWeekendGoalUiState: StateFlow<GetWeekendGoalUiState> = _getWeekendGoalUiState.asStateFlow()
 
@@ -42,6 +45,14 @@ class GoalReadingViewModel @Inject constructor(
 
     private val _isSuccess = MutableStateFlow(false)
     val isSuccess: StateFlow<Boolean> = _isSuccess.asStateFlow()
+
+    fun loadStuff() {
+        viewModelScope.launch {
+            _swipeRefreshLoading.value = true
+            delay(1000L)
+            _swipeRefreshLoading.value = false
+        }
+    }
 
     fun getWeekendGoal() = viewModelScope.launch {
         getWeekendGoalUseCase()
@@ -107,6 +118,7 @@ class GoalReadingViewModel @Inject constructor(
     }
 
     init {
+        loadStuff()
         getBookList()
         getWeekendGoal()
     }
