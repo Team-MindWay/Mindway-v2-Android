@@ -45,7 +45,7 @@ class MyViewModel @Inject constructor(
 
     private val _myBookItem = MutableStateFlow<MyBookListModel?>(null)
     val myBookItem: StateFlow<MyBookListModel?> = _myBookItem.asStateFlow()
-    
+
     fun setBook(book: MyBookListModel) {
         _myBookItem.value = book
     }

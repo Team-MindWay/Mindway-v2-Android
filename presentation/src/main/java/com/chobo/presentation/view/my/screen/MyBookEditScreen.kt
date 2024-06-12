@@ -161,6 +161,7 @@ internal fun MyBookEditScreen(
                                         bookUrl = linkTextState,
                                     )
                                 )
+                            navigateToBack()
                         },
                         modifier = Modifier
                             .fillMaxWidth()
