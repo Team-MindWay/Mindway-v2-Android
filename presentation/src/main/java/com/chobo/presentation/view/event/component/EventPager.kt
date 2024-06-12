@@ -60,7 +60,7 @@ fun EventPager(
                         text = {
                             Text(
                                 text = title,
-                                color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400 // TODO: 상태 호이스팅
+                                color = if (pagerState.currentPage == index) colors.Black else colors.GRAY400
                             )
                         },
                         selected = pagerState.currentPage == index,

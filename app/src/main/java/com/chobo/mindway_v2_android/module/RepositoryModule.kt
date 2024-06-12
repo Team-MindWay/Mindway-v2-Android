@@ -1,4 +1,4 @@
-package com.chobo.mindway_v2_android.Module
+package com.chobo.mindway_v2_android.module
 
 import com.chobo.data.repository.AuthRepositoryImpl
 import com.chobo.data.repository.BookRepositoryImpl
