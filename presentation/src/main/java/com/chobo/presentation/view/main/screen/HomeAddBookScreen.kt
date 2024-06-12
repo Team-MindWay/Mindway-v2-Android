@@ -122,7 +122,10 @@ internal fun HomeAddBookScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(R.string.check),
-                        onClick = checkButtonOnClick,
+                        onClick = {
+                            checkButtonOnClick()
+                            navigateToBack()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
