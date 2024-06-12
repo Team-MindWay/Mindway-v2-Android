@@ -7,7 +7,6 @@ import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.usecase.auth.GAuthLoginUseCase
 import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
 import com.chobo.presentation.viewModel.auth.uistate.AuthUiState
-import com.chobo.presentation.viewModel.auth.uistate.SaveTokenUiState
 import com.chobo.presentation.viewModel.util.result.Result
 import com.chobo.presentation.viewModel.util.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,8 +25,8 @@ class AuthViewModel @Inject constructor(
     private val _authUiState = MutableStateFlow<AuthUiState>(AuthUiState.Loading)
     val authUiState: StateFlow<AuthUiState> = _authUiState.asStateFlow()
 
-    private val _saveLoginDataUiState = MutableStateFlow(SaveTokenUiState.Loading)
-    val saveLoginDataUiState: StateFlow<SaveTokenUiState> = _saveLoginDataUiState.asStateFlow()
+    private val _saveLoginDataUiState = MutableStateFlow(false)
+    val saveLoginDataUiState: StateFlow<Boolean> = _saveLoginDataUiState.asStateFlow()
 
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
@@ -47,10 +46,10 @@ class AuthViewModel @Inject constructor(
     fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
         saveTokenUseCase(data = data)
             .onSuccess {
-                _saveLoginDataUiState.value = SaveTokenUiState.Success
+                _saveLoginDataUiState.value = true
             }
             .onFailure {
-                _saveLoginDataUiState.value = SaveTokenUiState.Fail
+                _saveLoginDataUiState.value = false
             }
     }
 }
