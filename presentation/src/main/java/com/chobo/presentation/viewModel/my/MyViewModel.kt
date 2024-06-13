@@ -43,11 +43,9 @@ class MyViewModel @Inject constructor(
     private val _isCommunicationSuccess = MutableStateFlow(true)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
-    private val _myBookItem = MutableStateFlow<MyBookListModel?>(null)
-    val myBookItem: StateFlow<MyBookListModel?> = _myBookItem.asStateFlow()
-
+    lateinit var myBookItem: MyBookListModel
     fun setBook(book: MyBookListModel) {
-        _myBookItem.value = book
+        myBookItem = book
     }
 
     fun showToast() {
