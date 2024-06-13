@@ -65,7 +65,6 @@ class GoalReadingViewModel @Inject constructor(
                     } else {
                         _getWeekendGoalUiState.value = GetWeekendGoalUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
                 }
             }
@@ -82,7 +81,6 @@ class GoalReadingViewModel @Inject constructor(
                     } else {
                         _getBookListUiState.value = GetBookListUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getBookListUiState.value = GetBookListUiState.Fail(result.exception)
                 }
             }
@@ -95,10 +93,7 @@ class GoalReadingViewModel @Inject constructor(
 
     fun goalBookReadSettingOnClick() {
         _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
-        if (
-            !_goalBookReadSettingIsEmpty.value
-            && _goalBookReadSetting.value.toIntOrNull() != null
-        ) {
+        if (!_goalBookReadSettingIsEmpty.value && _goalBookReadSetting.value.toIntOrNull() != null) {
             viewModelScope.launch {
                 postGoalRequestUseCase(
                     body = PostGoalRequestModel(goal_count = _goalBookReadSetting.value.toInt())

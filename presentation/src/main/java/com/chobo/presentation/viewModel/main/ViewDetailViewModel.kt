@@ -2,7 +2,6 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookDeleteByIdUseCase
 import com.chobo.domain.usecase.book.GetBookByIdUseCase
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
