@@ -2,7 +2,6 @@ package com.chobo.presentation.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookDeleteByIdUseCase
 import com.chobo.domain.usecase.book.GetBookByIdUseCase
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
@@ -38,14 +37,5 @@ class ViewDetailViewModel @Inject constructor(
 
     fun bookDeleteById(id: Long) = viewModelScope.launch {
         bookDeleteByIdUseCase(bookId = id).asResult().collectLatest { }
-    }
-
-    init {
-        _getBookByIdUiState.value = GetBookByIdUiState.Success(
-            data = BookRequestBodyModel(
-                title = "임시데이터 임시데이터 임시데이터",
-                plot = "임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터",
-            )
-        )
     }
 }

@@ -56,7 +56,6 @@ class HomeViewModel @Inject constructor(
                     } else {
                         _getRankUiState.value = GetRankUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail(result.exception)
                 }
             }
@@ -73,7 +72,6 @@ class HomeViewModel @Inject constructor(
                     } else {
                         _getWeekendGoalUiState.value = GetWeekendGoalUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
                 }
             }

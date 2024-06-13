@@ -50,7 +50,7 @@ class HomeBookEditViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> {}
+                    is Result.Loading -> Unit
                     is Result.Success -> {
                         _titleTextState.value = result.data.title
                         _plotTextState.value = result.data.plot
@@ -63,10 +63,7 @@ class HomeBookEditViewModel @Inject constructor(
     fun checkButtonOnClick(id: Long) {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _plotTextStateIsEmpty.value = _plotTextState.value.isEmpty()
-        if (
-            !_titleTextStateIsEmpty.value
-            && !_plotTextStateIsEmpty.value
-        ) {
+        if (!_titleTextStateIsEmpty.value && !_plotTextStateIsEmpty.value) {
             viewModelScope.launch {
                 bookModifyUseCase(
                     bookRequestBodyModel = BookRequestBodyModel(
