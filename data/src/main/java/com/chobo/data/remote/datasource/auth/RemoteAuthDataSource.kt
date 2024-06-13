@@ -8,4 +8,6 @@ interface RemoteAuthDataSource {
     suspend fun GuauthLogin(body: GAuthLoginRequestBody) : Flow<GAuthLoginResponse>
 
     suspend fun GuathLogout() : Flow<Unit>
+
+    suspend fun GuathAccess(): Flow<GAuthLoginResponse>
 }
