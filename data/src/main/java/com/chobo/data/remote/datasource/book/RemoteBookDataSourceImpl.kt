@@ -28,7 +28,8 @@ class RemoteBookDataSourceImpl @Inject constructor(
         bookId: Long
     ): Flow<Unit> =
         performApiRequest { bookService.bookModify(
-            body = body, bookId = bookId
+            body = body,
+            bookId = bookId
         ) }
 
     override suspend fun bookDeleteById(bookId: Long): Flow<Unit> =
