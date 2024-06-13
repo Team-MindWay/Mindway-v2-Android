@@ -11,8 +11,8 @@ import com.chobo.domain.usecase.order.OrderDeleteByIdUseCase
 import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
 import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
 import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
-import com.chobo.presentation.viewModel.util.result.Result
-import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.presentation.viewModel.util.Result
+import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

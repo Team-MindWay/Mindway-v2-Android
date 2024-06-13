@@ -6,8 +6,8 @@ import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookDeleteByIdUseCase
 import com.chobo.domain.usecase.book.GetBookByIdUseCase
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
-import com.chobo.presentation.viewModel.util.result.Result
-import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.presentation.viewModel.util.Result
+import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
