@@ -1,5 +1,7 @@
 package com.chobo.mindway_v2_android
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,10 +35,15 @@ fun MindWayNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String,
 ) {
-    val (currentDestination, setCurrentDestination) = remember { mutableStateOf(MindWayNavBarItemType.HOME) }
+    val (currentDestination, setCurrentDestination) =
+        remember { mutableStateOf(MindWayNavBarItemType.HOME) }
 
     NavHost(
         navController = navController,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
         startDestination = startDestination
     ) {
         loginScreen(navigateToHome = navController::navigationToCombinationView)

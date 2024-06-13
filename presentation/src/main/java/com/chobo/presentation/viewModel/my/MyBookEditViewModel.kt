@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
+// TODO: 파일 삭제 
 @HiltViewModel
 class MyBookEditViewModel @Inject constructor() : ViewModel() {
     private val _titleTextState = MutableStateFlow("")

@@ -11,8 +11,8 @@ import com.chobo.domain.usecase.order.OrderDeleteByIdUseCase
 import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
 import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
 import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
-import com.chobo.presentation.viewModel.util.result.Result
-import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.presentation.viewModel.util.Result
+import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,11 +43,11 @@ class MyViewModel @Inject constructor(
     private val _isCommunicationSuccess = MutableStateFlow(true)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
-    private val _myBookItem = MutableStateFlow<MyBookListModel?>(null)
-    val myBookItem: StateFlow<MyBookListModel?> = _myBookItem.asStateFlow()
+    lateinit var myBookItem: MyBookListModel
+        private set
 
     fun setBook(book: MyBookListModel) {
-        _myBookItem.value = book
+        myBookItem = book
     }
 
     fun showToast() {
@@ -92,7 +92,9 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _isCommunicationSuccess.value = true
-                    is Result.Success -> _isCommunicationSuccess.value = true
+                    is Result.Success -> {
+                        _isCommunicationSuccess.value = true
+                    }
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
@@ -106,11 +108,14 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _isCommunicationSuccess.value = false
-                    is Result.Success -> _isCommunicationSuccess.value = true
+                    is Result.Success -> {
+                        _isCommunicationSuccess.value = true
+                    }
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
         showToast()
+        getMyBookList()
     }
 
     fun logout() = viewModelScope.launch {

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookUploadUseCase
-import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

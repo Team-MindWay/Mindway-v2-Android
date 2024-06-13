@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.event.GetEventListUseCase
 import com.chobo.presentation.viewModel.event.uistate.GetNowEventListUiState
 import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
-import com.chobo.presentation.viewModel.util.result.Result
-import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.presentation.viewModel.util.Result
+import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

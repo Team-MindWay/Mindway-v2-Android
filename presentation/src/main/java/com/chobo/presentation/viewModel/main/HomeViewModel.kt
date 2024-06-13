@@ -8,8 +8,8 @@ import com.chobo.domain.usecase.rank.GetRankUseCase
 import com.chobo.presentation.viewModel.main.uistate.GetRankUiState
 import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
-import com.chobo.presentation.viewModel.util.result.Result
-import com.chobo.presentation.viewModel.util.result.asResult
+import com.chobo.presentation.viewModel.util.Result
+import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -56,7 +56,6 @@ class HomeViewModel @Inject constructor(
                     } else {
                         _getRankUiState.value = GetRankUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail(result.exception)
                 }
             }
@@ -73,7 +72,6 @@ class HomeViewModel @Inject constructor(
                     } else {
                         _getWeekendGoalUiState.value = GetWeekendGoalUiState.Success(result.data)
                     }
-
                     is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
                 }
             }
