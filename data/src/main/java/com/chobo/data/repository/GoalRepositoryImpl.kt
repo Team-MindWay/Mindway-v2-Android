@@ -13,11 +13,9 @@ import javax.inject.Inject
 class GoalRepositoryImpl @Inject constructor(
     private val remoteGoalDataSource: RemoteGoalDataSource
 ) : GoalRepository {
-    override suspend fun postGoalRequest(body: PostGoalRequestModel): Flow<Unit> {
-        return remoteGoalDataSource.postGoalRequest(body = body.toDto())
-    }
+    override suspend fun postGoalRequest(body: PostGoalRequestModel): Flow<Unit> =
+        remoteGoalDataSource.postGoalRequest(body = body.toDto())
 
-    override suspend fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel> {
-        return remoteGoalDataSource.getWeekendGoalResponse().map { it.toModel() }
-    }
+    override suspend fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel> =
+        remoteGoalDataSource.getWeekendGoalResponse().map { it.toModel() }
 }

@@ -12,15 +12,12 @@ import javax.inject.Inject
 class OrderRepositoryImpl @Inject constructor(
     private val remoteNoticeDataSource: RemoteOrderDataSource
 ) : OrderRepository {
-    override suspend fun orderUpload(body: OrderRequestBodyModel): Flow<Unit> {
-        return remoteNoticeDataSource.orderUpload(body = body.toDto())
-    }
+    override suspend fun orderUpload(body: OrderRequestBodyModel): Flow<Unit> =
+        remoteNoticeDataSource.orderUpload(body = body.toDto())
 
-    override suspend fun orderModifyById(body: MyBookListModel, orderId: Long): Flow<Unit> {
-        return remoteNoticeDataSource.orderModifyById(body = body.toDto(), orderId = orderId)
-    }
+    override suspend fun orderModifyById(body: MyBookListModel, orderId: Long): Flow<Unit> =
+        remoteNoticeDataSource.orderModifyById(body = body.toDto(), orderId = orderId)
 
-    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> {
-        return remoteNoticeDataSource.orderDeleteById(orderId = orderId)
-    }
+    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> =
+        remoteNoticeDataSource.orderDeleteById(orderId = orderId)
 }

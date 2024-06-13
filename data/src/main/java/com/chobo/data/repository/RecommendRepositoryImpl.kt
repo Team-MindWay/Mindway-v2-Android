@@ -13,32 +13,15 @@ import javax.inject.Inject
 class RecommendRepositoryImpl @Inject constructor(
     private val remoteRecommendDataSource: RemoteRecommendDataSource
 ) : RecommendRepository {
-    override suspend fun postRecommendBook(
-        body: RecommendRequestAllModel,
-        type: String
-    ): Flow<Unit> {
-        return remoteRecommendDataSource.postRecommendBook(
-            body = body.toDto(),
-            type = type
-        )
-    }
+    override suspend fun postRecommendBook(body: RecommendRequestAllModel, type: String): Flow<Unit> =
+        remoteRecommendDataSource.postRecommendBook(body = body.toDto(), type = type)
 
-    override suspend fun getRecommendBookList(type: String): Flow<List<RecommendListResponseAllModel>> {
-        return remoteRecommendDataSource.getRecommendBookList(type = type)
-            .map { list -> list.map { it.toModel() } }
-    }
+    override suspend fun getRecommendBookList(type: String): Flow<List<RecommendListResponseAllModel>> =
+        remoteRecommendDataSource.getRecommendBookList(type = type).map { list -> list.map { it.toModel() } }
 
-    override suspend fun patchRecommendBook(
-        body: RecommendRequestAllModel,
-        id: Long
-    ): Flow<Unit> {
-        return remoteRecommendDataSource.patchRecommendBook(
-            body = body.toDto(),
-            id = id
-        )
-    }
+    override suspend fun patchRecommendBook(body: RecommendRequestAllModel, id: Long): Flow<Unit> =
+        remoteRecommendDataSource.patchRecommendBook(body = body.toDto(), id = id)
 
-    override suspend fun deleteRecommendBook(id: Long): Flow<Unit> {
-        return remoteRecommendDataSource.deleteRecommendBook(id = id)
-    }
+    override suspend fun deleteRecommendBook(id: Long): Flow<Unit> =
+        remoteRecommendDataSource.deleteRecommendBook(id = id)
 }
