@@ -87,7 +87,7 @@ internal fun ViewDetailScreen(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
                     topOnClick = { navigateToHomeEditBook(id) },
-                    bottomOnCLick = { setIsDialogOpen(true) },
+                    bottomOnClick = { setIsDialogOpen(true) },
                 )
             },
             sheetState = sheetState
