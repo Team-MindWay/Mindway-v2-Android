@@ -59,7 +59,7 @@ fun MindWayCombinationView(
                 topText = stringResource(R.string.mindway_intro),
                 bottomText = stringResource(R.string.logout),
                 topOnClick = navigateToIntro,
-                bottomOnCLick = {
+                bottomOnClick = {
                     myViewModel.logout()
                     navigateToLogin()
                 },
