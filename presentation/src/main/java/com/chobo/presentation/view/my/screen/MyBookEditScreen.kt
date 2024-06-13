@@ -50,7 +50,7 @@ internal fun MyBookEditRoute(
     val titleTextStateIsEmpty by myBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val writeTextStateIsEmpty by myBookEditViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
     val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
-    val myBookItem by myViewModel.myBookItem.collectAsStateWithLifecycle()
+    val myBookItem = myViewModel.myBookItem
     val focusManager = LocalFocusManager.current
 
     MyBookEditScreen(

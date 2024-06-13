@@ -44,6 +44,8 @@ class MyViewModel @Inject constructor(
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
     lateinit var myBookItem: MyBookListModel
+        private set
+
     fun setBook(book: MyBookListModel) {
         myBookItem = book
     }
@@ -92,12 +94,12 @@ class MyViewModel @Inject constructor(
                     is Result.Loading -> _isCommunicationSuccess.value = true
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
-                        showToast()
-                        getMyBookList()
                     }
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
+        showToast()
+        getMyBookList()
     }
 
     fun orderModifyById(id: Long, body: MyBookListModel) = viewModelScope.launch {
@@ -108,12 +110,12 @@ class MyViewModel @Inject constructor(
                     is Result.Loading -> _isCommunicationSuccess.value = false
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
-                        showToast()
-                        getMyBookList()
                     }
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
+        showToast()
+        getMyBookList()
     }
 
     fun logout() = viewModelScope.launch {
