@@ -23,6 +23,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -96,7 +97,7 @@ internal fun GoalReadingRoute(
         loadStuff = goalReadingViewModel::loadStuff,
         getBookList = goalReadingViewModel::getBookList,
         getWeekendGoal = goalReadingViewModel::getWeekendGoal,
-        )
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -121,6 +122,10 @@ internal fun GoalReadingScreen(
     getBookList: () -> Unit,
     getWeekendGoal: () -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        getBookList()
+        getWeekendGoal()
+    }
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -214,23 +219,23 @@ internal fun GoalReadingScreen(
                                             )
                                         }
 
-                                        is GetWeekendGoalUiState.Fail -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
+                                    is GetWeekendGoalUiState.Fail -> {
+                                        GoalReadingChart(
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                    }
 
-                                        is GetWeekendGoalUiState.Loading -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
+                                    is GetWeekendGoalUiState.Loading -> {
+                                        GoalReadingChart(
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                    }
 
                                         is GetWeekendGoalUiState.Success -> {
                                             GoalReadingChart(
@@ -241,10 +246,7 @@ internal fun GoalReadingScreen(
                                                     .height(180.dp),
                                             )
                                             Column(
-                                                verticalArrangement = Arrangement.spacedBy(
-                                                    8.dp,
-                                                    Alignment.CenterVertically
-                                                ),
+                                                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                                 modifier = modifier
                                                     .shadow(
