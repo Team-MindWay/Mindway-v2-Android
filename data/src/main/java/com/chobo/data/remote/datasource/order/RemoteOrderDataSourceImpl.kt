@@ -3,38 +3,19 @@ package com.chobo.data.remote.datasource.order
 import com.chobo.data.remote.api.OrderAPI
 import com.chobo.data.remote.dto.my_response.MyBookListResponse
 import com.chobo.data.remote.dto.order_request.OrderRequestBody
-import com.chobo.data.util.MindWayAPIHandler
-import kotlinx.coroutines.Dispatchers
+import com.chobo.data.util.performApiRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class RemoteOrderDataSourceImpl @Inject constructor(
-    private val orderAPI: OrderAPI,
+    private val orderService: OrderAPI,
 ) : RemoteOrderDataSource {
-    override suspend fun orderUpload(body: OrderRequestBody): Flow<Unit> = flow {
-        emit(
-            MindWayAPIHandler<Unit>()
-                .httpRequest { orderAPI.orderUpload(body = body) }
-                .sendRequest()
-        )
-    }.flowOn(Dispatchers.IO)
+    override suspend fun orderUpload(body: OrderRequestBody): Flow<Unit> =
+        performApiRequest { orderService.orderUpload(body = body) }
 
-    override suspend fun orderModifyById(body: MyBookListResponse, orderId: Long): Flow<Unit> = flow {
-        emit(
-            MindWayAPIHandler<Unit>()
-                .httpRequest { orderAPI.orderModifyById(body = body, orderId = orderId) }
-                .sendRequest()
-        )
-    }.flowOn(Dispatchers.IO)
+    override suspend fun orderModifyById(body: MyBookListResponse, orderId: Long): Flow<Unit> =
+        performApiRequest { orderService.orderModifyById(body = body, orderId = orderId) }
 
-    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> = flow {
-        emit(
-            MindWayAPIHandler<Unit>()
-                .httpRequest { orderAPI.orderDeleteById(orderId = orderId) }
-                .sendRequest()
-        )
-    }.flowOn(Dispatchers.IO)
-
+    override suspend fun orderDeleteById(orderId: Long): Flow<Unit> =
+        performApiRequest { orderService.orderDeleteById(orderId = orderId) }
 }
