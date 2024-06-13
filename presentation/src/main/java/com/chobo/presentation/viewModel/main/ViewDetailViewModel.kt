@@ -39,13 +39,4 @@ class ViewDetailViewModel @Inject constructor(
     fun bookDeleteById(id: Long) = viewModelScope.launch {
         bookDeleteByIdUseCase(bookId = id).asResult().collectLatest { }
     }
-
-    init {
-        _getBookByIdUiState.value = GetBookByIdUiState.Success(
-            data = BookRequestBodyModel(
-                title = "임시데이터 임시데이터 임시데이터",
-                plot = "임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터 임시데이터",
-            )
-        )
-    }
 }

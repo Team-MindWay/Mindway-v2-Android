@@ -76,10 +76,10 @@ internal fun ViewDetailScreen(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
-
     LaunchedEffect(Unit) {
         getBookById(id)
     }
+
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
