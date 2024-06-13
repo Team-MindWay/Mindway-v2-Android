@@ -44,6 +44,7 @@ internal fun LoginRoute(
         authUiState = authUiState,
         saveLoginDataUiState = saveLoginDataUiState,
         gAuthLogin = authViewModel::gAuthLogin,
+        initUiState = authViewModel::initUiState,
         navigateToHome = navigateToHome,
     )
 }
@@ -54,6 +55,7 @@ internal fun LoginScreen(
     authUiState: AuthUiState,
     saveLoginDataUiState: Boolean,
     gAuthLogin: (String) -> Unit,
+    initUiState: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
     LaunchedEffect(authUiState, saveLoginDataUiState) {
@@ -62,6 +64,7 @@ internal fun LoginScreen(
             && saveLoginDataUiState
         ) {
             navigateToHome()
+            initUiState()
         }
     }
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
