@@ -5,17 +5,14 @@ import com.chobo.data.remote.dto.my_response.MyBookListResponse
 import com.chobo.data.remote.dto.my_response.MyDataResponse
 import com.chobo.data.util.performApiRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RemoteMyDataSourceImpl @Inject constructor(
     private val myService: MyAPI,
 ) : RemoteMyDataSource {
-    override suspend fun getMyInformation(): Flow<MyDataResponse> = flow {
+    override suspend fun getMyInformation(): Flow<MyDataResponse> =
         performApiRequest { myService.myInformationGet() }
-    }
 
-    override suspend fun getMyBookList(): Flow<List<MyBookListResponse>> = flow {
+    override suspend fun getMyBookList(): Flow<List<MyBookListResponse>> =
         performApiRequest { myService.myBookListGet() }
-    }
 }

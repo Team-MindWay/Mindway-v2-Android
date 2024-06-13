@@ -20,15 +20,12 @@ class RemoteBookDataSourceImpl @Inject constructor(
     }
 
 
-    override suspend fun bookGetById(bookId: Long): Flow<BookRequestBody> = flow {
+    override suspend fun bookGetById(bookId: Long): Flow<BookRequestBody> =
         performApiRequest { bookService.bookGetById(bookId = bookId) }
-    }
 
-    override suspend fun bookModify(body: BookRequestBody, bookId: Long): Flow<Unit> = flow {
+    override suspend fun bookModify(body: BookRequestBody, bookId: Long): Flow<Unit> =
         performApiRequest { bookService.bookModify(body = body, bookId = bookId) }
-    }
 
-    override suspend fun bookDeleteById(bookId: Long): Flow<Unit> = flow {
+    override suspend fun bookDeleteById(bookId: Long): Flow<Unit> =
         performApiRequest { bookService.bookDeleteById(bookId = bookId) }
-    }
 }

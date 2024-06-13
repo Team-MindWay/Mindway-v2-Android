@@ -5,17 +5,14 @@ import com.chobo.data.remote.dto.goal.request.GoalRequestBodyPost
 import com.chobo.data.remote.dto.goal.response.GoalWeekendResponse
 import com.chobo.data.util.performApiRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RemoteGoalDataSourceImpl @Inject constructor(
     private val goalService: GoalAPI
 ) : RemoteGoalDataSource {
-    override suspend fun postGoalRequest(body: GoalRequestBodyPost): Flow<Unit> = flow {
+    override suspend fun postGoalRequest(body: GoalRequestBodyPost): Flow<Unit> =
         performApiRequest { goalService.postGoal(body = body) }
-    }
 
-    override suspend fun getWeekendGoalResponse(): Flow<GoalWeekendResponse> = flow {
+    override suspend fun getWeekendGoalResponse(): Flow<GoalWeekendResponse> =
         performApiRequest { goalService.getWeekendGoal() }
-    }
 }
