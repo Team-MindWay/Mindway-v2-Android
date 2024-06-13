@@ -32,9 +32,7 @@ class HomeBookEditViewModel @Inject constructor(
     private val _plotTextStateIsEmpty = MutableStateFlow(false)
     val plotTextStateIsEmpty: StateFlow<Boolean> = _plotTextStateIsEmpty.asStateFlow()
 
-    val plotTextMaxLength: Int
-        get() = 1000
-
+    val plotTextMaxLength = 1000
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
         _titleTextState.value = input
