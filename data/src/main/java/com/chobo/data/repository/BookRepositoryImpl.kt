@@ -23,8 +23,14 @@ class BookRepositoryImpl @Inject constructor(
     override suspend fun bookGetById(bookId: Long): Flow<BookRequestBodyModel> =
         bookDataSource.bookGetById(bookId = bookId).map { it.toModel() }
 
-    override suspend fun bookModify(bookId: Long, body: BookRequestBodyModel): Flow<Unit> =
-        bookDataSource.bookModify(bookId = bookId, body = body.toDto())
+    override suspend fun bookModify(
+        bookId: Long,
+        body: BookRequestBodyModel
+    ): Flow<Unit> =
+        bookDataSource.bookModify(
+            bookId = bookId,
+            body = body.toDto()
+        )
 
     override suspend fun bookDeleteById(bookId: Long): Flow<Unit> =
         bookDataSource.bookDeleteById(bookId = bookId)
