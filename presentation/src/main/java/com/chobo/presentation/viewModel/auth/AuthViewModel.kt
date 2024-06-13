@@ -43,7 +43,7 @@ class AuthViewModel @Inject constructor(
             }
     }
 
-    fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
+    private fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
         saveTokenUseCase(data = data)
             .onSuccess {
                 _saveLoginDataUiState.value = true
