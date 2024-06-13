@@ -149,7 +149,26 @@ fun MyScreen(
                             }
                         }
                     }
-                    is GetMyBookListUiState.Fail -> Unit
+                    is GetMyBookListUiState.Fail -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                BookImage()
+                                Text(
+                                    text = stringResource(R.string.is_on_error),
+                                    style = typography.bodyMedium,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY500,
+                                )
+                            }
+                        }
+                    }
                     is GetMyBookListUiState.Loading -> Unit
                     is GetMyBookListUiState.Success -> {
                         LazyColumn(
