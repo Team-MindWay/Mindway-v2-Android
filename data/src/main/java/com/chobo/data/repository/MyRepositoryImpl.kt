@@ -16,7 +16,6 @@ class MyRepositoryImpl @Inject constructor(
         return myDataSource.getMyInformation().map { it.toModel() }
     }
 
-    override suspend fun myBookListGet(): Flow<List<MyBookListModel>> {
-        return myDataSource.getMyBookList().map { list -> list.map { it.toModel() } }
-    }
+    override suspend fun myBookListGet(): Flow<List<MyBookListModel>> =
+        myDataSource.getMyBookList().map { list -> list.map { it.toModel() } }
 }

@@ -7,32 +7,25 @@ import com.chobo.data.remote.dto.book.response.toModel
 import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.model.book.response.BookListResponseModel
 import com.chobo.domain.repository.BookRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(
     private val bookDataSource: RemoteBookDataSource
 ) : BookRepository {
-    override suspend fun bookUpload(body: BookRequestBodyModel): Flow<Unit> {
-        return bookDataSource.bookUpload(body = body.toDto())
-    }
+    override suspend fun bookUpload(body: BookRequestBodyModel): Flow<Unit> =
+        bookDataSource.bookUpload(body = body.toDto())
 
-    override suspend fun bookListGet(): Flow<List<BookListResponseModel>> {
-        return bookDataSource.bookListGet().map { list -> list.map { it.toModel() } }
-    }
+    override suspend fun bookListGet(): Flow<List<BookListResponseModel>> =
+        bookDataSource.bookListGet().map { list -> list.map { it.toModel() } }
 
-    override suspend fun bookGetById(bookId: Long): Flow<BookRequestBodyModel> {
-        return bookDataSource.bookGetById(bookId = bookId).map { it.toModel() }
-    }
+    override suspend fun bookGetById(bookId: Long): Flow<BookRequestBodyModel> =
+        bookDataSource.bookGetById(bookId = bookId).map { it.toModel() }
 
-    override suspend fun bookModify(
-        bookId: Long,
-        body: BookRequestBodyModel
-    ): Flow<Unit> {
-        return bookDataSource.bookModify(bookId = bookId, body = body.toDto())
-    }
+    override suspend fun bookModify(bookId: Long, body: BookRequestBodyModel): Flow<Unit> =
+        bookDataSource.bookModify(bookId = bookId, body = body.toDto())
 
-    override suspend fun bookDeleteById(bookId: Long): Flow<Unit> {
-        return bookDataSource.bookDeleteById(bookId = bookId)
-    }
+    override suspend fun bookDeleteById(bookId: Long): Flow<Unit> =
+        bookDataSource.bookDeleteById(bookId = bookId)
 }
