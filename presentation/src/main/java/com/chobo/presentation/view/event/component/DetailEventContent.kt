@@ -1,7 +1,10 @@
 package com.chobo.presentation.view.event.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.formatServerDate
 
 @Composable
 fun DetailEventContent(
@@ -42,9 +46,9 @@ fun DetailEventContent(
             Spacer(modifier = Modifier.height(14.dp))
             Text(
                 text = stringResource(
-                    id = R.string.wave,
-                    startedAt,
-                    endedAt
+                    R.string.wave,
+                    formatServerDate(startedAt),
+                    formatServerDate(endedAt)
                 ),
                 style = typography.labelLarge,
                 color = colors.GRAY400,

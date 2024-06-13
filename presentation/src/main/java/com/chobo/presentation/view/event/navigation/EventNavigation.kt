@@ -7,14 +7,20 @@ import com.chobo.presentation.view.event.screen.DetailEventRoute
 
 const val detailEventRoute = "detail_event_route"
 
-fun NavController.navigationToDetailEvent() {
-    this.navigate(detailEventRoute)
+fun NavController.navigationToDetailEvent(id: Long) {
+    this.navigate("$detailEventRoute/${id}")
 }
 
 fun NavGraphBuilder.detailEventScreen(
     navigateToBack: () -> Unit,
 ) {
-    composable(detailEventRoute) {
-        DetailEventRoute(navigateToBack = navigateToBack)
+    composable("$detailEventRoute/{id}") { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id")?.toLongOrNull()
+        if(id != null) {
+            DetailEventRoute(
+                id = id,
+                navigateToBack = navigateToBack
+            )
+        }
     }
 }

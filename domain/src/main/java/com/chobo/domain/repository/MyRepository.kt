@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface MyRepository {
     suspend fun myInformationGet(): Flow<MyDataModel>
 
-    suspend fun myBookListGet(): Flow<MyBookListModel>
+    suspend fun myBookListGet(): Flow<List<MyBookListModel>>
 }

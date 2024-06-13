@@ -27,12 +27,6 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.util.getTodayDayOfWeek
 import okhttp3.internal.immutableListOf
 
-data class GoalReadingGraphData(
-    val numBooksRead: Int,
-    val maxBooksRead: Int,
-    val isCurrentDate: Boolean,
-    val today: String,
-)
 
 @Composable
 fun HomeGoalReadingChart(
@@ -145,7 +139,7 @@ fun HomeGoalReadingChart(
                         fontWeight = FontWeight.SemiBold,
                         color = colors.Black,
                     )
-                    ChevronRightIcon()
+                    ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                 }
                 Text(
                     text = "아직 목표 독서량을 설정하지 않았습니다.",

@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.ifZeroThenOne
 
 @Composable
 fun GoalReadingGraph(
@@ -22,7 +23,7 @@ fun GoalReadingGraph(
     today: String,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        val height = ((27 * numBooksRead) / maxBooksRead + 1).toFloat().dp
+        val height = ((27 * numBooksRead) / (maxBooksRead.ifZeroThenOne()) + 1).toFloat().dp
         val graphColor = if (!isCurrentDate) colors.GRAY200 else colors.MAIN
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,9 +71,10 @@ fun GoalReadingGraph(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
-fun GoalReadingGraphPreview(){
+fun GoalReadingGraphPreview() {
     Box(modifier = Modifier.width(17.dp)) {
         GoalReadingGraph(numBooksRead = 2, maxBooksRead = 6, isCurrentDate = true, today = "일")
     }

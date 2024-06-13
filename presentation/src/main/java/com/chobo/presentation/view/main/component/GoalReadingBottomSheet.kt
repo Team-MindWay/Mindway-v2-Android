@@ -2,10 +2,18 @@ package com.chobo.presentation.view.main.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -18,6 +26,10 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.textField.MindWayRightTextField
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.viewModel.util.localDateTimeMonthDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDateTime
+import java.time.temporal.TemporalAdjusters
 
 @Composable
 fun GoalReadingBottomSheet(
@@ -76,18 +88,20 @@ fun GoalReadingBottomSheet(
                             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
                             verticalAlignment = Alignment.Top,
                         ) {
-                            listOf(
-                                stringResource(id = R.string.month_day, 3, 24),
-                                stringResource(id = R.string.wave),
-                                stringResource(id = R.string.month_day, 3, 21)
-                            ).forEach {
-                                Text(
-                                    text = it,
-                                    style = typography.bodyMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = colors.Black,
-                                )
-                            }
+                            val now = LocalDateTime.now()
+                            val startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+                            val endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+
+                            Text(
+                                text = stringResource(
+                                    id = R.string.wave,
+                                    localDateTimeMonthDateFormat(startOfWeek),
+                                    localDateTimeMonthDateFormat(endOfWeek)
+                                ),
+                                style = typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colors.Black,
+                            )
                         }
                     }
                     MindWayRightTextField(

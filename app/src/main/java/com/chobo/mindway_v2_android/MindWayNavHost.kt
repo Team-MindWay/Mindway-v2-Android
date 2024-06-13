@@ -33,9 +33,8 @@ fun MindWayNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String,
 ) {
-    val topDestination = remember {
-        mutableStateOf(MindWayNavBarItemType.HOME)
-    }
+    val (currentDestination, setCurrentDestination) = remember { mutableStateOf(MindWayNavBarItemType.HOME) }
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -43,7 +42,8 @@ fun MindWayNavHost(
         loginScreen(navigateToHome = navController::navigationToCombinationView)
 
         combinationView(
-            topDestination = topDestination,
+            currentDestination = currentDestination,
+            setCurrentDestination = setCurrentDestination,
             navigateToGoalReading = navController::navigationToGoalReading,
             navigateToDetailEvent = navController::navigationToDetailEvent,
             navigateToBookAddBook = navController::navigationToBookAddBook,
@@ -67,7 +67,7 @@ fun MindWayNavHost(
 
         homeEditBook(navigateToBack = navController::popBackStack)
 
-        detailEventScreen(navigateToBack = navController::popBackStack,)
+        detailEventScreen(navigateToBack = navController::popBackStack)
 
         bookAddBook(navigateToBack = navController::popBackStack)
 

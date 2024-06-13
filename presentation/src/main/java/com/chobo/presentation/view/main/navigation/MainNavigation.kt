@@ -17,22 +17,22 @@ fun NavController.navigationToGoalReading() {
     this.navigate(goalReadingRoute)
 }
 
-fun NavController.navigationToViewDetail() {
-    this.navigate(viewDetailRoute)
+fun NavController.navigationToViewDetail(id: Long) {
+    this.navigate("${viewDetailRoute}/${id}")
 }
 
 fun NavController.navigationToHomeAddBook() {
     this.navigate(homeAddBookRoute)
 }
 
-fun NavController.navigationToHomeEditBook() {
-    this.navigate(homeEditBookRoute)
+fun NavController.navigationToHomeEditBook(id: Long) {
+    this.navigate("${homeEditBookRoute}/${id}")
 }
 
 fun NavGraphBuilder.goalReading(
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: () -> Unit
+    navigateToHomeViewDetail: (Long) -> Unit,
 ) {
     composable(goalReadingRoute) {
         GoalReadingRoute(
@@ -45,13 +45,17 @@ fun NavGraphBuilder.goalReading(
 
 fun NavGraphBuilder.viewDetail(
     navigateToBack: () -> Unit,
-    navigateToHomeEditBook: () -> Unit
+    navigateToHomeEditBook: (Long) -> Unit,
 ) {
-    composable(viewDetailRoute) {
-        ViewDetailRoute(
-            navigateToBack = navigateToBack,
-            navigateToHomeEditBook = navigateToHomeEditBook,
-        )
+    composable("${viewDetailRoute}/{id}") { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id")?.toLongOrNull()
+        if (id != null) {
+            ViewDetailRoute(
+                id = id,
+                navigateToBack = navigateToBack,
+                navigateToHomeEditBook = navigateToHomeEditBook,
+            )
+        }
     }
 }
 
@@ -62,7 +66,13 @@ fun NavGraphBuilder.homeAddBook(navigateToBack: () -> Unit) {
 }
 
 fun NavGraphBuilder.homeEditBook(navigateToBack: () -> Unit) {
-    composable(homeEditBookRoute) {
-        HomeEditBookRoute(navigateToBack = navigateToBack)
+    composable("${homeEditBookRoute}/{id}") { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id")?.toLongOrNull()
+        if (id != null) {
+            HomeEditBookRoute(
+                id = id,
+                navigateToBack = navigateToBack
+            )
+        }
     }
 }

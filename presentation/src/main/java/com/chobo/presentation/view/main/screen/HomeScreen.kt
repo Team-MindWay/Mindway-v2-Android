@@ -33,7 +33,6 @@ internal fun HomeRoute(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToGoalReading: () -> Unit,
-    navigateToDetailEvent: () -> Unit,
 ) {
     val getWeekendGoalUIState by homeViewModel.getWeekendGoalUIState.collectAsStateWithLifecycle()
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
@@ -45,7 +44,6 @@ internal fun HomeRoute(
         noticeGetUiState = noticeGetUiState,
         getRankUIState = getRankUIState,
         navigateToGoalReading = navigateToGoalReading,
-        navigateToDetailEvent = navigateToDetailEvent,
     )
 }
 
@@ -56,7 +54,6 @@ internal fun HomeScreen(
     noticeGetUiState: NoticeGetUiState,
     getRankUIState: GetRankUiState,
     navigateToGoalReading: () -> Unit,
-    navigateToDetailEvent: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
         Column {
@@ -70,12 +67,11 @@ internal fun HomeScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 when (noticeGetUiState) {
-                    is NoticeGetUiState.Fail -> {}
-                    is NoticeGetUiState.Loading -> {}
+                    is NoticeGetUiState.Fail -> Unit
+                    is NoticeGetUiState.Loading -> Unit
                     is NoticeGetUiState.Success -> {
                         HomeNoticeCard(
                             noticeAllModel = noticeGetUiState.data,
-                            onClick = navigateToDetailEvent,
                             modifier = Modifier
                                 .height(100.dp)
                                 .fillMaxWidth(),
@@ -172,6 +168,5 @@ internal fun HomeScreen(
 fun HomeScreenPreview() {
     HomeRoute(
         navigateToGoalReading = { },
-        navigateToDetailEvent = { }
     )
 }

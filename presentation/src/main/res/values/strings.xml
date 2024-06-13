@@ -9,7 +9,7 @@
     <string name="my">마이</string>
     <string name="period">기간</string>
     <string name="month_day">%d월 %02d일</string>
-    <string name="wave">%d ~ %d</string>
+    <string name="wave">%s ~ %s</string>
     <string name="check">확인</string>
     <string name="goal_reading_error">목표 독서량을 입력해주세요</string>
     <string name="view_detail">자세히 보기</string>
@@ -27,11 +27,15 @@
     <string name="book_request_modify_succes_toast">신청 도서 수정이 완료되었어요!</string>
     <string name="book_request_fail_toast">도서 신청을 실패했어요!</string>
     <string name="goal_reading_fail_toast">목표 독서량 설정이 실패했어요</string>
+    <string name="order_delete_success">신청 도서 삭제가 완료되었어요!</string>
+    <string name="order_delete_fail">도서 신청 수정에 실패했어요!</string>
     <string name="ongoing_event">진행 중인 이벤트</string>
     <string name="past_event">지난 이벤트</string>
     <string name="year_month_day">%04d년 %02d월 %02d일</string>
     <string name="is_no_ongoing_event">진행 중인 이벤트가 없습니다</string>
     <string name="is_no_past_event">지난 이벤트가 없습니다</string>
+    <string name="is_on_error">통신이 원활하지 않습니다</string>
+    <string name="missing_data">데이터를 불러오지 못했습니다</string>
     <string name="novel">Novel</string>
     <string name="essay">Essay</string>
     <string name="link">링크</string>
@@ -60,4 +64,7 @@
     <string name="book_delete">독서 삭제</string>
     <string name="book">독서를</string>
     <string name="overFlowErrorMessage">최대 글자수를 초과했습니다</string>
+    <string name="not_essay">등록된 에세이가 없습니다</string>
+    <string name="not_book">등록된 도서이 없습니다</string>
+    <string name="thereIsNoOrderBook">아직 책을 빌리지 않았어요</string>
 </resources>

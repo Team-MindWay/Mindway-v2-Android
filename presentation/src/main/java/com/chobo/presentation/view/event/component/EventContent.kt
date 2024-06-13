@@ -26,9 +26,7 @@ fun EventContent(
     content: String,
     eventDataList: List<GetEventListResponseModel> = listOf(),
     eventDataListIsEmpty: Boolean,
-    onIconClick: (Int) -> Unit,
-    onEventClick: (Long) -> Unit,
-    navigateToDetailEvent: () -> Unit,
+    navigateToDetailEvent: (Long) -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (eventDataListIsEmpty) {
@@ -36,14 +34,11 @@ fun EventContent(
                 modifier = modifier
                     .background(color = colors.WHITE)
                     .padding(horizontal = 24.dp)
+                    .fillMaxSize()
             ) {
-                itemsIndexed(eventDataList) { index, item ->
+                itemsIndexed(eventDataList) { _, item ->
                     Events(
                         eventsData = item,
-                        onClick = {
-                            onIconClick(index)
-                            onEventClick(item.id)
-                        },
                         navigateToDetailEvent = navigateToDetailEvent
                     )
                 }
@@ -74,9 +69,7 @@ fun EventContent(
 fun EventContentPreview() {
     EventContent(
         content = "리뷰 정말 감사합니다 임시 데이터 입니다",
-        onIconClick = {},
         eventDataListIsEmpty = true,
         navigateToDetailEvent = {},
-        onEventClick = {}
     )
 }

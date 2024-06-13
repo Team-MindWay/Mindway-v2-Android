@@ -37,9 +37,6 @@ class BookAddBookViewModel @Inject constructor(
     private val _linkTextStateIsEmpty = MutableStateFlow(false)
     val linkTextStateIsEmpty: StateFlow<Boolean> = _linkTextStateIsEmpty.asStateFlow()
 
-    private val _checkBookDialog = MutableStateFlow(false)
-    val checkBookDialog: StateFlow<Boolean> = _checkBookDialog.asStateFlow()
-
     private val _orderUploadUiState = MutableStateFlow<OrderUploadUiState>(OrderUploadUiState.Loading)
     val orderUploadUiState: StateFlow<OrderUploadUiState> = _orderUploadUiState.asStateFlow()
 
@@ -56,10 +53,6 @@ class BookAddBookViewModel @Inject constructor(
     fun updateLinkTextState(input: String) {
         _linkTextStateIsEmpty.value = false
         _linkTextState.value = input
-    }
-
-    fun toggleCheckBookDialog() {
-        _checkBookDialog.value = !_checkBookDialog.value
     }
 
     fun checkButtonOnClick() {

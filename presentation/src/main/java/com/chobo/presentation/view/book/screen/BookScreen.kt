@@ -165,7 +165,7 @@ internal fun BookScreen(
                         when (page) {
                             0 -> {
                                 when (novelDataList) {
-                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Loading -> Unit
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -179,7 +179,7 @@ internal fun BookScreen(
                                             ) {
                                                 BookImage()
                                                 Text(
-                                                    text = "등록된 소설이 없습니다",
+                                                    text = stringResource(R.string.not_book),
                                                     style = typography.bodyMedium,
                                                     fontWeight = FontWeight.Normal,
                                                     color = colors.GRAY500,
@@ -188,7 +188,27 @@ internal fun BookScreen(
                                         }
                                     }
 
-                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Fail -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = stringResource(R.string.is_on_error),
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
                                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -197,7 +217,7 @@ internal fun BookScreen(
                                                 .padding(horizontal = 24.dp)
                                                 .fillMaxSize()
                                         ) {
-                                            item { Spacer(modifier = modifier.height(28.dp)) }
+                                            item { Spacer(modifier = Modifier.height(8.dp)) }
                                             itemsIndexed(novelDataList.data) { _, item ->
                                                 BookListItem(data = item)
                                             }
@@ -208,7 +228,7 @@ internal fun BookScreen(
 
                             1 -> {
                                 when (essayDataList) {
-                                    is GetRecommendBookUiState.Loading -> {}
+                                    is GetRecommendBookUiState.Loading -> Unit
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -222,7 +242,7 @@ internal fun BookScreen(
                                             ) {
                                                 BookImage()
                                                 Text(
-                                                    text = "등록된 에세이가 없습니다",
+                                                    text = stringResource(R.string.not_essay),
                                                     style = typography.bodyMedium,
                                                     fontWeight = FontWeight.Normal,
                                                     color = colors.GRAY500,
@@ -231,7 +251,27 @@ internal fun BookScreen(
                                         }
                                     }
 
-                                    is GetRecommendBookUiState.Fail -> {}
+                                    is GetRecommendBookUiState.Fail -> {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .verticalScroll(scrollState),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Column(
+                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                BookImage()
+                                                Text(
+                                                    text = stringResource(R.string.is_on_error),
+                                                    style = typography.bodyMedium,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = colors.GRAY500,
+                                                )
+                                            }
+                                        }
+                                    }
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
                                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -240,7 +280,7 @@ internal fun BookScreen(
                                                 .padding(horizontal = 24.dp)
                                                 .fillMaxSize()
                                         ) {
-                                            item { Spacer(modifier = modifier.height(28.dp)) }
+                                            item { Spacer(modifier = modifier.height(8.dp)) }
                                             itemsIndexed(essayDataList.data) { _, item ->
                                                 BookListItem(data = item)
                                             }
@@ -277,7 +317,7 @@ internal fun BookScreen(
                             )
                         }
 
-                        is OrderUploadUiState.Loading -> {}
+                        is OrderUploadUiState.Loading -> Unit
                         is OrderUploadUiState.RemoteFail -> {
                             showToast()
                             MindWayToast(

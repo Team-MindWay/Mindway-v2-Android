@@ -20,7 +20,7 @@ fun HomeReadersOfTheMonthGraph(
     rankModel: RankModel,
     maxBook: Int,
 ) {
-    val height = ((78 * rankModel.total) / maxBook + 2).toFloat().dp
+    val height = ((78 * rankModel.accrue) / maxBook + 2).toFloat().dp
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
@@ -28,7 +28,7 @@ fun HomeReadersOfTheMonthGraph(
             modifier = modifier
         ) {
             Text(
-                text = "${rankModel.total}권",
+                text = "${rankModel.accrue}권",
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.GRAY800,
@@ -47,7 +47,7 @@ fun HomeReadersOfTheMonthGraph(
                     )
             )
             Text(
-                text = rankModel.username,
+                text = rankModel.name,
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.GRAY800,
@@ -64,8 +64,8 @@ fun HomeReadersOfTheMonthGraphPreview() {
         modifier = Modifier.width(50.dp),
         maxBook = 35,
         rankModel = RankModel(
-            username = "사람",
-            total = 15
+            name = "사람",
+            accrue = 15
         )
     )
 }

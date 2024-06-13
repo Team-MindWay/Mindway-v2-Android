@@ -11,7 +11,6 @@ import javax.inject.Inject
 class RankRepositoryImpl @Inject constructor(
     private val rankDataSource: RemoteRankDataSource
 ) : RankRepository {
-    override suspend fun rankGet(): Flow<List<RankModel>> {
-        return rankDataSource.rankGet().map { list -> list.map { it.toModel() } }
-    }
+    override suspend fun rankGet(): Flow<List<RankModel>> =
+        rankDataSource.rankGet().map { list -> list.map { it.toModel() } }
 }
