@@ -30,7 +30,6 @@ import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.icon.InfoIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
@@ -110,7 +109,6 @@ internal fun MyBookEditScreen(
             ) {
                 MindWayTopAppBar(
                     startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },
                     midText = stringResource(R.string.book_modify),
                 )
                 Column(
