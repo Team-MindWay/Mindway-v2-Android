@@ -92,12 +92,14 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _isCommunicationSuccess.value = true
-                    is Result.Success -> _isCommunicationSuccess.value = true
+                    is Result.Success -> {
+                        _isCommunicationSuccess.value = true
+                        showToast()
+                        getMyBookList()
+                    }
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
-        showToast()
-        getMyBookList()
     }
 
     fun orderModifyById(id: Long, body: MyBookListModel) = viewModelScope.launch {
@@ -106,11 +108,14 @@ class MyViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _isCommunicationSuccess.value = false
-                    is Result.Success -> _isCommunicationSuccess.value = true
+                    is Result.Success -> {
+                        _isCommunicationSuccess.value = true
+                        showToast()
+                        getMyBookList()
+                    }
                     is Result.Fail -> _isCommunicationSuccess.value = false
                 }
             }
-        showToast()
     }
 
     fun logout() = viewModelScope.launch {
