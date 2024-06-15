@@ -108,5 +108,5 @@ fun getApiKey(propertyKey: String): String {
     val propFile = rootProject.file("./local.properties")
     val properties = Properties()
     properties.load(FileInputStream(propFile))
-    return properties.getProperty(propertyKey)
+    return properties.getProperty(propertyKey) ?: "default_value"
 }
