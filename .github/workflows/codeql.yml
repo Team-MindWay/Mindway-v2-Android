@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: CodeQL
 
 on:
   push:
@@ -31,6 +31,10 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
+
+    # Set Android SDK path using environment variable
+    - name: Set Android SDK path
+      run: echo "sdk.dir=/Users/munhyeseong/Library/Android/sdk" > local.properties
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
