@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "develop" ]
 
-permissions:
-  contents: read
-
 jobs:
   zscan:
     name: zScan
@@ -22,6 +19,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'adopt'
 
       - name: Checkout repository
         uses: actions/checkout@v4
