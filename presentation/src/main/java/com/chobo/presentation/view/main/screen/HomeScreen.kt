@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +44,9 @@ internal fun HomeRoute(
         getWeekendGoalUIState = getWeekendGoalUIState,
         noticeGetUiState = noticeGetUiState,
         getRankUIState = getRankUIState,
+        getNotice = homeViewModel::getNotice,
+        getRank = homeViewModel::getRank,
+        getWeekendGoal = homeViewModel::getWeekendGoal,
         navigateToGoalReading = navigateToGoalReading,
     )
 }
@@ -53,8 +57,16 @@ internal fun HomeScreen(
     getWeekendGoalUIState: GetWeekendGoalUiState,
     noticeGetUiState: NoticeGetUiState,
     getRankUIState: GetRankUiState,
+    getNotice: () -> Unit,
+    getRank: () -> Unit,
+    getWeekendGoal: () -> Unit,
     navigateToGoalReading: () -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        getNotice()
+        getRank()
+        getWeekendGoal()
+    }
     MindWayAndroidTheme { colors, _ ->
         Column {
             MindWayTopAppBar(startIcon = { LogoIcon() })

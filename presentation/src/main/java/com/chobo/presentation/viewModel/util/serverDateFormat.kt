@@ -4,9 +4,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-fun formatServerDate(dateString: String): String {
-    val serverDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val desiredDateFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일", Locale.getDefault())
-    val date = LocalDate.parse(dateString, serverDateFormatter)
-    return date.format(desiredDateFormatter)
-}
+fun formatServerDate(dateString: String): String =
+    LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        .format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일",Locale.getDefault()))

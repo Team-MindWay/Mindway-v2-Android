@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel.util.result
+package com.chobo.presentation.viewModel.util
 
 import kotlinx.coroutines.flow.*
 

@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
 import com.chobo.domain.usecase.order.OrderUploadUseCase
 import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
-import com.chobo.presentation.viewModel.util.Event
-import com.chobo.presentation.viewModel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -75,15 +73,12 @@ class BookAddBookViewModel @Inject constructor(
                     .onSuccess {
                         it.catch { remoteError ->
                             _orderUploadUiState.value = OrderUploadUiState.RemoteFail(exception = remoteError)
-                            remoteError.errorHandling<Unit>()
-                        }.collect { response ->
+                        }.collect {
                             _orderUploadUiState.value = OrderUploadUiState.Success
-                            Event.Success(data = response)
                         }
                     }
                     .onFailure {
                         _orderUploadUiState.value = OrderUploadUiState.RemoteFail(exception = it)
-                        it.errorHandling<Unit>()
                     }
             }
         }
