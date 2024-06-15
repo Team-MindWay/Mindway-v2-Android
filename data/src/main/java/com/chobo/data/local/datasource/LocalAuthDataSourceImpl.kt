@@ -43,7 +43,7 @@ class LocalAuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRefreshToken(): Flow<String> = dataStore.data.map {
+    override fun getRefreshToken(): Flow<String> = dataStore.data.map {
         it[AuthDataStoreKey.REFRESH_TOKEN] ?: ""
     }
 
