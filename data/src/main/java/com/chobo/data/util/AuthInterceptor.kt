@@ -1,5 +1,6 @@
 package com.chobo.data.util
 
+import android.util.Log
 import com.chobo.data.BuildConfig
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.domain.exception.NeedLoginException
@@ -20,44 +21,49 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val builder = request.newBuilder()
-        val ignorePath = listOf("/api/v2/auth")
+        val ignorePath = "/api/v2/auth"
         val currentTime = System.currentTimeMillis().toMindWayDate()
         val path = request.url.encodedPath
+        val method = request.method
 
-        if (ignorePath.contains(path)) {
+        if (ignorePath.contains(path) && method != "PATCH") {
             return chain.proceed(request)
         }
 
         runBlocking {
             val accessTime = dataSource.getAccessTime().first().replace("\"", "")
             val refreshTime = dataSource.getRefreshTime().first().replace("\"", "")
+            val accessToken = dataSource.getAccessToken().first().replace("\"", "")
+            val refreshToken = dataSource.getRefreshToken().first().replace("\"", "")
 
             if (refreshTime == "") return@runBlocking
 
             if (currentTime.after(refreshTime.toDate())) throw NeedLoginException()
 
             if (currentTime.after(accessTime.toDate())) {
-                val client = OkHttpClient()
-                val refreshRequest = Request.Builder()
-                    .url(BuildConfig.BASE_URL + "auth")
-                    .patch(chain.request().body ?: RequestBody.create(null, byteArrayOf()))
-                    .addHeader(
-                    "refreshToken",
-                        dataSource.getRefreshToken().first().replace("\"", "")
-                    )
-                    .build()
-                val jsonParser = JsonParser()
-                val response = client.newCall(refreshRequest).execute()
-                if (response.isSuccessful) {
-                    val token = jsonParser.parse(response.body!!.string()) as JsonObject
-                    dataSource.setAccessToken(token["accessToken"].toString())
-                    dataSource.setRefreshToken(token["refreshToken"].toString())
-                    dataSource.setAccessTime(token["accessTokenExpiresIn"].toString())
-                    dataSource.setRefreshTime(token["refreshTokenExpiresIn"].toString())
-                } else throw NeedLoginException()
-            }
-            val accessToken = dataSource.getAccessToken().first().replace("\"", "")
-            builder.addHeader(name = "Authorization", value = "Bearer $accessToken")
+                    val client = OkHttpClient()
+                    val refreshRequest = Request.Builder()
+                        .url(BuildConfig.BASE_URL + "auth")
+                        .patch(chain.request().body ?: RequestBody.create(null, byteArrayOf()))
+                        .addHeader(name = "refreshToken", value = "Bearer $refreshToken")
+                        .build()
+                    val jsonParser = JsonParser()
+                    val response = client.newCall(refreshRequest).execute()
+                    if (response.isSuccessful) {
+                        val token = jsonParser.parse(response.body!!.string()) as JsonObject
+                        dataSource.setAccessToken(token["accessToken"].toString())
+                        dataSource.setRefreshToken(token["refreshToken"].toString())
+                        dataSource.setAccessTime(token["accessTokenExpiresIn"].toString())
+                        dataSource.setRefreshTime(token["refreshTokenExpiresIn"].toString())
+                    } else throw NeedLoginException()
+                } else {
+                    builder.addHeader(name = "Authorization", value = "Bearer $accessToken")
+                }
+                if (method == "PATCH") {
+                    builder.addHeader(name = "refreshToken", value = "Bearer $refreshToken")
+                    Log.d("AuthInterceptor", "Added refreshToken to headers for PATCH")
+                }
+            builder.header(name = "Authorization", value = "Bearer $accessToken")
         }
         return chain.proceed(builder.build())
     }

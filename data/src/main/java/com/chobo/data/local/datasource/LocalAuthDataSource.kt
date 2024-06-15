@@ -12,7 +12,7 @@ interface LocalAuthDataSource {
     suspend fun setAccessTime(accessToken: String)
     suspend fun deleteAccessTime()
 
-    suspend fun getRefreshToken(): Flow<String>
+    fun getRefreshToken(): Flow<String>
     suspend fun setRefreshToken(refreshToken: String)
     suspend fun deleteRefreshToken()
 

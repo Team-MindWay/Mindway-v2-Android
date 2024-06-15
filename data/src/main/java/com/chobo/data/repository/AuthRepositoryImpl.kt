@@ -18,6 +18,12 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun gAuthLogin(body: GAuthLoginRequestModel): Flow<GAuthLoginResponseModel> =
         remoteAuthDataSource.GuauthLogin(body = body.toDto()).map { it.toLoginModel() }
 
+    override suspend fun gAuthAccess(): Flow<GAuthLoginResponseModel> =
+        remoteAuthDataSource.GuathAccess().map { it.toLoginModel() }
+
+    override fun getGAuthAccess(): Flow<String> =
+        localAuthDataSource.getRefreshToken()
+
     override suspend fun saveLoginData(data: GAuthLoginResponseModel) {
         data.let {
             localAuthDataSource.setAccessToken(it.accessToken)
