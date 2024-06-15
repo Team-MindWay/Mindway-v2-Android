@@ -26,7 +26,7 @@ class AuthInterceptor @Inject constructor(
         val path = request.url.encodedPath
         val method = request.method
 
-        if (ignorePath.contains(path)) {
+        if (ignorePath.contains(path) && method != "PATCH") {
             return chain.proceed(request)
         }
 
