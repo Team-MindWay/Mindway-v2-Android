@@ -24,6 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-levels: 30
+          build-tools: 30.0.3
+
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > $GITHUB_WORKSPACE/local.properties
+
       - name: Execute gradle build
         run: ./gradlew build
 
