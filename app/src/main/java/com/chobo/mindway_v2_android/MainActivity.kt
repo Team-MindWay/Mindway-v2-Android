@@ -1,6 +1,8 @@
 package com.chobo.mindway_v2_android
 
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     private val viewmodel: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
 
         var uiState: MainActivityUiState by mutableStateOf( MainActivityUiState.Loading)
