@@ -23,6 +23,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN ,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         var uiState: MainActivityUiState by mutableStateOf( MainActivityUiState.Loading)
 
