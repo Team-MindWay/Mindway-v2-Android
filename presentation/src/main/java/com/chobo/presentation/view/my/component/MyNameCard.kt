@@ -3,6 +3,7 @@ package com.chobo.presentation.view.my.component
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,6 +15,7 @@ import com.chobo.presentation.view.component.icon.OptionIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+@Stable
 @Composable
 fun MyNameCard(
     name: String,

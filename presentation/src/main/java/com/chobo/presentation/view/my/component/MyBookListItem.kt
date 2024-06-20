@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -15,13 +16,7 @@ import com.chobo.presentation.view.component.icon.EditIcon
 import com.chobo.presentation.view.component.icon.TrashCanIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-
-data class MyBookListItemData(
-    val title: String,
-    val writer: String,
-    val trashCanOnclick: () -> Unit,
-)
-
+@Stable
 @Composable
 fun MyBookListItem(
     title: String,
