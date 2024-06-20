@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,6 +27,7 @@ import com.chobo.domain.model.notice.NoticeAllModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+@Stable
 @Composable
 fun HomeNoticeCard(
     modifier: Modifier = Modifier,

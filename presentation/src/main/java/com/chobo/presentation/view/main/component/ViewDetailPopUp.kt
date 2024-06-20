@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,6 +16,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+@Stable
 @Composable
 fun ViewDetailPopUp(
     cancelOnclick: () -> Unit,

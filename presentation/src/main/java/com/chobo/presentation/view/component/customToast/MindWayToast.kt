@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -16,6 +17,7 @@ import com.chobo.presentation.view.component.icon.FailIcon
 import com.chobo.presentation.view.component.icon.SuccessIcon
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
+@Stable
 @Composable
 fun MindWayToast(
     modifier: Modifier = Modifier,
