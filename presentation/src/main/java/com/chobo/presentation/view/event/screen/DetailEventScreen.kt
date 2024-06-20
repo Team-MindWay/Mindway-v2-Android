@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.chobo.domain.model.event.response.GetDetailEventResponseModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.BookImage
@@ -102,7 +102,7 @@ internal fun DetailEventScreen(
                     is GetDetailEventUiState.Loading -> Unit
                     is GetDetailEventUiState.Success -> {
                         Image(
-                            painter = rememberImagePainter(data = getDetailEventUiState.data.img_url),
+                            painter = rememberAsyncImagePainter(model = getDetailEventUiState.data.img_url),
                             contentDescription = "Event Image",
                             modifier = Modifier
                                 .padding(vertical = 20.dp)
