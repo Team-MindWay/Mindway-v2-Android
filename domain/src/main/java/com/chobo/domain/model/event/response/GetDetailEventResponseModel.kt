@@ -1,5 +1,8 @@
 package com.chobo.domain.model.event.response
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class GetDetailEventResponseModel(
     val title: String,
     val content: String,
