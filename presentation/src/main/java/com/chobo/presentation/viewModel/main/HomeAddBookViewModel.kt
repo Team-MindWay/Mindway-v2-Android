@@ -45,13 +45,17 @@ class HomeAddBookViewModel @Inject constructor(
     fun checkButtonOnClick() {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _contentTextStateIsEmpty.value = _contentTextState.value.isEmpty()
-       viewModelScope.launch {
-            bookUploadUseCase(
-                body = BookRequestBodyModel(
-                    title = _titleTextState.value,
-                    plot = _contentTextState.value
-                )
-            ).asResult().collectLatest {  }
-        }
+        if (
+            !_titleTextStateIsEmpty.value
+            && !_contentTextStateIsEmpty.value
+        )
+            viewModelScope.launch {
+                bookUploadUseCase(
+                    body = BookRequestBodyModel(
+                        title = _titleTextState.value,
+                        plot = _contentTextState.value
+                    )
+                ).asResult().collectLatest { }
+            }
     }
 }

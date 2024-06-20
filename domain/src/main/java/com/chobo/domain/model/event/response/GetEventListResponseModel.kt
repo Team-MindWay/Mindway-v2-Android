@@ -1,5 +1,8 @@
 package com.chobo.domain.model.event.response
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class GetEventListResponseModel(
     val id: Long,
     val title: String,

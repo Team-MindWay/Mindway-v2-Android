@@ -38,7 +38,7 @@ import com.chobo.presentation.viewModel.main.HomeAddBookViewModel
 internal fun HomeAddBookRoute(
     modifier: Modifier = Modifier,
     homeAddBookViewModel: HomeAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
 ) {
     val titleTextState by homeAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
@@ -122,7 +122,15 @@ internal fun HomeAddBookScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(R.string.check),
-                        onClick = checkButtonOnClick,
+                        onClick = {
+                            if (
+                                !titleTextStateIsEmpty
+                                && !contentTextStateIsEmpty
+                            ) {
+                                navigateToBack()
+                            }
+                            checkButtonOnClick()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
