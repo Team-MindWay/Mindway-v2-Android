@@ -5,7 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,7 +41,6 @@ internal fun EventScreenRoute(
     val getEventPastListUiState by eventViewModel.getPastEventListUiState.collectAsStateWithLifecycle()
     val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
-    val pagerState = rememberPagerState { 2 }
 
     EventScreen(
         modifier = modifier,
@@ -50,7 +48,6 @@ internal fun EventScreenRoute(
         getEventNowListUiState = getEventNowListUiState,
         getEventPastListUiState = getEventPastListUiState,
         swipeRefreshState = swipeRefreshState,
-        pagerState = pagerState,
         getEventNowList = eventViewModel::getEventNowList,
         getEventPastList = eventViewModel::getEventPastList,
         loadStuff = eventViewModel::loadStuff,
@@ -71,8 +68,6 @@ internal fun EventScreen(
     loadStuff: () -> Unit,
 ) {
     val (storageNowStatus, setStorageNowStatus) = remember { mutableStateOf(EventRequestListStatusType.NOW) }
-    val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST) }
-
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             when (page) {
@@ -81,10 +76,9 @@ internal fun EventScreen(
             }
         }
     }
-
     LaunchedEffect(Unit) {
         getEventNowList(storageNowStatus.name)
-        getEventPastList(storagePastStatus.name)
+        getEventPastList(EventRequestListStatusType.PAST.name)
     }
 
     MindWayAndroidTheme { colors, _ ->
@@ -92,10 +86,9 @@ internal fun EventScreen(
             state = swipeRefreshState,
             onRefresh = {
                 loadStuff()
-                if (storageNowStatus == EventRequestListStatusType.PAST) {
-                    getEventPastList(storagePastStatus.name)
-                } else {
-                    getEventNowList(storageNowStatus.name)
+                when (storageNowStatus) {
+                    EventRequestListStatusType.NOW -> getEventNowList(storageNowStatus.name)
+                    EventRequestListStatusType.PAST -> getEventPastList(EventRequestListStatusType.PAST.name)
                 }
             }
         ) {
