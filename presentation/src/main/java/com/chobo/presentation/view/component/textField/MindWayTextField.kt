@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ fun MindWayTextField(
     emptyErrorMessage: String,
     isError: Boolean,
     lengthLimit: Int = 0,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     updateTextValue: (String) -> Unit,
 ) {
     val lengthCheck = remember {
@@ -100,6 +102,7 @@ fun MindWayTextField(
                                             updateTextValue(newText)
                                         }
                                     },
+                                    keyboardOptions = keyboardOptions,
                                     value = textState,
                                     textStyle = typography.bodySmall.copy(
                                         fontWeight = FontWeight.Normal,

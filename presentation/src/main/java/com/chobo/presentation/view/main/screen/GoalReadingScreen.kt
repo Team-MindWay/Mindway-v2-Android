@@ -120,7 +120,7 @@ internal fun GoalReadingScreen(
     navigateToHomeViewDetail: (Long) -> Unit,
     loadStuff: () -> Unit,
     getBookList: () -> Unit,
-    getWeekendGoal: () -> Unit
+    getWeekendGoal: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         getBookList()
@@ -136,7 +136,10 @@ internal fun GoalReadingScreen(
             GoalReadingBottomSheet(
                 isError = goalBookReadSettingIsEmpty,
                 textState = goalBookReadSetting,
-                onclick = goalBookReadSettingOnClick,
+                onclick = {
+                    goalBookReadSettingOnClick()
+                    coroutineScope.launch { sheetState.hide() }
+                },
                 updateTextValue = updateGoalBookReadSetting
             )
         },
@@ -170,18 +173,21 @@ internal fun GoalReadingScreen(
                                         tint = MindWayColor.Black
                                     )
                                 }
+
                                 is GetWeekendGoalUiState.Fail -> {
                                     PlusIcon(
                                         modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                         tint = MindWayColor.Black
                                     )
                                 }
+
                                 is GetWeekendGoalUiState.Loading -> {
                                     PlusIcon(
                                         modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                         tint = MindWayColor.Black
                                     )
                                 }
+
                                 is GetWeekendGoalUiState.Success -> {
                                     PlusIcon(tint = MindWayColor.GRAY400)
                                 }
@@ -219,23 +225,23 @@ internal fun GoalReadingScreen(
                                             )
                                         }
 
-                                    is GetWeekendGoalUiState.Fail -> {
-                                        GoalReadingChart(
-                                            isHasData = false,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(180.dp),
-                                        )
-                                    }
+                                        is GetWeekendGoalUiState.Fail -> {
+                                            GoalReadingChart(
+                                                isHasData = false,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(180.dp),
+                                            )
+                                        }
 
-                                    is GetWeekendGoalUiState.Loading -> {
-                                        GoalReadingChart(
-                                            isHasData = false,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(180.dp),
-                                        )
-                                    }
+                                        is GetWeekendGoalUiState.Loading -> {
+                                            GoalReadingChart(
+                                                isHasData = false,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(180.dp),
+                                            )
+                                        }
 
                                         is GetWeekendGoalUiState.Success -> {
                                             GoalReadingChart(
@@ -246,7 +252,10 @@ internal fun GoalReadingScreen(
                                                     .height(180.dp),
                                             )
                                             Column(
-                                                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    8.dp,
+                                                    Alignment.CenterVertically
+                                                ),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                                 modifier = modifier
                                                     .shadow(
@@ -271,7 +280,7 @@ internal fun GoalReadingScreen(
                                     is GetBookListUiState.Fail -> Unit
                                     is GetBookListUiState.Loading -> Unit
                                     is GetBookListUiState.Success -> {
-                                        items(getBookListUiState.data) { item ->
+                                        items(getBookListUiState.data.reversed()) { item ->
                                             GoalReadingListOfBooksReadItem(
                                                 data = item,
                                                 onClick = navigateToHomeViewDetail,

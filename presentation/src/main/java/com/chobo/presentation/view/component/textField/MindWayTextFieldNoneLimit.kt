@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ fun MindWayTextFieldNoneLimit(
     placeholder: String,
     emptyErrorMessage: String,
     isError: Boolean,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     updateTextValue: (String) -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
@@ -71,6 +73,7 @@ fun MindWayTextFieldNoneLimit(
                                     onValueChange = { newText ->
                                         updateTextValue(newText)
                                     },
+                                    keyboardOptions = keyboardOptions,
                                     value = textState,
                                     textStyle = typography.bodySmall.copy(
                                         fontWeight = FontWeight.Normal,

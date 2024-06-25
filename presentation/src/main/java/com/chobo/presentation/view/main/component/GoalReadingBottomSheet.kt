@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -20,6 +21,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
@@ -89,7 +91,8 @@ fun GoalReadingBottomSheet(
                             verticalAlignment = Alignment.Top,
                         ) {
                             val now = LocalDateTime.now()
-                            val startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+                            val startOfWeek =
+                                now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
                             val endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
 
                             Text(
@@ -108,18 +111,22 @@ fun GoalReadingBottomSheet(
                         title = stringResource(id = R.string.goal_reading),
                         textState = textState,
                         placeholder = "권",
+                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                         emptyErrorMessage = stringResource(R.string.goal_reading_error),
-                        updateTextValue = updateTextValue,
+                        updateTextValue = { it ->
+                            if (it.length <= 2 && it.all { it.isDigit() }) {
+                                updateTextValue(it)
+                            }
+                        },
                         isError = isError,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(119.dp),
                     )
                 }
                 MindWayButton(
                     text = stringResource(id = R.string.check),
                     onClick = onclick,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
                 )
             }
         }
