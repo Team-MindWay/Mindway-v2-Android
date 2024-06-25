@@ -280,7 +280,7 @@ internal fun GoalReadingScreen(
                                     is GetBookListUiState.Fail -> Unit
                                     is GetBookListUiState.Loading -> Unit
                                     is GetBookListUiState.Success -> {
-                                        items(getBookListUiState.data) { item ->
+                                        items(getBookListUiState.data.reversed()) { item ->
                                             GoalReadingListOfBooksReadItem(
                                                 data = item,
                                                 onClick = navigateToHomeViewDetail,
