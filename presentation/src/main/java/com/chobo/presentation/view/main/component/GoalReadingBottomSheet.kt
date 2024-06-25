@@ -113,21 +113,20 @@ fun GoalReadingBottomSheet(
                         placeholder = "권",
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                         emptyErrorMessage = stringResource(R.string.goal_reading_error),
-                        updateTextValue = {
+                        updateTextValue = { it ->
                             if (it.length <= 2 && it.all { it.isDigit() }) {
                                 updateTextValue(it)
                             }
                         },
                         isError = isError,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(119.dp),
                     )
                 }
                 MindWayButton(
                     text = stringResource(id = R.string.check),
                     onClick = onclick,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
                 )
             }
         }
