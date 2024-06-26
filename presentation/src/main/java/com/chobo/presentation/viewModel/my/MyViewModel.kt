@@ -50,7 +50,7 @@ class MyViewModel @Inject constructor(
         myBookItem = book
     }
 
-    fun showToast() {
+    private fun showToast() {
         _isToastVisible.value = true
         viewModelScope.launch {
             delay(2000)
@@ -58,7 +58,7 @@ class MyViewModel @Inject constructor(
         }
     }
 
-    fun getMyInformation() = viewModelScope.launch {
+    private fun getMyInformation() = viewModelScope.launch {
         getMyInformationUseCase()
             .asResult()
             .collectLatest { result ->
