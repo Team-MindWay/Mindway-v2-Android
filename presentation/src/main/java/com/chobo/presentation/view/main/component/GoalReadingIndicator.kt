@@ -21,7 +21,9 @@ fun GoalReadingIndicator(
     numBooksRead: Int,
     goalBookRead: Int
 ) {
-    val readProgress: (Int, Int) -> Int = { limit, input -> if (input < limit) input else limit }
+    val readProgress: (Int, Int) -> Int =
+        { limit, input -> if (input < limit) input else limit }
+
     MindWayAndroidTheme { colors, typography ->
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -51,7 +53,10 @@ fun GoalReadingIndicator(
                     textAlign = TextAlign.Center,
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        2.dp,
+                        Alignment.CenterHorizontally
+                    ),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.height(30.dp),
                 ) {

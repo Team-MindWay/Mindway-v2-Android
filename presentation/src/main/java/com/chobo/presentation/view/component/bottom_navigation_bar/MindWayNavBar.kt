@@ -36,12 +36,7 @@ fun MindWayNavBar(
                 .background(colors.WHITE)
                 .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 20.dp),
         ) {
-            listOf(
-                HOME,
-                EVENT,
-                BOOKS,
-                MY
-            ).forEach { item ->
+            MindWayNavBarItemType.values().forEach { item ->
                 MindWayNavBarItem(
                     colors = if (currentDestination != item) colors.GRAY400 else colors.Black,
                     text = when (item) {
@@ -103,6 +98,6 @@ fun MindWayNavBarPre() {
     }
     MindWayNavBar(
         currentDestination = topDestination,
-        setCurrentDestination = {  }
+        setCurrentDestination = { }
     )
 }

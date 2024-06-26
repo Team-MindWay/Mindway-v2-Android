@@ -67,6 +67,7 @@ internal fun HomeScreen(
         getRank()
         getWeekendGoal()
     }
+
     MindWayAndroidTheme { colors, _ ->
         Column {
             MindWayTopAppBar(startIcon = { LogoIcon() })

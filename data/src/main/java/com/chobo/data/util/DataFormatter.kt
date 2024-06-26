@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @SuppressLint("SimpleDateFormat")
-fun String.toDate(): Date{
+fun String.toDate(): Date {
     kotlin.runCatching {
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(this)!!
     }.onSuccess {
@@ -16,6 +16,6 @@ fun String.toDate(): Date{
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Long.toMindWayDate(): Date{
+fun Long.toMindWayDate(): Date {
     return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(this).toDate()
 }
