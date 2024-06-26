@@ -13,6 +13,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
 fun BookTabRowItem(
+    modifier: Modifier = Modifier,
     tabName: String,
     onClick: () -> Unit,
     isCurrentIndex: Boolean,
@@ -20,7 +21,7 @@ fun BookTabRowItem(
     MindWayAndroidTheme { colors, typography ->
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
+            modifier = modifier
                 .padding(8.dp)
                 .clickableSingle(onClick = onClick)
         ) {

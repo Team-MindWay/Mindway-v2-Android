@@ -19,6 +19,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Stable
 @Composable
 fun ViewDetailPopUp(
+    modifier: Modifier = Modifier,
     cancelOnclick: () -> Unit,
     checkOnclick: () -> Unit,
 ) {
@@ -26,8 +27,7 @@ fun ViewDetailPopUp(
         Column(
             verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .height(152.dp)
+            modifier = modifier
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)

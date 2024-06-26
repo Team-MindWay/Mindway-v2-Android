@@ -13,13 +13,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.recommend.response.RecommendListResponseAllModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+
 @Composable
-fun BookListItem(data: RecommendListResponseAllModel) {
+fun BookListItem(
+    modifier: Modifier = Modifier,
+    data: RecommendListResponseAllModel
+) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .shadow(
                     elevation = 20.dp,

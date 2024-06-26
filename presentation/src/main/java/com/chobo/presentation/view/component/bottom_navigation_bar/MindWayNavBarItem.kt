@@ -25,10 +25,11 @@ fun MindWayNavBarItem(
     MindWayAndroidTheme { _, typography ->
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier,
         ) {
             icon()
-            Spacer(modifier = modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = text,
                 style = typography.labelLarge,

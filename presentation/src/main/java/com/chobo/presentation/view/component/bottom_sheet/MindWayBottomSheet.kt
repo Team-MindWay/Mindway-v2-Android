@@ -22,6 +22,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Stable
 @Composable
 fun MindWayBottomSheet(
+    modifier: Modifier = Modifier,
     topText: String,
     bottomText: String,
     topOnClick: () -> Unit,
@@ -31,7 +32,7 @@ fun MindWayBottomSheet(
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .background(
                     color = colors.WHITE,
@@ -41,10 +42,8 @@ fun MindWayBottomSheet(
                     )
                 )
                 .padding(
-                    start = 24.dp,
-                    top = 28.dp,
-                    end = 24.dp,
-                    bottom = 48.dp
+                    horizontal = 24.dp,
+                    vertical = 28.dp,
                 )
         ) {
             Text(

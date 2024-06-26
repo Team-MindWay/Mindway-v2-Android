@@ -18,6 +18,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Stable
 @Composable
 fun MyNameCard(
+    modifier: Modifier = Modifier,
     name: String,
     onClick: () -> Unit
 ) {
@@ -25,7 +26,7 @@ fun MyNameCard(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(
                     top = 60.dp,

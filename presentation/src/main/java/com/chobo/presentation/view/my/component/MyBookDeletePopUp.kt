@@ -25,6 +25,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Stable
 @Composable
 fun MyBookDeletePopUp(
+    modifier: Modifier = Modifier,
     title: String,
     cancelOnclick: () -> Unit,
     checkOnclick: () -> Unit,
@@ -33,7 +34,7 @@ fun MyBookDeletePopUp(
         Column(
             verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
+            modifier = modifier
                 .background(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
