@@ -201,44 +201,28 @@ fun MyScreen(
                     }
                 }
             }
-            if (isCommunicationSuccess) {
-                AnimatedVisibility(
-                    visible = isToastVisible,
-                    enter = slideInVertically(
-                        initialOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    exit = slideOutVertically(
-                        targetOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .offset(y = (-50).dp)
-                        .padding(horizontal = 24.dp),
-                ) {
+            AnimatedVisibility(
+                visible = isToastVisible,
+                enter = slideInVertically(
+                    initialOffsetY = { it + 110 },
+                    animationSpec = tween(durationMillis = 500)
+                ),
+                exit = slideOutVertically(
+                    targetOffsetY = { it + 110 },
+                    animationSpec = tween(durationMillis = 500)
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-50).dp)
+                    .padding(horizontal = 24.dp),
+            ) {
+                if (isCommunicationSuccess) {
                     MindWayToast(
                         isSuccess = false,
                         text = stringResource(R.string.order_delete_fail),
                         modifier = Modifier.fillMaxWidth()
                     )
-                }
-            } else {
-                AnimatedVisibility(
-                    visible = isToastVisible,
-                    enter = slideInVertically(
-                        initialOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    exit = slideOutVertically(
-                        targetOffsetY = { it + 110 },
-                        animationSpec = tween(durationMillis = 500)
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .offset(y = (-50).dp)
-                        .padding(horizontal = 24.dp),
-                ) {
+                } else {
                     MindWayToast(
                         isSuccess = true,
                         text = stringResource(R.string.order_delete_success),

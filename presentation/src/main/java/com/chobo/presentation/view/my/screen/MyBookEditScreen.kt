@@ -14,10 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -34,38 +33,19 @@ import com.chobo.presentation.view.component.multipleEventsCutterManager.clickab
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 import com.chobo.presentation.viewModel.my.MyViewModel
 
 @Composable
 internal fun MyBookEditRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
-    val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
-    val writeTextState by myBookEditViewModel.writeTextState.collectAsStateWithLifecycle()
-    val linkTextState by myBookEditViewModel.linkTextState.collectAsStateWithLifecycle()
-    val titleTextStateIsEmpty by myBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
-    val writeTextStateIsEmpty by myBookEditViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
-    val linkTextStateIsEmpty by myBookEditViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
     val myBookItem = myViewModel.myBookItem
-    val focusManager = LocalFocusManager.current
 
     MyBookEditScreen(
         modifier = modifier,
-        focusManager = focusManager,
         myBookItem = myBookItem,
-        titleTextState = titleTextState,
-        writeTextState = writeTextState,
-        linkTextState = linkTextState,
-        titleTextStateIsEmpty = titleTextStateIsEmpty,
-        writeTextStateIsEmpty = writeTextStateIsEmpty,
-        linkTextStateIsEmpty = linkTextStateIsEmpty,
-        updateTitleTextState = myBookEditViewModel::updateTitleTextState,
-        updateWriteTextState = myBookEditViewModel::updateWriteTextState,
-        updateLinkTextState = myBookEditViewModel::updateLinkTextState,
         orderModifyById = myViewModel::orderModifyById,
         navigateToBack = navigateToBack,
     )
@@ -74,20 +54,18 @@ internal fun MyBookEditRoute(
 @Composable
 internal fun MyBookEditScreen(
     modifier: Modifier = Modifier,
-    focusManager: FocusManager,
     myBookItem: MyBookListModel?,
-    titleTextState: String,
-    writeTextState: String,
-    linkTextState: String,
-    titleTextStateIsEmpty: Boolean,
-    writeTextStateIsEmpty: Boolean,
-    linkTextStateIsEmpty: Boolean,
-    updateTitleTextState: (String) -> Unit,
-    updateWriteTextState: (String) -> Unit,
-    updateLinkTextState: (String) -> Unit,
     orderModifyById: (Long, MyBookListModel) -> Unit,
     navigateToBack: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+    val (titleTextState, updateTitleTextState) = remember { mutableStateOf("") }
+    val (writeTextState, updateWriteTextState) = remember { mutableStateOf("") }
+    val (linkTextState, updateLinkTextState) = remember { mutableStateOf("") }
+    val (titleTextStateIsEmpty, updateTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val (writeTextStateIsEmpty, updateWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val (linkTextStateIsEmpty, updateLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         myBookItem?.let { book ->
             updateTitleTextState(book.title)
@@ -126,7 +104,10 @@ internal fun MyBookEditScreen(
                         textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
+                        updateTextValue = {
+                            updateTitleTextState(it)
+                            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
+                        },
                         isError = titleTextStateIsEmpty
                     )
                     MindWayTextFieldNoneLimit(
@@ -134,7 +115,10 @@ internal fun MyBookEditScreen(
                         textState = writeTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_writer),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
-                        updateTextValue = updateWriteTextState,
+                        updateTextValue = {
+                            updateWriteTextState(it)
+                            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
+                        },
                         isError = writeTextStateIsEmpty
                     )
                     MindWayTextFieldNoneLimit(
@@ -142,7 +126,10 @@ internal fun MyBookEditScreen(
                         textState = linkTextState,
                         placeholder = stringResource(R.string.please_enter_the_link),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_link),
-                        updateTextValue = updateLinkTextState,
+                        updateTextValue = {
+                            updateLinkTextState(it)
+                            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
+                        },
                         isError = linkTextStateIsEmpty
                     )
                     Spacer(modifier = Modifier.weight(1f))

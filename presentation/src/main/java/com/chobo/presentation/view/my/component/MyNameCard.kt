@@ -36,7 +36,7 @@ fun MyNameCard(
                 )
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
@@ -60,7 +60,7 @@ fun MyNameCard(
                     )
                 }
             }
-            OptionIcon(modifier = Modifier.clickableSingle (onClick = onClick))
+            OptionIcon(modifier = Modifier.clickableSingle(onClick = onClick))
         }
     }
 }
