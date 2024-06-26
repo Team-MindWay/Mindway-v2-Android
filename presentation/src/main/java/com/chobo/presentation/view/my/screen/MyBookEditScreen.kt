@@ -34,14 +34,12 @@ import com.chobo.presentation.view.component.multipleEventsCutterManager.clickab
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.my.MyBookEditViewModel
 import com.chobo.presentation.viewModel.my.MyViewModel
 
 @Composable
 internal fun MyBookEditRoute(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    myBookEditViewModel: MyBookEditViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
     val titleTextState by myBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
