@@ -5,7 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,18 +30,16 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun EventScreenRoute(
     modifier: Modifier = Modifier,
+    eventViewModel: EventViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToDetailEvent: (Long) -> Unit,
-    eventViewModel: EventViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
 ) {
     val getEventNowListUiState by eventViewModel.getNowEventListUiState.collectAsStateWithLifecycle()
     val getEventPastListUiState by eventViewModel.getPastEventListUiState.collectAsStateWithLifecycle()
     val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
-    val pagerState = rememberPagerState { 2 }
 
     EventScreen(
         modifier = modifier,
@@ -50,7 +47,6 @@ internal fun EventScreenRoute(
         getEventNowListUiState = getEventNowListUiState,
         getEventPastListUiState = getEventPastListUiState,
         swipeRefreshState = swipeRefreshState,
-        pagerState = pagerState,
         getEventNowList = eventViewModel::getEventNowList,
         getEventPastList = eventViewModel::getEventPastList,
         loadStuff = eventViewModel::loadStuff,
@@ -64,15 +60,13 @@ internal fun EventScreen(
     getEventNowListUiState: GetNowEventListUiState,
     getEventPastListUiState: GetPastEventListUiState,
     swipeRefreshState: SwipeRefreshState,
-    pagerState: PagerState,
     navigateToDetailEvent: (Long) -> Unit,
     getEventNowList: (String) -> Unit,
     getEventPastList: (String) -> Unit,
     loadStuff: () -> Unit,
 ) {
+    val pagerState = rememberPagerState { 2 }
     val (storageNowStatus, setStorageNowStatus) = remember { mutableStateOf(EventRequestListStatusType.NOW) }
-    val storagePastStatus by remember { mutableStateOf(EventRequestListStatusType.PAST) }
-
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             when (page) {
@@ -81,10 +75,9 @@ internal fun EventScreen(
             }
         }
     }
-
     LaunchedEffect(Unit) {
         getEventNowList(storageNowStatus.name)
-        getEventPastList(storagePastStatus.name)
+        getEventPastList(EventRequestListStatusType.PAST.name)
     }
 
     MindWayAndroidTheme { colors, _ ->
@@ -92,10 +85,9 @@ internal fun EventScreen(
             state = swipeRefreshState,
             onRefresh = {
                 loadStuff()
-                if (storageNowStatus == EventRequestListStatusType.PAST) {
-                    getEventPastList(storagePastStatus.name)
-                } else {
-                    getEventNowList(storageNowStatus.name)
+                when (storageNowStatus) {
+                    EventRequestListStatusType.NOW -> getEventNowList(storageNowStatus.name)
+                    EventRequestListStatusType.PAST -> getEventPastList(EventRequestListStatusType.PAST.name)
                 }
             }
         ) {
@@ -115,6 +107,7 @@ internal fun EventScreen(
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
+
                             is GetNowEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
@@ -122,6 +115,7 @@ internal fun EventScreen(
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
+
                             is GetNowEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
@@ -129,25 +123,27 @@ internal fun EventScreen(
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
+
                             is GetNowEventListUiState.Success -> {
-                                    EventContent(
-                                        content = stringResource(R.string.is_no_ongoing_event),
-                                        eventDataList = getEventNowListUiState.getEventListResponse,
-                                        eventDataListIsEmpty = true,
-                                        navigateToDetailEvent = navigateToDetailEvent,
-                                    )
+                                EventContent(
+                                    content = stringResource(R.string.is_no_ongoing_event),
+                                    eventDataList = getEventNowListUiState.getEventListResponse,
+                                    eventDataListIsEmpty = true,
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                )
                             }
                         }
                     },
                     pastEvent = {
                         when (getEventPastListUiState) {
-                         GetPastEventListUiState.Empty -> {
+                            GetPastEventListUiState.Empty -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
                                     navigateToDetailEvent = navigateToDetailEvent
                                 )
                             }
+
                             is GetPastEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
@@ -155,6 +151,7 @@ internal fun EventScreen(
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
+
                             is GetPastEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
@@ -162,13 +159,14 @@ internal fun EventScreen(
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
+
                             is GetPastEventListUiState.Success -> {
-                                    EventContent(
-                                        content = stringResource(R.string.is_no_past_event),
-                                        eventDataList = getEventPastListUiState.getEventListResponse,
-                                        eventDataListIsEmpty = true,
-                                        navigateToDetailEvent = navigateToDetailEvent,
-                                    )
+                                EventContent(
+                                    content = stringResource(R.string.is_no_past_event),
+                                    eventDataList = getEventPastListUiState.getEventListResponse,
+                                    eventDataListIsEmpty = true,
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                )
                             }
                         }
                     }

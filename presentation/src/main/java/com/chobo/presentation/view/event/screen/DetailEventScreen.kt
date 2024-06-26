@@ -80,7 +80,6 @@ internal fun DetailEventScreen(
             ) {
                 when (getDetailEventUiState) {
                     is GetDetailEventUiState.Fail -> {
-                        val fail = getDetailEventUiState.exception
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
