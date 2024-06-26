@@ -45,7 +45,6 @@ internal fun HomeAddBookRoute(
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength
-    val focusManager = LocalFocusManager.current
 
     HomeAddBookScreen(
         modifier = modifier,
@@ -55,7 +54,6 @@ internal fun HomeAddBookRoute(
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
         contentTextMaxLength = contentTextMaxLength,
-        focusManager = focusManager,
         updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
         updateContentTextState = homeAddBookViewModel::updateContentTextState,
         checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick
@@ -71,11 +69,12 @@ internal fun HomeAddBookScreen(
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
     contentTextMaxLength: Int,
-    focusManager: FocusManager,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
     checkButtonOnClick: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {
             Column(
