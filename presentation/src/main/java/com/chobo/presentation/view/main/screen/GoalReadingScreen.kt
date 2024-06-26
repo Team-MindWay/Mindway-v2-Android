@@ -63,9 +63,9 @@ import kotlinx.coroutines.launch
 internal fun GoalReadingRoute(
     modifier: Modifier = Modifier,
     goalReadingViewModel: GoalReadingViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    navigateToHomeViewDetail: (Long) -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: (Long) -> Unit,
 ) {
     val getWeekendGoalUiState by goalReadingViewModel.getWeekendGoalUiState.collectAsStateWithLifecycle()
     val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
@@ -115,9 +115,9 @@ internal fun GoalReadingScreen(
     focusManager: FocusManager,
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
+    navigateToHomeViewDetail: (Long) -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    navigateToHomeViewDetail: (Long) -> Unit,
     loadStuff: () -> Unit,
     getBookList: () -> Unit,
     getWeekendGoal: () -> Unit,

@@ -76,6 +76,7 @@ internal fun HomeEditBookScreen(
     LaunchedEffect(Unit) {
         getBookById(id)
     }
+
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(

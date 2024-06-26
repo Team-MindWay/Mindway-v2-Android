@@ -8,7 +8,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +23,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -58,7 +56,6 @@ import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -73,42 +70,37 @@ internal fun BookRoute(
     val isToastVisible by bookScreenViewModel.isToastVisible.collectAsStateWithLifecycle()
     val orderUploadUiState by bookAddBookScreen.orderUploadUiState.collectAsStateWithLifecycle()
     val swipeRefreshLoading by bookScreenViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
-    val pagerState = rememberPagerState(pageCount = { 2 })
-    val scrollState = rememberScrollState()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
-    val coroutineScope = rememberCoroutineScope()
 
     BookScreen(
         modifier = modifier,
+        isToastVisible = isToastVisible,
         novelDataList = novelDataList,
         essayDataList = essayDataList,
-        isToastVisible = isToastVisible,
-        pagerState = pagerState,
-        scrollState = scrollState,
-        coroutineScope = coroutineScope,
         swipeRefreshState = swipeRefreshState,
         orderUploadUiState = orderUploadUiState,
         getRecommendBook = bookScreenViewModel::getRecommendBook,
         showToast = bookScreenViewModel::showToast,
-        navigateToBookAddBook = navigateToBookAddBook
+        navigateToBookAddBook = navigateToBookAddBook,
     )
 }
 
 @Composable
 internal fun BookScreen(
     modifier: Modifier = Modifier,
+    isToastVisible: Boolean,
     novelDataList: GetRecommendBookUiState,
     essayDataList: GetRecommendBookUiState,
-    isToastVisible: Boolean,
-    pagerState: PagerState,
-    scrollState: ScrollState,
-    coroutineScope: CoroutineScope,
     swipeRefreshState: SwipeRefreshState,
     orderUploadUiState: OrderUploadUiState,
     getRecommendBook: (OrderRequestBookType) -> Unit,
     showToast: () -> Unit,
     navigateToBookAddBook: () -> Unit,
 ) {
+    val pagerState = rememberPagerState(pageCount = { 2 })
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+
     MindWayAndroidTheme { colors, typography ->
         SwipeRefresh(
             state = swipeRefreshState,
@@ -174,7 +166,10 @@ internal fun BookScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Column(
-                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    20.dp,
+                                                    Alignment.Top
+                                                ),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                             ) {
                                                 BookImage()
@@ -196,7 +191,10 @@ internal fun BookScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Column(
-                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    20.dp,
+                                                    Alignment.Top
+                                                ),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                             ) {
                                                 BookImage()
@@ -209,9 +207,13 @@ internal fun BookScreen(
                                             }
                                         }
                                     }
+
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
-                                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                            verticalArrangement = Arrangement.spacedBy(
+                                                20.dp,
+                                                Alignment.Top
+                                            ),
                                             horizontalAlignment = Alignment.CenterHorizontally,
                                             modifier = Modifier
                                                 .padding(horizontal = 24.dp)
@@ -237,7 +239,10 @@ internal fun BookScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Column(
-                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    20.dp,
+                                                    Alignment.Top
+                                                ),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                             ) {
                                                 BookImage()
@@ -259,7 +264,10 @@ internal fun BookScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Column(
-                                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    20.dp,
+                                                    Alignment.Top
+                                                ),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                             ) {
                                                 BookImage()
@@ -272,9 +280,13 @@ internal fun BookScreen(
                                             }
                                         }
                                     }
+
                                     is GetRecommendBookUiState.Success -> {
                                         LazyColumn(
-                                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                            verticalArrangement = Arrangement.spacedBy(
+                                                20.dp,
+                                                Alignment.Top
+                                            ),
                                             horizontalAlignment = Alignment.CenterHorizontally,
                                             modifier = Modifier
                                                 .padding(horizontal = 24.dp)

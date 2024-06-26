@@ -24,17 +24,6 @@ import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-internal fun MindWayIntroRoute(
-    modifier: Modifier = Modifier,
-    navigateToBack: () -> Unit
-) {
-    MindWayIntroScreen(
-        modifier = modifier,
-        navigateToBack = navigateToBack
-    )
-}
-
-@Composable
 internal fun MindWayIntroScreen(
     modifier: Modifier = Modifier,
     navigateToBack: () -> Unit
@@ -112,5 +101,5 @@ internal fun MindWayIntroScreen(
 @Preview(showBackground = true)
 @Composable
 fun MindWayIntroScreenPreview() {
-    MindWayIntroRoute(navigateToBack = {})
+    MindWayIntroScreen(navigateToBack = {})
 }

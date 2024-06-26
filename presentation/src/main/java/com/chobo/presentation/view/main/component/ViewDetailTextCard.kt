@@ -16,6 +16,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Stable
 @Composable
 fun ViewDetailTextCard(
+    modifier: Modifier = Modifier,
     title: String,
     content: String,
 ) {
@@ -23,6 +24,7 @@ fun ViewDetailTextCard(
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
+            modifier = modifier
         ) {
             Text(
                 text = title,

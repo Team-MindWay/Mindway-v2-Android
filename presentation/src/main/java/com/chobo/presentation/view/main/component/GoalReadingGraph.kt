@@ -27,6 +27,7 @@ fun GoalReadingGraph(
     MindWayAndroidTheme { colors, typography ->
         val height = ((27 * numBooksRead) / (maxBooksRead.ifZeroThenOne()) + 1).toFloat().dp
         val graphColor = if (!isCurrentDate) colors.GRAY200 else colors.MAIN
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Bottom),

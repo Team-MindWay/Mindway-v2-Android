@@ -50,12 +50,12 @@ internal fun ViewDetailRoute(
 
     ViewDetailScreen(
         modifier = modifier,
-        getBookByIdUiState = getBookByIdUiState,
         id = id,
+        getBookByIdUiState = getBookByIdUiState,
         getBookById = viewDetailViewModel::getBookById,
         bookDeleteById = viewDetailViewModel::bookDeleteById,
-        navigateToBack = navigateToBack,
         navigateToHomeEditBook = navigateToHomeEditBook,
+        navigateToBack = navigateToBack,
     )
 }
 
@@ -63,13 +63,13 @@ internal fun ViewDetailRoute(
 @Composable
 internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
-    getBookByIdUiState: GetBookByIdUiState,
     id: Long,
+    getBookByIdUiState: GetBookByIdUiState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     getBookById: (Long) -> Unit,
     bookDeleteById: (Long) -> Unit,
-    navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     val (isDialogOpen, setIsDialogOpen) = remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(

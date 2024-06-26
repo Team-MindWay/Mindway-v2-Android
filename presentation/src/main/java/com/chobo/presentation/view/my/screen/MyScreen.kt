@@ -68,7 +68,7 @@ internal fun MyRoute(
         setBook = myViewModel::setBook,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
-        )
+    )
 }
 
 @Composable
@@ -78,9 +78,9 @@ fun MyScreen(
     getMyBookListUiState: GetMyBookListUiState,
     isCommunicationSuccess: Boolean,
     isToastVisible: Boolean,
+    setBook: (MyBookListModel) -> Unit,
     orderDeleteById: (Long) -> Unit,
     getMyBookList: () -> Unit,
-    setBook: (MyBookListModel) -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
@@ -149,6 +149,7 @@ fun MyScreen(
                             }
                         }
                     }
+
                     is GetMyBookListUiState.Fail -> {
                         Box(
                             modifier = Modifier
@@ -169,6 +170,7 @@ fun MyScreen(
                             }
                         }
                     }
+
                     is GetMyBookListUiState.Loading -> Unit
                     is GetMyBookListUiState.Success -> {
                         LazyColumn(

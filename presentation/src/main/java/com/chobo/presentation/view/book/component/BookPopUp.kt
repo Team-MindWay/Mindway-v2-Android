@@ -18,12 +18,15 @@ import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
-fun BookPopUp(onDismiss: () -> Unit) {
+fun BookPopUp(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit
+) {
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
+            modifier = modifier
                 .shadow(
                     elevation = 20.dp,
                     spotColor = colors.CardShadow,
@@ -59,5 +62,5 @@ fun BookPopUp(onDismiss: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun BookPopUpPreview() {
-    BookPopUp(onDismiss = {  })
+    BookPopUp(onDismiss = { })
 }

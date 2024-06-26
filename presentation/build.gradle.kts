@@ -84,6 +84,8 @@ dependencies {
     implementation(Dependency.Gauth.GAUTH)
 
     implementation(Dependency.Google.SWIPE_REFRESH)
+
+    implementation(Dependency.Compose.COMPOSE_IMMUTABLELIST)
 }
 
 fun getApiKey(propertyKey: String): String {

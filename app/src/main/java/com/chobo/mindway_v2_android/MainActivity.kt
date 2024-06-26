@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
-import com.chobo.mindway_v2_android.ui.theme.Mindwayv2AndroidTheme
 import com.chobo.presentation.view.component.combinationView.CombinationViewRoute
 import com.chobo.presentation.view.login.navigation.loginRoute
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,11 +23,11 @@ class MainActivity : ComponentActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN ,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        var uiState: MainActivityUiState by mutableStateOf( MainActivityUiState.Loading)
+        var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
 
         lifecycleScope.launch {
             viewmodel.uiState
@@ -50,10 +49,7 @@ class MainActivity : ComponentActivity() {
                 is MainActivityUiState.Fail -> loginRoute
                 else -> loginRoute
             }
-
-            Mindwayv2AndroidTheme {
-                MindWayNavHost(startDestination = startDestination)
-            }
+            MindWayNavHost(startDestination = startDestination)
         }
     }
 }

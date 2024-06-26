@@ -12,6 +12,7 @@ object Versions {
     const val COMPOSE_BOM = "2023.03.00"
     const val COMPOSE_NAVIGATION = "2.7.6"
     const val COMPOSE_FOUNDATION = "1.6.1"
+    const val COMPOSE_IMMUTABLELIST = "0.3.4"
 
     const val LIFECYCLE = "2.3.1"
     const val COMPOSE_LIFECYCLE = "2.6.2"

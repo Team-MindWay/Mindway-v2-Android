@@ -33,12 +33,12 @@ import okhttp3.internal.immutableListOf
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
-    getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0,0,0,0,0,0,0,0,0),
+    getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0, 0, 0, 0, 0, 0, 0, 0, 0),
     onClick: () -> Unit,
 ) {
     val weekList = remember { immutableListOf("월", "화", "수", "목", "금", "토", "일") }
-    val dateList = remember {
-        mutableListOf(
+    val dateList =
+        immutableListOf(
             getWeekendGoalModel.mon,
             getWeekendGoalModel.tue,
             getWeekendGoalModel.wed,
@@ -47,9 +47,8 @@ fun HomeGoalReadingChart(
             getWeekendGoalModel.sat,
             getWeekendGoalModel.sun
         )
-    }
-    val maxRead = remember { dateList.max() }
-    val currentDate = getTodayDayOfWeek()
+    val maxRead = dateList.max()
+    val currentDate = remember { getTodayDayOfWeek() }
 
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
