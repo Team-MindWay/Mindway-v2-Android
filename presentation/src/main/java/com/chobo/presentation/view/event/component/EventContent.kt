@@ -19,13 +19,15 @@ import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.event.response.GetEventListResponseModel
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun EventContent(
     modifier: Modifier = Modifier,
     content: String,
-    eventDataList: List<GetEventListResponseModel> = listOf(),
     eventDataListIsEmpty: Boolean,
+    eventDataList: ImmutableList<GetEventListResponseModel> = persistentListOf(),
     navigateToDetailEvent: (Long) -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
