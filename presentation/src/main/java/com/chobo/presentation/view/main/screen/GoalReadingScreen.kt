@@ -163,29 +163,15 @@ internal fun GoalReadingScreen(
                         midText = stringResource(R.string.goal_reading),
                         endIcon = {
                             when (getWeekendGoalUiState) {
-                                is GetWeekendGoalUiState.Empty -> {
-                                    PlusIcon(
-                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                        tint = MindWayColor.Black
-                                    )
-                                }
-
-                                is GetWeekendGoalUiState.Fail -> {
-                                    PlusIcon(
-                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                        tint = MindWayColor.Black
-                                    )
-                                }
-
-                                is GetWeekendGoalUiState.Loading -> {
-                                    PlusIcon(
-                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                        tint = MindWayColor.Black
-                                    )
-                                }
-
                                 is GetWeekendGoalUiState.Success -> {
                                     PlusIcon(tint = MindWayColor.GRAY400)
+                                }
+
+                                else -> {
+                                    PlusIcon(
+                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                        tint = MindWayColor.Black
+                                    )
                                 }
                             }
                         }
@@ -212,33 +198,6 @@ internal fun GoalReadingScreen(
                             ) {
                                 item {
                                     when (getWeekendGoalUiState) {
-                                        is GetWeekendGoalUiState.Empty -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-
-                                        is GetWeekendGoalUiState.Fail -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-
-                                        is GetWeekendGoalUiState.Loading -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-
                                         is GetWeekendGoalUiState.Success -> {
                                             GoalReadingChart(
                                                 isHasData = true,
@@ -269,12 +228,18 @@ internal fun GoalReadingScreen(
                                                 PlusIcon(modifier = Modifier.fillMaxSize())
                                             }
                                         }
+
+                                        else -> {
+                                            GoalReadingChart(
+                                                isHasData = false,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(180.dp),
+                                            )
+                                        }
                                     }
                                 }
                                 when (getBookListUiState) {
-                                    is GetBookListUiState.Empty -> Unit
-                                    is GetBookListUiState.Fail -> Unit
-                                    is GetBookListUiState.Loading -> Unit
                                     is GetBookListUiState.Success -> {
                                         items(getBookListUiState.data.reversed()) { item ->
                                             GoalReadingListOfBooksReadItem(
@@ -284,6 +249,8 @@ internal fun GoalReadingScreen(
                                             )
                                         }
                                     }
+
+                                    else -> Unit
                                 }
                             }
                             this@Column.AnimatedVisibility(
