@@ -109,9 +109,8 @@ fun MyScreen(
                 }
                 MyNameCard(
                     name = when (myNameUiState) {
-                        is GetMyInformationUiState.Fail -> ""
-                        is GetMyInformationUiState.Loading -> ""
                         is GetMyInformationUiState.Success -> myNameUiState.data.name
+                        else -> ""
                     },
                     onClick = showSheet,
                 )
