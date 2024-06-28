@@ -36,6 +36,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -77,6 +78,7 @@ internal fun ViewDetailScreen(
         skipHalfExpanded = true
     )
     LaunchedEffect(Unit) {
+        delay(100)
         getBookById(id)
     }
 
