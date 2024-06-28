@@ -181,7 +181,7 @@ fun MyScreen(
                                     vertical = 16.dp
                                 )
                         ) {
-                            items(getMyBookListUiState.data) { item ->
+                            items(getMyBookListUiState.data.reversed()) { item ->
                                 MyBookListItem(
                                     title = item.title,
                                     writer = item.author,
