@@ -6,9 +6,6 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.chobo.presentation.view.component.combinationView.CombinationViewRoute
@@ -27,7 +24,7 @@ class MainActivity : ComponentActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
+        var uiState: MainActivityUiState = MainActivityUiState.Loading
 
         lifecycleScope.launch {
             viewmodel.uiState
@@ -46,9 +43,9 @@ class MainActivity : ComponentActivity() {
 
             val startDestination = when (uiState) {
                 is MainActivityUiState.Success -> CombinationViewRoute
-                is MainActivityUiState.Fail -> loginRoute
                 else -> loginRoute
             }
+
             MindWayNavHost(startDestination = startDestination)
         }
     }
