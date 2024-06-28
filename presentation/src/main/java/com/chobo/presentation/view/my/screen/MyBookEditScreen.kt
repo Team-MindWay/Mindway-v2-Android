@@ -106,7 +106,7 @@ internal fun MyBookEditScreen(
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                         updateTextValue = {
                             updateTitleTextState(it)
-                            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
+                            updateTitleTextStateIsEmpty(false)
                         },
                         isError = titleTextStateIsEmpty
                     )
@@ -117,7 +117,7 @@ internal fun MyBookEditScreen(
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
                         updateTextValue = {
                             updateWriteTextState(it)
-                            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
+                            updateWriteTextStateIsEmpty(false)
                         },
                         isError = writeTextStateIsEmpty
                     )
@@ -128,7 +128,7 @@ internal fun MyBookEditScreen(
                         emptyErrorMessage = stringResource(R.string.please_enter_the_link),
                         updateTextValue = {
                             updateLinkTextState(it)
-                            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
+                            updateLinkTextStateIsEmpty(false)
                         },
                         isError = linkTextStateIsEmpty
                     )
@@ -136,7 +136,15 @@ internal fun MyBookEditScreen(
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
                         onClick = {
-                            if (myBookItem != null)
+                            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
+                            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
+                            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
+                            if (
+                                myBookItem != null
+                                && titleTextState.isNotEmpty()
+                                && writeTextState.isNotEmpty()
+                                && linkTextState.isNotEmpty()
+                            ) {
                                 orderModifyById(
                                     myBookItem.id,
                                     MyBookListModel(
@@ -146,7 +154,8 @@ internal fun MyBookEditScreen(
                                         bookUrl = linkTextState,
                                     )
                                 )
-                            navigateToBack()
+                                navigateToBack()
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
