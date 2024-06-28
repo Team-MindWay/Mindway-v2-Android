@@ -106,6 +106,7 @@ internal fun ViewDetailScreen(
                             checkOnclick = {
                                 setIsDialogOpen(false)
                                 bookDeleteById(id)
+                                navigateToBack()
                             },
                         )
                     }
