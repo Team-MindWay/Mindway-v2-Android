@@ -218,13 +218,13 @@ fun MyScreen(
                 if (isCommunicationSuccess) {
                     MindWayToast(
                         isSuccess = false,
-                        text = stringResource(R.string.order_delete_fail),
+                        text = stringResource(R.string.work_fail),
                         modifier = Modifier.fillMaxWidth()
                     )
                 } else {
                     MindWayToast(
                         isSuccess = true,
-                        text = stringResource(R.string.order_delete_success),
+                        text = stringResource(R.string.work_success),
                         modifier = Modifier.fillMaxWidth()
                     )
                 }

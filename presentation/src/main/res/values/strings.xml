@@ -67,4 +67,6 @@
     <string name="not_essay">등록된 에세이가 없습니다</string>
     <string name="not_book">등록된 도서이 없습니다</string>
     <string name="thereIsNoOrderBook">아직 책을 빌리지 않았어요</string>
+    <string name="work_fail">작업에 실패했어요!</string>
+    <string name="work_success">작업에 성공했어요!</string>
 </resources>
