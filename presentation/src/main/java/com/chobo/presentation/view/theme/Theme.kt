@@ -10,6 +10,6 @@ fun MindWayAndroidTheme(
     colors: ColorTheme = MindWayColor,
     typography: Typography = MindWayTypography,
     content: @Composable (colors: ColorTheme, typography: Typography) -> Unit
-){
+) {
     content(colors, typography)
 }
