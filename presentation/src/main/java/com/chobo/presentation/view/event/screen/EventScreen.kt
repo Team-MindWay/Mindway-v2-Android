@@ -120,7 +120,7 @@ internal fun EventScreen(
                             is GetNowEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataListIsEmpty = false,
+                                    eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                     isLoading = true
                                 )
