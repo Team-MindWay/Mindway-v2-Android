@@ -29,7 +29,7 @@ import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.collections.immutable.toImmutableList
+import okhttp3.internal.toImmutableList
 
 @Composable
 internal fun EventScreenRoute(
@@ -122,6 +122,7 @@ internal fun EventScreen(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = false,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                    isLoading = true
                                 )
                             }
 
@@ -156,8 +157,9 @@ internal fun EventScreen(
                             is GetPastEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
-                                    eventDataListIsEmpty = false,
+                                    eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                    isLoading = true
                                 )
                             }
 
