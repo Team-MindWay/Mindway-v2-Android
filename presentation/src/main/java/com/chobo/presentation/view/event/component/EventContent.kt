@@ -30,8 +30,8 @@ fun EventContent(
     content: String,
     eventDataListIsEmpty: Boolean,
     eventDataList: List<GetEventListResponseModel> = listOf(),
+    isLoading: Boolean = false,
     navigateToDetailEvent: (Long) -> Unit,
-    isLoading: Boolean = false
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (isLoading) {
