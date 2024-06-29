@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
@@ -48,6 +49,7 @@ import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.shimmer.shimmerEffect
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 import com.chobo.presentation.viewModel.book.BookScreenViewModel
@@ -157,7 +159,31 @@ internal fun BookScreen(
                         when (page) {
                             0 -> {
                                 when (novelDataList) {
-                                    is GetRecommendBookUiState.Loading -> Unit
+                                    is GetRecommendBookUiState.Loading -> {
+                                        LazyColumn(
+                                            modifier = Modifier
+                                                .background(
+                                                    color = colors.WHITE,
+                                                    shape = RoundedCornerShape(8.dp)
+                                                )
+                                                .padding(horizontal = 24.dp)
+                                                .fillMaxSize()
+                                        ) {
+                                            items(10) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(150.dp)
+                                                        .padding(vertical = 16.dp)
+                                                        .background(
+                                                            color = colors.WHITE,
+                                                            shape = RoundedCornerShape(8.dp)
+                                                        )
+                                                        .shimmerEffect(shape = RoundedCornerShape(8.dp))
+                                                )
+                                            }
+                                        }
+                                    }
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -230,7 +256,31 @@ internal fun BookScreen(
 
                             1 -> {
                                 when (essayDataList) {
-                                    is GetRecommendBookUiState.Loading -> Unit
+                                    is GetRecommendBookUiState.Loading -> {
+                                        LazyColumn(
+                                            modifier = Modifier
+                                                .background(
+                                                    color = colors.WHITE,
+                                                    shape = RoundedCornerShape(8.dp)
+                                                )
+                                                .padding(horizontal = 24.dp)
+                                                .fillMaxSize()
+                                        ) {
+                                            items(10) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(150.dp)
+                                                        .padding(vertical = 16.dp)
+                                                        .background(
+                                                            color = colors.WHITE,
+                                                            shape = RoundedCornerShape(8.dp)
+                                                        )
+                                                        .shimmerEffect(shape = RoundedCornerShape(8.dp))
+                                                )
+                                            }
+                                        }
+                                    }
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
