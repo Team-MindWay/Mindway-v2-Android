@@ -67,10 +67,18 @@ fun HomeReadersOfTheMonthChart(
                             maxBook = maxBook,
                             modifier = Modifier.weight(72f)
                         )
-
                         if (index < bookKingOfTheMonthData.size - 1) {
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         }
+
+                    }
+                    repeat(3 - bookKingOfTheMonthData.size) {
+                        Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
+                        HomeReadersOfTheMonthGraph(
+                            rankModel = RankModel(name = "", accrue = 0),
+                            maxBook = maxBook,
+                            modifier = Modifier.weight(72f)
+                        )
                     }
                 }
             }
@@ -118,8 +126,7 @@ fun HomeReadersOfTheMonthChartPreview() {
             .width(312.dp),
         bookKingOfTheMonthData = listOf(
             RankModel("나다", 12),
-            RankModel("나다", 2),
-            RankModel("나다", 30),
+            RankModel("나다", 12),
         )
     )
 }
