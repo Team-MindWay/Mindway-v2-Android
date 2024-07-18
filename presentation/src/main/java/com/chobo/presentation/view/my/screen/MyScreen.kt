@@ -64,11 +64,17 @@ internal fun MyRoute(
         isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
         orderDeleteById = myViewModel::orderDeleteById,
-        getMyBookList = myViewModel::getMyBookList,
         setBook = myViewModel::setBook,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
+
+    LaunchedEffect(Unit) {
+        myViewModel.apply {
+            getMyInformation()
+            getMyBookList()
+        }
+    }
 }
 
 @Composable
@@ -80,7 +86,6 @@ fun MyScreen(
     isToastVisible: Boolean,
     setBook: (MyBookListModel) -> Unit,
     orderDeleteById: (Long) -> Unit,
-    getMyBookList: () -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
@@ -88,9 +93,6 @@ fun MyScreen(
     val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
     val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
 
-    LaunchedEffect(Unit) {
-        getMyBookList()
-    }
 
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
