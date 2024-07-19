@@ -36,19 +36,20 @@ class MainActivity : ComponentActivity() {
                     if (it is MainActivityUiState.Success) runCatching { viewmodel.saveLoginToken(it.gAuthLoginResponseModel) }
                 }
         }
+        var startDestination: String = loginRoute
 
-        setContent {
-            installSplashScreen().apply {
-                setKeepOnScreenCondition {
-                    uiState is MainActivityUiState.Loading
-                }
-            }
-
-            val startDestination = when (uiState) {
+        lifecycleScope.launch {
+            when (uiState) {
                 is MainActivityUiState.Success -> CombinationViewRoute
                 is MainActivityUiState.Fail -> loginRoute
                 else -> loginRoute
+            }.also { startDestination = it }
+        }
+        setContent {
+            installSplashScreen().setKeepOnScreenCondition {
+                uiState is MainActivityUiState.Loading
             }
+
             MindWayNavHost(startDestination = startDestination)
         }
     }
