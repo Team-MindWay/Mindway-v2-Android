@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chobo.presentation.view.component.combinationView.CombinationViewRoute
 import com.chobo.presentation.view.login.navigation.loginRoute
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
         lifecycleScope.launch {
             viewmodel.uiState
-                .collect {
+                .collectLatest {
                     uiState = it
                     if (it is MainActivityUiState.Success) runCatching { viewmodel.saveLoginToken(it.gAuthLoginResponseModel) }
                 }
@@ -41,10 +42,10 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             when (uiState) {
                 is MainActivityUiState.Success -> CombinationViewRoute
-                is MainActivityUiState.Fail -> loginRoute
                 else -> loginRoute
             }.also { startDestination = it }
         }
+
         setContent {
             installSplashScreen().setKeepOnScreenCondition {
                 uiState is MainActivityUiState.Loading
