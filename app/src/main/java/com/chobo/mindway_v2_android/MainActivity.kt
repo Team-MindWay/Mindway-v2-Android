@@ -1,6 +1,7 @@
 package com.chobo.mindway_v2_android
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -31,9 +32,11 @@ class MainActivity : ComponentActivity() {
 
         lifecycleScope.launch {
             viewmodel.uiState
-                .collect {
-                    uiState = it
-                    if (it is MainActivityUiState.Success) runCatching { viewmodel.saveLoginToken(it.gAuthLoginResponseModel) }
+                .collect { state ->
+                    uiState = state
+                    if (state is MainActivityUiState.Success) {
+                        runCatching { viewmodel.saveLoginToken(state.gAuthLoginResponseModel) }
+                    } else state is MainActivityUiState.Fail
                 }
         }
 

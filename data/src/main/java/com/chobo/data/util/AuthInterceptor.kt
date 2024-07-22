@@ -26,7 +26,7 @@ class AuthInterceptor @Inject constructor(
         val path = request.url.encodedPath
         val method = request.method
 
-        if (ignorePath.contains(path) && method != "PATCH") {
+        if (ignorePath.contains(path)) {
             return chain.proceed(request)
         }
 
@@ -58,10 +58,6 @@ class AuthInterceptor @Inject constructor(
                     } else throw NeedLoginException()
                 } else {
                     builder.addHeader(name = "Authorization", value = "Bearer $accessToken")
-                }
-                if (method == "PATCH") {
-                    builder.addHeader(name = "refreshToken", value = "Bearer $refreshToken")
-                    Log.d("AuthInterceptor", "Added refreshToken to headers for PATCH")
                 }
             builder.header(name = "Authorization", value = "Bearer $accessToken")
         }

@@ -16,6 +16,6 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun GuathLogout(): Flow<Unit> =
         performApiRequest { authService.gAuthLogout() }
 
-    override suspend fun GuathAccess(): Flow<GAuthLoginResponse> =
-        performApiRequest { authService.gAuthAccess() }
+    override suspend fun GuathAccess(refreshToken: String): Flow<GAuthLoginResponse> =
+        performApiRequest { authService.gAuthAccess(refreshToken = refreshToken) }
 }
