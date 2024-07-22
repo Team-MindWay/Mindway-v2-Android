@@ -34,6 +34,11 @@ class BookScreenViewModel @Inject constructor(
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
+    init {
+        getRecommendBook(type = NOVEL)
+        getRecommendBook(type = ESSAY)
+    }
+
     fun showToast() {
         _isToastVisible.value = true
         viewModelScope.launch {
@@ -54,7 +59,6 @@ class BookScreenViewModel @Inject constructor(
                 when (result) {
                     is Result.Loading -> {
                         targetStateFlow.value = GetRecommendBookUiState.Loading
-                        _swipeRefreshLoading.value = false
                     }
                     is Result.Success -> if (result.data.isEmpty()) {
                         targetStateFlow.value = GetRecommendBookUiState.Empty
@@ -69,10 +73,5 @@ class BookScreenViewModel @Inject constructor(
                     }
                 }
             }
-    }
-
-    init {
-        getRecommendBook(type = NOVEL)
-        getRecommendBook(type = ESSAY)
     }
 }

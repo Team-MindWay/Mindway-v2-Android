@@ -25,9 +25,6 @@ class GoalReadingViewModel @Inject constructor(
     private val getBookListUseCase: GetBookListUseCase,
     private val postGoalRequestUseCase: PostGoalRequestUseCase,
 ) : ViewModel() {
-    private val _swipeRefreshLoading = MutableStateFlow(false)
-    val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
-
     private val _getWeekendGoalUiState = MutableStateFlow<GetWeekendGoalUiState>(GetWeekendGoalUiState.Loading)
     val getWeekendGoalUiState: StateFlow<GetWeekendGoalUiState> = _getWeekendGoalUiState.asStateFlow()
 
@@ -36,6 +33,9 @@ class GoalReadingViewModel @Inject constructor(
 
     private val _goalBookReadSetting = MutableStateFlow("")
     val goalBookReadSetting: StateFlow<String> = _goalBookReadSetting.asStateFlow()
+
+    private val _swipeRefreshLoading = MutableStateFlow(false)
+    val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
 
     private val _goalBookReadSettingIsEmpty = MutableStateFlow(false)
     val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
@@ -46,9 +46,15 @@ class GoalReadingViewModel @Inject constructor(
     private val _isSuccess = MutableStateFlow(false)
     val isSuccess: StateFlow<Boolean> = _isSuccess.asStateFlow()
 
+    init {
+        loadStuff()
+        getBookList()
+        getWeekendGoal()
+    }
+
     fun loadStuff() {
+        _swipeRefreshLoading.value = true
         viewModelScope.launch {
-            _swipeRefreshLoading.value = true
             delay(1000L)
             _swipeRefreshLoading.value = false
         }
@@ -93,7 +99,10 @@ class GoalReadingViewModel @Inject constructor(
 
     fun goalBookReadSettingOnClick() {
         _goalBookReadSettingIsEmpty.value = _goalBookReadSetting.value.isEmpty()
-        if (!_goalBookReadSettingIsEmpty.value && _goalBookReadSetting.value.toIntOrNull() != null) {
+        if (
+            !_goalBookReadSettingIsEmpty.value
+            && _goalBookReadSetting.value.toIntOrNull() != null
+            ) {
             viewModelScope.launch {
                 postGoalRequestUseCase(
                     body = PostGoalRequestModel(goal_count = _goalBookReadSetting.value.toInt())
@@ -110,11 +119,5 @@ class GoalReadingViewModel @Inject constructor(
             delay(2000)
             _isToastVisible.value = false
         }
-    }
-
-    init {
-        loadStuff()
-        getBookList()
-        getWeekendGoal()
     }
 }

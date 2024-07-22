@@ -55,7 +55,9 @@ class HomeAddBookViewModel @Inject constructor(
                         title = _titleTextState.value,
                         plot = _contentTextState.value
                     )
-                ).asResult().collectLatest { }
+                )
+                    .asResult()
+                    .collectLatest { }
             }
     }
 }

@@ -33,6 +33,7 @@ class HomeBookEditViewModel @Inject constructor(
     val plotTextStateIsEmpty: StateFlow<Boolean> = _plotTextStateIsEmpty.asStateFlow()
 
     val plotTextMaxLength = 1000
+
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
         _titleTextState.value = input
@@ -53,6 +54,7 @@ class HomeBookEditViewModel @Inject constructor(
                         _titleTextState.value = result.data.title
                         _plotTextState.value = result.data.plot
                     }
+
                     is Result.Fail -> {}
                 }
             }
@@ -61,7 +63,10 @@ class HomeBookEditViewModel @Inject constructor(
     fun checkButtonOnClick(id: Long) {
         _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
         _plotTextStateIsEmpty.value = _plotTextState.value.isEmpty()
-        if (!_titleTextStateIsEmpty.value && !_plotTextStateIsEmpty.value) {
+        if (
+            !_titleTextStateIsEmpty.value
+            && !_plotTextStateIsEmpty.value
+        ) {
             viewModelScope.launch {
                 bookModifyUseCase(
                     bookRequestBodyModel = BookRequestBodyModel(
@@ -69,7 +74,9 @@ class HomeBookEditViewModel @Inject constructor(
                         plot = _plotTextState.value,
                     ),
                     bookId = id
-                ).asResult().collectLatest { }
+                )
+                    .asResult()
+                    .collectLatest { }
             }
         }
     }

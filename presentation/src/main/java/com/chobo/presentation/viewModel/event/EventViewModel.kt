@@ -47,7 +47,8 @@ class EventViewModel @Inject constructor(
             .collectLatest { result ->
                 when (result) {
                     is Result.Loading -> _getPastEventListUiState.value = GetPastEventListUiState.Loading
-                    is Result.Success -> if (result.data.isEmpty()) { _getPastEventListUiState.value = GetPastEventListUiState.Empty
+                    is Result.Success -> if (result.data.isEmpty()) {
+                        _getPastEventListUiState.value = GetPastEventListUiState.Empty
                     } else {
                         _getPastEventListUiState.value = GetPastEventListUiState.Success(result.data)
                     }
