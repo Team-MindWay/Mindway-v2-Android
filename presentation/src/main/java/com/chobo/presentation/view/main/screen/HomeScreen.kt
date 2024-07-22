@@ -44,9 +44,11 @@ internal fun HomeRoute(
         getWeekendGoalUIState = getWeekendGoalUIState,
         noticeGetUiState = noticeGetUiState,
         getRankUIState = getRankUIState,
-        getNotice = homeViewModel::getNotice,
-        getRank = homeViewModel::getRank,
-        getWeekendGoal = homeViewModel::getWeekendGoal,
+        dataInit = {
+            homeViewModel.getNotice()
+            homeViewModel.getRank()
+            homeViewModel.getWeekendGoal()
+        },
         navigateToGoalReading = navigateToGoalReading,
     )
 }
@@ -57,15 +59,11 @@ internal fun HomeScreen(
     getWeekendGoalUIState: GetWeekendGoalUiState,
     noticeGetUiState: NoticeGetUiState,
     getRankUIState: GetRankUiState,
-    getNotice: () -> Unit,
-    getRank: () -> Unit,
-    getWeekendGoal: () -> Unit,
+    dataInit: () -> Unit,
     navigateToGoalReading: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        getNotice()
-        getRank()
-        getWeekendGoal()
+        dataInit()
     }
 
     MindWayAndroidTheme { colors, _ ->
