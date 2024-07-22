@@ -40,7 +40,6 @@ internal fun HomeEditBookRoute(
     val contentTextState by homeBookEditViewModel.plotTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeBookEditViewModel.plotTextStateIsEmpty.collectAsStateWithLifecycle()
-    val contentTextMaxLength = homeBookEditViewModel.plotTextMaxLength
 
     HomeEditBookScreen(
         modifier = modifier,
@@ -49,7 +48,7 @@ internal fun HomeEditBookRoute(
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
-        contentTextMaxLength = contentTextMaxLength,
+        contentTextMaxLength = homeBookEditViewModel.plotTextMaxLength,
         updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
         updateContentTextState = homeBookEditViewModel::updatePlotTextState,
         checkButtonOnClick = homeBookEditViewModel::checkButtonOnClick,
@@ -81,54 +80,48 @@ internal fun HomeEditBookScreen(
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },
+                endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },// TODO: 기능 추가
                 midText = stringResource(R.string.book_modify),
             )
             Column(
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
+                    .fillMaxWidth()
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
+                )
+                MindWayTextField(
+                    title = stringResource(R.string.content),
+                    textState = contentTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_content),
+                    overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                    emptyErrorMessage = stringResource(R.string.error_content),
+                    lengthLimit = contentTextMaxLength,
+                    updateTextValue = updateContentTextState,
+                    isError = contentTextStateIsEmpty
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(R.string.check),
+                    onClick = {
+                        checkButtonOnClick(id)
+                        navigateToBack()
+                    },
                     modifier = Modifier
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
                         .fillMaxWidth()
-                ) {
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextField(
-                        title = stringResource(R.string.content),
-                        textState = contentTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_content),
-                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
-                        emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = contentTextMaxLength,
-                        updateTextValue = updateContentTextState,
-                        isError = contentTextStateIsEmpty
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(R.string.check),
-                        onClick = {
-                            checkButtonOnClick(id)
-                            navigateToBack()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp),
-                    )
-                }
+                        .height(60.dp),
+                )
             }
         }
     }
