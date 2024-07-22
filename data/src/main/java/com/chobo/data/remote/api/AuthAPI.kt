@@ -11,7 +11,9 @@ interface AuthAPI {
     ): GAuthLoginResponse
 
     @PATCH("/api/v2/auth")
-    suspend fun gAuthAccess(): GAuthLoginResponse
+    suspend fun gAuthAccess(
+        @Header("refreshToken") refreshToken: String
+    ): GAuthLoginResponse
 
     @DELETE("/api/v2/auth")
     fun gAuthLogout()
