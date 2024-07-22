@@ -79,8 +79,8 @@ fun Events(
                 Text(
                     text = stringResource(
                         R.string.wave,
-                        formatServerDate(eventsData.started_at),
-                        formatServerDate(eventsData.ended_at)
+                        eventsData.started_at.formatServerDate(),
+                        eventsData.ended_at.formatServerDate()
                     ),
                     style = typography.labelLarge,
                     color = colors.GRAY400,

@@ -49,8 +49,8 @@ fun DetailEventContent(
             Text(
                 text = stringResource(
                     R.string.wave,
-                    formatServerDate(startedAt),
-                    formatServerDate(endedAt)
+                    startedAt.formatServerDate(),
+                    endedAt.formatServerDate()
                 ),
                 style = typography.labelLarge,
                 color = colors.GRAY400,
