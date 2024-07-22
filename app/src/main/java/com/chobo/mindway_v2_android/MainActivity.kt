@@ -34,13 +34,9 @@ class MainActivity : ComponentActivity() {
             viewmodel.uiState
                 .collect { state ->
                     uiState = state
-                    Log.d("MainActivity", "uiState updated: $state")
                     if (state is MainActivityUiState.Success) {
                         runCatching { viewmodel.saveLoginToken(state.gAuthLoginResponseModel) }
-                        Log.e("MainActivity", "Login token saved: ${state.gAuthLoginResponseModel}")
-                    } else if (state is MainActivityUiState.Fail) {
-                        Log.d("MainActivity", "Login failed: ${state.exception}")
-                    }
+                    } else state is MainActivityUiState.Fail
                 }
         }
 
