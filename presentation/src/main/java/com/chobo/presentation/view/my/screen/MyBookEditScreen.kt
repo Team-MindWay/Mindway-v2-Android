@@ -54,7 +54,7 @@ internal fun MyBookEditRoute(
 @Composable
 internal fun MyBookEditScreen(
     modifier: Modifier = Modifier,
-    myBookItem: MyBookListModel?,
+    myBookItem: MyBookListModel,
     orderModifyById: (Long, MyBookListModel) -> Unit,
     navigateToBack: () -> Unit,
 ) {
@@ -67,7 +67,7 @@ internal fun MyBookEditScreen(
     val (linkTextStateIsEmpty, updateLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        myBookItem?.let { book ->
+        myBookItem.let { book ->
             updateTitleTextState(book.title)
             updateWriteTextState(book.author)
             updateLinkTextState(book.bookUrl)

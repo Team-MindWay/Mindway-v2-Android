@@ -43,7 +43,7 @@ class MyViewModel @Inject constructor(
     private val _isCommunicationSuccess = MutableStateFlow(false)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
-    lateinit var myBookItem: MyBookListModel
+    var myBookItem: MyBookListModel = MyBookListModel(id = 0, title = "", author = "", bookUrl = "")
         private set
 
     fun setBook(book: MyBookListModel) {
