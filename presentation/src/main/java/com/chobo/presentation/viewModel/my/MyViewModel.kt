@@ -40,7 +40,7 @@ class MyViewModel @Inject constructor(
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
-    private val _isCommunicationSuccess = MutableStateFlow(true)
+    private val _isCommunicationSuccess = MutableStateFlow(false)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
     lateinit var myBookItem: MyBookListModel
@@ -91,7 +91,7 @@ class MyViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _isCommunicationSuccess.value = true
+                    is Result.Loading -> _isCommunicationSuccess.value = false
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
                     }
