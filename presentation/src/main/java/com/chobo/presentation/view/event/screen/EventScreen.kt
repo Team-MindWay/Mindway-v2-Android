@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.chobo.presentation.view.event.screen
 
 import androidx.activity.ComponentActivity
@@ -5,6 +7,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,10 +57,10 @@ internal fun EventScreenRoute(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun EventScreen(
     modifier: Modifier = Modifier,
+    pagerState: PagerState = rememberPagerState { 2 },
     getEventNowListUiState: GetNowEventListUiState,
     getEventPastListUiState: GetPastEventListUiState,
     swipeRefreshState: SwipeRefreshState,
@@ -66,8 +69,10 @@ internal fun EventScreen(
     getEventPastList: (String) -> Unit,
     loadStuff: () -> Unit,
 ) {
-    val pagerState = rememberPagerState { 2 }
-    val (storageNowStatus, setStorageNowStatus) = remember { mutableStateOf(EventRequestListStatusType.NOW) }
+    val (storageNowStatus, setStorageNowStatus) = remember {
+        mutableStateOf(EventRequestListStatusType.NOW)
+    }
+
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
             when (page) {
@@ -180,5 +185,13 @@ internal fun EventScreen(
 @Preview
 @Composable
 fun EventScreenPre() {
-    EventScreenRoute(navigateToDetailEvent = { })
+    EventScreen(
+        navigateToDetailEvent = { },
+        getEventPastList = { _ -> },
+        getEventNowList = { _ -> },
+        getEventNowListUiState = GetNowEventListUiState.Loading,
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
+        getEventPastListUiState = GetPastEventListUiState.Loading,
+        loadStuff = {}
+    )
 }
