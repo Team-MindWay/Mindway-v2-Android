@@ -137,5 +137,16 @@ internal fun HomeEditBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeBookEditScreenPreview() {
-    HomeEditBookRoute(navigateToBack = { }, id = 0)
+    HomeEditBookScreen(navigateToBack = { },
+        id = 0,
+        checkButtonOnClick = {},
+        contentTextState = "",
+        contentTextMaxLength = 0,
+        contentTextStateIsEmpty = false,
+        getBookById = { _ -> },
+        titleTextStateIsEmpty = false,
+        titleTextState = "",
+        updateTitleTextState = { _ -> },
+        updateContentTextState = { _ -> }
+    )
 }
