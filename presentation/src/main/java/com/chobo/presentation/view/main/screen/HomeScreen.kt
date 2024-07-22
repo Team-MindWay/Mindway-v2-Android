@@ -39,16 +39,17 @@ internal fun HomeRoute(
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        homeViewModel.getNotice()
+        homeViewModel.getRank()
+        homeViewModel.getWeekendGoal()
+    }
+
     HomeScreen(
         modifier = modifier,
         getWeekendGoalUIState = getWeekendGoalUIState,
         noticeGetUiState = noticeGetUiState,
         getRankUIState = getRankUIState,
-        dataInit = {
-            homeViewModel.getNotice()
-            homeViewModel.getRank()
-            homeViewModel.getWeekendGoal()
-        },
         navigateToGoalReading = navigateToGoalReading,
     )
 }
@@ -59,13 +60,8 @@ internal fun HomeScreen(
     getWeekendGoalUIState: GetWeekendGoalUiState,
     noticeGetUiState: NoticeGetUiState,
     getRankUIState: GetRankUiState,
-    dataInit: () -> Unit,
     navigateToGoalReading: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        dataInit()
-    }
-
     MindWayAndroidTheme { colors, _ ->
         Column {
             MindWayTopAppBar(startIcon = { LogoIcon() })
