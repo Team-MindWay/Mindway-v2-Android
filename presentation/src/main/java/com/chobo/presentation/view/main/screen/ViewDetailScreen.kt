@@ -44,15 +44,15 @@ internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = hiltViewModel(),
     id: Long,
-    navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
 
     ViewDetailScreen(
         modifier = modifier,
-        id = id,
         getBookByIdUiState = getBookByIdUiState,
+        id = id,
         getBookById = viewDetailViewModel::getBookById,
         bookDeleteById = viewDetailViewModel::bookDeleteById,
         navigateToHomeEditBook = navigateToHomeEditBook,
@@ -64,9 +64,9 @@ internal fun ViewDetailRoute(
 @Composable
 internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
-    id: Long,
-    getBookByIdUiState: GetBookByIdUiState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    getBookByIdUiState: GetBookByIdUiState,
+    id: Long,
     getBookById: (Long) -> Unit,
     bookDeleteById: (Long) -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
@@ -112,8 +112,12 @@ internal fun ViewDetailScreen(
                     }
                 }
                 MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    endIcon = { OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } })) },
+                    startIcon = {
+                        ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack))
+                    },
+                    endIcon = {
+                        OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }))
+                    },
                     midText = stringResource(R.string.view_detail),
                 )
                 when (getBookByIdUiState) {
