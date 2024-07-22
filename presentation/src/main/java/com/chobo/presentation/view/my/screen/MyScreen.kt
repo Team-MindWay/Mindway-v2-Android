@@ -57,6 +57,10 @@ internal fun MyRoute(
     val isCommunicationSuccess by myViewModel.isCommunicationSuccess.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        myViewModel.getMyBookList()
+    }
+
     MyScreen(
         modifier = modifier,
         myNameUiState = myNameUiState,
@@ -64,7 +68,6 @@ internal fun MyRoute(
         isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
         orderDeleteById = myViewModel::orderDeleteById,
-        getMyBookList = myViewModel::getMyBookList,
         setBook = myViewModel::setBook,
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
@@ -80,17 +83,12 @@ fun MyScreen(
     isToastVisible: Boolean,
     setBook: (MyBookListModel) -> Unit,
     orderDeleteById: (Long) -> Unit,
-    getMyBookList: () -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
     val (bookDeleteDialogIsVisible, setBookDeleteDialogIsVisible) = remember { mutableStateOf(false) }
     val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
     val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
-
-    LaunchedEffect(Unit) {
-        getMyBookList()
-    }
 
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
@@ -236,7 +234,6 @@ fun MyScreenPreview() {
         navigateToMyBookEdit = {},
         showSheet = {},
         getMyBookListUiState = GetMyBookListUiState.Empty,
-        getMyBookList = {},
         isToastVisible = false,
         isCommunicationSuccess = false,
         setBook = { _ -> },
