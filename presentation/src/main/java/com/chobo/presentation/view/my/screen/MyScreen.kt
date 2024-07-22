@@ -109,14 +109,16 @@ fun MyScreen(
                         )
                     }
                 }
-                MyNameCard(
-                    name = when (myNameUiState) {
-                        is GetMyInformationUiState.Fail -> ""
-                        is GetMyInformationUiState.Loading -> ""
-                        is GetMyInformationUiState.Success -> myNameUiState.data.name
-                    },
-                    onClick = showSheet,
-                )
+                when (myNameUiState) {
+                    is GetMyInformationUiState.Fail -> Unit
+                    is GetMyInformationUiState.Loading -> Unit
+                    is GetMyInformationUiState.Success -> {
+                        MyNameCard(
+                            name = myNameUiState.data.name,
+                            onClick = showSheet,
+                        )
+                    }
+                }
                 Row(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
