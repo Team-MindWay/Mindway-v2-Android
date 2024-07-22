@@ -49,13 +49,20 @@ internal fun ViewDetailRoute(
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        delay(100)
+        viewDetailViewModel.getBookById(id)
+    }
+
     ViewDetailScreen(
         modifier = modifier,
         getBookByIdUiState = getBookByIdUiState,
-        id = id,
-        getBookById = viewDetailViewModel::getBookById,
-        bookDeleteById = viewDetailViewModel::bookDeleteById,
-        navigateToHomeEditBook = navigateToHomeEditBook,
+        bookDeleteById = {
+            viewDetailViewModel.bookDeleteById(id)
+        },
+        navigateToHomeEditBook = {
+            navigateToHomeEditBook(id)
+        },
         navigateToBack = navigateToBack,
     )
 }
@@ -66,10 +73,8 @@ internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     getBookByIdUiState: GetBookByIdUiState,
-    id: Long,
-    getBookById: (Long) -> Unit,
-    bookDeleteById: (Long) -> Unit,
-    navigateToHomeEditBook: (Long) -> Unit,
+    bookDeleteById: () -> Unit,
+    navigateToHomeEditBook: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     val (isDialogOpen, setIsDialogOpen) = remember { mutableStateOf(false) }
@@ -77,10 +82,6 @@ internal fun ViewDetailScreen(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
-    LaunchedEffect(Unit) {
-        delay(100)
-        getBookById(id)
-    }
 
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
@@ -88,7 +89,7 @@ internal fun ViewDetailScreen(
                 MindWayBottomSheet(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
-                    topOnClick = { navigateToHomeEditBook(id) },
+                    topOnClick = { navigateToHomeEditBook() },
                     bottomOnClick = { setIsDialogOpen(true) },
                 )
             },
@@ -105,7 +106,7 @@ internal fun ViewDetailScreen(
                             cancelOnclick = { setIsDialogOpen(false) },
                             checkOnclick = {
                                 setIsDialogOpen(false)
-                                bookDeleteById(id)
+                                bookDeleteById()
                                 navigateToBack()
                             },
                         )
@@ -156,9 +157,7 @@ fun ViewDetailScreenPreview() {
     ViewDetailScreen(
         navigateToBack = { },
         navigateToHomeEditBook = { },
-        id = 0,
-        bookDeleteById = { _ -> },
-        getBookById = { _ -> },
+        bookDeleteById = { },
         getBookByIdUiState = GetBookByIdUiState.Loading
     )
 }

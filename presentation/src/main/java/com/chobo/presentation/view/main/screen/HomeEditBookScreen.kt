@@ -43,7 +43,6 @@ internal fun HomeEditBookRoute(
 
     HomeEditBookScreen(
         modifier = modifier,
-        id = id,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
@@ -51,8 +50,12 @@ internal fun HomeEditBookRoute(
         contentTextMaxLength = homeBookEditViewModel.plotTextMaxLength,
         updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
         updateContentTextState = homeBookEditViewModel::updatePlotTextState,
-        checkButtonOnClick = homeBookEditViewModel::checkButtonOnClick,
-        getBookById = homeBookEditViewModel::getBookById,
+        checkButtonOnClick = {
+            homeBookEditViewModel.checkButtonOnClick(id)
+        },
+        getBookById = {
+            homeBookEditViewModel.getBookById(id)
+        },
         navigateToBack = navigateToBack,
     )
 }
@@ -60,7 +63,6 @@ internal fun HomeEditBookRoute(
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
-    id: Long,
     titleTextState: String,
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
@@ -68,12 +70,12 @@ internal fun HomeEditBookScreen(
     contentTextMaxLength: Int,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
-    checkButtonOnClick: (Long) -> Unit,
-    getBookById: (Long) -> Unit,
+    checkButtonOnClick: () -> Unit,
+    getBookById: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        getBookById(id)
+        getBookById()
     }
 
     MindWayAndroidTheme { colors, _ ->
@@ -115,7 +117,7 @@ internal fun HomeEditBookScreen(
                 MindWayButton(
                     text = stringResource(R.string.check),
                     onClick = {
-                        checkButtonOnClick(id)
+                        checkButtonOnClick()
                         navigateToBack()
                     },
                     modifier = Modifier
@@ -131,12 +133,11 @@ internal fun HomeEditBookScreen(
 @Composable
 fun HomeBookEditScreenPreview() {
     HomeEditBookScreen(navigateToBack = { },
-        id = 0,
         checkButtonOnClick = {},
         contentTextState = "",
         contentTextMaxLength = 0,
         contentTextStateIsEmpty = false,
-        getBookById = { _ -> },
+        getBookById = { },
         titleTextStateIsEmpty = false,
         titleTextState = "",
         updateTitleTextState = { _ -> },

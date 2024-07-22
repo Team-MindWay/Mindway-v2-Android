@@ -48,9 +48,10 @@ internal fun DetailEventRoute(
 
     DetailEventScreen(
         modifier = modifier,
-        id = id,
         getDetailEventUiState = getDetailEventUiState,
-        getDetailEvent = detailEventViewModel::getDetailEvent,
+        getDetailEvent = {
+            detailEventViewModel.getDetailEvent(id)
+        },
         navigateToBack = navigateToBack
     )
 }
@@ -59,12 +60,11 @@ internal fun DetailEventRoute(
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
     getDetailEventUiState: GetDetailEventUiState,
-    id: Long,
-    getDetailEvent: (Long) -> Unit,
+    getDetailEvent: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        getDetailEvent(id)
+        getDetailEvent()
     }
 
     MindWayAndroidTheme { colors, typography ->
@@ -136,6 +136,5 @@ fun DetailEventScreenPre() {
         getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
         getDetailEvent = {},
         navigateToBack = {},
-        id = 0
     )
 }
