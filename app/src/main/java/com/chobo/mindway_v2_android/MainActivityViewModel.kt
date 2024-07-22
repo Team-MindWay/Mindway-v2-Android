@@ -1,5 +1,8 @@
 package com.chobo.mindway_v2_android
 
+import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
@@ -8,11 +11,7 @@ import com.chobo.domain.usecase.auth.TokenRefreshUseCase
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,32 +19,34 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val saveTokenUseCase: SaveLoginDataUseCase,
     private val tokenRefreshUseCase: TokenRefreshUseCase,
-): ViewModel() {
+) : ViewModel() {
 
-    val uiState: StateFlow<MainActivityUiState> = flow {
-        tokenRefreshUseCase().collect {
-            emit(it)
-        }
+    var uiState: MutableState<MainActivityUiState> = mutableStateOf(MainActivityUiState.Loading)
+
+    init {
+        tokenRefresh()
     }
-        .asResult()
-        .map { result ->
-            when (result) {
-                is Result.Fail -> MainActivityUiState.Fail(result.exception)
-                is Result.Loading -> MainActivityUiState.Loading
-                is Result.Success -> MainActivityUiState.Success(result.data)
-            }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = MainActivityUiState.Loading
-        )
 
-    fun saveLoginToken(data: GAuthLoginResponseModel) = viewModelScope.launch {
+    private fun saveLoginToken(data: GAuthLoginResponseModel) = viewModelScope.launch {
         saveTokenUseCase(data = data)
+        Log.d("saveLoginToken", data.toString())
+    }
+
+    private fun tokenRefresh() = viewModelScope.launch {
+        tokenRefreshUseCase()
+            .asResult()
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Fail -> uiState.value = MainActivityUiState.Fail(result.exception)
+                    is Result.Loading -> uiState.value = MainActivityUiState.Loading
+                    is Result.Success -> {
+                        saveLoginToken(result.data)
+                        uiState.value = MainActivityUiState.Success(result.data)
+                    }
+                }
+            }
     }
 }
-
 
 sealed interface MainActivityUiState {
     object Loading : MainActivityUiState

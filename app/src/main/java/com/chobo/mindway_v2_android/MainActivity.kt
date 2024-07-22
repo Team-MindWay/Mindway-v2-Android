@@ -7,19 +7,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import com.chobo.presentation.view.component.combinationView.CombinationViewRoute
 import com.chobo.presentation.view.login.navigation.loginRoute
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewmodel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -28,27 +24,16 @@ class MainActivity : ComponentActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
-
-        lifecycleScope.launch {
-            viewmodel.uiState
-                .collectLatest {
-                    uiState = it
-                    if (it is MainActivityUiState.Success) runCatching { viewmodel.saveLoginToken(it.gAuthLoginResponseModel) }
-                }
-        }
-        var startDestination: String = loginRoute
-
-        lifecycleScope.launch {
-            when (uiState) {
-                is MainActivityUiState.Success -> CombinationViewRoute
-                else -> loginRoute
-            }.also { startDestination = it }
+        installSplashScreen().setKeepOnScreenCondition {
+            viewModel.uiState.value is MainActivityUiState.Loading
         }
 
         setContent {
-            installSplashScreen().setKeepOnScreenCondition {
-                uiState is MainActivityUiState.Loading
+            val uiState by viewModel.uiState
+
+            val startDestination = when (uiState) {
+                is MainActivityUiState.Success -> CombinationViewRoute
+                else -> loginRoute
             }
 
             MindWayNavHost(startDestination = startDestination)
