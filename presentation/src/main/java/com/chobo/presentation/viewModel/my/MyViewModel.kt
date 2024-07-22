@@ -91,15 +91,25 @@ class MyViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _isCommunicationSuccess.value = false
+                    is Result.Loading -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
+
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
+                        showToast()
+                        getMyBookList()
                     }
-                    is Result.Fail -> _isCommunicationSuccess.value = false
+
+                    is Result.Fail -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
                 }
             }
-        showToast()
-        getMyBookList()
     }
 
     fun orderModifyById(id: Long, body: MyBookListModel) = viewModelScope.launch {
@@ -107,15 +117,25 @@ class MyViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _isCommunicationSuccess.value = false
+                    is Result.Loading -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
+
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
+                        showToast()
+                        getMyBookList()
                     }
-                    is Result.Fail -> _isCommunicationSuccess.value = false
+
+                    is Result.Fail -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
                 }
             }
-        showToast()
-        getMyBookList()
     }
 
     fun logout() = viewModelScope.launch {
