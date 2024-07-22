@@ -283,13 +283,20 @@ internal fun GoalReadingScreen(
 @Preview(showBackground = true)
 @Composable
 fun GoalReadingScreenPreview() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        GoalReadingRoute(
-            navigateToBack = { },
-            navigateToHomeAddBook = { },
-            navigateToHomeViewDetail = { },
-        )
-    }
+
+    GoalReadingScreen(
+        navigateToBack = { },
+        navigateToHomeAddBook = { },
+        navigateToHomeViewDetail = { },
+        dataInit = {},
+        getWeekendGoalUiState = GetWeekendGoalUiState.Loading,
+        getBookListUiState = GetBookListUiState.Loading,
+        goalBookReadSetting = "",
+        goalBookReadSettingIsEmpty = false,
+        goalBookReadSettingOnClick = {},
+        isToastVisible = false,
+        isSuccess = false,
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
+        updateGoalBookReadSetting = { _ -> }
+    )
 }

@@ -108,5 +108,11 @@ internal fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginRoute(navigateToHome = { })
+    LoginScreen(
+        navigateToHome = { },
+        authUiState = AuthUiState.Loading,
+        gAuthLogin = { _ -> },
+        initUiState = {},
+        saveLoginDataUiState = false
+    )
 }

@@ -357,5 +357,14 @@ internal fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookRoute { }
+    BookScreen(
+        essayDataList = GetRecommendBookUiState.Loading,
+        getRecommendBook = { _ -> },
+        isToastVisible = false,
+        navigateToBookAddBook = {},
+        novelDataList = GetRecommendBookUiState.Loading,
+        orderUploadUiState = OrderUploadUiState.Loading,
+        showToast = {},
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+    )
 }
