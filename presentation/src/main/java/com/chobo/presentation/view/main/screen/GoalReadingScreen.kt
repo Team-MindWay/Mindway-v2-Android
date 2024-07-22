@@ -86,9 +86,11 @@ internal fun GoalReadingRoute(
         swipeRefreshState = swipeRefreshState,
         goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
         updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting,
-        loadStuff = goalReadingViewModel::loadStuff,
-        getBookList = goalReadingViewModel::getBookList,
-        getWeekendGoal = goalReadingViewModel::getWeekendGoal,
+        dataInit = {
+            goalReadingViewModel.loadStuff()
+            goalReadingViewModel.getBookList()
+            goalReadingViewModel.getWeekendGoal()
+        },
         navigateToBack = navigateToBack,
         navigateToHomeAddBook = navigateToHomeAddBook,
         navigateToHomeViewDetail = navigateToHomeViewDetail,
@@ -108,18 +110,15 @@ internal fun GoalReadingScreen(
     swipeRefreshState: SwipeRefreshState,
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
-    loadStuff: () -> Unit,
-    getBookList: () -> Unit,
-    getWeekendGoal: () -> Unit,
+    dataInit: () -> Unit,
     navigateToHomeViewDetail: (Long) -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        delay(200)
-        getBookList()
-        getWeekendGoal()
+        dataInit()
     }
+
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val sheetState = rememberModalBottomSheetState(
@@ -179,9 +178,7 @@ internal fun GoalReadingScreen(
                     SwipeRefresh(
                         state = swipeRefreshState,
                         onRefresh = {
-                            loadStuff()
-                            getBookList()
-                            getWeekendGoal()
+                            dataInit()
                         }
                     ) {
                         Box(modifier = Modifier.fillMaxSize()) {

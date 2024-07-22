@@ -46,12 +46,6 @@ class GoalReadingViewModel @Inject constructor(
     private val _isSuccess = MutableStateFlow(false)
     val isSuccess: StateFlow<Boolean> = _isSuccess.asStateFlow()
 
-    init {
-        loadStuff()
-        getBookList()
-        getWeekendGoal()
-    }
-
     fun loadStuff() {
         _swipeRefreshLoading.value = true
         viewModelScope.launch {
