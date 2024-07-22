@@ -138,6 +138,7 @@ internal fun ViewDetailScreen(
                             )
                         }
                     }
+
                     else -> Unit
                 }
             }
@@ -148,9 +149,12 @@ internal fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    ViewDetailRoute(
+    ViewDetailScreen(
         navigateToBack = { },
         navigateToHomeEditBook = { },
         id = 0,
+        bookDeleteById = { _ -> },
+        getBookById = { _ -> },
+        getBookByIdUiState = GetBookByIdUiState.Loading
     )
 }
