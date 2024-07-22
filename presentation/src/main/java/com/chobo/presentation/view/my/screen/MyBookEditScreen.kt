@@ -170,7 +170,9 @@ internal fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditRoute(
+    MyBookEditScreen(
         navigateToBack = { },
+        myBookItem = MyBookListModel(id = 0, author = "", bookUrl = "", title = ""),
+        orderModifyById = { _, _ -> }
     )
 }
