@@ -44,34 +44,33 @@ internal fun HomeAddBookRoute(
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
-    val contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength
 
     HomeAddBookScreen(
         modifier = modifier,
-        navigateToBack = navigateToBack,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
+        contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
-        contentTextMaxLength = contentTextMaxLength,
         updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
         updateContentTextState = homeAddBookViewModel::updateContentTextState,
-        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick
+        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick,
+        navigateToBack = navigateToBack,
     )
 }
 
 @Composable
 internal fun HomeAddBookScreen(
     modifier: Modifier = Modifier,
-    navigateToBack: () -> Unit,
     titleTextState: String,
     contentTextState: String,
+    contentTextMaxLength: Int,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
-    contentTextMaxLength: Int,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
     checkButtonOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -143,5 +142,15 @@ internal fun HomeAddBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun AddBookScreenPreview() {
-    HomeAddBookRoute(navigateToBack = { })
+    HomeAddBookScreen(
+        navigateToBack = { },
+        checkButtonOnClick = {},
+        contentTextState = "",
+        contentTextMaxLength = 0,
+        contentTextStateIsEmpty = false,
+        titleTextState = "",
+        titleTextStateIsEmpty = true,
+        updateTitleTextState = {},
+        updateContentTextState = {}
+    )
 }
