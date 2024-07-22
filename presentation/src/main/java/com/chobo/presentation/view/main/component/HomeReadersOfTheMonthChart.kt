@@ -72,7 +72,7 @@ fun HomeReadersOfTheMonthChart(
                         }
 
                     }
-                    repeat(3 - bookKingOfTheMonthData.size) {
+                    for (i in 0..3 - bookKingOfTheMonthData.size) {
                         Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
                         HomeReadersOfTheMonthGraph(
                             rankModel = RankModel(name = "", accrue = 0),
