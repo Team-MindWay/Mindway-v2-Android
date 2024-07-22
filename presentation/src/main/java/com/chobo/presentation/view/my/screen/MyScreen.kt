@@ -150,23 +150,18 @@ fun MyScreen(
                     }
 
                     is GetMyBookListUiState.Fail -> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                BookImage()
-                                Text(
-                                    text = stringResource(R.string.is_on_error),
-                                    style = typography.bodyMedium,
-                                    fontWeight = FontWeight.Normal,
-                                    color = colors.GRAY500,
-                                )
-                            }
+                            BookImage()
+                            Text(
+                                text = stringResource(R.string.is_on_error),
+                                style = typography.bodyMedium,
+                                fontWeight = FontWeight.Normal,
+                                color = colors.GRAY500,
+                            )
                         }
                     }
 
@@ -237,8 +232,15 @@ fun MyScreen(
 @Composable
 fun MyScreenPreview() {
 
-    MyRoute(
+    MyScreen(
         navigateToMyBookEdit = {},
-        showSheet = {}
+        showSheet = {},
+        getMyBookListUiState = GetMyBookListUiState.Empty,
+        getMyBookList = {},
+        isToastVisible = false,
+        isCommunicationSuccess = false,
+        setBook = { _ -> },
+        myNameUiState = GetMyInformationUiState.Loading,
+        orderDeleteById = { _ -> }
     )
 }
