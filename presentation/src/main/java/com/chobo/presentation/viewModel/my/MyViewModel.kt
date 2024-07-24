@@ -58,7 +58,7 @@ class MyViewModel @Inject constructor(
         }
     }
 
-    private fun getMyInformation() = viewModelScope.launch {
+    fun getMyInformation() = viewModelScope.launch {
         getMyInformationUseCase()
             .asResult()
             .collectLatest { result ->
@@ -141,10 +141,5 @@ class MyViewModel @Inject constructor(
     fun logout() = viewModelScope.launch {
         logoutUseCase()
         deleteTokenUseCase()
-    }
-
-    init {
-        getMyInformation()
-        getMyBookList()
     }
 }

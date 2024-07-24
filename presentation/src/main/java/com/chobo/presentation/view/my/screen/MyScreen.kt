@@ -57,10 +57,6 @@ internal fun MyRoute(
     val isCommunicationSuccess by myViewModel.isCommunicationSuccess.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        myViewModel.getMyBookList()
-    }
-
     MyScreen(
         modifier = modifier,
         myNameUiState = myNameUiState,
@@ -72,6 +68,13 @@ internal fun MyRoute(
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
+
+    LaunchedEffect(Unit) {
+        myViewModel.apply {
+            getMyInformation()
+            getMyBookList()
+        }
+    }
 }
 
 @Composable
@@ -90,6 +93,7 @@ fun MyScreen(
     val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
     val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
 
+
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
             Column(modifier = modifier.fillMaxSize()) {
@@ -105,13 +109,16 @@ fun MyScreen(
                         )
                     }
                 }
-                MyNameCard(
-                    name = when (myNameUiState) {
-                        is GetMyInformationUiState.Success -> myNameUiState.data.name
-                        else -> ""
-                    },
-                    onClick = showSheet,
-                )
+                when (myNameUiState) {
+                    is GetMyInformationUiState.Success -> {
+                        MyNameCard(
+                            name = myNameUiState.data.name,
+                            onClick = showSheet,
+                        )
+                    }
+
+                    else -> Unit
+                }
                 Row(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
