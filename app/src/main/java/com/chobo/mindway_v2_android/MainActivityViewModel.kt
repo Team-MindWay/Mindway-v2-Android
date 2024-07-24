@@ -1,53 +1,49 @@
 package com.chobo.mindway_v2_android
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
-import com.chobo.domain.repository.AuthRepository
 import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
 import com.chobo.domain.usecase.auth.TokenRefreshUseCase
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     private val saveTokenUseCase: SaveLoginDataUseCase,
     private val tokenRefreshUseCase: TokenRefreshUseCase,
-    private val authRepository: AuthRepository
-): ViewModel() {
-    private val refreshToken = runBlocking { authRepository.getGAuthAccess().first() }
+    private val localAuthDataSource: LocalAuthDataSource
+) : ViewModel() {
 
-    val uiState: StateFlow<MainActivityUiState> = flow {
-        tokenRefreshUseCase(refreshToken = "Bearer $refreshToken").collect {
-            emit(it)
-        }
+    var uiState: MutableState<MainActivityUiState> = mutableStateOf(MainActivityUiState.Loading)
+
+    init {
+        tokenRefresh()
     }
-        .asResult()
-        .map { result ->
-            when (result) {
-                is Result.Fail -> MainActivityUiState.Fail(result.exception)
-                is Result.Loading -> MainActivityUiState.Loading
-                is Result.Success -> MainActivityUiState.Success(result.data)
-            }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = MainActivityUiState.Loading
-        )
 
-    fun saveLoginToken(data: GAuthLoginResponseModel) = viewModelScope.launch {
-        saveTokenUseCase(data = data)
+    private fun tokenRefresh() = viewModelScope.launch {
+        localAuthDataSource.getRefreshToken()
+            .collectLatest { refreshToken ->
+                tokenRefreshUseCase(refreshToken)
+                    .asResult()
+                    .collectLatest { result ->
+                        when (result) {
+                            is Result.Fail -> uiState.value = MainActivityUiState.Fail(result.exception)
+                            is Result.Loading -> uiState.value = MainActivityUiState.Loading
+                            is Result.Success -> {
+                                saveTokenUseCase(data = result.data)
+                                uiState.value = MainActivityUiState.Success(result.data)
+                            }
+                        }
+                    }
+            }
     }
 }
 

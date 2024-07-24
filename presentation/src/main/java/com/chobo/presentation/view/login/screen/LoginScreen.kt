@@ -58,7 +58,7 @@ internal fun LoginScreen(
     initUiState: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
-    LaunchedEffect(authUiState, saveLoginDataUiState) {
+    LaunchedEffect(Unit, authUiState, saveLoginDataUiState) {
         if (
             authUiState is AuthUiState.Success
             && saveLoginDataUiState
