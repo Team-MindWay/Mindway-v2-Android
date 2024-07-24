@@ -81,12 +81,16 @@ internal fun LoginScreen(
                 painter = painterResource(id = R.drawable.mind_way_logo),
                 contentDescription = "MindWay Main logo",
             )
-            Spacer(modifier = Modifier.height(302.dp))
+            Spacer(modifier = Modifier.weight(1f))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp),
+                    .padding(
+                        start = 24.dp,
+                        end = 24.dp,
+                        bottom = 140.dp
+                    ),
             ) {
                 MindWayGAuthButton(
                     onClick = { toggleIsClickLoginButton(true) },
