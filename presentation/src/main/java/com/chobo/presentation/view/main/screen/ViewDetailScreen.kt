@@ -50,7 +50,6 @@ internal fun ViewDetailRoute(
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        delay(100)
         viewDetailViewModel.getBookById(id)
     }
 

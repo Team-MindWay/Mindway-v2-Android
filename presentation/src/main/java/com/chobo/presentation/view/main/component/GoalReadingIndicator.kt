@@ -53,10 +53,7 @@ fun GoalReadingIndicator(
                     textAlign = TextAlign.Center,
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        2.dp,
-                        Alignment.CenterHorizontally
-                    ),
+                    horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.height(30.dp),
                 ) {

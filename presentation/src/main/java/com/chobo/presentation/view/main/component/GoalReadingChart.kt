@@ -37,8 +37,7 @@ fun GoalReadingChart(
         getWeekendGoalModel.sat,
         getWeekendGoalModel.sun
     )
-    val maxRead = remember { dateList.max() }
-    val currentDate by remember { mutableStateOf(getTodayDayOfWeek()) }
+    val currentDate = getTodayDayOfWeek()
 
     MindWayAndroidTheme { colors, typography ->
         Column(
@@ -80,7 +79,7 @@ fun GoalReadingChart(
                     ).forEachIndexed { index, date ->
                         GoalReadingGraph(
                             numBooksRead = dateList[index],
-                            maxBooksRead = maxRead,
+                            maxBooksRead = dateList.max(),
                             isCurrentDate = currentDate == date,
                             today = date,
                             modifier = Modifier

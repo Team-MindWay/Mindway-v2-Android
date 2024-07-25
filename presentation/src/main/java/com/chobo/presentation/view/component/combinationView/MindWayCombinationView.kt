@@ -31,6 +31,7 @@ import com.chobo.presentation.view.event.screen.EventScreenRoute
 import com.chobo.presentation.view.main.screen.HomeRoute
 import com.chobo.presentation.view.my.screen.MyRoute
 import com.chobo.presentation.viewModel.my.MyViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -38,6 +39,7 @@ import kotlinx.coroutines.launch
 fun MindWayCombinationView(
     modifier: Modifier = Modifier,
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    coroutine :CoroutineScope = rememberCoroutineScope(),
     currentDestination: MindWayNavBarItemType,
     setCurrentDestination: (MindWayNavBarItemType) -> Unit,
     navigateToDetailEvent: (Long) -> Unit,
@@ -47,7 +49,6 @@ fun MindWayCombinationView(
     navigateToMyBookEdit: () -> Unit,
     navigateToLogin: () -> Unit,
 ) {
-    val coroutine = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true

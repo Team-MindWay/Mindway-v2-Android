@@ -40,9 +40,11 @@ internal fun HomeRoute(
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        homeViewModel.getNotice()
-        homeViewModel.getRank()
-        homeViewModel.getWeekendGoal()
+        homeViewModel.apply {
+            getNotice()
+            getRank()
+            getWeekendGoal()
+        }
     }
 
     HomeScreen(

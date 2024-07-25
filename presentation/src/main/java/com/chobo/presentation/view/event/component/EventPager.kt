@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chobo.presentation.R
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -48,11 +49,10 @@ fun EventPager(
                         modifier = modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                     )
                 },
-                divider = {},
                 containerColor = colors.WHITE,
                 contentColor = colors.GRAY400,
             ) {
-                listOf(
+                persistentListOf(
                     stringResource(id = R.string.ongoing_event),
                     stringResource(id = R.string.past_event)
                 ).forEachIndexed { index, title ->

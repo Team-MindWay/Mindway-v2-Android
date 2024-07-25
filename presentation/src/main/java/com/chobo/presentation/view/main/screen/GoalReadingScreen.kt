@@ -55,6 +55,7 @@ import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -101,6 +102,7 @@ internal fun GoalReadingRoute(
 @Composable
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
+    coroutineScope:CoroutineScope = rememberCoroutineScope(),
     getWeekendGoalUiState: GetWeekendGoalUiState,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
@@ -119,7 +121,6 @@ internal fun GoalReadingScreen(
         dataInit()
     }
 
-    val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
