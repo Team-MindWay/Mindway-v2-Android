@@ -10,8 +10,8 @@ data class GAuthLoginResponse(
 )
 
 fun GAuthLoginResponse.toLoginModel() = GAuthLoginResponseModel(
-    accessToken = this.accessToken,
-    refreshToken = this.refreshToken,
-    accessTokenExpiresIn = this.accessTokenExpiresIn,
-    refreshTokenExpiresIn = this.refreshTokenExpiresIn
+    accessToken = accessToken,
+    refreshToken = refreshToken,
+    accessTokenExpiresIn = accessTokenExpiresIn,
+    refreshTokenExpiresIn = refreshTokenExpiresIn
 )
