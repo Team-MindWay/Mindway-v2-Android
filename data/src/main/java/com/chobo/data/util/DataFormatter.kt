@@ -1,21 +1,16 @@
 package com.chobo.data.util
 
-import android.annotation.SuppressLint
 import com.chobo.domain.exception.NeedLoginException
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.Calendar
+import java.util.Locale
 
-@SuppressLint("SimpleDateFormat")
-fun String.toDate(): Date {
-    kotlin.runCatching {
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(this)!!
-    }.onSuccess {
-        return it
-    }
+private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+
+fun String.toDate() = runCatching {
+    dateFormat.parse(this)
+}.getOrElse {
     throw NeedLoginException()
-}
+} ?: throw NeedLoginException()
 
-@SuppressLint("SimpleDateFormat")
-fun Long.toMindWayDate(): Date {
-    return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(this).toDate()
-}
+fun getDate() = dateFormat.format(Calendar.getInstance().time).toDate()
