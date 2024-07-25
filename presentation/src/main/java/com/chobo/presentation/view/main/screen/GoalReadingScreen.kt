@@ -25,6 +25,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,10 +73,23 @@ internal fun GoalReadingRoute(
     val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
-    val isToastVisible by goalReadingViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val (isToastVisible, setIsToastVisible) = remember { mutableStateOf(false) }
     val isSuccess by goalReadingViewModel.isSuccess.collectAsStateWithLifecycle()
-    val swipeRefreshLoading by goalReadingViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
+    val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
+
+    LaunchedEffect(swipeRefreshLoading) {
+        delay(1000)
+        setSwipeRefreshLoading(false)
+    }
+
+    LaunchedEffect(Unit) {
+        setSwipeRefreshLoading(true)
+        goalReadingViewModel.apply {
+            getBookList()
+            getWeekendGoal()
+        }
+    }
 
     GoalReadingScreen(
         modifier = modifier,
@@ -88,9 +103,11 @@ internal fun GoalReadingRoute(
         goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
         updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting,
         dataInit = {
-            goalReadingViewModel.loadStuff()
-            goalReadingViewModel.getBookList()
-            goalReadingViewModel.getWeekendGoal()
+            setSwipeRefreshLoading(true)
+            goalReadingViewModel.apply {
+                getBookList()
+                getWeekendGoal()
+            }
         },
         navigateToBack = navigateToBack,
         navigateToHomeAddBook = navigateToHomeAddBook,
@@ -102,7 +119,7 @@ internal fun GoalReadingRoute(
 @Composable
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
-    coroutineScope:CoroutineScope = rememberCoroutineScope(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     getWeekendGoalUiState: GetWeekendGoalUiState,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
@@ -117,9 +134,6 @@ internal fun GoalReadingScreen(
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        dataInit()
-    }
 
     val focusManager = LocalFocusManager.current
     val sheetState = rememberModalBottomSheetState(
