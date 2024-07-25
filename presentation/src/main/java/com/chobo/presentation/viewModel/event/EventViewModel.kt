@@ -1,6 +1,5 @@
 package com.chobo.presentation.viewModel.event
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.usecase.event.GetEventListUseCase
@@ -9,7 +8,6 @@ import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,26 +18,11 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val getEventListUseCase: GetEventListUseCase
 ) : ViewModel() {
-    private val _swipeRefreshLoading = MutableStateFlow(false)
-    val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
-
     private val _getNowEventListUiState = MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
     val getNowEventListUiState = _getNowEventListUiState.asStateFlow()
 
     private val _getPastEventListUiState = MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
     val getPastEventListUiState = _getPastEventListUiState.asStateFlow()
-
-    init {
-        loadStuff()
-    }
-
-    fun loadStuff() {
-        viewModelScope.launch {
-            _swipeRefreshLoading.value = true
-            delay(1000L)
-            _swipeRefreshLoading.value = false
-        }
-    }
 
     fun getEventPastList(status: String) = viewModelScope.launch {
         getEventListUseCase(status = status)
@@ -58,7 +41,6 @@ class EventViewModel @Inject constructor(
     }
 
     fun getEventNowList(status: String) = viewModelScope.launch {
-        Log.d("EventViewModel", "getEventPastList called with status: $status")
         getEventListUseCase(status = status)
             .asResult()
             .collectLatest { result ->

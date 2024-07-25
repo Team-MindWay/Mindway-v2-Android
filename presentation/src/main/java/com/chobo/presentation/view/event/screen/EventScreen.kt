@@ -32,6 +32,7 @@ import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.delay
 import okhttp3.internal.toImmutableList
 
 @Composable
@@ -42,8 +43,13 @@ internal fun EventScreenRoute(
 ) {
     val getEventNowListUiState by eventViewModel.getNowEventListUiState.collectAsStateWithLifecycle()
     val getEventPastListUiState by eventViewModel.getPastEventListUiState.collectAsStateWithLifecycle()
-    val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
+    val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
+
+    LaunchedEffect(swipeRefreshLoading) {
+        delay(1000)
+        setSwipeRefreshLoading(false)
+    }
 
     EventScreen(
         modifier = modifier,
@@ -51,9 +57,11 @@ internal fun EventScreenRoute(
         getEventNowListUiState = getEventNowListUiState,
         getEventPastListUiState = getEventPastListUiState,
         swipeRefreshState = swipeRefreshState,
+        setSwipeRefreshLoading = {
+            setSwipeRefreshLoading(true)
+        },
         getEventNowList = eventViewModel::getEventNowList,
         getEventPastList = eventViewModel::getEventPastList,
-        loadStuff = eventViewModel::loadStuff,
     )
 }
 
@@ -64,10 +72,10 @@ internal fun EventScreen(
     getEventNowListUiState: GetNowEventListUiState,
     getEventPastListUiState: GetPastEventListUiState,
     swipeRefreshState: SwipeRefreshState,
+    setSwipeRefreshLoading: () -> Unit,
     navigateToDetailEvent: (Long) -> Unit,
     getEventNowList: (String) -> Unit,
     getEventPastList: (String) -> Unit,
-    loadStuff: () -> Unit,
 ) {
     val (storageNowStatus, setStorageNowStatus) = remember {
         mutableStateOf(EventRequestListStatusType.NOW)
@@ -90,7 +98,7 @@ internal fun EventScreen(
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
-                loadStuff()
+                setSwipeRefreshLoading()
                 when (storageNowStatus) {
                     EventRequestListStatusType.NOW -> getEventNowList(storageNowStatus.name)
                     EventRequestListStatusType.PAST -> getEventPastList(EventRequestListStatusType.PAST.name)
@@ -194,6 +202,6 @@ fun EventScreenPre() {
         getEventNowListUiState = GetNowEventListUiState.Loading,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
         getEventPastListUiState = GetPastEventListUiState.Loading,
-        loadStuff = {}
+        setSwipeRefreshLoading = { }
     )
 }
