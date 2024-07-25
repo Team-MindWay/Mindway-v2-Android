@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailEventViewModel @Inject constructor(
     private val getEventDetailUseCase: GetDetailEventUseCase,
-    ) : ViewModel() {
+) : ViewModel() {
     private val _getDetailEventUiState = MutableStateFlow<GetDetailEventUiState>(GetDetailEventUiState.Loading)
     val getDetailEventUiState = _getDetailEventUiState.asStateFlow()
 
@@ -24,10 +24,15 @@ class DetailEventViewModel @Inject constructor(
         getEventDetailUseCase(eventId = eventId)
             .asResult()
             .collectLatest { result ->
-                when(result) {
-                    is Result.Loading -> _getDetailEventUiState.value = GetDetailEventUiState.Loading
-                    is Result.Success -> _getDetailEventUiState.value = GetDetailEventUiState.Success(result.data)
-                    is Result.Fail -> _getDetailEventUiState.value = GetDetailEventUiState.Fail(result.exception)
+                when (result) {
+                    is Result.Loading -> _getDetailEventUiState.value =
+                        GetDetailEventUiState.Loading
+
+                    is Result.Success -> _getDetailEventUiState.value =
+                        GetDetailEventUiState.Success(result.data)
+
+                    is Result.Fail -> _getDetailEventUiState.value =
+                        GetDetailEventUiState.Fail(result.exception)
                 }
             }
     }
