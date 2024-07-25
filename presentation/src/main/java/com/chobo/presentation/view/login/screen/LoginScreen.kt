@@ -37,7 +37,7 @@ internal fun LoginRoute(
     navigateToHome: () -> Unit,
 ) {
     val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
-    val saveLoginDataUiState by authViewModel.saveLoginDataUiState.collectAsStateWithLifecycle()
+    val saveLoginDataUiState by authViewModel.isSuccessSaveLoginData.collectAsStateWithLifecycle()
 
     LoginScreen(
         modifier = modifier,

@@ -25,8 +25,8 @@ class AuthViewModel @Inject constructor(
     private val _authUiState = MutableStateFlow<AuthUiState>(AuthUiState.Loading)
     val authUiState: StateFlow<AuthUiState> = _authUiState.asStateFlow()
 
-    private val _saveLoginDataUiState = MutableStateFlow(false)
-    val saveLoginDataUiState: StateFlow<Boolean> = _saveLoginDataUiState.asStateFlow()
+    private val _isSuccessSaveLoginData = MutableStateFlow(false)
+    val isSuccessSaveLoginData: StateFlow<Boolean> = _isSuccessSaveLoginData.asStateFlow()
 
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
@@ -46,15 +46,15 @@ class AuthViewModel @Inject constructor(
     private fun saveLoginData(data: GAuthLoginResponseModel) = viewModelScope.launch {
         saveTokenUseCase(data = data)
             .onSuccess {
-                _saveLoginDataUiState.value = true
+                _isSuccessSaveLoginData.value = true
             }
             .onFailure {
-                _saveLoginDataUiState.value = false
+                _isSuccessSaveLoginData.value = false
             }
     }
 
     fun initUiState() {
         _authUiState.value = AuthUiState.Loading
-        _saveLoginDataUiState.value = false
+        _isSuccessSaveLoginData.value = false
     }
 }
