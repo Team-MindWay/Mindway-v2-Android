@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
@@ -31,7 +31,7 @@ import com.msg.gauthsignin.GAuthSigninWebView
 @Composable
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = viewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
 ) {
     val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
