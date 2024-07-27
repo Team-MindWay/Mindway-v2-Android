@@ -37,12 +37,12 @@ internal fun LoginRoute(
     navigateToHome: () -> Unit,
 ) {
     val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
-    val saveLoginDataUiState by authViewModel.isSuccessSaveLoginData.collectAsStateWithLifecycle()
+    val isSuccessSaveLoginData by authViewModel.isSuccessSaveLoginData.collectAsStateWithLifecycle()
 
     LoginScreen(
         modifier = modifier,
         authUiState = authUiState,
-        saveLoginDataUiState = saveLoginDataUiState,
+        isSuccessSaveLoginData = isSuccessSaveLoginData,
         gAuthLogin = authViewModel::gAuthLogin,
         initUiState = authViewModel::initUiState,
         navigateToHome = navigateToHome,
@@ -53,15 +53,15 @@ internal fun LoginRoute(
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
     authUiState: AuthUiState,
-    saveLoginDataUiState: Boolean,
+    isSuccessSaveLoginData: Boolean,
     gAuthLogin: (String) -> Unit,
     initUiState: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
-    LaunchedEffect(Unit, authUiState, saveLoginDataUiState) {
+    LaunchedEffect(Unit, authUiState, isSuccessSaveLoginData) {
         if (
             authUiState is AuthUiState.Success
-            && saveLoginDataUiState
+            && isSuccessSaveLoginData
         ) {
             navigateToHome()
             initUiState()
@@ -117,6 +117,6 @@ fun PreviewLoginScreen() {
         authUiState = AuthUiState.Loading,
         gAuthLogin = { _ -> },
         initUiState = {},
-        saveLoginDataUiState = false
+        isSuccessSaveLoginData = false
     )
 }
