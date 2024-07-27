@@ -52,9 +52,4 @@ class AuthViewModel @Inject constructor(
                 _isSuccessSaveLoginData.value = false
             }
     }
-
-    fun initUiState() {
-        _authUiState.value = AuthUiState.Loading
-        _isSuccessSaveLoginData.value = false
-    }
 }

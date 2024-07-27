@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.login.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +31,7 @@ import com.msg.gauthsignin.GAuthSigninWebView
 @Composable
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = viewModel(LocalContext.current as ComponentActivity),
+    authViewModel: AuthViewModel = viewModel(),
     navigateToHome: () -> Unit,
 ) {
     val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
@@ -44,7 +42,6 @@ internal fun LoginRoute(
         authUiState = authUiState,
         isSuccessSaveLoginData = isSuccessSaveLoginData,
         gAuthLogin = authViewModel::gAuthLogin,
-        initUiState = authViewModel::initUiState,
         navigateToHome = navigateToHome,
     )
 }
@@ -55,7 +52,6 @@ internal fun LoginScreen(
     authUiState: AuthUiState,
     isSuccessSaveLoginData: Boolean,
     gAuthLogin: (String) -> Unit,
-    initUiState: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
     LaunchedEffect(Unit, authUiState, isSuccessSaveLoginData) {
@@ -64,7 +60,6 @@ internal fun LoginScreen(
             && isSuccessSaveLoginData
         ) {
             navigateToHome()
-            initUiState()
         }
     }
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
@@ -116,7 +111,6 @@ fun PreviewLoginScreen() {
         navigateToHome = { },
         authUiState = AuthUiState.Loading,
         gAuthLogin = { _ -> },
-        initUiState = {},
         isSuccessSaveLoginData = false
     )
 }
