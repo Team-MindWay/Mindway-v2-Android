@@ -7,8 +7,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.chobo.data.local.datasource.LocalAuthDataSource
-import com.chobo.data.local.datasource.LocalAuthDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,14 +26,4 @@ object DataStoreModule {
             ),
             produceFile = { context.preferencesDataStoreFile("autoDataStore") }
         )
-
-    @Provides
-    @Singleton
-    fun provideLocalAuthDataSource(
-        dataStore: DataStore<Preferences>
-    ): LocalAuthDataSource {
-        return LocalAuthDataSourceImpl(
-            dataStore = dataStore
-        )
-    }
 }
