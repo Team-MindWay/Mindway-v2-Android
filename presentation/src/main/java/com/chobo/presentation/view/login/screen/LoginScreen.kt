@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.login.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -16,12 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
@@ -33,18 +31,17 @@ import com.msg.gauthsignin.GAuthSigninWebView
 @Composable
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = viewModel(LocalContext.current as ComponentActivity),
+    authViewModel: AuthViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
 ) {
     val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
-    val saveLoginDataUiState by authViewModel.saveLoginDataUiState.collectAsStateWithLifecycle()
+    val isSuccessSaveLoginData by authViewModel.isSuccessSaveLoginData.collectAsStateWithLifecycle()
 
     LoginScreen(
         modifier = modifier,
         authUiState = authUiState,
-        saveLoginDataUiState = saveLoginDataUiState,
+        isSuccessSaveLoginData = isSuccessSaveLoginData,
         gAuthLogin = authViewModel::gAuthLogin,
-        initUiState = authViewModel::initUiState,
         navigateToHome = navigateToHome,
     )
 }
@@ -53,18 +50,16 @@ internal fun LoginRoute(
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
     authUiState: AuthUiState,
-    saveLoginDataUiState: Boolean,
+    isSuccessSaveLoginData: Boolean,
     gAuthLogin: (String) -> Unit,
-    initUiState: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
-    LaunchedEffect(authUiState, saveLoginDataUiState) {
+    LaunchedEffect(Unit, authUiState, isSuccessSaveLoginData) {
         if (
             authUiState is AuthUiState.Success
-            && saveLoginDataUiState
+            && isSuccessSaveLoginData
         ) {
             navigateToHome()
-            initUiState()
         }
     }
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
@@ -112,5 +107,10 @@ internal fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginRoute(navigateToHome = { })
+    LoginScreen(
+        navigateToHome = { },
+        authUiState = AuthUiState.Loading,
+        gAuthLogin = { _ -> },
+        isSuccessSaveLoginData = false
+    )
 }

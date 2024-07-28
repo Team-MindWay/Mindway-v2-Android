@@ -42,7 +42,6 @@ fun ViewDetailPopUp(
             Row {
                 Text(
                     text = stringResource(R.string.book),
-
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
@@ -51,7 +50,6 @@ fun ViewDetailPopUp(
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     text = stringResource(R.string.delete),
-
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.MAIN,
@@ -59,7 +57,6 @@ fun ViewDetailPopUp(
                 )
                 Text(
                     text = stringResource(R.string.pr),
-
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,

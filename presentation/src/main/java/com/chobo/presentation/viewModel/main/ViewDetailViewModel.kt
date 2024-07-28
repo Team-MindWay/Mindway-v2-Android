@@ -36,6 +36,10 @@ class ViewDetailViewModel @Inject constructor(
     }
 
     fun bookDeleteById(id: Long) = viewModelScope.launch {
-        bookDeleteByIdUseCase(bookId = id).asResult().collectLatest { }
+        bookDeleteByIdUseCase(bookId = id)
+            .asResult()
+            .collectLatest {
+
+            }
     }
 }

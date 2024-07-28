@@ -39,14 +39,19 @@ internal fun HomeRoute(
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        homeViewModel.apply {
+            getNotice()
+            getRank()
+            getWeekendGoal()
+        }
+    }
+
     HomeScreen(
         modifier = modifier,
         getWeekendGoalUIState = getWeekendGoalUIState,
         noticeGetUiState = noticeGetUiState,
         getRankUIState = getRankUIState,
-        getNotice = homeViewModel::getNotice,
-        getRank = homeViewModel::getRank,
-        getWeekendGoal = homeViewModel::getWeekendGoal,
         navigateToGoalReading = navigateToGoalReading,
     )
 }
@@ -57,17 +62,8 @@ internal fun HomeScreen(
     getWeekendGoalUIState: GetWeekendGoalUiState,
     noticeGetUiState: NoticeGetUiState,
     getRankUIState: GetRankUiState,
-    getNotice: () -> Unit,
-    getRank: () -> Unit,
-    getWeekendGoal: () -> Unit,
     navigateToGoalReading: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        getNotice()
-        getRank()
-        getWeekendGoal()
-    }
-
     MindWayAndroidTheme { colors, _ ->
         Column {
             MindWayTopAppBar(startIcon = { LogoIcon() })
@@ -80,8 +76,6 @@ internal fun HomeScreen(
                     .padding(horizontal = 24.dp)
             ) {
                 when (noticeGetUiState) {
-                    is NoticeGetUiState.Fail -> Unit
-                    is NoticeGetUiState.Loading -> Unit
                     is NoticeGetUiState.Success -> {
                         HomeNoticeCard(
                             noticeAllModel = noticeGetUiState.data,
@@ -90,38 +84,10 @@ internal fun HomeScreen(
                                 .fillMaxWidth(),
                         )
                     }
+
+                    else -> Unit
                 }
                 when (getWeekendGoalUIState) {
-                    is GetWeekendGoalUiState.Empty -> {
-                        HomeGoalReadingChart(
-                            isHasData = false,
-                            onClick = navigateToGoalReading,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(211.dp),
-                        )
-                    }
-
-                    is GetWeekendGoalUiState.Fail -> {
-                        HomeGoalReadingChart(
-                            isHasData = false,
-                            onClick = navigateToGoalReading,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(211.dp),
-                        )
-                    }
-
-                    is GetWeekendGoalUiState.Loading -> {
-                        HomeGoalReadingChart(
-                            isHasData = false,
-                            onClick = navigateToGoalReading,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(211.dp),
-                        )
-                    }
-
                     is GetWeekendGoalUiState.Success -> {
                         HomeGoalReadingChart(
                             getWeekendGoalModel = getWeekendGoalUIState.data,
@@ -132,39 +98,31 @@ internal fun HomeScreen(
                                 .height(211.dp),
                         )
                     }
+
+                    else -> {
+                        HomeGoalReadingChart(
+                            isHasData = false,
+                            onClick = navigateToGoalReading,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(211.dp),
+                        )
+                    }
                 }
                 when (getRankUIState) {
-                    is GetRankUiState.Empty -> {
-                        HomeReadersOfTheMonthChart(
-                            isHasData = false,
-                            modifier = Modifier
-                                .height(239.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
-
-                    is GetRankUiState.Fail -> {
-                        HomeReadersOfTheMonthChart(
-                            isHasData = false,
-                            modifier = Modifier
-                                .height(239.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
-
-                    is GetRankUiState.Loading -> {
-                        HomeReadersOfTheMonthChart(
-                            isHasData = false,
-                            modifier = Modifier
-                                .height(239.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
-
                     is GetRankUiState.Success -> {
                         HomeReadersOfTheMonthChart(
                             isHasData = true,
                             bookKingOfTheMonthData = getRankUIState.data,
+                            modifier = Modifier
+                                .height(239.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
+
+                    else -> {
+                        HomeReadersOfTheMonthChart(
+                            isHasData = false,
                             modifier = Modifier
                                 .height(239.dp)
                                 .fillMaxWidth(),

@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,6 +60,8 @@ import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -90,6 +94,9 @@ internal fun BookRoute(
 @Composable
 internal fun BookScreen(
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    pagerState: PagerState = rememberPagerState(pageCount = { 2 }),
     isToastVisible: Boolean,
     novelDataList: GetRecommendBookUiState,
     essayDataList: GetRecommendBookUiState,
@@ -99,10 +106,6 @@ internal fun BookScreen(
     showToast: () -> Unit,
     navigateToBookAddBook: () -> Unit,
 ) {
-    val pagerState = rememberPagerState(pageCount = { 2 })
-    val scrollState = rememberScrollState()
-    val coroutineScope = rememberCoroutineScope()
-
     MindWayAndroidTheme { colors, typography ->
         SwipeRefresh(
             state = swipeRefreshState,
@@ -135,7 +138,7 @@ internal fun BookScreen(
                             backgroundColor = colors.WHITE,
                             modifier = Modifier.width(166.dp),
                         ) {
-                            listOf(
+                            persistentListOf(
                                 stringResource(R.string.novel),
                                 stringResource(R.string.essay),
                             ).forEachIndexed { index, tabName ->
@@ -179,11 +182,16 @@ internal fun BookScreen(
                                                             color = colors.WHITE,
                                                             shape = RoundedCornerShape(8.dp)
                                                         )
-                                                        .shimmerEffect(shape = RoundedCornerShape(8.dp))
+                                                        .shimmerEffect(
+                                                            shape = RoundedCornerShape(
+                                                                8.dp
+                                                            )
+                                                        )
                                                 )
                                             }
                                         }
                                     }
+
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -276,11 +284,16 @@ internal fun BookScreen(
                                                             color = colors.WHITE,
                                                             shape = RoundedCornerShape(8.dp)
                                                         )
-                                                        .shimmerEffect(shape = RoundedCornerShape(8.dp))
+                                                        .shimmerEffect(
+                                                            shape = RoundedCornerShape(
+                                                                8.dp
+                                                            )
+                                                        )
                                                 )
                                             }
                                         }
                                     }
+
                                     is GetRecommendBookUiState.Empty -> {
                                         Box(
                                             modifier = Modifier
@@ -407,5 +420,14 @@ internal fun BookScreen(
 @Preview(showBackground = true)
 @Composable
 fun BookScreenPreview() {
-    BookRoute { }
+    BookScreen(
+        essayDataList = GetRecommendBookUiState.Loading,
+        getRecommendBook = { _ -> },
+        isToastVisible = false,
+        navigateToBookAddBook = {},
+        novelDataList = GetRecommendBookUiState.Loading,
+        orderUploadUiState = OrderUploadUiState.Loading,
+        showToast = {},
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+    )
 }

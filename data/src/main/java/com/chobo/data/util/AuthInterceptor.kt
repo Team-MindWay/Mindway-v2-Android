@@ -22,7 +22,7 @@ class AuthInterceptor @Inject constructor(
         val request = chain.request()
         val builder = request.newBuilder()
         val ignorePath = "/api/v2/auth"
-        val currentTime = System.currentTimeMillis().toMindWayDate()
+        val currentTime = getDate()
         val path = request.url.encodedPath
         val method = request.method
 

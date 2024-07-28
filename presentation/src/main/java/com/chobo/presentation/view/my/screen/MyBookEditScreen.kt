@@ -54,7 +54,7 @@ internal fun MyBookEditRoute(
 @Composable
 internal fun MyBookEditScreen(
     modifier: Modifier = Modifier,
-    myBookItem: MyBookListModel?,
+    myBookItem: MyBookListModel,
     orderModifyById: (Long, MyBookListModel) -> Unit,
     navigateToBack: () -> Unit,
 ) {
@@ -67,7 +67,7 @@ internal fun MyBookEditScreen(
     val (linkTextStateIsEmpty, updateLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        myBookItem?.let { book ->
+        myBookItem.let { book ->
             updateTitleTextState(book.title)
             updateWriteTextState(book.author)
             updateLinkTextState(book.bookUrl)
@@ -106,7 +106,7 @@ internal fun MyBookEditScreen(
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                         updateTextValue = {
                             updateTitleTextState(it)
-                            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
+                            updateTitleTextStateIsEmpty(false)
                         },
                         isError = titleTextStateIsEmpty
                     )
@@ -117,7 +117,7 @@ internal fun MyBookEditScreen(
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
                         updateTextValue = {
                             updateWriteTextState(it)
-                            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
+                            updateWriteTextStateIsEmpty(false)
                         },
                         isError = writeTextStateIsEmpty
                     )
@@ -128,7 +128,7 @@ internal fun MyBookEditScreen(
                         emptyErrorMessage = stringResource(R.string.please_enter_the_link),
                         updateTextValue = {
                             updateLinkTextState(it)
-                            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
+                            updateLinkTextStateIsEmpty(false)
                         },
                         isError = linkTextStateIsEmpty
                     )
@@ -136,7 +136,15 @@ internal fun MyBookEditScreen(
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
                         onClick = {
-                            if (myBookItem != null)
+                            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
+                            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
+                            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
+                            if (
+                                myBookItem != null
+                                && titleTextState.isNotEmpty()
+                                && writeTextState.isNotEmpty()
+                                && linkTextState.isNotEmpty()
+                            ) {
                                 orderModifyById(
                                     myBookItem.id,
                                     MyBookListModel(
@@ -146,7 +154,8 @@ internal fun MyBookEditScreen(
                                         bookUrl = linkTextState,
                                     )
                                 )
-                            navigateToBack()
+                                navigateToBack()
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -161,7 +170,9 @@ internal fun MyBookEditScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyBookEditScreenPreview() {
-    MyBookEditRoute(
+    MyBookEditScreen(
         navigateToBack = { },
+        myBookItem = MyBookListModel(id = 0, author = "", bookUrl = "", title = ""),
+        orderModifyById = { _, _ -> }
     )
 }

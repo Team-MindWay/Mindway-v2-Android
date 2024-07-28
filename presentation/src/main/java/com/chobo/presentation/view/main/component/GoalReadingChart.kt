@@ -6,6 +6,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +28,6 @@ fun GoalReadingChart(
     isHasData: Boolean,
     getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0, 0, 0, 0, 0, 0, 0, 0, 0),
 ) {
-    val weekList = immutableListOf("월", "화", "수", "목", "금", "토", "일")
     val dateList = immutableListOf(
         getWeekendGoalModel.mon,
         getWeekendGoalModel.tue,
@@ -36,8 +37,8 @@ fun GoalReadingChart(
         getWeekendGoalModel.sat,
         getWeekendGoalModel.sun
     )
-    val maxRead = remember { dateList.max() }
     val currentDate = getTodayDayOfWeek()
+
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = if (isHasData) Arrangement.SpaceBetween else Arrangement.SpaceAround,
@@ -67,10 +68,18 @@ fun GoalReadingChart(
                         .fillMaxWidth(0.9091f)
                         .height(78.dp)
                 ) {
-                    weekList.forEachIndexed { index, date ->
+                    immutableListOf(
+                        "월",
+                        "화",
+                        "수",
+                        "목",
+                        "금",
+                        "토",
+                        "일"
+                    ).forEachIndexed { index, date ->
                         GoalReadingGraph(
                             numBooksRead = dateList[index],
-                            maxBooksRead = maxRead,
+                            maxBooksRead = dateList.max(),
                             isCurrentDate = currentDate == date,
                             today = date,
                             modifier = Modifier

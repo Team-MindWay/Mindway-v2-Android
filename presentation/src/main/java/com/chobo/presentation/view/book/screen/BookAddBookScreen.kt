@@ -166,5 +166,17 @@ internal fun BookAddBookScreen(
 @Preview
 @Composable
 fun PreviewAddBookScreen() {
-    BookAddBookRoute(navigateToBack = {})
+    BookAddBookScreen(
+        navigateToBack = {},
+        checkButtonOnClick = {},
+        linkTextState = "",
+        linkTextStateIsEmpty = false,
+        titleTextStateIsEmpty = false,
+        writeTextState = "",
+        titleTextState = "",
+        updateTitleTextState = { _ -> },
+        updateLinkTextState = { _ -> },
+        updateWriteTextState = { _ -> },
+        writeTextStateIsEmpty = false
+    )
 }

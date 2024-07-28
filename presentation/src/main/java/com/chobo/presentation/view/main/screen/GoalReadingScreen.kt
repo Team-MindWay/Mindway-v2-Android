@@ -25,11 +25,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -57,6 +58,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -71,12 +73,23 @@ internal fun GoalReadingRoute(
     val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
-    val isToastVisible by goalReadingViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val (isToastVisible, setIsToastVisible) = remember { mutableStateOf(false) }
     val isSuccess by goalReadingViewModel.isSuccess.collectAsStateWithLifecycle()
-    val swipeRefreshLoading by goalReadingViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
+    val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
-    val coroutineScope = rememberCoroutineScope()
-    val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(swipeRefreshLoading) {
+        delay(1000)
+        setSwipeRefreshLoading(false)
+    }
+
+    LaunchedEffect(Unit) {
+        setSwipeRefreshLoading(true)
+        goalReadingViewModel.apply {
+            getBookList()
+            getWeekendGoal()
+        }
+    }
 
     GoalReadingScreen(
         modifier = modifier,
@@ -87,16 +100,18 @@ internal fun GoalReadingRoute(
         isToastVisible = isToastVisible,
         isSuccess = isSuccess,
         swipeRefreshState = swipeRefreshState,
-        coroutineScope = coroutineScope,
-        focusManager = focusManager,
         goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
         updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting,
+        dataInit = {
+            setSwipeRefreshLoading(true)
+            goalReadingViewModel.apply {
+                getBookList()
+                getWeekendGoal()
+            }
+        },
         navigateToBack = navigateToBack,
         navigateToHomeAddBook = navigateToHomeAddBook,
         navigateToHomeViewDetail = navigateToHomeViewDetail,
-        loadStuff = goalReadingViewModel::loadStuff,
-        getBookList = goalReadingViewModel::getBookList,
-        getWeekendGoal = goalReadingViewModel::getWeekendGoal,
     )
 }
 
@@ -104,6 +119,7 @@ internal fun GoalReadingRoute(
 @Composable
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     getWeekendGoalUiState: GetWeekendGoalUiState,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
@@ -111,21 +127,15 @@ internal fun GoalReadingScreen(
     isToastVisible: Boolean,
     isSuccess: Boolean,
     swipeRefreshState: SwipeRefreshState,
-    coroutineScope: CoroutineScope,
-    focusManager: FocusManager,
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
+    dataInit: () -> Unit,
     navigateToHomeViewDetail: (Long) -> Unit,
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
-    loadStuff: () -> Unit,
-    getBookList: () -> Unit,
-    getWeekendGoal: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        getBookList()
-        getWeekendGoal()
-    }
+
+    val focusManager = LocalFocusManager.current
     val sheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -174,21 +184,7 @@ internal fun GoalReadingScreen(
                                     )
                                 }
 
-                                is GetWeekendGoalUiState.Fail -> {
-                                    PlusIcon(
-                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                        tint = MindWayColor.Black
-                                    )
-                                }
-
-                                is GetWeekendGoalUiState.Loading -> {
-                                    PlusIcon(
-                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                        tint = MindWayColor.Black
-                                    )
-                                }
-
-                                is GetWeekendGoalUiState.Success -> {
+                                else -> {
                                     PlusIcon(tint = MindWayColor.GRAY400)
                                 }
                             }
@@ -197,9 +193,7 @@ internal fun GoalReadingScreen(
                     SwipeRefresh(
                         state = swipeRefreshState,
                         onRefresh = {
-                            loadStuff()
-                            getBookList()
-                            getWeekendGoal()
+                            dataInit()
                         }
                     ) {
                         Box(modifier = Modifier.fillMaxSize()) {
@@ -216,33 +210,6 @@ internal fun GoalReadingScreen(
                             ) {
                                 item {
                                     when (getWeekendGoalUiState) {
-                                        is GetWeekendGoalUiState.Empty -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-
-                                        is GetWeekendGoalUiState.Fail -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-
-                                        is GetWeekendGoalUiState.Loading -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-
                                         is GetWeekendGoalUiState.Success -> {
                                             GoalReadingChart(
                                                 isHasData = true,
@@ -273,12 +240,18 @@ internal fun GoalReadingScreen(
                                                 PlusIcon(modifier = Modifier.fillMaxSize())
                                             }
                                         }
+
+                                        else -> {
+                                            GoalReadingChart(
+                                                isHasData = false,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(180.dp),
+                                            )
+                                        }
                                     }
                                 }
                                 when (getBookListUiState) {
-                                    is GetBookListUiState.Empty -> Unit
-                                    is GetBookListUiState.Fail -> Unit
-                                    is GetBookListUiState.Loading -> Unit
                                     is GetBookListUiState.Success -> {
                                         items(getBookListUiState.data.reversed()) { item ->
                                             GoalReadingListOfBooksReadItem(
@@ -288,6 +261,8 @@ internal fun GoalReadingScreen(
                                             )
                                         }
                                     }
+
+                                    else -> Unit
                                 }
                             }
                             this@Column.AnimatedVisibility(
@@ -323,13 +298,20 @@ internal fun GoalReadingScreen(
 @Preview(showBackground = true)
 @Composable
 fun GoalReadingScreenPreview() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        GoalReadingRoute(
-            navigateToBack = { },
-            navigateToHomeAddBook = { },
-            navigateToHomeViewDetail = { },
-        )
-    }
+
+    GoalReadingScreen(
+        navigateToBack = { },
+        navigateToHomeAddBook = { },
+        navigateToHomeViewDetail = { },
+        dataInit = {},
+        getWeekendGoalUiState = GetWeekendGoalUiState.Loading,
+        getBookListUiState = GetBookListUiState.Loading,
+        goalBookReadSetting = "",
+        goalBookReadSettingIsEmpty = false,
+        goalBookReadSettingOnClick = {},
+        isToastVisible = false,
+        isSuccess = false,
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
+        updateGoalBookReadSetting = { _ -> }
+    )
 }

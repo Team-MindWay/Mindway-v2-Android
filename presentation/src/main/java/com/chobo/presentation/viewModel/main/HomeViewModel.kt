@@ -33,6 +33,12 @@ class HomeViewModel @Inject constructor(
     private val _noticeGetUiState = MutableStateFlow<NoticeGetUiState>(NoticeGetUiState.Loading)
     val noticeGetUiState: StateFlow<NoticeGetUiState> = _noticeGetUiState.asStateFlow()
 
+    init {
+        getWeekendGoal()
+        getRank()
+        getNotice()
+    }
+
     fun getNotice() = viewModelScope.launch {
         getNoticeGetUseCase()
             .asResult()
@@ -75,11 +81,5 @@ class HomeViewModel @Inject constructor(
                     is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
                 }
             }
-    }
-
-    init {
-        getWeekendGoal()
-        getRank()
-        getNotice()
     }
 }

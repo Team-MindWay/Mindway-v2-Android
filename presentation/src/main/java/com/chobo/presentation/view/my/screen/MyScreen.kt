@@ -110,14 +110,14 @@ fun MyScreen(
                     }
                 }
                 when (myNameUiState) {
-                    is GetMyInformationUiState.Fail -> Unit
-                    is GetMyInformationUiState.Loading -> Unit
                     is GetMyInformationUiState.Success -> {
                         MyNameCard(
                             name = myNameUiState.data.name,
                             onClick = showSheet,
                         )
                     }
+
+                    else -> Unit
                 }
                 Row(
                     horizontalArrangement = Arrangement.Start,
@@ -155,23 +155,18 @@ fun MyScreen(
                     }
 
                     is GetMyBookListUiState.Fail -> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                BookImage()
-                                Text(
-                                    text = stringResource(R.string.is_on_error),
-                                    style = typography.bodyMedium,
-                                    fontWeight = FontWeight.Normal,
-                                    color = colors.GRAY500,
-                                )
-                            }
+                            BookImage()
+                            Text(
+                                text = stringResource(R.string.is_on_error),
+                                style = typography.bodyMedium,
+                                fontWeight = FontWeight.Normal,
+                                color = colors.GRAY500,
+                            )
                         }
                     }
 
@@ -186,7 +181,7 @@ fun MyScreen(
                                     vertical = 16.dp
                                 )
                         ) {
-                            items(getMyBookListUiState.data) { item ->
+                            items(getMyBookListUiState.data.reversed()) { item ->
                                 MyBookListItem(
                                     title = item.title,
                                     writer = item.author,
@@ -223,13 +218,13 @@ fun MyScreen(
                 if (isCommunicationSuccess) {
                     MindWayToast(
                         isSuccess = false,
-                        text = stringResource(R.string.order_delete_fail),
+                        text = stringResource(R.string.work_fail),
                         modifier = Modifier.fillMaxWidth()
                     )
                 } else {
                     MindWayToast(
                         isSuccess = true,
-                        text = stringResource(R.string.order_delete_success),
+                        text = stringResource(R.string.work_success),
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -242,8 +237,14 @@ fun MyScreen(
 @Composable
 fun MyScreenPreview() {
 
-    MyRoute(
+    MyScreen(
         navigateToMyBookEdit = {},
-        showSheet = {}
+        showSheet = {},
+        getMyBookListUiState = GetMyBookListUiState.Empty,
+        isToastVisible = false,
+        isCommunicationSuccess = false,
+        setBook = { _ -> },
+        myNameUiState = GetMyInformationUiState.Loading,
+        orderDeleteById = { _ -> }
     )
 }

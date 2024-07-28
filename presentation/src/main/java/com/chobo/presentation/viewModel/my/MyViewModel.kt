@@ -40,10 +40,10 @@ class MyViewModel @Inject constructor(
     private val _isToastVisible = MutableStateFlow(false)
     val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
 
-    private val _isCommunicationSuccess = MutableStateFlow(true)
+    private val _isCommunicationSuccess = MutableStateFlow(false)
     val isCommunicationSuccess: StateFlow<Boolean> = _isCommunicationSuccess.asStateFlow()
 
-    lateinit var myBookItem: MyBookListModel
+    var myBookItem: MyBookListModel = MyBookListModel(id = 0, title = "", author = "", bookUrl = "")
         private set
 
     fun setBook(book: MyBookListModel) {
@@ -91,15 +91,25 @@ class MyViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _isCommunicationSuccess.value = true
+                    is Result.Loading -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
+
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
+                        showToast()
+                        getMyBookList()
                     }
-                    is Result.Fail -> _isCommunicationSuccess.value = false
+
+                    is Result.Fail -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
                 }
             }
-        showToast()
-        getMyBookList()
     }
 
     fun orderModifyById(id: Long, body: MyBookListModel) = viewModelScope.launch {
@@ -107,15 +117,25 @@ class MyViewModel @Inject constructor(
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _isCommunicationSuccess.value = false
+                    is Result.Loading -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
+
                     is Result.Success -> {
                         _isCommunicationSuccess.value = true
+                        showToast()
+                        getMyBookList()
                     }
-                    is Result.Fail -> _isCommunicationSuccess.value = false
+
+                    is Result.Fail -> {
+                        _isCommunicationSuccess.value = false
+                        showToast()
+                        getMyBookList()
+                    }
                 }
             }
-        showToast()
-        getMyBookList()
     }
 
     fun logout() = viewModelScope.launch {

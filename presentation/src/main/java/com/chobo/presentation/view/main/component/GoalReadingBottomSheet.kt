@@ -98,8 +98,8 @@ fun GoalReadingBottomSheet(
                             Text(
                                 text = stringResource(
                                     id = R.string.wave,
-                                    localDateTimeMonthDateFormat(startOfWeek),
-                                    localDateTimeMonthDateFormat(endOfWeek)
+                                    startOfWeek.localDateTimeMonthDateFormat(),
+                                    endOfWeek.localDateTimeMonthDateFormat()
                                 ),
                                 style = typography.bodyMedium,
                                 fontWeight = FontWeight.SemiBold,

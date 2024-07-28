@@ -6,4 +6,4 @@ data class GAuthLoginRequestBody(
     val code: String
 )
 
-fun GAuthLoginRequestModel.toDto() = GAuthLoginRequestBody(code = this.code)
+fun GAuthLoginRequestModel.toDto() = GAuthLoginRequestBody(code = code)

@@ -25,11 +25,11 @@ class AuthRepositoryImpl @Inject constructor(
         localAuthDataSource.getRefreshToken()
 
     override suspend fun saveLoginData(data: GAuthLoginResponseModel) {
-        data.let {
-            localAuthDataSource.setAccessToken(it.accessToken)
-            localAuthDataSource.setAccessTime(it.accessTokenExpiresIn)
-            localAuthDataSource.setRefreshToken(it.refreshToken)
-            localAuthDataSource.setRefreshTime(it.refreshTokenExpiresIn)
+        with(data) {
+            localAuthDataSource.setAccessToken(accessToken)
+            localAuthDataSource.setAccessTime(accessTokenExpiresIn)
+            localAuthDataSource.setRefreshToken(refreshToken)
+            localAuthDataSource.setRefreshTime(refreshTokenExpiresIn)
         }
     }
 
@@ -37,7 +37,7 @@ class AuthRepositoryImpl @Inject constructor(
         remoteAuthDataSource.GuathLogout()
 
     override suspend fun deleteLoginData() {
-        with(localAuthDataSource){
+        localAuthDataSource.apply {
             deleteAccessTime()
             deleteAccessToken()
             deleteRefreshTime()

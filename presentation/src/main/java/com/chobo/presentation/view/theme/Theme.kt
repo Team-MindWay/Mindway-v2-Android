@@ -11,5 +11,5 @@ fun MindWayAndroidTheme(
     typography: Typography = MindWayTypography,
     content: @Composable (colors: ColorTheme, typography: Typography) -> Unit
 ) {
-    content(colors, typography)
+    content(colors = colors, typography = typography)
 }

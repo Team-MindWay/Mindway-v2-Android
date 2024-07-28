@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.rank.RankModel
@@ -62,14 +63,80 @@ fun HomeReadersOfTheMonthChart(
                 ) {
                     val maxBook = bookKingOfTheMonthData.maxOf { it.accrue }
                     bookKingOfTheMonthData.forEachIndexed { index, it ->
-                        HomeReadersOfTheMonthGraph(
-                            rankModel = it,
-                            maxBook = maxBook,
-                            modifier = Modifier.weight(72f)
-                        )
-
+                        val height = ((78 * it.accrue) / maxBook + 2).toFloat().dp
+                        MindWayAndroidTheme { colors, typography ->
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.weight(72f)
+                            ) {
+                                Text(
+                                    text = "${it.accrue}권",
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = colors.GRAY800,
+                                    textAlign = TextAlign.Center,
+                                )
+                                Spacer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(height.value.dp)
+                                        .background(
+                                            color = colors.MAIN,
+                                            shape = RoundedCornerShape(
+                                                topStart = 8.dp,
+                                                topEnd = 8.dp,
+                                            )
+                                        )
+                                )
+                                Text(
+                                    text = it.name,
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = colors.GRAY800,
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
+                        }
                         if (index < bookKingOfTheMonthData.size - 1) {
                             Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
+                        }
+                    }
+                    for (i in 1..3 - bookKingOfTheMonthData.size) {
+                        Spacer(modifier = Modifier.fillMaxWidth(0.1666f))
+                        MindWayAndroidTheme { colors, typography ->
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.weight(72f)
+                            ) {
+                                Text(
+                                    text = "0권",
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = colors.GRAY800,
+                                    textAlign = TextAlign.Center,
+                                )
+                                Spacer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(1.dp)
+                                        .background(
+                                            color = colors.MAIN,
+                                            shape = RoundedCornerShape(
+                                                topStart = 8.dp,
+                                                topEnd = 8.dp,
+                                            )
+                                        )
+                                )
+                                Text(
+                                    text = "",
+                                    style = typography.bodySmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = colors.GRAY800,
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
                         }
                     }
                 }
@@ -118,8 +185,7 @@ fun HomeReadersOfTheMonthChartPreview() {
             .width(312.dp),
         bookKingOfTheMonthData = listOf(
             RankModel("나다", 12),
-            RankModel("나다", 2),
-            RankModel("나다", 30),
+            RankModel("나다", 12),
         )
     )
 }

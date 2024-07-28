@@ -36,6 +36,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,18 +44,24 @@ internal fun ViewDetailRoute(
     modifier: Modifier = Modifier,
     viewDetailViewModel: ViewDetailViewModel = hiltViewModel(),
     id: Long,
-    navigateToBack: () -> Unit,
     navigateToHomeEditBook: (Long) -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewDetailViewModel.getBookById(id)
+    }
+
     ViewDetailScreen(
         modifier = modifier,
-        id = id,
         getBookByIdUiState = getBookByIdUiState,
-        getBookById = viewDetailViewModel::getBookById,
-        bookDeleteById = viewDetailViewModel::bookDeleteById,
-        navigateToHomeEditBook = navigateToHomeEditBook,
+        bookDeleteById = {
+            viewDetailViewModel.bookDeleteById(id)
+        },
+        navigateToHomeEditBook = {
+            navigateToHomeEditBook(id)
+        },
         navigateToBack = navigateToBack,
     )
 }
@@ -63,12 +70,10 @@ internal fun ViewDetailRoute(
 @Composable
 internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
-    id: Long,
-    getBookByIdUiState: GetBookByIdUiState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    getBookById: (Long) -> Unit,
-    bookDeleteById: (Long) -> Unit,
-    navigateToHomeEditBook: (Long) -> Unit,
+    getBookByIdUiState: GetBookByIdUiState,
+    bookDeleteById: () -> Unit,
+    navigateToHomeEditBook: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     val (isDialogOpen, setIsDialogOpen) = remember { mutableStateOf(false) }
@@ -76,9 +81,6 @@ internal fun ViewDetailScreen(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
-    LaunchedEffect(Unit) {
-        getBookById(id)
-    }
 
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
@@ -86,7 +88,7 @@ internal fun ViewDetailScreen(
                 MindWayBottomSheet(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
-                    topOnClick = { navigateToHomeEditBook(id) },
+                    topOnClick = { navigateToHomeEditBook() },
                     bottomOnClick = { setIsDialogOpen(true) },
                 )
             },
@@ -103,19 +105,22 @@ internal fun ViewDetailScreen(
                             cancelOnclick = { setIsDialogOpen(false) },
                             checkOnclick = {
                                 setIsDialogOpen(false)
-                                bookDeleteById(id)
+                                bookDeleteById()
+                                navigateToBack()
                             },
                         )
                     }
                 }
                 MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    endIcon = { OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } })) },
+                    startIcon = {
+                        ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack))
+                    },
+                    endIcon = {
+                        OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }))
+                    },
                     midText = stringResource(R.string.view_detail),
                 )
                 when (getBookByIdUiState) {
-                    is GetBookByIdUiState.Fail -> Unit
-                    is GetBookByIdUiState.Loading -> Unit
                     is GetBookByIdUiState.Success -> {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -137,6 +142,8 @@ internal fun ViewDetailScreen(
                             )
                         }
                     }
+
+                    else -> Unit
                 }
             }
         }
@@ -146,9 +153,10 @@ internal fun ViewDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ViewDetailScreenPreview() {
-    ViewDetailRoute(
+    ViewDetailScreen(
         navigateToBack = { },
         navigateToHomeEditBook = { },
-        id = 0,
+        bookDeleteById = { },
+        getBookByIdUiState = GetBookByIdUiState.Loading
     )
 }
