@@ -1,6 +1,6 @@
 package com.chobo.mindway_v2_android
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     private val saveTokenUseCase: SaveLoginDataUseCase,
@@ -22,7 +23,8 @@ class MainActivityViewModel @Inject constructor(
     private val localAuthDataSource: LocalAuthDataSource
 ) : ViewModel() {
 
-    var uiState: MutableState<MainActivityUiState> = mutableStateOf(MainActivityUiState.Loading)
+    private val _uiState = mutableStateOf<MainActivityUiState>(MainActivityUiState.Loading)
+    val uiState: State<MainActivityUiState> = _uiState
 
     init {
         tokenRefresh()
@@ -30,16 +32,16 @@ class MainActivityViewModel @Inject constructor(
 
     private fun tokenRefresh() = viewModelScope.launch {
         localAuthDataSource.getRefreshToken()
-            ?.collect { refreshToken ->
+            ?.collectLatest { refreshToken ->
                 tokenRefreshUseCase(refreshToken)
                     .asResult()
-                    .collect { result ->
+                    .collectLatest { result ->
                         when (result) {
-                            is Result.Fail -> uiState.value = MainActivityUiState.Fail(result.exception)
-                            is Result.Loading -> uiState.value = MainActivityUiState.Loading
+                            is Result.Fail -> _uiState.value = MainActivityUiState.Fail(result.exception)
+                            is Result.Loading -> _uiState.value = MainActivityUiState.Loading
                             is Result.Success -> {
-                                saveTokenUseCase(data = result.data)
-                                uiState.value = MainActivityUiState.Success(result.data)
+                                saveTokenUseCase(result.data)
+                                _uiState.value = MainActivityUiState.Success(result.data)
                             }
                         }
                     }
