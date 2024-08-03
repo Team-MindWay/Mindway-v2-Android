@@ -62,6 +62,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -73,10 +74,10 @@ internal fun BookRoute(
 ) {
     val novelDataList by bookScreenViewModel.novelDataList.collectAsStateWithLifecycle()
     val essayDataList by bookScreenViewModel.essayDataList.collectAsStateWithLifecycle()
-    val isToastVisible by bookScreenViewModel.isToastVisible.collectAsStateWithLifecycle()
     val orderUploadUiState by bookAddBookScreen.orderUploadUiState.collectAsStateWithLifecycle()
     val swipeRefreshLoading by bookScreenViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
+    val (isToastVisible, setIsToastVisible) = remember { mutableStateOf(false) }
 
     BookScreen(
         modifier = modifier,
@@ -86,9 +87,14 @@ internal fun BookRoute(
         swipeRefreshState = swipeRefreshState,
         orderUploadUiState = orderUploadUiState,
         getRecommendBook = bookScreenViewModel::getRecommendBook,
-        showToast = bookScreenViewModel::showToast,
+        showToast = { setIsToastVisible(true) },
         navigateToBookAddBook = navigateToBookAddBook,
     )
+
+    LaunchedEffect(isToastVisible) {
+        delay(2000)
+        setIsToastVisible(false)
+    }
 }
 
 @Composable
