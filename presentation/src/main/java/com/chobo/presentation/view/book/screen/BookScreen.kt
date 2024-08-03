@@ -32,7 +32,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.domain.emumtype.OrderRequestBookType
+import com.chobo.domain.emumtype.OrderRequestBookType.*
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookListItem
 import com.chobo.presentation.view.book.component.BookTabRowItem
@@ -81,12 +85,13 @@ internal fun BookRoute(
 
     BookScreen(
         modifier = modifier,
+        swipeRefreshState = swipeRefreshState,
         isToastVisible = isToastVisible,
         novelDataList = novelDataList,
         essayDataList = essayDataList,
-        swipeRefreshState = swipeRefreshState,
         orderUploadUiState = orderUploadUiState,
-        getRecommendBook = bookScreenViewModel::getRecommendBook,
+        getEssayRecommendBook = { bookScreenViewModel.getRecommendBook(ESSAY) },
+        getNovelRecommendBook = { bookScreenViewModel.getRecommendBook(NOVEL) },
         showToast = { setIsToastVisible(true) },
         navigateToBookAddBook = navigateToBookAddBook,
     )
@@ -103,12 +108,13 @@ internal fun BookScreen(
     scrollState: ScrollState = rememberScrollState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     pagerState: PagerState = rememberPagerState(pageCount = { 2 }),
+    swipeRefreshState: SwipeRefreshState,
     isToastVisible: Boolean,
     novelDataList: GetRecommendBookUiState,
     essayDataList: GetRecommendBookUiState,
-    swipeRefreshState: SwipeRefreshState,
     orderUploadUiState: OrderUploadUiState,
-    getRecommendBook: (OrderRequestBookType) -> Unit,
+    getEssayRecommendBook: () -> Unit,
+    getNovelRecommendBook: () -> Unit,
     showToast: () -> Unit,
     navigateToBookAddBook: () -> Unit,
 ) {
@@ -116,13 +122,11 @@ internal fun BookScreen(
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
-                getRecommendBook(
-                    if (pagerState.currentPage == 1) {
-                        OrderRequestBookType.ESSAY
-                    } else {
-                        OrderRequestBookType.NOVEL
-                    }
-                )
+                if (pagerState.currentPage == 1) {
+                    getEssayRecommendBook()
+                } else {
+                    getNovelRecommendBook()
+                }
             }
         ) {
             Box(modifier = modifier.background(color = colors.WHITE)) {
@@ -389,30 +393,22 @@ internal fun BookScreen(
                         .padding(horizontal = 24.dp),
                 ) {
                     when (orderUploadUiState) {
-                        is OrderUploadUiState.Fail -> {
-                            showToast()
-                            MindWayToast(
-                                isSuccess = false,
-                                text = stringResource(R.string.book_request_fail_toast),
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-
                         is OrderUploadUiState.Loading -> Unit
-                        is OrderUploadUiState.RemoteFail -> {
-                            showToast()
-                            MindWayToast(
-                                isSuccess = false,
-                                text = stringResource(R.string.book_request_fail_toast),
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
 
                         is OrderUploadUiState.Success -> {
                             showToast()
                             MindWayToast(
                                 isSuccess = true,
                                 text = stringResource(R.string.book_request_succes_toast),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
+                        else -> {
+                            showToast()
+                            MindWayToast(
+                                isSuccess = false,
+                                text = stringResource(R.string.book_request_fail_toast),
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -428,12 +424,13 @@ internal fun BookScreen(
 fun BookScreenPreview() {
     BookScreen(
         essayDataList = GetRecommendBookUiState.Loading,
-        getRecommendBook = { _ -> },
+        getNovelRecommendBook = {},
         isToastVisible = false,
         navigateToBookAddBook = {},
         novelDataList = GetRecommendBookUiState.Loading,
         orderUploadUiState = OrderUploadUiState.Loading,
         showToast = {},
-        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
+        getEssayRecommendBook = {},
     )
 }
