@@ -39,29 +39,22 @@ internal fun LoginRoute(
 
     LoginScreen(
         modifier = modifier,
-        authUiState = authUiState,
-        isSuccessSaveLoginData = isSuccessSaveLoginData,
         gAuthLogin = authViewModel::gAuthLogin,
-        navigateToHome = navigateToHome,
     )
+
+    LaunchedEffect(authUiState, isSuccessSaveLoginData) {
+        if (
+            authUiState is AuthUiState.Success
+            && isSuccessSaveLoginData
+        ) navigateToHome()
+    }
 }
 
 @Composable
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
-    authUiState: AuthUiState,
-    isSuccessSaveLoginData: Boolean,
     gAuthLogin: (String) -> Unit,
-    navigateToHome: () -> Unit,
 ) {
-    LaunchedEffect(Unit, authUiState, isSuccessSaveLoginData) {
-        if (
-            authUiState is AuthUiState.Success
-            && isSuccessSaveLoginData
-        ) {
-            navigateToHome()
-        }
-    }
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
@@ -108,9 +101,6 @@ internal fun LoginScreen(
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen(
-        navigateToHome = { },
-        authUiState = AuthUiState.Loading,
         gAuthLogin = { _ -> },
-        isSuccessSaveLoginData = false
     )
 }
