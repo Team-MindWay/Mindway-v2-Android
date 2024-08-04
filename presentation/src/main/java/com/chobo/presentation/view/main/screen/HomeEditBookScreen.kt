@@ -47,7 +47,6 @@ internal fun HomeEditBookRoute(
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
-        contentTextMaxLength = homeBookEditViewModel.plotTextMaxLength,
         updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
         updateContentTextState = homeBookEditViewModel::updatePlotTextState,
         checkButtonOnClick = {
@@ -67,7 +66,6 @@ internal fun HomeEditBookScreen(
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
-    contentTextMaxLength: Int,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
     checkButtonOnClick: () -> Unit,
@@ -109,7 +107,7 @@ internal fun HomeEditBookScreen(
                     placeholder = stringResource(R.string.please_enter_the_book_content),
                     overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                     emptyErrorMessage = stringResource(R.string.error_content),
-                    lengthLimit = contentTextMaxLength,
+                    lengthLimit = 1000,
                     updateTextValue = updateContentTextState,
                     isError = contentTextStateIsEmpty
                 )
@@ -135,7 +133,6 @@ fun HomeBookEditScreenPreview() {
     HomeEditBookScreen(navigateToBack = { },
         checkButtonOnClick = {},
         contentTextState = "",
-        contentTextMaxLength = 0,
         contentTextStateIsEmpty = false,
         getBookById = { },
         titleTextStateIsEmpty = false,
