@@ -96,6 +96,11 @@ internal fun BookRoute(
         navigateToBookAddBook = navigateToBookAddBook,
     )
 
+    LaunchedEffect(Unit) {
+        bookScreenViewModel.getRecommendBook(ESSAY)
+        bookScreenViewModel.getRecommendBook(NOVEL)
+    }
+
     LaunchedEffect(isToastVisible) {
         delay(2000)
         setIsToastVisible(false)
