@@ -34,7 +34,6 @@ internal fun LoginRoute(
     authViewModel: AuthViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
 ) {
-    val authUiState by authViewModel.authUiState.collectAsStateWithLifecycle()
     val isSuccessSaveLoginData by authViewModel.isSuccessSaveLoginData.collectAsStateWithLifecycle()
 
     LoginScreen(
@@ -42,11 +41,8 @@ internal fun LoginRoute(
         gAuthLogin = authViewModel::gAuthLogin,
     )
 
-    LaunchedEffect(authUiState, isSuccessSaveLoginData) {
-        if (
-            authUiState is AuthUiState.Success
-            && isSuccessSaveLoginData
-        ) navigateToHome()
+    LaunchedEffect(isSuccessSaveLoginData) {
+        if (isSuccessSaveLoginData) navigateToHome()
     }
 }
 
