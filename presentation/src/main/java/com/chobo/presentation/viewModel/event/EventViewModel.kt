@@ -8,6 +8,7 @@ import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +34,7 @@ class EventViewModel @Inject constructor(
                     is Result.Success -> if (result.data.isEmpty()) {
                         _getPastEventListUiState.value = GetPastEventListUiState.Empty
                     } else {
-                        _getPastEventListUiState.value = GetPastEventListUiState.Success(result.data)
+                        _getPastEventListUiState.value = GetPastEventListUiState.Success(result.data.toImmutableList())
                     }
                     is Result.Fail -> _getPastEventListUiState.value = GetPastEventListUiState.Fail(result.exception)
                 }
@@ -49,7 +50,7 @@ class EventViewModel @Inject constructor(
                     is Result.Success -> if (result.data.isEmpty()) {
                         _getNowEventListUiState.value = GetNowEventListUiState.Empty
                     } else {
-                        _getNowEventListUiState.value = GetNowEventListUiState.Success(result.data)
+                        _getNowEventListUiState.value = GetNowEventListUiState.Success(result.data.toImmutableList())
                     }
                     is Result.Fail -> _getNowEventListUiState.value = GetNowEventListUiState.Fail(result.exception)
                 }

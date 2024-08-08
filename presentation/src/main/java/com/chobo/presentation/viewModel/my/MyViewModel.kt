@@ -14,6 +14,7 @@ import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -79,7 +80,7 @@ class MyViewModel @Inject constructor(
                     is Result.Success -> if (result.data.isEmpty()) {
                         _getMyBookListUiState.value = GetMyBookListUiState.Empty
                     } else {
-                        _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data)
+                        _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data.toImmutableList())
                     }
                     is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail(result.exception)
                 }

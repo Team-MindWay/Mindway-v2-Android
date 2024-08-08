@@ -10,6 +10,7 @@ import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -64,7 +65,7 @@ class BookScreenViewModel @Inject constructor(
                         targetStateFlow.value = GetRecommendBookUiState.Empty
                         _swipeRefreshLoading.value = false
                     } else {
-                        targetStateFlow.value = GetRecommendBookUiState.Success(result.data)
+                        targetStateFlow.value = GetRecommendBookUiState.Success(result.data.toImmutableList())
                         _swipeRefreshLoading.value = false
                     }
                     is Result.Fail -> {
