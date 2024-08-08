@@ -163,15 +163,15 @@ fun HomeGoalReadingChartPreview() {
         isHasData = true,
         onClick = { },
         getWeekendGoalModel = GetWeekendGoalModel(
-            mon = 32,
-            tue = 43,
-            wed = 56,
+            mon = 2,
+            tue = 4,
+            wed = 6,
             thu = 1,
-            fri = 24,
-            sat = 34,
-            sun = 45,
+            fri = 4,
+            sat = 4,
+            sun = 4,
             now_count = 23,
-            goal_value = 300
+            goal_value = 30
         )
     )
 }

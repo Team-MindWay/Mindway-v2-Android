@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -254,7 +254,7 @@ internal fun BookScreen(
                                                 .fillMaxSize()
                                         ) {
                                             item { Spacer(modifier = Modifier.height(8.dp)) }
-                                            itemsIndexed(novelDataList.data) { _, item ->
+                                            items(novelDataList.data) { item ->
                                                 BookListItem(data = item)
                                             }
                                         }
@@ -356,7 +356,7 @@ internal fun BookScreen(
                                                 .fillMaxSize()
                                         ) {
                                             item { Spacer(modifier = modifier.height(8.dp)) }
-                                            itemsIndexed(essayDataList.data) { _, item ->
+                                            items(essayDataList.data) { item ->
                                                 BookListItem(data = item)
                                             }
                                         }

@@ -22,13 +22,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.rank.RankModel
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
     isHasData: Boolean,
-    bookKingOfTheMonthData: List<RankModel> = listOf()
+    bookKingOfTheMonthData: ImmutableList<RankModel> = persistentListOf()
 ) {
     MindWayAndroidTheme { colors, typography ->
         if (isHasData) {
@@ -183,7 +185,7 @@ fun HomeReadersOfTheMonthChartPreview() {
         isHasData = true,
         modifier = Modifier
             .width(312.dp),
-        bookKingOfTheMonthData = listOf(
+        bookKingOfTheMonthData = persistentListOf(
             RankModel("나다", 12),
             RankModel("나다", 12),
         )

@@ -1,10 +1,6 @@
 package com.chobo.presentation.view.main.screen
 
 import androidx.activity.ComponentActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -41,7 +36,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDialog
-import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
@@ -73,8 +67,6 @@ internal fun GoalReadingRoute(
     val getBookListUiState by goalReadingViewModel.getBookListUiState.collectAsStateWithLifecycle()
     val goalBookReadSetting by goalReadingViewModel.goalBookReadSetting.collectAsStateWithLifecycle()
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
-    val (isToastVisible, setIsToastVisible) = remember { mutableStateOf(false) }
-    val isSuccess by goalReadingViewModel.isSuccess.collectAsStateWithLifecycle()
     val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
 
@@ -97,8 +89,6 @@ internal fun GoalReadingRoute(
         goalBookReadSetting = goalBookReadSetting,
         goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
         getBookListUiState = getBookListUiState,
-        isToastVisible = isToastVisible,
-        isSuccess = isSuccess,
         swipeRefreshState = swipeRefreshState,
         goalBookReadSettingOnClick = goalReadingViewModel::goalBookReadSettingOnClick,
         updateGoalBookReadSetting = goalReadingViewModel::updateGoalBookReadSetting,
@@ -124,8 +114,6 @@ internal fun GoalReadingScreen(
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
     getBookListUiState: GetBookListUiState,
-    isToastVisible: Boolean,
-    isSuccess: Boolean,
     swipeRefreshState: SwipeRefreshState,
     goalBookReadSettingOnClick: () -> Unit,
     updateGoalBookReadSetting: (String) -> Unit,
@@ -265,28 +253,6 @@ internal fun GoalReadingScreen(
                                     else -> Unit
                                 }
                             }
-                            this@Column.AnimatedVisibility(
-                                visible = isToastVisible,
-                                enter = slideInVertically(
-                                    initialOffsetY = { it + 110 },
-                                    animationSpec = tween(durationMillis = 500)
-                                ),
-                                exit = slideOutVertically(
-                                    targetOffsetY = { it + 110 },
-                                    animationSpec = tween(durationMillis = 500)
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.BottomCenter)
-                                    .offset(y = (-40).dp)
-                                    .padding(horizontal = 24.dp),
-                            ) {
-                                MindWayToast(
-                                    isSuccess = isSuccess,
-                                    text = if (isSuccess) stringResource(R.string.goal_reading_fail_toast)
-                                    else stringResource(R.string.goal_reading_success_toast),
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
                         }
                     }
                 }
@@ -309,8 +275,6 @@ fun GoalReadingScreenPreview() {
         goalBookReadSetting = "",
         goalBookReadSettingIsEmpty = false,
         goalBookReadSettingOnClick = {},
-        isToastVisible = false,
-        isSuccess = false,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
         updateGoalBookReadSetting = { _ -> }
     )

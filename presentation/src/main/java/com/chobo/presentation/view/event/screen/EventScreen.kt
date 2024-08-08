@@ -142,7 +142,7 @@ internal fun EventScreen(
                             is GetNowEventListUiState.Success -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataList = getEventNowListUiState.data.toImmutableList(),
+                                    eventDataList = getEventNowListUiState.data,
                                     eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
@@ -179,7 +179,7 @@ internal fun EventScreen(
                             is GetPastEventListUiState.Success -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
-                                    eventDataList = getEventPastListUiState.data.toImmutableList(),
+                                    eventDataList = getEventPastListUiState.data,
                                     eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
