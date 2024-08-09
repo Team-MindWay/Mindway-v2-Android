@@ -113,8 +113,8 @@ class MyViewModel @Inject constructor(
             }
     }
 
-    fun orderModifyById(id: Long, body: MyBookListModel) = viewModelScope.launch {
-        orderModifyByIdUseCase(orderId = id, body = body)
+    fun orderModifyById(body: MyBookListModel) = viewModelScope.launch {
+        orderModifyByIdUseCase(orderId = body.id, body = body)
             .asResult()
             .collectLatest { result ->
                 when (result) {
