@@ -47,6 +47,7 @@ internal fun BookAddBookRoute(
     val (titleTextStateIsEmpty, setTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (writeTextStateIsEmpty, setWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (linkTextStateIsEmpty, setLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
 
     BookAddBookScreen(
         modifier = modifier,
@@ -56,6 +57,7 @@ internal fun BookAddBookRoute(
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
+        checkBookDialogState = checkBookDialogState,
         updateTitleTextState = { text ->
             setTitleTextState(text)
             setTitleTextStateIsEmpty(false)
@@ -68,6 +70,7 @@ internal fun BookAddBookRoute(
             setLinkTextState(text)
             setLinkTextStateIsEmpty(false)
         },
+        toggleCheckBookDialogState = { toggleCheckBookDialogState(!checkBookDialogState) },
         checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
         navigateToBack = navigateToBack,
     )
@@ -83,14 +86,14 @@ internal fun BookAddBookScreen(
     titleTextStateIsEmpty: Boolean,
     writeTextStateIsEmpty: Boolean,
     linkTextStateIsEmpty: Boolean,
+    checkBookDialogState: Boolean,
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
     checkButtonOnClick: (String, String, String) -> Unit,
+    toggleCheckBookDialogState: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    val (checkBookDialog, toggleCheckBookDialog) = remember { mutableStateOf(false) }
-
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
             Column(
@@ -117,10 +120,10 @@ internal fun BookAddBookScreen(
                             vertical = 28.dp
                         )
                 ) {
-                    if (checkBookDialog) {
-                        Dialog(onDismissRequest = { toggleCheckBookDialog(false) }) {
+                    if (checkBookDialogState) {
+                        Dialog(onDismissRequest = toggleCheckBookDialogState) {
                             BookPopUp(
-                                onDismiss = { toggleCheckBookDialog(false) }
+                                onDismiss = toggleCheckBookDialogState
                             )
                         }
                     }
@@ -189,6 +192,8 @@ fun PreviewAddBookScreen() {
         updateTitleTextState = { _ -> },
         updateLinkTextState = { _ -> },
         updateWriteTextState = { _ -> },
-        writeTextStateIsEmpty = false
+        writeTextStateIsEmpty = false,
+        checkBookDialogState = false,
+        toggleCheckBookDialogState = { },
     )
 }
