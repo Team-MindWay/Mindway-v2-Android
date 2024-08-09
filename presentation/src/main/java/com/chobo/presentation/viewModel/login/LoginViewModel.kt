@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel.auth
+package com.chobo.presentation.viewModel.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+class LoginViewModel @Inject constructor(
     private val gAuthLoginUseCase: GAuthLoginUseCase,
     private val saveTokenUseCase: SaveLoginDataUseCase,
 ) : ViewModel() {

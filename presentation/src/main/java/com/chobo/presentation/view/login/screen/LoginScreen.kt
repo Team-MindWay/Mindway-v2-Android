@@ -21,13 +21,13 @@ import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
-import com.chobo.presentation.viewModel.auth.AuthViewModel
+import com.chobo.presentation.viewModel.login.LoginViewModel
 import com.msg.gauthsignin.GAuthSigninWebView
 
 @Composable
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel(),
+    loginViewModel: LoginViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
 ) {
     val (isClickLoginButton, toggleIsClickLoginButton) = remember { mutableStateOf(false) }
@@ -36,7 +36,7 @@ internal fun LoginRoute(
         modifier = modifier,
         isClickLoginButton = isClickLoginButton,
         gAuthLogin = { gAuthCode ->
-            authViewModel.gAuthLogin(
+            loginViewModel.gAuthLogin(
                 code = gAuthCode,
                 onSuccess = navigateToHome,
             )
