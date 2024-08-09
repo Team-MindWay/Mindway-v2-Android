@@ -2,9 +2,10 @@ package com.chobo.presentation.viewModel.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chobo.domain.emumtype.EventRequestListStatusType
+import com.chobo.domain.emumtype.EventRequestListStatusType.*
 import com.chobo.domain.usecase.event.GetEventListUseCase
-import com.chobo.presentation.viewModel.event.uistate.GetNowEventListUiState
-import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,40 +20,30 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val getEventListUseCase: GetEventListUseCase
 ) : ViewModel() {
-    private val _getNowEventListUiState = MutableStateFlow<GetNowEventListUiState>(GetNowEventListUiState.Loading)
+    private val _getNowEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getNowEventListUiState = _getNowEventListUiState.asStateFlow()
 
-    private val _getPastEventListUiState = MutableStateFlow<GetPastEventListUiState>(GetPastEventListUiState.Loading)
-    val getPastEventListUiState = _getPastEventListUiState.asStateFlow()
+    private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
+    val getPastEventListUiState = _getEventListUiState.asStateFlow()
 
-    fun getEventPastList(status: String) = viewModelScope.launch {
-        getEventListUseCase(status = status)
+    fun getEventList(type: EventRequestListStatusType) = viewModelScope.launch {
+        val targetData = when (type) {
+            NOW -> _getNowEventListUiState
+            PAST -> _getEventListUiState
+        }
+        getEventListUseCase(status = type.name)
             .asResult()
             .collectLatest { result ->
                 when (result) {
-                    is Result.Loading -> _getPastEventListUiState.value = GetPastEventListUiState.Loading
+                    is Result.Loading -> targetData.value = GetEventListUiState.Loading
                     is Result.Success -> if (result.data.isEmpty()) {
-                        _getPastEventListUiState.value = GetPastEventListUiState.Empty
+                        targetData.value = GetEventListUiState.Empty
                     } else {
-                        _getPastEventListUiState.value = GetPastEventListUiState.Success(result.data.toImmutableList())
+                        targetData.value = GetEventListUiState.Success(result.data.toImmutableList())
                     }
-                    is Result.Fail -> _getPastEventListUiState.value = GetPastEventListUiState.Fail(result.exception)
-                }
-            }
-    }
 
-    fun getEventNowList(status: String) = viewModelScope.launch {
-        getEventListUseCase(status = status)
-            .asResult()
-            .collectLatest { result ->
-                when (result) {
-                    is Result.Loading -> _getNowEventListUiState.value = GetNowEventListUiState.Loading
-                    is Result.Success -> if (result.data.isEmpty()) {
-                        _getNowEventListUiState.value = GetNowEventListUiState.Empty
-                    } else {
-                        _getNowEventListUiState.value = GetNowEventListUiState.Success(result.data.toImmutableList())
-                    }
-                    is Result.Fail -> _getNowEventListUiState.value = GetNowEventListUiState.Fail(result.exception)
+                    is Result.Fail -> targetData.value =
+                        GetEventListUiState.Fail(result.exception)
                 }
             }
     }

@@ -12,11 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -42,12 +41,12 @@ internal fun BookAddBookRoute(
     bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
-    val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
-    val writeTextState by bookAddBookViewModel.writeTextState.collectAsStateWithLifecycle()
-    val linkTextState by bookAddBookViewModel.linkTextState.collectAsStateWithLifecycle()
-    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
-    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
-    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
+    val (titleTextState, setTitleTextState) = remember { mutableStateOf("") }
+    val (writeTextState, setWriteTextState) = remember { mutableStateOf("") }
+    val (linkTextState, setLinkTextState) = remember { mutableStateOf("") }
+    val (titleTextStateIsEmpty, setTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val (writeTextStateIsEmpty, setWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val (linkTextStateIsEmpty, setLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
 
     BookAddBookScreen(
         modifier = modifier,
@@ -57,9 +56,18 @@ internal fun BookAddBookRoute(
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
-        updateTitleTextState = bookAddBookViewModel::updateTitleTextState,
-        updateWriteTextState = bookAddBookViewModel::updateWriteTextState,
-        updateLinkTextState = bookAddBookViewModel::updateLinkTextState,
+        updateTitleTextState = { text ->
+            setTitleTextState(text)
+            setTitleTextStateIsEmpty(false)
+        },
+        updateWriteTextState = { text ->
+            setWriteTextState(text)
+            setWriteTextStateIsEmpty(false)
+        },
+        updateLinkTextState = { text ->
+            setLinkTextState(text)
+            setLinkTextStateIsEmpty(false)
+        },
         checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
         navigateToBack = navigateToBack,
     )
@@ -68,6 +76,7 @@ internal fun BookAddBookRoute(
 @Composable
 internal fun BookAddBookScreen(
     modifier: Modifier = Modifier,
+    focusManager: FocusManager = LocalFocusManager.current,
     titleTextState: String,
     writeTextState: String,
     linkTextState: String,
@@ -77,10 +86,9 @@ internal fun BookAddBookScreen(
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    checkButtonOnClick: () -> Unit,
+    checkButtonOnClick: (String, String, String) -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    val focusManager = LocalFocusManager.current
     val (checkBookDialog, toggleCheckBookDialog) = remember { mutableStateOf(false) }
 
     MindWayAndroidTheme { colors, _ ->
@@ -150,8 +158,12 @@ internal fun BookAddBookScreen(
                                 && !linkTextStateIsEmpty
                             ) {
                                 navigateToBack()
+                                checkButtonOnClick(
+                                    titleTextState,
+                                    writeTextState,
+                                    linkTextState,
+                                )
                             }
-                            checkButtonOnClick()
                         },
                         modifier = modifier
                             .fillMaxWidth()
@@ -168,7 +180,7 @@ internal fun BookAddBookScreen(
 fun PreviewAddBookScreen() {
     BookAddBookScreen(
         navigateToBack = {},
-        checkButtonOnClick = {},
+        checkButtonOnClick = { _, _, _ -> },
         linkTextState = "",
         linkTextStateIsEmpty = false,
         titleTextStateIsEmpty = false,

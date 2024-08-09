@@ -22,23 +22,14 @@ class AuthViewModel @Inject constructor(
     private val gAuthLoginUseCase: GAuthLoginUseCase,
     private val saveTokenUseCase: SaveLoginDataUseCase,
 ) : ViewModel() {
-    private val _authUiState = MutableStateFlow<AuthUiState>(AuthUiState.Loading)
-    val authUiState: StateFlow<AuthUiState> = _authUiState.asStateFlow()
-
     private val _isSuccessSaveLoginData = MutableStateFlow(false)
     val isSuccessSaveLoginData: StateFlow<Boolean> = _isSuccessSaveLoginData.asStateFlow()
 
     fun gAuthLogin(code: String) = viewModelScope.launch {
         gAuthLoginUseCase(GAuthLoginRequestModel(code = code))
-            .asResult()
-            .collectLatest { result ->
-                when (result) {
-                    is Result.Fail -> _authUiState.value = AuthUiState.Fail(result.exception)
-                    is Result.Loading -> _authUiState.value = AuthUiState.Loading
-                    is Result.Success -> {
-                        saveLoginData(result.data)
-                        _authUiState.value = AuthUiState.Success
-                    }
+            .onSuccess {
+                it.collect { result ->
+                    saveLoginData(result)
                 }
             }
     }

@@ -49,23 +49,20 @@ internal fun DetailEventRoute(
     DetailEventScreen(
         modifier = modifier,
         getDetailEventUiState = getDetailEventUiState,
-        getDetailEvent = {
-            detailEventViewModel.getDetailEvent(id)
-        },
         navigateToBack = navigateToBack
     )
+
+    LaunchedEffect(Unit) {
+        detailEventViewModel.getDetailEvent(id)
+    }
 }
 
 @Composable
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
     getDetailEventUiState: GetDetailEventUiState,
-    getDetailEvent: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        getDetailEvent()
-    }
 
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
@@ -98,6 +95,7 @@ internal fun DetailEventScreen(
                             }
                         }
                     }
+
                     is GetDetailEventUiState.Loading -> Unit
                     is GetDetailEventUiState.Success -> {
                         Image(
@@ -134,7 +132,6 @@ fun DetailEventScreenPre() {
     )
     DetailEventScreen(
         getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
-        getDetailEvent = {},
         navigateToBack = {},
     )
 }
