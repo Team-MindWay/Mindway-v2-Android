@@ -61,6 +61,7 @@ internal fun HomeAddBookRoute(
 @Composable
 internal fun HomeAddBookScreen(
     modifier: Modifier = Modifier,
+    focusManager: FocusManager = LocalFocusManager.current,
     titleTextState: String,
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
@@ -70,7 +71,6 @@ internal fun HomeAddBookScreen(
     checkButtonOnClick: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    val focusManager = LocalFocusManager.current
 
     MindWayAndroidTheme { colors, _ ->
         CompositionLocalProvider(LocalFocusManager provides focusManager) {

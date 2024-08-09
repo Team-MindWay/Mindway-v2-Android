@@ -39,14 +39,6 @@ internal fun HomeRoute(
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        homeViewModel.apply {
-            getNotice()
-            getRank()
-            getWeekendGoal()
-        }
-    }
-
     HomeScreen(
         modifier = modifier,
         getWeekendGoalUIState = getWeekendGoalUIState,
@@ -54,6 +46,14 @@ internal fun HomeRoute(
         getRankUIState = getRankUIState,
         navigateToGoalReading = navigateToGoalReading,
     )
+
+    LaunchedEffect(Unit) {
+        homeViewModel.apply {
+            getNotice()
+            getRank()
+            getWeekendGoal()
+        }
+    }
 }
 
 @Composable

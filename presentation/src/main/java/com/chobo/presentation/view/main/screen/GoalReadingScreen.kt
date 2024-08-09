@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.chobo.presentation.view.main.screen
 
 import androidx.activity.ComponentActivity
@@ -14,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -26,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -69,22 +73,14 @@ internal fun GoalReadingRoute(
     val goalBookReadSettingIsEmpty by goalReadingViewModel.goalBookReadSettingIsEmpty.collectAsStateWithLifecycle()
     val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
-
-    LaunchedEffect(swipeRefreshLoading) {
-        delay(1000)
-        setSwipeRefreshLoading(false)
-    }
-
-    LaunchedEffect(Unit) {
-        setSwipeRefreshLoading(true)
-        goalReadingViewModel.apply {
-            getBookList()
-            getWeekendGoal()
-        }
-    }
+    val sheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
 
     GoalReadingScreen(
         modifier = modifier,
+        sheetState = sheetState,
         getWeekendGoalUiState = getWeekendGoalUiState,
         goalBookReadSetting = goalBookReadSetting,
         goalBookReadSettingIsEmpty = goalBookReadSettingIsEmpty,
@@ -103,13 +99,28 @@ internal fun GoalReadingRoute(
         navigateToHomeAddBook = navigateToHomeAddBook,
         navigateToHomeViewDetail = navigateToHomeViewDetail,
     )
+
+
+    LaunchedEffect(swipeRefreshLoading) {
+        delay(1000)
+        setSwipeRefreshLoading(false)
+    }
+
+    LaunchedEffect(Unit) {
+        setSwipeRefreshLoading(true)
+        goalReadingViewModel.apply {
+            getBookList()
+            getWeekendGoal()
+        }
+    }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun GoalReadingScreen(
     modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    focusManager: FocusManager = LocalFocusManager.current,
+    sheetState: ModalBottomSheetState,
     getWeekendGoalUiState: GetWeekendGoalUiState,
     goalBookReadSetting: String,
     goalBookReadSettingIsEmpty: Boolean,
@@ -123,11 +134,6 @@ internal fun GoalReadingScreen(
     navigateToHomeAddBook: () -> Unit,
 ) {
 
-    val focusManager = LocalFocusManager.current
-    val sheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
 
     MindWayBottomSheetDialog(
         sheetContent = {
@@ -276,6 +282,7 @@ fun GoalReadingScreenPreview() {
         goalBookReadSettingIsEmpty = false,
         goalBookReadSettingOnClick = {},
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
-        updateGoalBookReadSetting = { _ -> }
+        updateGoalBookReadSetting = { _ -> },
+        sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     )
 }

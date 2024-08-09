@@ -20,7 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.chobo.domain.emumtype.EventRequestListStatusType.*
+import com.chobo.domain.emumtype.EventRequestListStatusType.NOW
+import com.chobo.domain.emumtype.EventRequestListStatusType.PAST
 import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
@@ -31,7 +32,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
-import okhttp3.internal.toImmutableList
 
 @Composable
 internal fun EventScreenRoute(
@@ -44,16 +44,6 @@ internal fun EventScreenRoute(
     val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
 
-    LaunchedEffect(swipeRefreshLoading) {
-        delay(1000)
-        setSwipeRefreshLoading(false)
-    }
-
-    LaunchedEffect(Unit) {
-        eventViewModel.getEventList(NOW)
-        eventViewModel.getEventList(PAST)
-    }
-
     EventScreen(
         modifier = modifier,
         navigateToDetailEvent = navigateToDetailEvent,
@@ -64,6 +54,16 @@ internal fun EventScreenRoute(
         getEventNowList = { eventViewModel.getEventList(NOW) },
         getEventPastList = { eventViewModel.getEventList(PAST) },
     )
+
+    LaunchedEffect(swipeRefreshLoading) {
+        delay(1000)
+        setSwipeRefreshLoading(false)
+    }
+
+    LaunchedEffect(Unit) {
+        eventViewModel.getEventList(NOW)
+        eventViewModel.getEventList(PAST)
+    }
 }
 
 @Composable

@@ -71,7 +71,23 @@ internal fun BookAddBookRoute(
             setLinkTextStateIsEmpty(false)
         },
         toggleCheckBookDialogState = { toggleCheckBookDialogState(!checkBookDialogState) },
-        checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
+        checkButtonOnClick = {
+            setTitleTextStateIsEmpty(titleTextState.isEmpty())
+            setWriteTextStateIsEmpty(writeTextState.isEmpty())
+            setLinkTextStateIsEmpty(linkTextState.isEmpty())
+            if (
+                !titleTextStateIsEmpty
+                && !writeTextStateIsEmpty
+                && !linkTextStateIsEmpty
+            ) {
+                navigateToBack()
+                bookAddBookViewModel.checkButtonOnClick(
+                    titleTextState,
+                    writeTextState,
+                    linkTextState
+                )
+            }
+        },
         navigateToBack = navigateToBack,
     )
 }
@@ -90,7 +106,7 @@ internal fun BookAddBookScreen(
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    checkButtonOnClick: (String, String, String) -> Unit,
+    checkButtonOnClick: () -> Unit,
     toggleCheckBookDialogState: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
@@ -154,20 +170,7 @@ internal fun BookAddBookScreen(
                     Spacer(modifier = modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
-                        onClick = {
-                            if (
-                                !titleTextStateIsEmpty
-                                && !writeTextStateIsEmpty
-                                && !linkTextStateIsEmpty
-                            ) {
-                                navigateToBack()
-                                checkButtonOnClick(
-                                    titleTextState,
-                                    writeTextState,
-                                    linkTextState,
-                                )
-                            }
-                        },
+                        onClick = checkButtonOnClick,
                         modifier = modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -183,7 +186,7 @@ internal fun BookAddBookScreen(
 fun PreviewAddBookScreen() {
     BookAddBookScreen(
         navigateToBack = {},
-        checkButtonOnClick = { _, _, _ -> },
+        checkButtonOnClick = { },
         linkTextState = "",
         linkTextStateIsEmpty = false,
         titleTextStateIsEmpty = false,

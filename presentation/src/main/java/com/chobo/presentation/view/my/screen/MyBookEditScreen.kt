@@ -69,7 +69,7 @@ internal fun MyBookEditRoute(
             updateLinkTextState(textState)
             updateLinkTextStateIsEmpty(false)
         },
-        orderModifyById = {
+        checkOnClick = {
             updateTitleTextStateIsEmpty(titleTextState.isEmpty())
             updateWriteTextStateIsEmpty(writeTextState.isEmpty())
             updateLinkTextStateIsEmpty(linkTextState.isEmpty())
@@ -114,7 +114,7 @@ internal fun MyBookEditScreen(
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    orderModifyById: () -> Unit,
+    checkOnClick: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
 
@@ -170,7 +170,7 @@ internal fun MyBookEditScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     MindWayButton(
                         text = stringResource(id = R.string.apply),
-                        onClick = orderModifyById,
+                        onClick = checkOnClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -195,6 +195,6 @@ fun MyBookEditScreenPreview() {
         updateLinkTextState = { _ -> },
         titleTextStateIsEmpty = false,
         updateWriteTextState = { _ -> },
-        orderModifyById = { }
+        checkOnClick = { }
     )
 }

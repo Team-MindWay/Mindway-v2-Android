@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.background
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -36,7 +39,6 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.goal.uistate.GetBookByIdUiState
 import com.chobo.presentation.viewModel.main.ViewDetailViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,14 +50,18 @@ internal fun ViewDetailRoute(
     navigateToBack: () -> Unit,
 ) {
     val getBookByIdUiState by viewDetailViewModel.getBookByIdUiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(Unit) {
-        viewDetailViewModel.getBookById(id)
-    }
+    val (isDialogOpen, toggleIsDialogOpen) = remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
 
     ViewDetailScreen(
         modifier = modifier,
+        sheetState = sheetState,
         getBookByIdUiState = getBookByIdUiState,
+        isDialogOpen = isDialogOpen,
+        toggleIsDialogOpen = { toggleIsDialogOpen(!isDialogOpen) },
         bookDeleteById = {
             viewDetailViewModel.bookDeleteById(id)
         },
@@ -64,24 +70,24 @@ internal fun ViewDetailRoute(
         },
         navigateToBack = navigateToBack,
     )
+
+    LaunchedEffect(Unit) {
+        viewDetailViewModel.getBookById(id)
+    }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ViewDetailScreen(
     modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    sheetState: ModalBottomSheetState,
     getBookByIdUiState: GetBookByIdUiState,
+    isDialogOpen: Boolean,
+    toggleIsDialogOpen: () -> Unit,
     bookDeleteById: () -> Unit,
     navigateToHomeEditBook: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    val (isDialogOpen, setIsDialogOpen) = remember { mutableStateOf(false) }
-    val sheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-
     MindWayAndroidTheme { colors, _ ->
         MindWayBottomSheetDialog(
             sheetContent = {
@@ -89,7 +95,7 @@ internal fun ViewDetailScreen(
                     topText = stringResource(R.string.book_modify),
                     bottomText = stringResource(R.string.book_delete),
                     topOnClick = { navigateToHomeEditBook() },
-                    bottomOnClick = { setIsDialogOpen(true) },
+                    bottomOnClick = { toggleIsDialogOpen() },
                 )
             },
             sheetState = sheetState
@@ -100,11 +106,11 @@ internal fun ViewDetailScreen(
                     .background(color = colors.WHITE)
             ) {
                 if (isDialogOpen) {
-                    Dialog(onDismissRequest = { setIsDialogOpen(false) }) {
+                    Dialog(onDismissRequest = toggleIsDialogOpen) {
                         ViewDetailPopUp(
-                            cancelOnclick = { setIsDialogOpen(false) },
+                            cancelOnclick = toggleIsDialogOpen,
                             checkOnclick = {
-                                setIsDialogOpen(false)
+                                toggleIsDialogOpen()
                                 bookDeleteById()
                                 navigateToBack()
                             },
@@ -157,6 +163,9 @@ fun ViewDetailScreenPreview() {
         navigateToBack = { },
         navigateToHomeEditBook = { },
         bookDeleteById = { },
-        getBookByIdUiState = GetBookByIdUiState.Loading
+        getBookByIdUiState = GetBookByIdUiState.Loading,
+        isDialogOpen = false,
+        sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden),
+        toggleIsDialogOpen = { }
     )
 }
