@@ -98,28 +98,11 @@ internal fun EventScreen(
                     pagerState = pagerState,
                     onGoingEvent = {
                         when (getEventNowListUiState) {
-                            GetEventListUiState.Empty -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataListIsEmpty = false,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                )
-                            }
-
                             is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
                                     eventDataListIsEmpty = false,
                                     navigateToDetailEvent = navigateToDetailEvent,
-                                )
-                            }
-
-                            is GetEventListUiState.Loading -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataListIsEmpty = true,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                    isLoading = true
                                 )
                             }
 
@@ -131,32 +114,24 @@ internal fun EventScreen(
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
+
+                            else -> {
+                                EventContent(
+                                    content = stringResource(R.string.is_no_ongoing_event),
+                                    eventDataListIsEmpty = true,
+                                    navigateToDetailEvent = navigateToDetailEvent,
+                                    isLoading = true
+                                )
+                            }
                         }
                     },
                     pastEvent = {
                         when (getEventPastListUiState) {
-                            GetEventListUiState.Empty -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_past_event),
-                                    eventDataListIsEmpty = false,
-                                    navigateToDetailEvent = navigateToDetailEvent
-                                )
-                            }
-
                             is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
                                     eventDataListIsEmpty = false,
                                     navigateToDetailEvent = navigateToDetailEvent,
-                                )
-                            }
-
-                            is GetEventListUiState.Loading -> {
-                                EventContent(
-                                    content = stringResource(R.string.is_no_past_event),
-                                    eventDataListIsEmpty = true,
-                                    navigateToDetailEvent = navigateToDetailEvent,
-                                    isLoading = true
                                 )
                             }
 
@@ -166,6 +141,14 @@ internal fun EventScreen(
                                     eventDataList = getEventPastListUiState.data,
                                     eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
+                                )
+                            }
+
+                            else -> {
+                                EventContent(
+                                    content = stringResource(R.string.is_no_past_event),
+                                    eventDataListIsEmpty = false,
+                                    navigateToDetailEvent = navigateToDetailEvent
                                 )
                             }
                         }
