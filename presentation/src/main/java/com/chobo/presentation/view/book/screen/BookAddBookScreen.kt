@@ -111,71 +111,69 @@ internal fun BookAddBookScreen(
     navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(color = colors.WHITE)
-                    .pointerInput(Unit) {
-                        detectTapGestures {
-                            focusManager.clearFocus()
-                        }
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        focusManager.clearFocus()
                     }
+                }
+        ) {
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.book_request),
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
             ) {
-                MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    midText = stringResource(R.string.book_request),
+                if (checkBookDialogState) {
+                    Dialog(onDismissRequest = toggleCheckBookDialogState) {
+                        BookPopUp(
+                            onDismiss = toggleCheckBookDialogState
+                        )
+                    }
+                }
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(id = R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
                 )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(id = R.string.writer),
+                    textState = writeTextState,
+                    placeholder = stringResource(id = R.string.please_enter_the_book_writer),
+                    emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
+                    updateTextValue = updateWriteTextState,
+                    isError = writeTextStateIsEmpty
+                )
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(id = R.string.link),
+                    textState = linkTextState,
+                    placeholder = stringResource(id = R.string.please_enter_the_link),
+                    emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
+                    updateTextValue = updateLinkTextState,
+                    isError = linkTextStateIsEmpty
+                )
+                Spacer(modifier = modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(id = R.string.apply),
+                    onClick = checkButtonOnClick,
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                ) {
-                    if (checkBookDialogState) {
-                        Dialog(onDismissRequest = toggleCheckBookDialogState) {
-                            BookPopUp(
-                                onDismiss = toggleCheckBookDialogState
-                            )
-                        }
-                    }
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(id = R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(id = R.string.writer),
-                        textState = writeTextState,
-                        placeholder = stringResource(id = R.string.please_enter_the_book_writer),
-                        emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
-                        updateTextValue = updateWriteTextState,
-                        isError = writeTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(id = R.string.link),
-                        textState = linkTextState,
-                        placeholder = stringResource(id = R.string.please_enter_the_link),
-                        emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
-                        updateTextValue = updateLinkTextState,
-                        isError = linkTextStateIsEmpty
-                    )
-                    Spacer(modifier = modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(id = R.string.apply),
-                        onClick = checkButtonOnClick,
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                    )
-                }
+                        .height(56.dp),
+                )
             }
         }
     }
