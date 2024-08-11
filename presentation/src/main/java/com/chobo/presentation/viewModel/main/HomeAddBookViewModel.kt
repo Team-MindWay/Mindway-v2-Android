@@ -17,16 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeAddBookViewModel @Inject constructor(
     private val bookUploadUseCase: BookUploadUseCase,
-    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _titleTextState = MutableStateFlow("")
     val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
-
-    internal var title = savedStateHandle.getStateFlow(key = TITLE, initialValue = "")
-
-    internal fun onTitleChane(value: String) {
-        savedStateHandle[TITLE] = value
-    }
 
     private val _contentTextState = MutableStateFlow("")
     val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
@@ -66,6 +59,3 @@ class HomeAddBookViewModel @Inject constructor(
             }
     }
 }
-
-
-private const val TITLE = "title"

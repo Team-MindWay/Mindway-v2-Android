@@ -44,12 +44,9 @@ internal fun HomeAddBookRoute(
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
-    val title by homeAddBookViewModel.title.collectAsStateWithLifecycle()
 
     HomeAddBookScreen(
         modifier = modifier,
-        title = title,
-        onTitleChane = homeAddBookViewModel::onTitleChane,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
@@ -64,8 +61,6 @@ internal fun HomeAddBookRoute(
 @Composable
 internal fun HomeAddBookScreen(
     modifier: Modifier = Modifier,
-    title: String,
-    onTitleChane: (String) -> Unit,
     focusManager: FocusManager = LocalFocusManager.current,
     titleTextState: String,
     contentTextState: String,
@@ -104,10 +99,10 @@ internal fun HomeAddBookScreen(
                 ) {
                     MindWayTextFieldNoneLimit(
                         title = stringResource(R.string.title),
-                        textState = title,
+                        textState = titleTextState,
                         placeholder = stringResource(R.string.please_enter_the_book_title),
                         emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = onTitleChane,
+                        updateTextValue = updateTitleTextState,
                         isError = titleTextStateIsEmpty
                     )
                     MindWayTextField(
@@ -153,8 +148,6 @@ fun AddBookScreenPreview() {
         titleTextState = "",
         titleTextStateIsEmpty = true,
         updateTitleTextState = {},
-        updateContentTextState = {},
-        onTitleChane = {},
-        title = ""
+        updateContentTextState = {}
     )
 }
