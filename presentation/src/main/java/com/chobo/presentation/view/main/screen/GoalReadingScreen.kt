@@ -177,7 +177,8 @@ internal fun GoalReadingScreen(
                         midText = stringResource(R.string.goal_reading),
                         endIcon = {
                             when (getWeekendGoalUiState) {
-                                is GetWeekendGoalUiState.Empty -> {
+                                is GetWeekendGoalUiState.Empty,
+                                is GetWeekendGoalUiState.Fail -> {
                                     PlusIcon(
                                         modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                         tint = MindWayColor.Black
