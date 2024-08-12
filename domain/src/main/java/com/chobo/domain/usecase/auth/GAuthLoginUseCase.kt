@@ -1,14 +1,13 @@
 package com.chobo.domain.usecase.auth
 
 import com.chobo.domain.model.auth.request.GAuthLoginRequestModel
-import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.repository.AuthRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GAuthLoginUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
-    suspend operator fun invoke(body: GAuthLoginRequestModel): Flow<GAuthLoginResponseModel> =
+    suspend operator fun invoke(body: GAuthLoginRequestModel) = runCatching {
         authRepository.gAuthLogin(body = body)
+    }
 }

@@ -49,7 +49,6 @@ internal fun HomeAddBookRoute(
         modifier = modifier,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
-        contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
         updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
@@ -64,7 +63,6 @@ internal fun HomeAddBookScreen(
     modifier: Modifier = Modifier,
     titleTextState: String,
     contentTextState: String,
-    contentTextMaxLength: Int,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
     updateTitleTextState: (String) -> Unit,
@@ -113,7 +111,7 @@ internal fun HomeAddBookScreen(
                         placeholder = stringResource(R.string.please_enter_the_book_content),
                         overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                         emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = contentTextMaxLength,
+                        lengthLimit = 1000,
                         updateTextValue = updateContentTextState,
                         isError = contentTextStateIsEmpty
                     )
@@ -146,7 +144,6 @@ fun AddBookScreenPreview() {
         navigateToBack = { },
         checkButtonOnClick = {},
         contentTextState = "",
-        contentTextMaxLength = 0,
         contentTextStateIsEmpty = false,
         titleTextState = "",
         titleTextStateIsEmpty = true,

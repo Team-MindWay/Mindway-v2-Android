@@ -10,7 +10,6 @@ import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,22 +29,6 @@ class BookScreenViewModel @Inject constructor(
 
     private val _essayDataList = MutableStateFlow<GetRecommendBookUiState>(GetRecommendBookUiState.Loading)
     val essayDataList: StateFlow<GetRecommendBookUiState> = _essayDataList.asStateFlow()
-
-    private val _isToastVisible = MutableStateFlow(false)
-    val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
-
-    init {
-        getRecommendBook(type = NOVEL)
-        getRecommendBook(type = ESSAY)
-    }
-
-    fun showToast() {
-        _isToastVisible.value = true
-        viewModelScope.launch {
-            delay(2000)
-            _isToastVisible.value = false
-        }
-    }
 
     fun getRecommendBook(type: OrderRequestBookType) = viewModelScope.launch {
         _swipeRefreshLoading.value = true
