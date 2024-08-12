@@ -63,7 +63,6 @@ internal fun DetailEventScreen(
     getDetailEventUiState: GetDetailEventUiState,
     navigateToBack: () -> Unit,
 ) {
-
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(

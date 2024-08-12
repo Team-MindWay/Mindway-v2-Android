@@ -52,7 +52,6 @@ internal fun LoginScreen(
     toggleIsClickLoginButton: () -> Unit,
     gAuthLogin: (String) -> Unit,
 ) {
-
     MindWayAndroidTheme { colors, _ ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

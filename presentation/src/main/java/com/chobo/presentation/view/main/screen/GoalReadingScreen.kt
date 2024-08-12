@@ -133,131 +133,127 @@ internal fun GoalReadingScreen(
     navigateToBack: () -> Unit,
     navigateToHomeAddBook: () -> Unit,
 ) {
-
-
-    MindWayBottomSheetDialog(
-        sheetContent = {
-            GoalReadingBottomSheet(
-                isError = goalBookReadSettingIsEmpty,
-                textState = goalBookReadSetting,
-                onclick = {
-                    goalBookReadSettingOnClick()
-                    coroutineScope.launch { sheetState.hide() }
-                },
-                updateTextValue = updateGoalBookReadSetting
-            )
-        },
-        sheetState = sheetState
-    ) {
-        MindWayAndroidTheme { colors, _ ->
-            CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
-                Column(
-                    modifier = modifier
-                        .background(color = colors.WHITE)
-                        .pointerInput(Unit) {
-                            detectTapGestures {
-                                focusManager.clearFocus()
-                            }
+    MindWayAndroidTheme { colors, _ ->
+        MindWayBottomSheetDialog(
+            sheetContent = {
+                GoalReadingBottomSheet(
+                    isError = goalBookReadSettingIsEmpty,
+                    textState = goalBookReadSetting,
+                    onclick = {
+                        goalBookReadSettingOnClick()
+                        coroutineScope.launch { sheetState.hide() }
+                    },
+                    updateTextValue = updateGoalBookReadSetting
+                )
+            },
+            sheetState = sheetState
+        ) {
+            Column(
+                modifier = modifier
+                    .background(color = colors.WHITE)
+                    .pointerInput(Unit) {
+                        detectTapGestures {
+                            focusManager.clearFocus()
                         }
-                ) {
-                    MindWayTopAppBar(
-                        startIcon = {
-                            ChevronLeftIcon(
-                                modifier = Modifier.clickableSingle(
-                                    onClick = navigateToBack
-                                )
+                    }
+            ) {
+                MindWayTopAppBar(
+                    startIcon = {
+                        ChevronLeftIcon(
+                            modifier = Modifier.clickableSingle(
+                                onClick = navigateToBack
                             )
-                        },
-                        midText = stringResource(R.string.goal_reading),
-                        endIcon = {
-                            when (getWeekendGoalUiState) {
-                                is GetWeekendGoalUiState.Empty -> {
-                                    PlusIcon(
-                                        modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
-                                        tint = MindWayColor.Black
-                                    )
-                                }
+                        )
+                    },
+                    midText = stringResource(R.string.goal_reading),
+                    endIcon = {
+                        when (getWeekendGoalUiState) {
+                            is GetWeekendGoalUiState.Empty -> {
+                                PlusIcon(
+                                    modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
+                                    tint = MindWayColor.Black
+                                )
+                            }
 
-                                else -> {
-                                    PlusIcon(tint = MindWayColor.GRAY400)
-                                }
+                            else -> {
+                                PlusIcon(tint = MindWayColor.GRAY400)
                             }
                         }
-                    )
-                    SwipeRefresh(
-                        state = swipeRefreshState,
-                        onRefresh = {
-                            dataInit()
-                        }
-                    ) {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            LazyColumn(
-                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .padding(
-                                        start = 24.dp,
-                                        end = 24.dp,
-                                        top = 12.dp,
-                                    )
-                                    .fillMaxSize()
-                            ) {
-                                item {
-                                    when (getWeekendGoalUiState) {
-                                        is GetWeekendGoalUiState.Success -> {
-                                            GoalReadingChart(
-                                                isHasData = true,
-                                                getWeekendGoalModel = getWeekendGoalUiState.data,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                            Column(
-                                                verticalArrangement = Arrangement.spacedBy(
-                                                    8.dp,
-                                                    Alignment.CenterVertically
-                                                ),
-                                                horizontalAlignment = Alignment.CenterHorizontally,
-                                                modifier = modifier
-                                                    .shadow(
-                                                        elevation = 20.dp,
-                                                        spotColor = colors.CardShadow,
-                                                        ambientColor = colors.CardShadow
-                                                    )
-                                                    .background(
-                                                        color = colors.WHITE,
-                                                        shape = RoundedCornerShape(size = 8.dp)
-                                                    )
-                                                    .clickableSingle(onClick = navigateToHomeAddBook)
-                                                    .padding(16.dp)
-                                            ) {
-                                                PlusIcon(modifier = Modifier.fillMaxSize())
-                                            }
-                                        }
-
-                                        else -> {
-                                            GoalReadingChart(
-                                                isHasData = false,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(180.dp),
-                                            )
-                                        }
-                                    }
-                                }
-                                when (getBookListUiState) {
-                                    is GetBookListUiState.Success -> {
-                                        items(getBookListUiState.data.reversed()) { item ->
-                                            GoalReadingListOfBooksReadItem(
-                                                data = item,
-                                                onClick = navigateToHomeViewDetail,
-                                                modifier = Modifier.fillMaxWidth()
-                                            )
+                    }
+                )
+                SwipeRefresh(
+                    state = swipeRefreshState,
+                    onRefresh = {
+                        dataInit()
+                    }
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .padding(
+                                    start = 24.dp,
+                                    end = 24.dp,
+                                    top = 12.dp,
+                                )
+                                .fillMaxSize()
+                        ) {
+                            item {
+                                when (getWeekendGoalUiState) {
+                                    is GetWeekendGoalUiState.Success -> {
+                                        GoalReadingChart(
+                                            isHasData = true,
+                                            getWeekendGoalModel = getWeekendGoalUiState.data,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                        Column(
+                                            verticalArrangement = Arrangement.spacedBy(
+                                                8.dp,
+                                                Alignment.CenterVertically
+                                            ),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = modifier
+                                                .shadow(
+                                                    elevation = 20.dp,
+                                                    spotColor = colors.CardShadow,
+                                                    ambientColor = colors.CardShadow
+                                                )
+                                                .background(
+                                                    color = colors.WHITE,
+                                                    shape = RoundedCornerShape(size = 8.dp)
+                                                )
+                                                .clickableSingle(onClick = navigateToHomeAddBook)
+                                                .padding(16.dp)
+                                        ) {
+                                            PlusIcon(modifier = Modifier.fillMaxSize())
                                         }
                                     }
 
-                                    else -> Unit
+                                    else -> {
+                                        GoalReadingChart(
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                    }
                                 }
+                            }
+                            when (getBookListUiState) {
+                                is GetBookListUiState.Success -> {
+                                    items(getBookListUiState.data.reversed()) { item ->
+                                        GoalReadingListOfBooksReadItem(
+                                            data = item,
+                                            onClick = navigateToHomeViewDetail,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
+
+                                else -> Unit
                             }
                         }
                     }

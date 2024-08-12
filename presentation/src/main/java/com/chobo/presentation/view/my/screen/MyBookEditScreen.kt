@@ -117,65 +117,62 @@ internal fun MyBookEditScreen(
     checkOnClick: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(LocalFocusManager provides focusManager) {
-            Column(modifier = modifier
-                .background(colors.WHITE)
-                .pointerInput(Unit) {
-                    detectTapGestures {
-                        focusManager.clearFocus()
-                    }
+        Column(modifier = modifier
+            .background(colors.WHITE)
+            .pointerInput(Unit) {
+                detectTapGestures {
+                    focusManager.clearFocus()
                 }
-                .imePadding()
+            }
+            .imePadding()
+        ) {
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.book_modify),
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
             ) {
-                MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    midText = stringResource(R.string.book_modify),
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
                 )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.writer),
+                    textState = writeTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_writer),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
+                    updateTextValue = updateWriteTextState,
+                    isError = writeTextStateIsEmpty
+                )
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.link),
+                    textState = linkTextState,
+                    placeholder = stringResource(R.string.please_enter_the_link),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_link),
+                    updateTextValue = updateLinkTextState,
+                    isError = linkTextStateIsEmpty
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(id = R.string.apply),
+                    onClick = checkOnClick,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                ) {
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.writer),
-                        textState = writeTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_writer),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
-                        updateTextValue = updateWriteTextState,
-                        isError = writeTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.link),
-                        textState = linkTextState,
-                        placeholder = stringResource(R.string.please_enter_the_link),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_link),
-                        updateTextValue = updateLinkTextState,
-                        isError = linkTextStateIsEmpty
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(id = R.string.apply),
-                        onClick = checkOnClick,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                    )
-                }
+                        .fillMaxWidth()
+                        .height(56.dp),
+                )
             }
         }
     }

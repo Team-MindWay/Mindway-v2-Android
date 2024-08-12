@@ -71,67 +71,64 @@ internal fun HomeAddBookScreen(
     checkButtonOnClick: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(LocalFocusManager provides focusManager) {
-            Column(
-                modifier = modifier
-                    .background(color = colors.WHITE)
-                    .pointerInput(Unit) {
-                        detectTapGestures {
-                            focusManager.clearFocus()
-                        }
+        Column(
+            modifier = modifier
+                .background(color = colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        focusManager.clearFocus()
                     }
-            ) {
-                MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    midText = stringResource(R.string.add_book),
-                )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                        .fillMaxSize()
-                ) {
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextField(
-                        title = stringResource(R.string.content),
-                        textState = contentTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_content),
-                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
-                        emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = 1000,
-                        updateTextValue = updateContentTextState,
-                        isError = contentTextStateIsEmpty
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(R.string.check),
-                        onClick = {
-                            if (
-                                !titleTextStateIsEmpty
-                                && !contentTextStateIsEmpty
-                            ) {
-                                navigateToBack()
-                            }
-                            checkButtonOnClick()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp),
-                    )
                 }
+        ) {
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.add_book),
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
+                    .fillMaxSize()
+            ) {
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
+                )
+                MindWayTextField(
+                    title = stringResource(R.string.content),
+                    textState = contentTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_content),
+                    overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                    emptyErrorMessage = stringResource(R.string.error_content),
+                    lengthLimit = 1000,
+                    updateTextValue = updateContentTextState,
+                    isError = contentTextStateIsEmpty
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(R.string.check),
+                    onClick = {
+                        if (
+                            !titleTextStateIsEmpty
+                            && !contentTextStateIsEmpty
+                        ) {
+                            navigateToBack()
+                        }
+                        checkButtonOnClick()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                )
             }
         }
     }
