@@ -20,7 +20,6 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -168,7 +167,8 @@ internal fun GoalReadingScreen(
                     midText = stringResource(R.string.goal_reading),
                     endIcon = {
                         when (getWeekendGoalUiState) {
-                            is GetWeekendGoalUiState.Empty -> {
+                            is GetWeekendGoalUiState.Empty,
+                            is GetWeekendGoalUiState.Fail -> {
                                 PlusIcon(
                                     modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                     tint = MindWayColor.Black
