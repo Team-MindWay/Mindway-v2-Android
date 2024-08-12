@@ -40,6 +40,7 @@ internal fun HomeAddBookRoute(
     homeAddBookViewModel: HomeAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
+    // TODO: viewModel 과의 상태 분리
     val titleTextState by homeAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
