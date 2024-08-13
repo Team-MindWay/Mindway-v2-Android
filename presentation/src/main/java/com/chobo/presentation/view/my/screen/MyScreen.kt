@@ -56,15 +56,23 @@ internal fun MyRoute(
     val getMyBookListUiState by myViewModel.getMyBookListUiState.collectAsStateWithLifecycle()
     val isCommunicationSuccess by myViewModel.isCommunicationSuccess.collectAsStateWithLifecycle()
     val isToastVisible by myViewModel.isToastVisible.collectAsStateWithLifecycle()
+    val (isDialogVisible, toggleIsDialogVisible) = remember { mutableStateOf(false) }
+    val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
+    val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
 
     MyScreen(
         modifier = modifier,
         myNameUiState = myNameUiState,
         getMyBookListUiState = getMyBookListUiState,
+        selectedBookTitle = selectedBookTitle,
         isCommunicationSuccess = isCommunicationSuccess,
         isToastVisible = isToastVisible,
-        orderDeleteById = myViewModel::orderDeleteById,
+        isDialogVisible = isDialogVisible,
         setBook = myViewModel::setBook,
+        setSelectedBookTitle = setSelectedBookTitle,
+        orderDeleteById = { myViewModel.orderDeleteById(selectedIndex) },
+        setSelectedIndex = setSelectedIndex,
+        toggleIsDialogVisible = { toggleIsDialogVisible(!isDialogVisible) },
         showSheet = showSheet,
         navigateToMyBookEdit = navigateToMyBookEdit,
     )
@@ -82,29 +90,29 @@ fun MyScreen(
     modifier: Modifier = Modifier,
     myNameUiState: GetMyInformationUiState,
     getMyBookListUiState: GetMyBookListUiState,
+    selectedBookTitle: String,
     isCommunicationSuccess: Boolean,
     isToastVisible: Boolean,
+    isDialogVisible: Boolean,
     setBook: (MyBookListModel) -> Unit,
-    orderDeleteById: (Long) -> Unit,
+    setSelectedBookTitle: (String) -> Unit,
+    orderDeleteById: () -> Unit,
+    setSelectedIndex: (Long) -> Unit,
+    toggleIsDialogVisible: () -> Unit,
     showSheet: () -> Unit,
     navigateToMyBookEdit: () -> Unit,
 ) {
-    val (bookDeleteDialogIsVisible, setBookDeleteDialogIsVisible) = remember { mutableStateOf(false) }
-    val (selectedBookTitle, setSelectedBookTitle) = remember { mutableStateOf("") }
-    val (selectedIndex, setSelectedIndex) = remember { mutableLongStateOf(0L) }
-
-
     MindWayAndroidTheme { colors, typography ->
         Box(modifier = modifier.background(color = colors.WHITE)) {
             Column(modifier = modifier.fillMaxSize()) {
-                if (bookDeleteDialogIsVisible) {
-                    Dialog(onDismissRequest = { setBookDeleteDialogIsVisible(false) }) {
+                if (isDialogVisible) {
+                    Dialog(onDismissRequest = toggleIsDialogVisible) {
                         MyBookDeletePopUp(
                             title = selectedBookTitle,
-                            cancelOnclick = { setBookDeleteDialogIsVisible(false) },
+                            cancelOnclick = toggleIsDialogVisible,
                             checkOnclick = {
-                                orderDeleteById(selectedIndex)
-                                setBookDeleteDialogIsVisible(false)
+                                orderDeleteById()
+                                toggleIsDialogVisible()
                             }
                         )
                     }
@@ -192,7 +200,7 @@ fun MyScreen(
                                     trashCanOnclick = {
                                         setSelectedIndex(item.id)
                                         setSelectedBookTitle(item.title)
-                                        setBookDeleteDialogIsVisible(true)
+                                        toggleIsDialogVisible()
                                     }
                                 )
                             }
@@ -236,7 +244,6 @@ fun MyScreen(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-
     MyScreen(
         navigateToMyBookEdit = {},
         showSheet = {},
@@ -245,6 +252,11 @@ fun MyScreenPreview() {
         isCommunicationSuccess = false,
         setBook = { _ -> },
         myNameUiState = GetMyInformationUiState.Loading,
-        orderDeleteById = { _ -> }
+        orderDeleteById = { },
+        isDialogVisible = false,
+        selectedBookTitle = "",
+        setSelectedIndex = { _ -> },
+        setSelectedBookTitle = { _ -> },
+        toggleIsDialogVisible = { },
     )
 }

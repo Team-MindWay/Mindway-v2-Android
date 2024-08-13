@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -47,37 +46,30 @@ internal fun HomeEditBookRoute(
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
-        contentTextMaxLength = homeBookEditViewModel.plotTextMaxLength,
         updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
         updateContentTextState = homeBookEditViewModel::updatePlotTextState,
         checkButtonOnClick = {
             homeBookEditViewModel.checkButtonOnClick(id)
         },
-        getBookById = {
-            homeBookEditViewModel.getBookById(id)
-        },
         navigateToBack = navigateToBack,
     )
+    LaunchedEffect(Unit) {
+        homeBookEditViewModel.getBookById(id)
+    }
 }
 
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
-    titleTextState: String,
+    titleTextState: String, // TODO: focusManager: FocusManager = LocalFocusManager.current 추가
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
-    contentTextMaxLength: Int,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
     checkButtonOnClick: () -> Unit,
-    getBookById: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        getBookById()
-    }
-
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
@@ -109,7 +101,7 @@ internal fun HomeEditBookScreen(
                     placeholder = stringResource(R.string.please_enter_the_book_content),
                     overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
                     emptyErrorMessage = stringResource(R.string.error_content),
-                    lengthLimit = contentTextMaxLength,
+                    lengthLimit = 1000,
                     updateTextValue = updateContentTextState,
                     isError = contentTextStateIsEmpty
                 )
@@ -135,9 +127,7 @@ fun HomeBookEditScreenPreview() {
     HomeEditBookScreen(navigateToBack = { },
         checkButtonOnClick = {},
         contentTextState = "",
-        contentTextMaxLength = 0,
         contentTextStateIsEmpty = false,
-        getBookById = { },
         titleTextStateIsEmpty = false,
         titleTextState = "",
         updateTitleTextState = { _ -> },

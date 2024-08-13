@@ -14,26 +14,24 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.chobo.domain.emumtype.EventRequestListStatusType
+import com.chobo.domain.emumtype.EventRequestListStatusType.NOW
+import com.chobo.domain.emumtype.EventRequestListStatusType.PAST
 import com.chobo.presentation.R
 import com.chobo.presentation.view.event.component.EventContent
 import com.chobo.presentation.view.event.component.EventPager
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
-import com.chobo.presentation.viewModel.event.uistate.GetNowEventListUiState
-import com.chobo.presentation.viewModel.event.uistate.GetPastEventListUiState
+import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
-import okhttp3.internal.toImmutableList
 
 @Composable
 internal fun EventScreenRoute(
@@ -46,62 +44,48 @@ internal fun EventScreenRoute(
     val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
 
-    LaunchedEffect(swipeRefreshLoading) {
-        delay(1000)
-        setSwipeRefreshLoading(false)
-    }
-
     EventScreen(
         modifier = modifier,
         navigateToDetailEvent = navigateToDetailEvent,
         getEventNowListUiState = getEventNowListUiState,
         getEventPastListUiState = getEventPastListUiState,
         swipeRefreshState = swipeRefreshState,
-        setSwipeRefreshLoading = {
-            setSwipeRefreshLoading(true)
-        },
-        getEventNowList = eventViewModel::getEventNowList,
-        getEventPastList = eventViewModel::getEventPastList,
+        setSwipeRefreshLoading = { setSwipeRefreshLoading(true) },
+        getEventNowList = { eventViewModel.getEventList(NOW) },
+        getEventPastList = { eventViewModel.getEventList(PAST) },
     )
+
+    LaunchedEffect(swipeRefreshLoading) {
+        delay(1000)
+        setSwipeRefreshLoading(false)
+    }
+
+    LaunchedEffect(Unit) {
+        eventViewModel.getEventList(NOW)
+        eventViewModel.getEventList(PAST)
+    }
 }
 
 @Composable
 internal fun EventScreen(
     modifier: Modifier = Modifier,
     pagerState: PagerState = rememberPagerState { 2 },
-    getEventNowListUiState: GetNowEventListUiState,
-    getEventPastListUiState: GetPastEventListUiState,
+    getEventNowListUiState: GetEventListUiState,
+    getEventPastListUiState: GetEventListUiState,
     swipeRefreshState: SwipeRefreshState,
     setSwipeRefreshLoading: () -> Unit,
     navigateToDetailEvent: (Long) -> Unit,
-    getEventNowList: (String) -> Unit,
-    getEventPastList: (String) -> Unit,
+    getEventNowList: () -> Unit,
+    getEventPastList: () -> Unit,
 ) {
-    val (storageNowStatus, setStorageNowStatus) = remember {
-        mutableStateOf(EventRequestListStatusType.NOW)
-    }
-
-    LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }.collect { page ->
-            when (page) {
-                0 -> setStorageNowStatus(EventRequestListStatusType.NOW)
-                1 -> setStorageNowStatus(EventRequestListStatusType.PAST)
-            }
-        }
-    }
-    LaunchedEffect(Unit) {
-        getEventNowList(storageNowStatus.name)
-        getEventPastList(EventRequestListStatusType.PAST.name)
-    }
-
     MindWayAndroidTheme { colors, _ ->
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
                 setSwipeRefreshLoading()
-                when (storageNowStatus) {
-                    EventRequestListStatusType.NOW -> getEventNowList(storageNowStatus.name)
-                    EventRequestListStatusType.PAST -> getEventPastList(EventRequestListStatusType.PAST.name)
+                when (pagerState.currentPage) {
+                    1 -> getEventNowList()
+                    2 -> getEventPastList()
                 }
             }
         ) {
@@ -114,7 +98,7 @@ internal fun EventScreen(
                     pagerState = pagerState,
                     onGoingEvent = {
                         when (getEventNowListUiState) {
-                            GetNowEventListUiState.Empty -> {
+                            GetEventListUiState.Empty -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = false,
@@ -122,7 +106,7 @@ internal fun EventScreen(
                                 )
                             }
 
-                            is GetNowEventListUiState.Fail -> {
+                            is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
                                     eventDataListIsEmpty = false,
@@ -130,7 +114,7 @@ internal fun EventScreen(
                                 )
                             }
 
-                            is GetNowEventListUiState.Loading -> {
+                            is GetEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataListIsEmpty = true,
@@ -139,10 +123,10 @@ internal fun EventScreen(
                                 )
                             }
 
-                            is GetNowEventListUiState.Success -> {
+                            is GetEventListUiState.Success -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataList = getEventNowListUiState.getEventListResponse.toImmutableList(),
+                                    eventDataList = getEventNowListUiState.data,
                                     eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
@@ -151,7 +135,7 @@ internal fun EventScreen(
                     },
                     pastEvent = {
                         when (getEventPastListUiState) {
-                            GetPastEventListUiState.Empty -> {
+                            GetEventListUiState.Empty -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = false,
@@ -159,7 +143,7 @@ internal fun EventScreen(
                                 )
                             }
 
-                            is GetPastEventListUiState.Fail -> {
+                            is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
                                     eventDataListIsEmpty = false,
@@ -167,7 +151,7 @@ internal fun EventScreen(
                                 )
                             }
 
-                            is GetPastEventListUiState.Loading -> {
+                            is GetEventListUiState.Loading -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataListIsEmpty = true,
@@ -176,10 +160,10 @@ internal fun EventScreen(
                                 )
                             }
 
-                            is GetPastEventListUiState.Success -> {
+                            is GetEventListUiState.Success -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
-                                    eventDataList = getEventPastListUiState.getEventListResponse.toImmutableList(),
+                                    eventDataList = getEventPastListUiState.data,
                                     eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
@@ -197,11 +181,11 @@ internal fun EventScreen(
 fun EventScreenPre() {
     EventScreen(
         navigateToDetailEvent = { },
-        getEventPastList = { _ -> },
-        getEventNowList = { _ -> },
-        getEventNowListUiState = GetNowEventListUiState.Loading,
+        getEventPastList = { },
+        getEventNowList = { },
+        getEventNowListUiState = GetEventListUiState.Loading,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
-        getEventPastListUiState = GetPastEventListUiState.Loading,
+        getEventPastListUiState = GetEventListUiState.Loading,
         setSwipeRefreshLoading = { }
     )
 }

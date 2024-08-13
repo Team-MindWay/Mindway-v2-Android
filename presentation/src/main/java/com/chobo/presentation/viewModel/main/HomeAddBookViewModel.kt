@@ -1,5 +1,6 @@
 package com.chobo.presentation.viewModel.main
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.book.request.BookRequestBodyModel
@@ -28,9 +29,6 @@ class HomeAddBookViewModel @Inject constructor(
 
     private val _contentTextStateIsEmpty = MutableStateFlow(false)
     val contentTextStateIsEmpty: StateFlow<Boolean> = _contentTextStateIsEmpty.asStateFlow()
-
-    val contentTextMaxLength
-        get() = 1000
 
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false

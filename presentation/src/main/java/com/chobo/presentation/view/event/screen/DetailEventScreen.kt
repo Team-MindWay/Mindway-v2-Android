@@ -49,24 +49,20 @@ internal fun DetailEventRoute(
     DetailEventScreen(
         modifier = modifier,
         getDetailEventUiState = getDetailEventUiState,
-        getDetailEvent = {
-            detailEventViewModel.getDetailEvent(id)
-        },
         navigateToBack = navigateToBack
     )
+
+    LaunchedEffect(Unit) {
+        detailEventViewModel.getDetailEvent(id)
+    }
 }
 
 @Composable
 internal fun DetailEventScreen(
     modifier: Modifier = Modifier,
     getDetailEventUiState: GetDetailEventUiState,
-    getDetailEvent: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        getDetailEvent()
-    }
-
     MindWayAndroidTheme { colors, typography ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
@@ -98,23 +94,26 @@ internal fun DetailEventScreen(
                             }
                         }
                     }
+
                     is GetDetailEventUiState.Loading -> Unit
                     is GetDetailEventUiState.Success -> {
-                        Image(
-                            painter = rememberAsyncImagePainter(model = getDetailEventUiState.data.img_url),
-                            contentDescription = "Event Image",
-                            modifier = Modifier
-                                .padding(vertical = 20.dp)
-                                .fillMaxWidth()
-                                .height(264.dp)
-                                .clip(shape = RoundedCornerShape(8.dp))
-                        )
-                        DetailEventContent(
-                            title = getDetailEventUiState.data.title,
-                            content = getDetailEventUiState.data.content,
-                            startedAt = getDetailEventUiState.data.started_at,
-                            endedAt = getDetailEventUiState.data.ended_at
-                        )
+                        getDetailEventUiState.data.apply {
+                            Image(
+                                painter = rememberAsyncImagePainter(model = img_url),
+                                contentDescription = "Event Image",
+                                modifier = Modifier
+                                    .padding(vertical = 20.dp)
+                                    .fillMaxWidth()
+                                    .height(264.dp)
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                            )
+                            DetailEventContent(
+                                title = title,
+                                content = content,
+                                startedAt = started_at,
+                                endedAt = ended_at
+                            )
+                        }
                     }
                 }
             }
@@ -134,7 +133,6 @@ fun DetailEventScreenPre() {
     )
     DetailEventScreen(
         getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
-        getDetailEvent = {},
         navigateToBack = {},
     )
 }

@@ -10,6 +10,7 @@ import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,22 +32,6 @@ class BookScreenViewModel @Inject constructor(
     private val _essayDataList = MutableStateFlow<GetRecommendBookUiState>(GetRecommendBookUiState.Loading)
     val essayDataList: StateFlow<GetRecommendBookUiState> = _essayDataList.asStateFlow()
 
-    private val _isToastVisible = MutableStateFlow(false)
-    val isToastVisible: StateFlow<Boolean> = _isToastVisible.asStateFlow()
-
-    init {
-        getRecommendBook(type = NOVEL)
-        getRecommendBook(type = ESSAY)
-    }
-
-    fun showToast() {
-        _isToastVisible.value = true
-        viewModelScope.launch {
-            delay(2000)
-            _isToastVisible.value = false
-        }
-    }
-
     fun getRecommendBook(type: OrderRequestBookType) = viewModelScope.launch {
         _swipeRefreshLoading.value = true
         val targetStateFlow = when (type) {
@@ -64,7 +49,7 @@ class BookScreenViewModel @Inject constructor(
                         targetStateFlow.value = GetRecommendBookUiState.Empty
                         _swipeRefreshLoading.value = false
                     } else {
-                        targetStateFlow.value = GetRecommendBookUiState.Success(result.data)
+                        targetStateFlow.value = GetRecommendBookUiState.Success(result.data.toImmutableList())
                         _swipeRefreshLoading.value = false
                     }
                     is Result.Fail -> {

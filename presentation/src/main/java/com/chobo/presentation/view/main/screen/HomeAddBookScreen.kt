@@ -40,6 +40,7 @@ internal fun HomeAddBookRoute(
     homeAddBookViewModel: HomeAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
+    // TODO: viewModel 과의 상태 분리
     val titleTextState by homeAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
     val contentTextState by homeAddBookViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
@@ -49,7 +50,6 @@ internal fun HomeAddBookRoute(
         modifier = modifier,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
-        contentTextMaxLength = homeAddBookViewModel.contentTextMaxLength,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
         updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
@@ -62,9 +62,9 @@ internal fun HomeAddBookRoute(
 @Composable
 internal fun HomeAddBookScreen(
     modifier: Modifier = Modifier,
+    focusManager: FocusManager = LocalFocusManager.current,
     titleTextState: String,
     contentTextState: String,
-    contentTextMaxLength: Int,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
     updateTitleTextState: (String) -> Unit,
@@ -72,68 +72,64 @@ internal fun HomeAddBookScreen(
     checkButtonOnClick: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    val focusManager = LocalFocusManager.current
-
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(LocalFocusManager provides focusManager) {
-            Column(
-                modifier = modifier
-                    .background(color = colors.WHITE)
-                    .pointerInput(Unit) {
-                        detectTapGestures {
-                            focusManager.clearFocus()
-                        }
+        Column(
+            modifier = modifier
+                .background(color = colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        focusManager.clearFocus()
                     }
-            ) {
-                MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    midText = stringResource(R.string.add_book),
-                )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                        .fillMaxSize()
-                ) {
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextField(
-                        title = stringResource(R.string.content),
-                        textState = contentTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_content),
-                        overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
-                        emptyErrorMessage = stringResource(R.string.error_content),
-                        lengthLimit = contentTextMaxLength,
-                        updateTextValue = updateContentTextState,
-                        isError = contentTextStateIsEmpty
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(R.string.check),
-                        onClick = {
-                            if (
-                                !titleTextStateIsEmpty
-                                && !contentTextStateIsEmpty
-                            ) {
-                                navigateToBack()
-                            }
-                            checkButtonOnClick()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp),
-                    )
                 }
+        ) {
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.add_book),
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
+                    .fillMaxSize()
+            ) {
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
+                )
+                MindWayTextField(
+                    title = stringResource(R.string.content),
+                    textState = contentTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_content),
+                    overflowErrorMessage = stringResource(R.string.overFlowErrorMessage),
+                    emptyErrorMessage = stringResource(R.string.error_content),
+                    lengthLimit = 1000,
+                    updateTextValue = updateContentTextState,
+                    isError = contentTextStateIsEmpty
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(R.string.check),
+                    onClick = {
+                        if (
+                            !titleTextStateIsEmpty
+                            && !contentTextStateIsEmpty
+                        ) {
+                            navigateToBack()
+                        }
+                        checkButtonOnClick()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                )
             }
         }
     }
@@ -146,7 +142,6 @@ fun AddBookScreenPreview() {
         navigateToBack = { },
         checkButtonOnClick = {},
         contentTextState = "",
-        contentTextMaxLength = 0,
         contentTextStateIsEmpty = false,
         titleTextState = "",
         titleTextStateIsEmpty = true,

@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -41,24 +42,6 @@ internal fun MyBookEditRoute(
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
-    val myBookItem = myViewModel.myBookItem
-
-    MyBookEditScreen(
-        modifier = modifier,
-        myBookItem = myBookItem,
-        orderModifyById = myViewModel::orderModifyById,
-        navigateToBack = navigateToBack,
-    )
-}
-
-@Composable
-internal fun MyBookEditScreen(
-    modifier: Modifier = Modifier,
-    myBookItem: MyBookListModel,
-    orderModifyById: (Long, MyBookListModel) -> Unit,
-    navigateToBack: () -> Unit,
-) {
-    val focusManager = LocalFocusManager.current
     val (titleTextState, updateTitleTextState) = remember { mutableStateOf("") }
     val (writeTextState, updateWriteTextState) = remember { mutableStateOf("") }
     val (linkTextState, updateLinkTextState) = remember { mutableStateOf("") }
@@ -66,102 +49,130 @@ internal fun MyBookEditScreen(
     val (writeTextStateIsEmpty, updateWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (linkTextStateIsEmpty, updateLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
 
+    MyBookEditScreen(
+        modifier = modifier,
+        titleTextState = titleTextState,
+        writeTextState = writeTextState,
+        linkTextState = linkTextState,
+        titleTextStateIsEmpty = titleTextStateIsEmpty,
+        writeTextStateIsEmpty = writeTextStateIsEmpty,
+        linkTextStateIsEmpty = linkTextStateIsEmpty,
+        updateTitleTextState = { textState ->
+            updateTitleTextState(textState)
+            updateTitleTextStateIsEmpty(false)
+        },
+        updateWriteTextState = { textState ->
+            updateWriteTextState(textState)
+            updateWriteTextStateIsEmpty(false)
+        },
+        updateLinkTextState = { textState ->
+            updateLinkTextState(textState)
+            updateLinkTextStateIsEmpty(false)
+        },
+        checkOnClick = {
+            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
+            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
+            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
+            if (
+                titleTextState.isNotEmpty()
+                && writeTextState.isNotEmpty()
+                && linkTextState.isNotEmpty()
+            ) {
+                myViewModel.orderModifyById(
+                    body = MyBookListModel(
+                        id = myViewModel.myBookItem.id,
+                        author = writeTextState,
+                        title = titleTextState,
+                        bookUrl = linkTextState,
+                    )
+                )
+                navigateToBack()
+            }
+        },
+        navigateToBack = navigateToBack,
+    )
+
     LaunchedEffect(Unit) {
-        myBookItem.let { book ->
+        myViewModel.myBookItem.let { book ->
             updateTitleTextState(book.title)
             updateWriteTextState(book.author)
             updateLinkTextState(book.bookUrl)
         }
     }
+}
 
+@Composable
+internal fun MyBookEditScreen(
+    modifier: Modifier = Modifier,
+    focusManager: FocusManager = LocalFocusManager.current,
+    titleTextState: String,
+    writeTextState: String,
+    linkTextState: String,
+    titleTextStateIsEmpty: Boolean,
+    writeTextStateIsEmpty: Boolean,
+    linkTextStateIsEmpty: Boolean,
+    updateTitleTextState: (String) -> Unit,
+    updateWriteTextState: (String) -> Unit,
+    updateLinkTextState: (String) -> Unit,
+    checkOnClick: () -> Unit,
+    navigateToBack: () -> Unit,
+) {
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(LocalFocusManager provides focusManager) {
-            Column(modifier = modifier
-                .background(colors.WHITE)
-                .pointerInput(Unit) {
-                    detectTapGestures {
-                        focusManager.clearFocus()
-                    }
+        Column(modifier = modifier
+            .background(colors.WHITE)
+            .pointerInput(Unit) {
+                detectTapGestures {
+                    focusManager.clearFocus()
                 }
-                .imePadding()
+            }
+            .imePadding()
+        ) {
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.book_modify),
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
             ) {
-                MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    midText = stringResource(R.string.book_modify),
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
                 )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.writer),
+                    textState = writeTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_writer),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
+                    updateTextValue = updateWriteTextState,
+                    isError = writeTextStateIsEmpty
+                )
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(R.string.link),
+                    textState = linkTextState,
+                    placeholder = stringResource(R.string.please_enter_the_link),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_link),
+                    updateTextValue = updateLinkTextState,
+                    isError = linkTextStateIsEmpty
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(id = R.string.apply),
+                    onClick = checkOnClick,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                ) {
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = {
-                            updateTitleTextState(it)
-                            updateTitleTextStateIsEmpty(false)
-                        },
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.writer),
-                        textState = writeTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_writer),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_writer),
-                        updateTextValue = {
-                            updateWriteTextState(it)
-                            updateWriteTextStateIsEmpty(false)
-                        },
-                        isError = writeTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(R.string.link),
-                        textState = linkTextState,
-                        placeholder = stringResource(R.string.please_enter_the_link),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_link),
-                        updateTextValue = {
-                            updateLinkTextState(it)
-                            updateLinkTextStateIsEmpty(false)
-                        },
-                        isError = linkTextStateIsEmpty
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(id = R.string.apply),
-                        onClick = {
-                            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
-                            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
-                            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
-                            if (
-                                myBookItem != null
-                                && titleTextState.isNotEmpty()
-                                && writeTextState.isNotEmpty()
-                                && linkTextState.isNotEmpty()
-                            ) {
-                                orderModifyById(
-                                    myBookItem.id,
-                                    MyBookListModel(
-                                        id = myBookItem.id,
-                                        title = titleTextState,
-                                        author = writeTextState,
-                                        bookUrl = linkTextState,
-                                    )
-                                )
-                                navigateToBack()
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                    )
-                }
+                        .fillMaxWidth()
+                        .height(56.dp),
+                )
             }
         }
     }
@@ -172,7 +183,15 @@ internal fun MyBookEditScreen(
 fun MyBookEditScreenPreview() {
     MyBookEditScreen(
         navigateToBack = { },
-        myBookItem = MyBookListModel(id = 0, author = "", bookUrl = "", title = ""),
-        orderModifyById = { _, _ -> }
+        linkTextState = "",
+        titleTextState = "",
+        updateTitleTextState = { _ -> },
+        writeTextState = "",
+        writeTextStateIsEmpty = false,
+        linkTextStateIsEmpty = false,
+        updateLinkTextState = { _ -> },
+        titleTextStateIsEmpty = false,
+        updateWriteTextState = { _ -> },
+        checkOnClick = { }
     )
 }

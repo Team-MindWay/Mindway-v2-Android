@@ -39,14 +39,6 @@ internal fun HomeRoute(
     val noticeGetUiState by homeViewModel.noticeGetUiState.collectAsStateWithLifecycle()
     val getRankUIState by homeViewModel.getRankUIState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        homeViewModel.apply {
-            getNotice()
-            getRank()
-            getWeekendGoal()
-        }
-    }
-
     HomeScreen(
         modifier = modifier,
         getWeekendGoalUIState = getWeekendGoalUIState,
@@ -54,6 +46,14 @@ internal fun HomeRoute(
         getRankUIState = getRankUIState,
         navigateToGoalReading = navigateToGoalReading,
     )
+
+    LaunchedEffect(Unit) {
+        homeViewModel.apply {
+            getNotice()
+            getRank()
+            getWeekendGoal()
+        }
+    }
 }
 
 @Composable
@@ -65,69 +65,67 @@ internal fun HomeScreen(
     navigateToGoalReading: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
-        Column {
-            MindWayTopAppBar(startIcon = { LogoIcon() })
-            Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = modifier
-                    .background(color = colors.WHITE)
-                    .fillMaxSize()
-                    .padding(horizontal = 24.dp)
-            ) {
-                when (noticeGetUiState) {
-                    is NoticeGetUiState.Success -> {
-                        HomeNoticeCard(
-                            noticeAllModel = noticeGetUiState.data,
-                            modifier = Modifier
-                                .height(100.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
-
-                    else -> Unit
+        MindWayTopAppBar(startIcon = { LogoIcon() })
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
+                .background(color = colors.WHITE)
+                .fillMaxSize()
+                .padding(horizontal = 24.dp)
+        ) {
+            when (noticeGetUiState) {
+                is NoticeGetUiState.Success -> {
+                    HomeNoticeCard(
+                        noticeAllModel = noticeGetUiState.data,
+                        modifier = Modifier
+                            .height(100.dp)
+                            .fillMaxWidth(),
+                    )
                 }
-                when (getWeekendGoalUIState) {
-                    is GetWeekendGoalUiState.Success -> {
-                        HomeGoalReadingChart(
-                            getWeekendGoalModel = getWeekendGoalUIState.data,
-                            isHasData = true,
-                            onClick = navigateToGoalReading,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(211.dp),
-                        )
-                    }
 
-                    else -> {
-                        HomeGoalReadingChart(
-                            isHasData = false,
-                            onClick = navigateToGoalReading,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(211.dp),
-                        )
-                    }
+                else -> Unit
+            }
+            when (getWeekendGoalUIState) {
+                is GetWeekendGoalUiState.Success -> {
+                    HomeGoalReadingChart(
+                        getWeekendGoalModel = getWeekendGoalUIState.data,
+                        isHasData = true,
+                        onClick = navigateToGoalReading,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(211.dp),
+                    )
                 }
-                when (getRankUIState) {
-                    is GetRankUiState.Success -> {
-                        HomeReadersOfTheMonthChart(
-                            isHasData = true,
-                            bookKingOfTheMonthData = getRankUIState.data,
-                            modifier = Modifier
-                                .height(239.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
 
-                    else -> {
-                        HomeReadersOfTheMonthChart(
-                            isHasData = false,
-                            modifier = Modifier
-                                .height(239.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
+                else -> {
+                    HomeGoalReadingChart(
+                        isHasData = false,
+                        onClick = navigateToGoalReading,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(211.dp),
+                    )
+                }
+            }
+            when (getRankUIState) {
+                is GetRankUiState.Success -> {
+                    HomeReadersOfTheMonthChart(
+                        isHasData = true,
+                        bookKingOfTheMonthData = getRankUIState.data,
+                        modifier = Modifier
+                            .height(239.dp)
+                            .fillMaxWidth(),
+                    )
+                }
+
+                else -> {
+                    HomeReadersOfTheMonthChart(
+                        isHasData = false,
+                        modifier = Modifier
+                            .height(239.dp)
+                            .fillMaxWidth(),
+                    )
                 }
             }
         }
