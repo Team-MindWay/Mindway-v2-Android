@@ -119,10 +119,7 @@ fun MyScreen(
                 }
                 MyNameCard(
                     name = when (myNameUiState) {
-                        is GetMyInformationUiState.Success -> {
-                            myNameUiState.data.name
-                        }
-
+                        is GetMyInformationUiState.Success -> myNameUiState.data.name
                         else -> ""
                     },
                     onClick = showSheet,
