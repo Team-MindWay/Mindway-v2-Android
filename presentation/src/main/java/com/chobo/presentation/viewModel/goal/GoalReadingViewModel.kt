@@ -11,7 +11,7 @@ import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,9 +39,6 @@ class GoalReadingViewModel @Inject constructor(
 
     private val _goalBookReadSettingIsEmpty = MutableStateFlow(false)
     val goalBookReadSettingIsEmpty: StateFlow<Boolean> = _goalBookReadSettingIsEmpty.asStateFlow()
-
-    private val _isSuccess = MutableStateFlow(false)
-    val isSuccess: StateFlow<Boolean> = _isSuccess.asStateFlow()
 
     fun getWeekendGoal() = viewModelScope.launch {
         getWeekendGoalUseCase()
@@ -72,7 +69,7 @@ class GoalReadingViewModel @Inject constructor(
                     is Result.Success -> if (result.data.isEmpty()) {
                         _getBookListUiState.value = GetBookListUiState.Empty
                     } else {
-                        _getBookListUiState.value = GetBookListUiState.Success(result.data)
+                        _getBookListUiState.value = GetBookListUiState.Success(result.data.toImmutableList())
                     }
 
                     is Result.Fail -> _getBookListUiState.value =

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -52,30 +51,25 @@ internal fun HomeEditBookRoute(
         checkButtonOnClick = {
             homeBookEditViewModel.checkButtonOnClick(id)
         },
-        getBookById = {
-            homeBookEditViewModel.getBookById(id)
-        },
         navigateToBack = navigateToBack,
     )
+    LaunchedEffect(Unit) {
+        homeBookEditViewModel.getBookById(id)
+    }
 }
 
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
-    titleTextState: String,
+    titleTextState: String, // TODO: focusManager: FocusManager = LocalFocusManager.current 추가
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
     updateTitleTextState: (String) -> Unit,
     updateContentTextState: (String) -> Unit,
     checkButtonOnClick: () -> Unit,
-    getBookById: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        getBookById()
-    }
-
     MindWayAndroidTheme { colors, _ ->
         Column(modifier = modifier.background(color = colors.WHITE)) {
             MindWayTopAppBar(
@@ -134,7 +128,6 @@ fun HomeBookEditScreenPreview() {
         checkButtonOnClick = {},
         contentTextState = "",
         contentTextStateIsEmpty = false,
-        getBookById = { },
         titleTextStateIsEmpty = false,
         titleTextState = "",
         updateTitleTextState = { _ -> },

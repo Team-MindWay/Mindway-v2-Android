@@ -47,6 +47,7 @@ internal fun BookAddBookRoute(
     val (titleTextStateIsEmpty, setTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (writeTextStateIsEmpty, setWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (linkTextStateIsEmpty, setLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
 
     BookAddBookScreen(
         modifier = modifier,
@@ -56,6 +57,7 @@ internal fun BookAddBookRoute(
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
+        checkBookDialogState = checkBookDialogState,
         updateTitleTextState = { text ->
             setTitleTextState(text)
             setTitleTextStateIsEmpty(false)
@@ -68,7 +70,24 @@ internal fun BookAddBookRoute(
             setLinkTextState(text)
             setLinkTextStateIsEmpty(false)
         },
-        checkButtonOnClick = bookAddBookViewModel::checkButtonOnClick,
+        toggleCheckBookDialogState = { toggleCheckBookDialogState(!checkBookDialogState) },
+        checkButtonOnClick = {
+            setTitleTextStateIsEmpty(titleTextState.isEmpty())
+            setWriteTextStateIsEmpty(writeTextState.isEmpty())
+            setLinkTextStateIsEmpty(linkTextState.isEmpty())
+            if (
+                !titleTextStateIsEmpty
+                && !writeTextStateIsEmpty
+                && !linkTextStateIsEmpty
+            ) {
+                navigateToBack()
+                bookAddBookViewModel.checkButtonOnClick(
+                    titleTextState,
+                    writeTextState,
+                    linkTextState
+                )
+            }
+        },
         navigateToBack = navigateToBack,
     )
 }
@@ -83,93 +102,78 @@ internal fun BookAddBookScreen(
     titleTextStateIsEmpty: Boolean,
     writeTextStateIsEmpty: Boolean,
     linkTextStateIsEmpty: Boolean,
+    checkBookDialogState: Boolean,
     updateTitleTextState: (String) -> Unit,
     updateWriteTextState: (String) -> Unit,
     updateLinkTextState: (String) -> Unit,
-    checkButtonOnClick: (String, String, String) -> Unit,
+    checkButtonOnClick: () -> Unit,
+    toggleCheckBookDialogState: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
-    val (checkBookDialog, toggleCheckBookDialog) = remember { mutableStateOf(false) }
-
     MindWayAndroidTheme { colors, _ ->
-        CompositionLocalProvider(values = arrayOf(LocalFocusManager provides focusManager)) {
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(color = colors.WHITE)
-                    .pointerInput(Unit) {
-                        detectTapGestures {
-                            focusManager.clearFocus()
-                        }
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        focusManager.clearFocus()
                     }
+                }
+        ) {
+            MindWayTopAppBar(
+                startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                midText = stringResource(R.string.book_request),
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
+                horizontalAlignment = Alignment.Start,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 24.dp,
+                        vertical = 28.dp
+                    )
             ) {
-                MindWayTopAppBar(
-                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                    midText = stringResource(R.string.book_request),
+                if (checkBookDialogState) {
+                    Dialog(onDismissRequest = toggleCheckBookDialogState) {
+                        BookPopUp(
+                            onDismiss = toggleCheckBookDialogState
+                        )
+                    }
+                }
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(id = R.string.title),
+                    textState = titleTextState,
+                    placeholder = stringResource(R.string.please_enter_the_book_title),
+                    emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
+                    updateTextValue = updateTitleTextState,
+                    isError = titleTextStateIsEmpty
                 )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
-                    horizontalAlignment = Alignment.Start,
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(id = R.string.writer),
+                    textState = writeTextState,
+                    placeholder = stringResource(id = R.string.please_enter_the_book_writer),
+                    emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
+                    updateTextValue = updateWriteTextState,
+                    isError = writeTextStateIsEmpty
+                )
+                MindWayTextFieldNoneLimit(
+                    title = stringResource(id = R.string.link),
+                    textState = linkTextState,
+                    placeholder = stringResource(id = R.string.please_enter_the_link),
+                    emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
+                    updateTextValue = updateLinkTextState,
+                    isError = linkTextStateIsEmpty
+                )
+                Spacer(modifier = modifier.weight(1f))
+                MindWayButton(
+                    text = stringResource(id = R.string.apply),
+                    onClick = checkButtonOnClick,
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 28.dp
-                        )
-                ) {
-                    if (checkBookDialog) {
-                        Dialog(onDismissRequest = { toggleCheckBookDialog(false) }) {
-                            BookPopUp(
-                                onDismiss = { toggleCheckBookDialog(false) }
-                            )
-                        }
-                    }
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(id = R.string.title),
-                        textState = titleTextState,
-                        placeholder = stringResource(R.string.please_enter_the_book_title),
-                        emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
-                        updateTextValue = updateTitleTextState,
-                        isError = titleTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(id = R.string.writer),
-                        textState = writeTextState,
-                        placeholder = stringResource(id = R.string.please_enter_the_book_writer),
-                        emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
-                        updateTextValue = updateWriteTextState,
-                        isError = writeTextStateIsEmpty
-                    )
-                    MindWayTextFieldNoneLimit(
-                        title = stringResource(id = R.string.link),
-                        textState = linkTextState,
-                        placeholder = stringResource(id = R.string.please_enter_the_link),
-                        emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
-                        updateTextValue = updateLinkTextState,
-                        isError = linkTextStateIsEmpty
-                    )
-                    Spacer(modifier = modifier.weight(1f))
-                    MindWayButton(
-                        text = stringResource(id = R.string.apply),
-                        onClick = {
-                            if (
-                                !titleTextStateIsEmpty
-                                && !writeTextStateIsEmpty
-                                && !linkTextStateIsEmpty
-                            ) {
-                                navigateToBack()
-                                checkButtonOnClick(
-                                    titleTextState,
-                                    writeTextState,
-                                    linkTextState,
-                                )
-                            }
-                        },
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                    )
-                }
+                        .height(56.dp),
+                )
             }
         }
     }
@@ -180,7 +184,7 @@ internal fun BookAddBookScreen(
 fun PreviewAddBookScreen() {
     BookAddBookScreen(
         navigateToBack = {},
-        checkButtonOnClick = { _, _, _ -> },
+        checkButtonOnClick = { },
         linkTextState = "",
         linkTextStateIsEmpty = false,
         titleTextStateIsEmpty = false,
@@ -189,6 +193,8 @@ fun PreviewAddBookScreen() {
         updateTitleTextState = { _ -> },
         updateLinkTextState = { _ -> },
         updateWriteTextState = { _ -> },
-        writeTextStateIsEmpty = false
+        writeTextStateIsEmpty = false,
+        checkBookDialogState = false,
+        toggleCheckBookDialogState = { },
     )
 }

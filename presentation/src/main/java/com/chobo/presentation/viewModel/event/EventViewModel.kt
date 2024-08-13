@@ -9,6 +9,7 @@ import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -38,7 +39,7 @@ class EventViewModel @Inject constructor(
                     is Result.Success -> if (result.data.isEmpty()) {
                         targetData.value = GetEventListUiState.Empty
                     } else {
-                        targetData.value = GetEventListUiState.Success(result.data)
+                        targetData.value = GetEventListUiState.Success(result.data.toImmutableList())
                     }
 
                     is Result.Fail -> targetData.value =

@@ -11,6 +11,7 @@ import com.chobo.presentation.viewModel.main.uistate.NoticeGetUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -54,7 +55,7 @@ class HomeViewModel @Inject constructor(
                     is Result.Success -> if (result.data.isEmpty()) {
                         _getRankUiState.value = GetRankUiState.Empty
                     } else {
-                        _getRankUiState.value = GetRankUiState.Success(result.data)
+                        _getRankUiState.value = GetRankUiState.Success(result.data.toImmutableList())
                     }
                     is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail(result.exception)
                 }

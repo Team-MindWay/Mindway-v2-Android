@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -23,13 +24,15 @@ import com.chobo.domain.model.event.response.GetEventListResponseModel
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.shimmer.shimmerEffect
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun EventContent(
     modifier: Modifier = Modifier,
     content: String,
     eventDataListIsEmpty: Boolean,
-    eventDataList: List<GetEventListResponseModel> = listOf(),
+    eventDataList: ImmutableList<GetEventListResponseModel> = persistentListOf(),
     isLoading: Boolean = false,
     navigateToDetailEvent: (Long) -> Unit,
 ) {
@@ -65,7 +68,7 @@ fun EventContent(
                     .padding(horizontal = 24.dp)
                     .fillMaxSize()
             ) {
-                itemsIndexed(eventDataList) { _, item ->
+                items(eventDataList) { item ->
                     Events(
                         eventsData = item,
                         navigateToDetailEvent = navigateToDetailEvent
