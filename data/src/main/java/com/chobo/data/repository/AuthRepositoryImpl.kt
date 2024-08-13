@@ -1,5 +1,6 @@
 package com.chobo.data.repository
 
+import android.util.Log
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.data.remote.datasource.auth.RemoteAuthDataSource
 import com.chobo.data.remote.dto.auth.request.toDto
@@ -26,10 +27,12 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun saveLoginData(data: GAuthLoginResponseModel) {
         with(data) {
-            localAuthDataSource.setAccessToken(accessToken)
-            localAuthDataSource.setAccessTime(accessTokenExpiresIn)
-            localAuthDataSource.setRefreshToken(refreshToken)
-            localAuthDataSource.setRefreshTime(refreshTokenExpiresIn)
+            with(localAuthDataSource) {
+                setAccessToken(accessToken)
+                setAccessTime(accessTokenExpiresIn)
+                setRefreshToken(refreshToken)
+                setRefreshTime(refreshTokenExpiresIn)
+            }
         }
     }
 
@@ -37,7 +40,7 @@ class AuthRepositoryImpl @Inject constructor(
         remoteAuthDataSource.GuathLogout()
 
     override suspend fun deleteLoginData() {
-        localAuthDataSource.apply {
+        with(localAuthDataSource) {
             deleteAccessTime()
             deleteAccessToken()
             deleteRefreshTime()
