@@ -32,7 +32,7 @@ class MainActivityViewModel @Inject constructor(
 
     private fun tokenRefresh() = viewModelScope.launch {
         localAuthDataSource.getRefreshToken()
-            ?.collectLatest { refreshToken ->
+            .collect { refreshToken ->
                 tokenRefreshUseCase(refreshToken)
                     .asResult()
                     .collectLatest { result ->
@@ -40,8 +40,9 @@ class MainActivityViewModel @Inject constructor(
                             is Result.Fail -> _uiState.value = MainActivityUiState.Fail(result.exception)
                             is Result.Loading -> _uiState.value = MainActivityUiState.Loading
                             is Result.Success -> {
-                                saveTokenUseCase(result.data)
-                                _uiState.value = MainActivityUiState.Success(result.data)
+                                saveTokenUseCase(result.data).onSuccess {
+                                    _uiState.value = MainActivityUiState.Success(result.data)
+                                }
                             }
                         }
                     }
