@@ -4,19 +4,19 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface LocalAuthDataSource {
-    suspend fun getAccessToken(): Flow<String>
+    fun getAccessToken(): Flow<String>
     suspend fun setAccessToken(accessToken: String)
     suspend fun deleteAccessToken()
 
-    suspend fun getAccessTime(): Flow<String>
-    suspend fun setAccessTime(accessToken: String)
+    fun getAccessTime(): Flow<String>
+    suspend fun setAccessTime(accessTime: String)
     suspend fun deleteAccessTime()
 
     fun getRefreshToken(): Flow<String>
     suspend fun setRefreshToken(refreshToken: String)
     suspend fun deleteRefreshToken()
 
-    suspend fun getRefreshTime(): Flow<String>
-    suspend fun setRefreshTime(refreshToken: String)
+    fun getRefreshTime(): Flow<String>
+    suspend fun setRefreshTime(refreshTime: String)
     suspend fun deleteRefreshTime()
 }
