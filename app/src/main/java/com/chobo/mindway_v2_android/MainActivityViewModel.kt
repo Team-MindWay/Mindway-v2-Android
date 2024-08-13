@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.data.local.datasource.LocalAuthDataSource
+import com.chobo.domain.exception.NeedLoginException
 import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
 import com.chobo.domain.usecase.auth.TokenRefreshUseCase
@@ -12,6 +13,7 @@ import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,13 +33,15 @@ class MainActivityViewModel @Inject constructor(
     }
 
     private fun tokenRefresh() = viewModelScope.launch {
-        localAuthDataSource.getRefreshToken()
-            .collect { refreshToken ->
+        localAuthDataSource.getRefreshToken().firstOrNull()?.let { refreshToken ->
+            if (refreshToken == "") {
+
                 tokenRefreshUseCase(refreshToken)
                     .asResult()
                     .collectLatest { result ->
                         when (result) {
                             is Result.Fail -> _uiState.value = MainActivityUiState.Fail(result.exception)
+
                             is Result.Loading -> _uiState.value = MainActivityUiState.Loading
                             is Result.Success -> {
                                 saveTokenUseCase(result.data).onSuccess {
@@ -46,10 +50,13 @@ class MainActivityViewModel @Inject constructor(
                             }
                         }
                     }
+            } else {
+                _uiState.value = MainActivityUiState.Fail(NeedLoginException())
+
             }
+        }
     }
 }
-
 
 sealed interface MainActivityUiState {
     object Loading : MainActivityUiState
