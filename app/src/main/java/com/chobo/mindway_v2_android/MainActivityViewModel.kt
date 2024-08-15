@@ -33,29 +33,27 @@ class MainActivityViewModel @Inject constructor(
     }
 
     private fun tokenRefresh() = viewModelScope.launch {
-        localAuthDataSource.getRefreshToken().firstOrNull()?.let { refreshToken ->
-            if (refreshToken == "") {
+        val refreshToken = localAuthDataSource.getRefreshToken().firstOrNull()
 
-                tokenRefreshUseCase(refreshToken)
-                    .asResult()
-                    .collectLatest { result ->
-                        when (result) {
-                            is Result.Fail -> _uiState.value = MainActivityUiState.Fail(result.exception)
-
-                            is Result.Loading -> _uiState.value = MainActivityUiState.Loading
-                            is Result.Success -> {
-                                saveTokenUseCase(result.data).onSuccess {
-                                    _uiState.value = MainActivityUiState.Success(result.data)
-                                }
+        if (refreshToken.isNullOrEmpty()) {
+            _uiState.value = MainActivityUiState.Fail(NeedLoginException())
+        } else {
+            tokenRefreshUseCase(refreshToken)
+                .asResult()
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Fail -> _uiState.value = MainActivityUiState.Fail(result.exception)
+                        is Result.Loading -> _uiState.value = MainActivityUiState.Loading
+                        is Result.Success -> {
+                            saveTokenUseCase(result.data).onSuccess {
+                                _uiState.value = MainActivityUiState.Success(result.data)
                             }
                         }
                     }
-            } else {
-                _uiState.value = MainActivityUiState.Fail(NeedLoginException())
-
-            }
+                }
         }
     }
+
 }
 
 sealed interface MainActivityUiState {
