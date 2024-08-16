@@ -42,9 +42,9 @@ fun MindWayTextField(
             focusManager.clearFocus()
         }
     }
-    val lengthCheck = remember {
-        if (lengthLimit != 0) textState.length >= lengthLimit else false
-    }
+
+    val lengthCheck = remember { if (lengthLimit != 0) textState.length >= lengthLimit else false }
+
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
