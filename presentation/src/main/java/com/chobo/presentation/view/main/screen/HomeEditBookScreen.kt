@@ -4,16 +4,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,8 +47,19 @@ internal fun HomeEditBookRoute(
     val titleTextStateIsEmpty by homeBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeBookEditViewModel.plotTextStateIsEmpty.collectAsStateWithLifecycle()
 
+    var isKeyboardOpen by remember { mutableStateOf(false) }
+
+    val imeInsets = WindowInsets.ime
+    val imeHeightPx = imeInsets.getBottom(LocalDensity.current)
+    val imeHeightDp: Dp = with(LocalDensity.current) { imeHeightPx.toDp() }
+
+    LaunchedEffect(imeHeightDp) {
+        isKeyboardOpen = imeHeightDp > 0.dp
+    }
+
     HomeEditBookScreen(
         modifier = modifier,
+        isKeyboardOpen = isKeyboardOpen,
         titleTextState = titleTextState,
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
@@ -51,7 +69,7 @@ internal fun HomeEditBookRoute(
         checkButtonOnClick = {
             homeBookEditViewModel.checkButtonOnClick(id)
         },
-        navigateToBack = navigateToBack,
+        navigateToBack = navigateToBack
     )
     LaunchedEffect(Unit) {
         homeBookEditViewModel.getBookById(id)
@@ -61,6 +79,7 @@ internal fun HomeEditBookRoute(
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
+    isKeyboardOpen: Boolean,
     titleTextState: String, // TODO: focusManager: FocusManager = LocalFocusManager.current 추가
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
@@ -103,7 +122,8 @@ internal fun HomeEditBookScreen(
                     emptyErrorMessage = stringResource(R.string.error_content),
                     lengthLimit = 1000,
                     updateTextValue = updateContentTextState,
-                    isError = contentTextStateIsEmpty
+                    isError = contentTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
@@ -131,6 +151,7 @@ fun HomeBookEditScreenPreview() {
         titleTextStateIsEmpty = false,
         titleTextState = "",
         updateTitleTextState = { _ -> },
-        updateContentTextState = { _ -> }
+        updateContentTextState = { _ -> },
+        isKeyboardOpen = false
     )
 }
