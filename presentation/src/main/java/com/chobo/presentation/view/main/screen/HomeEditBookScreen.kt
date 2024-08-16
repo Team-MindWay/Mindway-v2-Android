@@ -61,7 +61,7 @@ internal fun HomeEditBookRoute(
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
-    titleTextState: String, // TODO: focusManager: FocusManager = LocalFocusManager.current 추가
+    titleTextState: String,
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
