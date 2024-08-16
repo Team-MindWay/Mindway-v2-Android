@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,8 +33,15 @@ fun MindWayTextField(
     isError: Boolean,
     lengthLimit: Int = 0,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    focusManager: FocusManager = LocalFocusManager.current,
+    isKeyboardOpen: Boolean,
     updateTextValue: (String) -> Unit,
 ) {
+    LaunchedEffect(isKeyboardOpen) {
+        if (!isKeyboardOpen) {
+            focusManager.clearFocus()
+        }
+    }
     val lengthCheck = remember {
         if (lengthLimit != 0) textState.length >= lengthLimit else false
     }
@@ -163,6 +172,7 @@ fun MindWayTextFieldPreview() {
         overflowErrorMessage = "에러니까 고치셈",
         emptyErrorMessage = "비어ㅆ습니다",
         updateTextValue = {},
-        isError = true
+        isError = true,
+        isKeyboardOpen = false
     )
 }
