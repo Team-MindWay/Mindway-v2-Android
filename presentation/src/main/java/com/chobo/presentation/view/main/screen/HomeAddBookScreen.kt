@@ -121,7 +121,8 @@ internal fun HomeAddBookScreen(
                     placeholder = stringResource(R.string.please_enter_the_book_title),
                     emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                     updateTextValue = updateTitleTextState,
-                    isError = titleTextStateIsEmpty
+                    isError = titleTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
                 MindWayTextField(
                     title = stringResource(R.string.content),

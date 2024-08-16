@@ -6,22 +6,28 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -48,6 +54,17 @@ internal fun BookAddBookRoute(
     val (writeTextStateIsEmpty, setWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (linkTextStateIsEmpty, setLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
+
+
+    val imeInsets = WindowInsets.ime
+    val imeHeightPx = imeInsets.getBottom(LocalDensity.current)
+    val imeHeightDp: Dp = with(LocalDensity.current) { imeHeightPx.toDp() }
+
+    var isKeyboardOpen by remember { mutableStateOf(false) }
+
+    LaunchedEffect(imeHeightDp) {
+        isKeyboardOpen = imeHeightDp > 0.dp
+    }
 
     BookAddBookScreen(
         modifier = modifier,
@@ -89,6 +106,7 @@ internal fun BookAddBookRoute(
             }
         },
         navigateToBack = navigateToBack,
+        isKeyboardOpen = isKeyboardOpen
     )
 }
 
@@ -96,6 +114,7 @@ internal fun BookAddBookRoute(
 internal fun BookAddBookScreen(
     modifier: Modifier = Modifier,
     focusManager: FocusManager = LocalFocusManager.current,
+    isKeyboardOpen: Boolean,
     titleTextState: String,
     writeTextState: String,
     linkTextState: String,
@@ -128,7 +147,7 @@ internal fun BookAddBookScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         horizontal = 24.dp,
@@ -148,7 +167,8 @@ internal fun BookAddBookScreen(
                     placeholder = stringResource(R.string.please_enter_the_book_title),
                     emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                     updateTextValue = updateTitleTextState,
-                    isError = titleTextStateIsEmpty
+                    isError = titleTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
                 MindWayTextFieldNoneLimit(
                     title = stringResource(id = R.string.writer),
@@ -156,7 +176,8 @@ internal fun BookAddBookScreen(
                     placeholder = stringResource(id = R.string.please_enter_the_book_writer),
                     emptyErrorMessage = stringResource(id = R.string.please_enter_the_book_writer),
                     updateTextValue = updateWriteTextState,
-                    isError = writeTextStateIsEmpty
+                    isError = writeTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
                 MindWayTextFieldNoneLimit(
                     title = stringResource(id = R.string.link),
@@ -164,13 +185,14 @@ internal fun BookAddBookScreen(
                     placeholder = stringResource(id = R.string.please_enter_the_link),
                     emptyErrorMessage = stringResource(id = R.string.please_enter_the_link),
                     updateTextValue = updateLinkTextState,
-                    isError = linkTextStateIsEmpty
+                    isError = linkTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
-                Spacer(modifier = modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
                     text = stringResource(id = R.string.apply),
                     onClick = checkButtonOnClick,
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
                 )
@@ -196,5 +218,6 @@ fun PreviewAddBookScreen() {
         writeTextStateIsEmpty = false,
         checkBookDialogState = false,
         toggleCheckBookDialogState = { },
+        isKeyboardOpen = false
     )
 }
