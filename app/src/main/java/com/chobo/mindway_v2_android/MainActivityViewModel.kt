@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.domain.exception.NeedLoginException
-import com.chobo.domain.model.auth.response.GAuthLoginResponseModel
 import com.chobo.domain.usecase.auth.SaveLoginDataUseCase
 import com.chobo.domain.usecase.auth.TokenRefreshUseCase
 import com.chobo.presentation.viewModel.util.Result
@@ -46,7 +45,7 @@ class MainActivityViewModel @Inject constructor(
                         is Result.Loading -> _uiState.value = MainActivityUiState.Loading
                         is Result.Success -> {
                             saveTokenUseCase(result.data).onSuccess {
-                                _uiState.value = MainActivityUiState.Success(result.data)
+                                _uiState.value = MainActivityUiState.Success
                             }
                         }
                     }
@@ -58,6 +57,6 @@ class MainActivityViewModel @Inject constructor(
 
 sealed interface MainActivityUiState {
     object Loading : MainActivityUiState
-    data class Success(val gAuthLoginResponseModel: GAuthLoginResponseModel) : MainActivityUiState
+    object Success : MainActivityUiState
     data class Fail(val exception: Throwable) : MainActivityUiState
 }
