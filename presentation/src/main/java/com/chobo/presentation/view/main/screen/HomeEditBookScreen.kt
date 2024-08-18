@@ -1,6 +1,7 @@
 package com.chobo.presentation.view.main.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,7 +65,8 @@ internal fun HomeEditBookRoute(
 @Composable
 internal fun HomeEditBookScreen(
     modifier: Modifier = Modifier,
-    titleTextState: String, // TODO: focusManager: FocusManager = LocalFocusManager.current 추가
+    focusManager: FocusManager = LocalFocusManager.current,
+    titleTextState: String,
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
     contentTextStateIsEmpty: Boolean,
@@ -71,7 +76,15 @@ internal fun HomeEditBookScreen(
     navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
-        Column(modifier = modifier.background(color = colors.WHITE)) {
+        Column(
+            modifier = modifier
+                .background(color = colors.WHITE)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        focusManager.clearFocus()
+                    }
+                }
+        ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
                 endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },// TODO: 기능 추가
