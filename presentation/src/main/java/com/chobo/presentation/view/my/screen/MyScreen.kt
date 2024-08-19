@@ -42,8 +42,8 @@ import com.chobo.presentation.view.my.component.MyBookListItem
 import com.chobo.presentation.view.my.component.MyNameCard
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
-import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
-import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
+import com.chobo.presentation.viewModel.my.uiState.GetMyBookListUiState
+import com.chobo.presentation.viewModel.my.uiState.GetMyInformationUiState
 
 @Composable
 internal fun MyRoute(

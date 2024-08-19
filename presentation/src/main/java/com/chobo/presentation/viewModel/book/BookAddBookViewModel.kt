@@ -34,15 +34,14 @@ class BookAddBookViewModel @Inject constructor(
                 )
             )
                 .onSuccess {
-                    it.catch { remoteError ->
-                        _orderUploadUiState.value =
-                            OrderUploadUiState.RemoteFail(exception = remoteError)
+                    it.catch {
+                        _orderUploadUiState.value = OrderUploadUiState.Fail
                     }.collect {
                         _orderUploadUiState.value = OrderUploadUiState.Success
                     }
                 }
                 .onFailure {
-                    _orderUploadUiState.value = OrderUploadUiState.RemoteFail(exception = it)
+                    _orderUploadUiState.value = OrderUploadUiState.Fail
                 }
         }
 }

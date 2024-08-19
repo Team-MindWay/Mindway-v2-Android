@@ -5,5 +5,5 @@ import com.chobo.domain.model.event.response.GetDetailEventResponseModel
 sealed interface GetDetailEventUiState {
     object Loading: GetDetailEventUiState
     data class Success(val data: GetDetailEventResponseModel): GetDetailEventUiState
-    data class Fail(val exception: Throwable): GetDetailEventUiState
+    object Fail: GetDetailEventUiState
 }

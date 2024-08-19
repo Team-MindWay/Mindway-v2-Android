@@ -7,5 +7,5 @@ interface GetEventListUiState {
     object Loading: GetEventListUiState
     object Empty: GetEventListUiState
     data class Success(val data: ImmutableList<GetEventListResponseModel>): GetEventListUiState
-    data class Fail(val exception: Throwable): GetEventListUiState
+    object Fail: GetEventListUiState
 }
