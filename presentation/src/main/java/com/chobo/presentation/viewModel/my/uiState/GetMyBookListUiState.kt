@@ -7,5 +7,5 @@ sealed interface GetMyBookListUiState {
     object Loading : GetMyBookListUiState
     object Empty : GetMyBookListUiState
     data class Success(val data: ImmutableList<MyBookListModel>) : GetMyBookListUiState
-    data class Fail(val exception: Throwable) : GetMyBookListUiState
+    object Fail : GetMyBookListUiState
 }

@@ -66,7 +66,7 @@ class MyViewModel @Inject constructor(
                 when (result) {
                     is Result.Loading -> _getMyInformationUiState.value = GetMyInformationUiState.Loading
                     is Result.Success -> _getMyInformationUiState.value = GetMyInformationUiState.Success(result.data)
-                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail(result.exception)
+                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail
                 }
             }
     }
@@ -82,7 +82,7 @@ class MyViewModel @Inject constructor(
                     } else {
                         _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data.toImmutableList())
                     }
-                    is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail(result.exception)
+                    is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail
                 }
             }
     }
