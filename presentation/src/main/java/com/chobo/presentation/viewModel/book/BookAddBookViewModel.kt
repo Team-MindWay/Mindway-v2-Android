@@ -17,8 +17,7 @@ import javax.inject.Inject
 class BookAddBookViewModel @Inject constructor(
     private val orderUploadUseCase: OrderUploadUseCase
 ) : ViewModel() {
-    private val _orderUploadUiState =
-        MutableStateFlow<OrderUploadUiState>(OrderUploadUiState.Loading)
+    private val _orderUploadUiState = MutableStateFlow<OrderUploadUiState>(OrderUploadUiState.Loading)
     val orderUploadUiState: StateFlow<OrderUploadUiState> = _orderUploadUiState.asStateFlow()
 
     fun checkButtonOnClick(
@@ -36,14 +35,13 @@ class BookAddBookViewModel @Inject constructor(
             )
                 .onSuccess {
                     it.catch {
-                        _orderUploadUiState.value =
-                            OrderUploadUiState.RemoteFail
+                        _orderUploadUiState.value = OrderUploadUiState.Fail
                     }.collect {
                         _orderUploadUiState.value = OrderUploadUiState.Success
                     }
                 }
                 .onFailure {
-                    _orderUploadUiState.value = OrderUploadUiState.RemoteFail
+                    _orderUploadUiState.value = OrderUploadUiState.Fail
                 }
         }
 }
