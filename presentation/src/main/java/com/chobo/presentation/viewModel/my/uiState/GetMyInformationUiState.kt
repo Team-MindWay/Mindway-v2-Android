@@ -1,4 +1,4 @@
-package com.chobo.presentation.viewModel.my.UiState
+package com.chobo.presentation.viewModel.my.uiState
 
 import com.chobo.domain.model.my.MyDataModel
 
