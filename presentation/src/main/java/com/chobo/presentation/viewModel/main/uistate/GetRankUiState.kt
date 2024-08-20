@@ -7,5 +7,5 @@ sealed interface GetRankUiState {
     object Loading : GetRankUiState
     object Empty : GetRankUiState
     data class Success(val data: ImmutableList<RankModel>) : GetRankUiState
-    data class Fail(val exception: Throwable) : GetRankUiState
+    object Fail : GetRankUiState
 }

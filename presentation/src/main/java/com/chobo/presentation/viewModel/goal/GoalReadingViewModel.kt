@@ -55,7 +55,7 @@ class GoalReadingViewModel @Inject constructor(
                     }
 
                     is Result.Fail -> _getWeekendGoalUiState.value =
-                        GetWeekendGoalUiState.Fail(result.exception)
+                        GetWeekendGoalUiState.Fail
                 }
             }
     }
@@ -73,7 +73,7 @@ class GoalReadingViewModel @Inject constructor(
                     }
 
                     is Result.Fail -> _getBookListUiState.value =
-                        GetBookListUiState.Fail(result.exception)
+                        GetBookListUiState.Fail
                 }
             }
     }

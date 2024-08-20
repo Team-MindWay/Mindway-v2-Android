@@ -9,8 +9,8 @@ import com.chobo.domain.usecase.my.GetMyBookListUseCase
 import com.chobo.domain.usecase.my.GetMyInformationUseCase
 import com.chobo.domain.usecase.order.OrderDeleteByIdUseCase
 import com.chobo.domain.usecase.order.OrderModifyByIdUseCase
-import com.chobo.presentation.viewModel.my.UiState.GetMyBookListUiState
-import com.chobo.presentation.viewModel.my.UiState.GetMyInformationUiState
+import com.chobo.presentation.viewModel.my.uiState.GetMyBookListUiState
+import com.chobo.presentation.viewModel.my.uiState.GetMyInformationUiState
 import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,7 +66,7 @@ class MyViewModel @Inject constructor(
                 when (result) {
                     is Result.Loading -> _getMyInformationUiState.value = GetMyInformationUiState.Loading
                     is Result.Success -> _getMyInformationUiState.value = GetMyInformationUiState.Success(result.data)
-                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail(result.exception)
+                    is Result.Fail -> _getMyInformationUiState.value = GetMyInformationUiState.Fail
                 }
             }
     }
@@ -82,7 +82,7 @@ class MyViewModel @Inject constructor(
                     } else {
                         _getMyBookListUiState.value = GetMyBookListUiState.Success(result.data.toImmutableList())
                     }
-                    is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail(result.exception)
+                    is Result.Fail -> _getMyBookListUiState.value = GetMyBookListUiState.Fail
                 }
             }
     }

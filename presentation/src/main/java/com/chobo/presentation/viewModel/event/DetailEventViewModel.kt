@@ -32,7 +32,7 @@ class DetailEventViewModel @Inject constructor(
                         GetDetailEventUiState.Success(result.data)
 
                     is Result.Fail -> _getDetailEventUiState.value =
-                        GetDetailEventUiState.Fail(result.exception)
+                        GetDetailEventUiState.Fail
                 }
             }
     }
