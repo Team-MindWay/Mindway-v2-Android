@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
                 when (result) {
                     is Result.Loading -> _noticeGetUiState.value = NoticeGetUiState.Loading
                     is Result.Success -> _noticeGetUiState.value = NoticeGetUiState.Success(result.data)
-                    is Result.Fail -> _noticeGetUiState.value = NoticeGetUiState.Fail(result.exception)
+                    is Result.Fail -> _noticeGetUiState.value = NoticeGetUiState.Fail
                 }
             }
     }
@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
                     } else {
                         _getRankUiState.value = GetRankUiState.Success(result.data.toImmutableList())
                     }
-                    is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail(result.exception)
+                    is Result.Fail -> _getRankUiState.value = GetRankUiState.Fail
                 }
             }
     }
@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor(
                     } else {
                         _getWeekendGoalUiState.value = GetWeekendGoalUiState.Success(result.data)
                     }
-                    is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail(result.exception)
+                    is Result.Fail -> _getWeekendGoalUiState.value = GetWeekendGoalUiState.Fail
                 }
             }
     }

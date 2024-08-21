@@ -30,7 +30,7 @@ class ViewDetailViewModel @Inject constructor(
                 when (result) {
                     is Result.Loading -> _getBookByIdUiState.value = GetBookByIdUiState.Loading
                     is Result.Success -> _getBookByIdUiState.value = GetBookByIdUiState.Success(data = result.data)
-                    is Result.Fail -> _getBookByIdUiState.value = GetBookByIdUiState.Fail(result.exception)
+                    is Result.Fail -> _getBookByIdUiState.value = GetBookByIdUiState.Fail
                 }
             }
     }

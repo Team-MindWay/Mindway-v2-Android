@@ -43,7 +43,7 @@ class EventViewModel @Inject constructor(
                     }
 
                     is Result.Fail -> targetData.value =
-                        GetEventListUiState.Fail(result.exception)
+                        GetEventListUiState.Fail
                 }
             }
     }
