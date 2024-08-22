@@ -35,13 +35,14 @@ class MainActivityViewModel @Inject constructor(
         val refreshToken = localAuthDataSource.getRefreshToken().firstOrNull()
 
         if (refreshToken.isNullOrEmpty()) {
-            _uiState.value = MainActivityUiState.Fail(NeedLoginException())
+            _uiState.value = MainActivityUiState.Fail
         } else {
             tokenRefreshUseCase(refreshToken)
                 .asResult()
                 .collectLatest { result ->
                     when (result) {
-                        is Result.Fail -> _uiState.value = MainActivityUiState.Fail(result.exception)
+                        is Result.Fail -> _uiState.value = MainActivityUiState.Fail
+
                         is Result.Loading -> _uiState.value = MainActivityUiState.Loading
                         is Result.Success -> {
                             saveTokenUseCase(result.data).onSuccess {
@@ -58,5 +59,5 @@ class MainActivityViewModel @Inject constructor(
 sealed interface MainActivityUiState {
     object Loading : MainActivityUiState
     object Success : MainActivityUiState
-    data class Fail(val exception: Throwable) : MainActivityUiState
+    object Fail : MainActivityUiState
 }
