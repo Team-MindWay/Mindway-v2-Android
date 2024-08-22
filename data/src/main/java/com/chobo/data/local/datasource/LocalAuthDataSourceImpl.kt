@@ -19,7 +19,7 @@ class LocalAuthDataSourceImpl @Inject constructor(
         val REFRESH_TIME = stringPreferencesKey("refresh_time")
     }
 
-    override suspend fun getAccessToken(): Flow<String> = dataStore.data.map {
+    override fun getAccessToken(): Flow<String> = dataStore.data.map {
         it[ACCESS_TOKEN] ?: ""
     }
 
@@ -35,13 +35,13 @@ class LocalAuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAccessTime(): Flow<String> = dataStore.data.map {
+    override fun getAccessTime(): Flow<String> = dataStore.data.map {
         it[ACCESS_TIME] ?: ""
     }
 
-    override suspend fun setAccessTime(accessToken: String) {
+    override suspend fun setAccessTime(accessTime: String) {
         dataStore.edit {
-            it[ACCESS_TIME] = accessToken
+            it[ACCESS_TIME] = accessTime
         }
     }
 
@@ -67,13 +67,13 @@ class LocalAuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRefreshTime(): Flow<String> = dataStore.data.map {
+    override fun getRefreshTime(): Flow<String> = dataStore.data.map {
         it[REFRESH_TIME] ?: ""
     }
 
-    override suspend fun setRefreshTime(refreshToken: String) {
+    override suspend fun setRefreshTime(refreshTime: String) {
         dataStore.edit {
-            it[REFRESH_TIME] = refreshToken
+            it[REFRESH_TIME] = refreshTime
         }
     }
 
