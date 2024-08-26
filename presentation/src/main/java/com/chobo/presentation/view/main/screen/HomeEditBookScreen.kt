@@ -84,20 +84,17 @@ internal fun HomeEditBookScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .padding(horizontal = 24.dp)
         ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },// TODO: 기능 추가
                 midText = stringResource(R.string.book_modify),
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
                     .fillMaxWidth()
             ) {
                 MindWayTextFieldNoneLimit(

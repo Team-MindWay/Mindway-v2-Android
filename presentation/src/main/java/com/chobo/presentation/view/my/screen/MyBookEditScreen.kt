@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -125,6 +124,7 @@ internal fun MyBookEditScreen(
                     focusManager.clearFocus()
                 }
             }
+            .padding(horizontal = 24.dp)
             .imePadding()
         ) {
             MindWayTopAppBar(
@@ -137,7 +137,6 @@ internal fun MyBookEditScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        horizontal = 24.dp,
                         vertical = 28.dp
                     )
             ) {

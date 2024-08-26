@@ -120,6 +120,7 @@ internal fun BookAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .padding(horizontal = 24.dp)
         ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
@@ -130,10 +131,7 @@ internal fun BookAddBookScreen(
                 horizontalAlignment = Alignment.Start,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
             ) {
                 if (checkBookDialogState) {
                     Dialog(onDismissRequest = toggleCheckBookDialogState) {

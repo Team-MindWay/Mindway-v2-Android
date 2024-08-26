@@ -120,7 +120,8 @@ fun MyScreen(
                 MyNameCard(
                     name = when (myNameUiState) {
                         is GetMyInformationUiState.Success -> myNameUiState.data.name
-                        else -> ""
+                        is GetMyInformationUiState.Fail -> "사용자를 찾을 수 없습니다.."
+                        is GetMyInformationUiState.Loading -> "로딩중.."
                     },
                     onClick = showSheet,
                 )
@@ -249,7 +250,7 @@ fun MyScreenPreview() {
         isToastVisible = false,
         isCommunicationSuccess = false,
         setBook = { _ -> },
-        myNameUiState = GetMyInformationUiState.Loading,
+        myNameUiState = GetMyInformationUiState.Fail,
         orderDeleteById = { },
         isDialogVisible = false,
         selectedBookTitle = "",
