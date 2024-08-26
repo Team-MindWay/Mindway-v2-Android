@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.view.component.icon.LogoIcon
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
+import com.chobo.presentation.view.main.component.HomeErrorNoticeCard
 import com.chobo.presentation.view.main.component.HomeGoalReadingChart
 import com.chobo.presentation.view.main.component.HomeNoticeCard
 import com.chobo.presentation.view.main.component.HomeReadersOfTheMonthChart
@@ -65,7 +66,6 @@ internal fun HomeScreen(
     navigateToGoalReading: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, _ ->
-        MindWayTopAppBar(startIcon = { LogoIcon() })
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -74,6 +74,7 @@ internal fun HomeScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
         ) {
+            MindWayTopAppBar(startIcon = { LogoIcon() })
             when (noticeGetUiState) {
                 is NoticeGetUiState.Success -> {
                     HomeNoticeCard(
@@ -83,8 +84,12 @@ internal fun HomeScreen(
                             .fillMaxWidth(),
                     )
                 }
-
-                else -> Unit
+                is NoticeGetUiState.Loading -> {
+                    HomeErrorNoticeCard(text = "데이터를 불러오는 중..")
+                }
+                is NoticeGetUiState.Fail -> {
+                    HomeErrorNoticeCard(text = "통신이 원활하지 않습니다..")
+                }
             }
             when (getWeekendGoalUIState) {
                 is GetWeekendGoalUiState.Success -> {
@@ -135,7 +140,8 @@ internal fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeRoute(
-        navigateToGoalReading = { },
-    )
+    HomeScreen(
+        getWeekendGoalUIState = GetWeekendGoalUiState.Loading,
+        noticeGetUiState = NoticeGetUiState.Loading,
+        getRankUIState = GetRankUiState.Loading) {}
 }

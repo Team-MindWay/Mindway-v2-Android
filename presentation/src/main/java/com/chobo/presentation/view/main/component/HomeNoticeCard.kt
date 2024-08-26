@@ -5,9 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +37,7 @@ fun HomeNoticeCard(
             horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
+                .fillMaxWidth()
                 .background(
                     color = colors.GRAY100,
                     shape = RoundedCornerShape(size = 8.dp)
@@ -54,12 +54,14 @@ fun HomeNoticeCard(
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
+                    modifier = modifier.padding(top = 18.5.dp),
                     text = noticeAllModel.title,
                     style = typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.Black,
                 )
                 Text(
+                    modifier = modifier.padding(bottom = 18.5.dp),
                     text = noticeAllModel.content,
                     style = TextStyle(
                         fontSize = 12.sp,
@@ -78,9 +80,6 @@ fun HomeNoticeCard(
 @Composable
 fun HomeNoticeCardPreview() {
     HomeNoticeCard(
-        modifier = Modifier
-            .width(312.dp)
-            .height(100.dp),
         noticeAllModel = NoticeAllModel(title = "제목제목제목제목", content = "내용")
     )
 }
