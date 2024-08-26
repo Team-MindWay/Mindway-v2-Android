@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -120,6 +119,7 @@ internal fun BookAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .padding(horizontal = 24.dp)
         ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
@@ -130,10 +130,7 @@ internal fun BookAddBookScreen(
                 horizontalAlignment = Alignment.Start,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
             ) {
                 if (checkBookDialogState) {
                     Dialog(onDismissRequest = toggleCheckBookDialogState) {

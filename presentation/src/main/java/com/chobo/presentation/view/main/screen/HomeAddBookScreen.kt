@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,6 +80,7 @@ internal fun HomeAddBookScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .padding(horizontal = 24.dp)
         ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
@@ -90,10 +90,7 @@ internal fun HomeAddBookScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
                     .fillMaxSize()
             ) {
                 MindWayTextFieldNoneLimit(

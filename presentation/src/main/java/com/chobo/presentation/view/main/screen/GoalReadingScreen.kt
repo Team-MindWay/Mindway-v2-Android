@@ -155,6 +155,7 @@ internal fun GoalReadingScreen(
                             focusManager.clearFocus()
                         }
                     }
+                    .padding(horizontal = 24.dp)
             ) {
                 MindWayTopAppBar(
                     startIcon = {
@@ -192,11 +193,7 @@ internal fun GoalReadingScreen(
                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
-                                .padding(
-                                    start = 24.dp,
-                                    end = 24.dp,
-                                    top = 12.dp,
-                                )
+                                .padding(top = 12.dp,)
                                 .fillMaxSize()
                         ) {
                             item {
@@ -266,7 +263,6 @@ internal fun GoalReadingScreen(
 @Preview(showBackground = true)
 @Composable
 fun GoalReadingScreenPreview() {
-
     GoalReadingScreen(
         navigateToBack = { },
         navigateToHomeAddBook = { },

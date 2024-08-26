@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
-import com.chobo.domain.model.event.response.GetDetailEventResponseModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
@@ -64,16 +63,16 @@ internal fun DetailEventScreen(
     navigateToBack: () -> Unit,
 ) {
     MindWayAndroidTheme { colors, typography ->
-        Column(modifier = modifier.background(color = colors.WHITE)) {
+        Column(
+            modifier = modifier
+                .background(color = colors.WHITE)
+                .padding(horizontal = 24.dp)
+        ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
                 midText = stringResource(id = R.string.ongoing_event)
             )
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 24.dp)
-            ) {
+            Column(modifier = Modifier.fillMaxSize()) {
                 when (getDetailEventUiState) {
                     is GetDetailEventUiState.Fail -> {
                         Box(
@@ -124,15 +123,8 @@ internal fun DetailEventScreen(
 @Preview(showBackground = true)
 @Composable
 fun DetailEventScreenPre() {
-    val exampleEventResponse = GetDetailEventResponseModel(
-        img_url = "https://example.com/image.jpg",
-        title = "Sample Event",
-        content = "This is a sample event description.",
-        started_at = "2024-01-01T00:00:00Z",
-        ended_at = "2024-01-02T00:00:00Z"
-    )
     DetailEventScreen(
-        getDetailEventUiState = GetDetailEventUiState.Success(exampleEventResponse),
+        getDetailEventUiState = GetDetailEventUiState.Loading,
         navigateToBack = {},
     )
 }

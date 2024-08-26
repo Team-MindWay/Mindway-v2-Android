@@ -104,6 +104,7 @@ internal fun ViewDetailScreen(
                 modifier = modifier
                     .fillMaxSize()
                     .background(color = colors.WHITE)
+                    .padding(horizontal = 24.dp)
             ) {
                 if (isDialogOpen) {
                     Dialog(onDismissRequest = toggleIsDialogOpen) {
@@ -118,12 +119,8 @@ internal fun ViewDetailScreen(
                     }
                 }
                 MindWayTopAppBar(
-                    startIcon = {
-                        ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack))
-                    },
-                    endIcon = {
-                        OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }))
-                    },
+                    startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
+                    endIcon = { OptionIcon(modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } })) },
                     midText = stringResource(R.string.view_detail),
                 )
                 when (getBookByIdUiState) {
@@ -134,8 +131,7 @@ internal fun ViewDetailScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
-                                    vertical = 24.dp,
-                                    horizontal = 28.dp,
+                                    vertical = 28.dp,
                                 )
                         ) {
                             ViewDetailTextCard(

@@ -24,7 +24,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.icon.InfoIcon
 import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextField
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
@@ -84,20 +83,17 @@ internal fun HomeEditBookScreen(
                         focusManager.clearFocus()
                     }
                 }
+                .padding(horizontal = 24.dp)
         ) {
             MindWayTopAppBar(
                 startIcon = { ChevronLeftIcon(modifier = Modifier.clickableSingle(onClick = navigateToBack)) },
-                endIcon = { InfoIcon(modifier = Modifier.clickableSingle(onClick = { })) },// TODO: 기능 추가
                 midText = stringResource(R.string.book_modify),
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .padding(
-                        horizontal = 24.dp,
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
                     .fillMaxWidth()
             ) {
                 MindWayTextFieldNoneLimit(
