@@ -30,6 +30,13 @@ class HomeAddBookViewModel @Inject constructor(
     private val _contentTextStateIsEmpty = MutableStateFlow(false)
     val contentTextStateIsEmpty: StateFlow<Boolean> = _contentTextStateIsEmpty.asStateFlow()
 
+    internal fun clearState() {
+        _titleTextState.value = ""
+        _contentTextState.value = ""
+        _titleTextStateIsEmpty.value = false
+        _contentTextStateIsEmpty.value = false
+    }
+
     fun updateTitleTextState(input: String) {
         _titleTextStateIsEmpty.value = false
         _titleTextState.value = input
