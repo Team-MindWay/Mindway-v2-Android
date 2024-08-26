@@ -140,7 +140,8 @@ internal fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(getWeekendGoalUIState = GetWeekendGoalUiState.Loading, noticeGetUiState = NoticeGetUiState.Loading, getRankUIState = GetRankUiState.Loading) {
-        
-    }
+    HomeScreen(
+        getWeekendGoalUIState = GetWeekendGoalUiState.Loading,
+        noticeGetUiState = NoticeGetUiState.Loading,
+        getRankUIState = GetRankUiState.Loading) {}
 }
