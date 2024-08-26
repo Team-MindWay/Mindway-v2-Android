@@ -6,21 +6,28 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -46,6 +53,16 @@ internal fun HomeAddBookRoute(
     val titleTextStateIsEmpty by homeAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
     val contentTextStateIsEmpty by homeAddBookViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
 
+    val imeInsets = WindowInsets.ime
+    val imeHeightPx = imeInsets.getBottom(LocalDensity.current)
+    val imeHeightDp: Dp = with(LocalDensity.current) { imeHeightPx.toDp() }
+
+    var isKeyboardOpen by remember { mutableStateOf(false) }
+
+    LaunchedEffect(imeHeightDp) {
+        isKeyboardOpen = imeHeightDp > 0.dp
+    }
+
     HomeAddBookScreen(
         modifier = modifier,
         titleTextState = titleTextState,
@@ -56,6 +73,7 @@ internal fun HomeAddBookRoute(
         updateContentTextState = homeAddBookViewModel::updateContentTextState,
         checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick,
         navigateToBack = navigateToBack,
+        isKeyboardOpen = isKeyboardOpen
     )
 }
 
@@ -63,6 +81,7 @@ internal fun HomeAddBookRoute(
 internal fun HomeAddBookScreen(
     modifier: Modifier = Modifier,
     focusManager: FocusManager = LocalFocusManager.current,
+    isKeyboardOpen: Boolean,
     titleTextState: String,
     contentTextState: String,
     titleTextStateIsEmpty: Boolean,
@@ -102,7 +121,8 @@ internal fun HomeAddBookScreen(
                     placeholder = stringResource(R.string.please_enter_the_book_title),
                     emptyErrorMessage = stringResource(R.string.please_enter_the_book_title),
                     updateTextValue = updateTitleTextState,
-                    isError = titleTextStateIsEmpty
+                    isError = titleTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
                 MindWayTextField(
                     title = stringResource(R.string.content),
@@ -112,7 +132,8 @@ internal fun HomeAddBookScreen(
                     emptyErrorMessage = stringResource(R.string.error_content),
                     lengthLimit = 1000,
                     updateTextValue = updateContentTextState,
-                    isError = contentTextStateIsEmpty
+                    isError = contentTextStateIsEmpty,
+                    isKeyboardOpen = isKeyboardOpen
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
@@ -146,6 +167,7 @@ fun AddBookScreenPreview() {
         titleTextState = "",
         titleTextStateIsEmpty = true,
         updateTitleTextState = {},
-        updateContentTextState = {}
+        updateContentTextState = {},
+        isKeyboardOpen = false
     )
 }

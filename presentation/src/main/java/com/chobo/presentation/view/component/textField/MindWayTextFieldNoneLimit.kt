@@ -9,9 +9,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,14 +24,21 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 @Composable
 fun MindWayTextFieldNoneLimit(
     modifier: Modifier = Modifier,
+    focusManager: FocusManager = LocalFocusManager.current,
     title: String,
     textState: String,
     placeholder: String,
     emptyErrorMessage: String,
     isError: Boolean,
+    isKeyboardOpen: Boolean,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     updateTextValue: (String) -> Unit,
 ) {
+    LaunchedEffect(isKeyboardOpen) {
+        if (!isKeyboardOpen) {
+            focusManager.clearFocus()
+        }
+    }
     MindWayAndroidTheme { colors, typography ->
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
@@ -125,6 +135,7 @@ fun MindWayTextFieldNoneLimitPreview() {
         placeholder = "힌트다",
         emptyErrorMessage = "비어ㅆ습니다",
         updateTextValue = {},
-        isError = true
+        isError = true,
+        isKeyboardOpen = false
     )
 }
