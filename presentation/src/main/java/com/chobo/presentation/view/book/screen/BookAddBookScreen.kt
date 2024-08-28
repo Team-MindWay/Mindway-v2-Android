@@ -1,6 +1,5 @@
 package com.chobo.presentation.view.book.screen
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -11,19 +10,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -37,16 +37,18 @@ import com.chobo.presentation.viewModel.book.BookAddBookViewModel
 @Composable
 internal fun BookAddBookRoute(
     modifier: Modifier = Modifier,
-    bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    bookAddBookViewModel: BookAddBookViewModel = hiltViewModel(),
     navigateToBack: () -> Unit,
 ) {
-    val (titleTextState, setTitleTextState) = remember { mutableStateOf("") }
-    val (writeTextState, setWriteTextState) = remember { mutableStateOf("") }
-    val (linkTextState, setLinkTextState) = remember { mutableStateOf("") }
+    val titleTextState by bookAddBookViewModel.titleTextState.collectAsStateWithLifecycle()
+    val writeTextState by bookAddBookViewModel.writeTextState.collectAsStateWithLifecycle()
+    val linkTextState by bookAddBookViewModel.linkTextState.collectAsStateWithLifecycle()
+
     val (titleTextStateIsEmpty, setTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (writeTextStateIsEmpty, setWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
     val (linkTextStateIsEmpty, setLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
-    val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
+
+        val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
 
     BookAddBookScreen(
         modifier = modifier,
@@ -57,16 +59,16 @@ internal fun BookAddBookRoute(
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
         checkBookDialogState = checkBookDialogState,
-        updateTitleTextState = { text ->
-            setTitleTextState(text)
+        updateTitleTextState = { title ->
+            bookAddBookViewModel.onTitleChanged(title)
             setTitleTextStateIsEmpty(false)
         },
-        updateWriteTextState = { text ->
-            setWriteTextState(text)
+        updateWriteTextState = { write ->
+            bookAddBookViewModel.onWriteChanged(write)
             setWriteTextStateIsEmpty(false)
         },
-        updateLinkTextState = { text ->
-            setLinkTextState(text)
+        updateLinkTextState = { link ->
+            bookAddBookViewModel.onLinkChanged(link)
             setLinkTextStateIsEmpty(false)
         },
         toggleCheckBookDialogState = { toggleCheckBookDialogState(!checkBookDialogState) },
@@ -79,12 +81,12 @@ internal fun BookAddBookRoute(
                 && !writeTextStateIsEmpty
                 && !linkTextStateIsEmpty
             ) {
-                navigateToBack()
                 bookAddBookViewModel.checkButtonOnClick(
                     titleTextState,
                     writeTextState,
                     linkTextState
                 )
+                navigateToBack()
             }
         },
         navigateToBack = navigateToBack,
@@ -128,7 +130,7 @@ internal fun BookAddBookScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(28.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 28.dp)
             ) {
@@ -163,11 +165,11 @@ internal fun BookAddBookScreen(
                     updateTextValue = updateLinkTextState,
                     isError = linkTextStateIsEmpty
                 )
-                Spacer(modifier = modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
                     text = stringResource(id = R.string.apply),
                     onClick = checkButtonOnClick,
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
                 )
