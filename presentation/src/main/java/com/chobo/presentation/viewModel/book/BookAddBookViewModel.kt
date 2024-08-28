@@ -31,6 +31,15 @@ class BookAddBookViewModel @Inject constructor(
 
     internal var linkTextState = savedStateHandle.getStateFlow(key = LINK, initialValue = "")
 
+    private val _titleTextStateIsEmpty = MutableStateFlow(false)
+    val titleTextStateIsEmpty: StateFlow<Boolean> = _titleTextStateIsEmpty.asStateFlow()
+
+    private val _writeTextStateIsEmpty = MutableStateFlow(false)
+    val writeTextStateIsEmpty: StateFlow<Boolean> = _writeTextStateIsEmpty.asStateFlow()
+
+    private val _linkTextStateIsEmpty = MutableStateFlow(false)
+    val linkTextStateIsEmpty: StateFlow<Boolean> = _linkTextStateIsEmpty.asStateFlow()
+
     private val _orderUploadUiState = MutableStateFlow<OrderUploadUiState>(OrderUploadUiState.Loading)
     val orderUploadUiState: StateFlow<OrderUploadUiState> = _orderUploadUiState.asStateFlow()
 
@@ -58,9 +67,30 @@ class BookAddBookViewModel @Inject constructor(
                 }
         }
 
-    internal fun onTitleChanged(title: String) { savedStateHandle[TITLE] = title }
+    internal fun onTitleChanged(title: String) {
+        savedStateHandle[TITLE] = title
+        _titleTextStateIsEmpty.value = title.isEmpty()
+    }
 
-    internal fun onWriteChanged(write: String) { savedStateHandle[WRITE] = write }
+    internal fun onWriteChanged(write: String) {
+        savedStateHandle[WRITE] = write
+        _writeTextStateIsEmpty.value = write.isEmpty()
+    }
 
-    internal fun onLinkChanged(link: String) { savedStateHandle[LINK] = link }
+    internal fun onLinkChanged(link: String) {
+        savedStateHandle[LINK] = link
+        _linkTextStateIsEmpty.value = link.isEmpty()
+    }
+
+    internal fun validateAndSetErrorStates(): Boolean {
+        val isTitleEmpty = titleTextState.value.isEmpty()
+        val isWriteEmpty = writeTextState.value.isEmpty()
+        val isLinkEmpty = linkTextState.value.isEmpty()
+
+        _titleTextStateIsEmpty.value = isTitleEmpty
+        _writeTextStateIsEmpty.value = isWriteEmpty
+        _linkTextStateIsEmpty.value = isLinkEmpty
+
+        return !isTitleEmpty && !isWriteEmpty && !isLinkEmpty
+    }
 }
