@@ -39,9 +39,9 @@ internal fun HomeEditBookRoute(
     navigateToBack: () -> Unit,
 ) {
     val titleTextState by homeBookEditViewModel.titleTextState.collectAsStateWithLifecycle()
-    val contentTextState by homeBookEditViewModel.plotTextState.collectAsStateWithLifecycle()
+    val contentTextState by homeBookEditViewModel.contentTextState.collectAsStateWithLifecycle()
     val titleTextStateIsEmpty by homeBookEditViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
-    val contentTextStateIsEmpty by homeBookEditViewModel.plotTextStateIsEmpty.collectAsStateWithLifecycle()
+    val contentTextStateIsEmpty by homeBookEditViewModel.contentTextStateIsEmpty.collectAsStateWithLifecycle()
 
     HomeEditBookScreen(
         modifier = modifier,
@@ -49,10 +49,13 @@ internal fun HomeEditBookRoute(
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
-        updateTitleTextState = homeBookEditViewModel::updateTitleTextState,
-        updateContentTextState = homeBookEditViewModel::updatePlotTextState,
+        updateTitleTextState = homeBookEditViewModel::onTitleChange,
+        updateContentTextState = homeBookEditViewModel::onContentChange,
         checkButtonOnClick = {
-            homeBookEditViewModel.checkButtonOnClick(id)
+            if (homeBookEditViewModel.validateFields()) {
+                homeBookEditViewModel.checkButtonOnClick(id)
+                navigateToBack()
+            }
         },
         navigateToBack = navigateToBack,
     )
@@ -117,10 +120,7 @@ internal fun HomeEditBookScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
                     text = stringResource(R.string.check),
-                    onClick = {
-                        checkButtonOnClick()
-                        navigateToBack()
-                    },
+                    onClick = checkButtonOnClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
