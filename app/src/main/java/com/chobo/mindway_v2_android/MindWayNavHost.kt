@@ -35,8 +35,7 @@ fun MindWayNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String,
 ) {
-    val (currentDestination, setCurrentDestination) =
-        remember { mutableStateOf(MindWayNavBarItemType.HOME) }
+    val (currentDestination, setCurrentDestination) = remember { mutableStateOf(MindWayNavBarItemType.HOME) }
 
     NavHost(
         navController = navController,
