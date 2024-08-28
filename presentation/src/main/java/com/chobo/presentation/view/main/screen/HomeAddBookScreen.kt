@@ -55,9 +55,14 @@ internal fun HomeAddBookRoute(
         contentTextState = contentTextState,
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         contentTextStateIsEmpty = contentTextStateIsEmpty,
-        updateTitleTextState = homeAddBookViewModel::updateTitleTextState,
-        updateContentTextState = homeAddBookViewModel::updateContentTextState,
-        checkButtonOnClick = homeAddBookViewModel::checkButtonOnClick,
+        updateTitleTextState = homeAddBookViewModel::onTitleChanged,
+        updateContentTextState = homeAddBookViewModel::onContentChanged,
+        checkButtonOnClick = {
+            if (homeAddBookViewModel.validateFields()) {
+                homeAddBookViewModel.submitBook()
+                navigateToBack()
+            }
+        },
         navigateToBack = navigateToBack,
     )
 }
@@ -118,15 +123,7 @@ internal fun HomeAddBookScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 MindWayButton(
                     text = stringResource(R.string.check),
-                    onClick = {
-                        if (
-                            !titleTextStateIsEmpty
-                            && !contentTextStateIsEmpty
-                        ) {
-                            navigateToBack()
-                        }
-                        checkButtonOnClick()
-                    },
+                    onClick = checkButtonOnClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
