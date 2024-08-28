@@ -17,12 +17,16 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeAddBookViewModel @Inject constructor(
     private val bookUploadUseCase: BookUploadUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _titleTextState = MutableStateFlow("")
-    val titleTextState: StateFlow<String> = _titleTextState.asStateFlow()
+    companion object {
+        const val TITLE = "title"
+        const val CONTENT = "content"
+    }
 
-    private val _contentTextState = MutableStateFlow("")
-    val contentTextState: StateFlow<String> = _contentTextState.asStateFlow()
+    internal var titleTextState = savedStateHandle.getStateFlow(key = TITLE, initialValue = "")
+
+    internal var contentTextState = savedStateHandle.getStateFlow(key = CONTENT, initialValue = "")
 
     private val _titleTextStateIsEmpty = MutableStateFlow(false)
     val titleTextStateIsEmpty: StateFlow<Boolean> = _titleTextStateIsEmpty.asStateFlow()
@@ -31,38 +35,43 @@ class HomeAddBookViewModel @Inject constructor(
     val contentTextStateIsEmpty: StateFlow<Boolean> = _contentTextStateIsEmpty.asStateFlow()
 
     internal fun clearState() {
-        _titleTextState.value = ""
-        _contentTextState.value = ""
+        onTitleChanged("")
+        onContentChanged("")
         _titleTextStateIsEmpty.value = false
         _contentTextStateIsEmpty.value = false
     }
 
-    fun updateTitleTextState(input: String) {
-        _titleTextStateIsEmpty.value = false
-        _titleTextState.value = input
+    internal fun validateFields(): Boolean {
+        val titleEmpty = titleTextState.value.isEmpty()
+        val contentEmpty = contentTextState.value.isEmpty()
+
+        _titleTextStateIsEmpty.value = titleEmpty
+        _contentTextStateIsEmpty.value = contentEmpty
+
+        return !titleEmpty && !contentEmpty
     }
 
-    fun updateContentTextState(input: String) {
-        _contentTextStateIsEmpty.value = false
-        _contentTextState.value = input
-    }
 
-    fun checkButtonOnClick() {
-        _titleTextStateIsEmpty.value = _titleTextState.value.isEmpty()
-        _contentTextStateIsEmpty.value = _contentTextState.value.isEmpty()
-        if (
-            !_titleTextStateIsEmpty.value
-            && !_contentTextStateIsEmpty.value
-        )
+    internal fun submitBook() {
             viewModelScope.launch {
                 bookUploadUseCase(
                     body = BookRequestBodyModel(
-                        title = _titleTextState.value,
-                        plot = _contentTextState.value
+                        title = titleTextState.value,
+                        plot = contentTextState.value
                     )
                 )
                     .asResult()
                     .collectLatest { }
             }
+    }
+
+    internal fun onTitleChanged(title: String) {
+        savedStateHandle[TITLE] = title
+        _titleTextStateIsEmpty.value = title.isEmpty()
+    }
+
+    internal fun onContentChanged(content: String) {
+        savedStateHandle[CONTENT] = content
+        _contentTextStateIsEmpty.value = content.isEmpty()
     }
 }
