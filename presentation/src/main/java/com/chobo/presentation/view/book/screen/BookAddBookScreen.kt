@@ -44,11 +44,11 @@ internal fun BookAddBookRoute(
     val writeTextState by bookAddBookViewModel.writeTextState.collectAsStateWithLifecycle()
     val linkTextState by bookAddBookViewModel.linkTextState.collectAsStateWithLifecycle()
 
-    val (titleTextStateIsEmpty, setTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
-    val (writeTextStateIsEmpty, setWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
-    val (linkTextStateIsEmpty, setLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val titleTextStateIsEmpty by bookAddBookViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val writeTextStateIsEmpty by bookAddBookViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
+    val linkTextStateIsEmpty by bookAddBookViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
 
-        val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
+    val (checkBookDialogState, toggleCheckBookDialogState) = remember { mutableStateOf(false) }
 
     BookAddBookScreen(
         modifier = modifier,
@@ -59,28 +59,12 @@ internal fun BookAddBookRoute(
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
         checkBookDialogState = checkBookDialogState,
-        updateTitleTextState = { title ->
-            bookAddBookViewModel.onTitleChanged(title)
-            setTitleTextStateIsEmpty(false)
-        },
-        updateWriteTextState = { write ->
-            bookAddBookViewModel.onWriteChanged(write)
-            setWriteTextStateIsEmpty(false)
-        },
-        updateLinkTextState = { link ->
-            bookAddBookViewModel.onLinkChanged(link)
-            setLinkTextStateIsEmpty(false)
-        },
+        updateTitleTextState = bookAddBookViewModel::onTitleChanged,
+        updateWriteTextState = bookAddBookViewModel::onWriteChanged,
+        updateLinkTextState = bookAddBookViewModel::onLinkChanged,
         toggleCheckBookDialogState = { toggleCheckBookDialogState(!checkBookDialogState) },
         checkButtonOnClick = {
-            setTitleTextStateIsEmpty(titleTextState.isEmpty())
-            setWriteTextStateIsEmpty(writeTextState.isEmpty())
-            setLinkTextStateIsEmpty(linkTextState.isEmpty())
-            if (
-                !titleTextStateIsEmpty
-                && !writeTextStateIsEmpty
-                && !linkTextStateIsEmpty
-            ) {
+            if (bookAddBookViewModel.validateAndSetErrorStates()) {
                 bookAddBookViewModel.checkButtonOnClick(
                     titleTextState,
                     writeTextState,
