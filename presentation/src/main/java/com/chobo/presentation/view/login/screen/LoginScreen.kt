@@ -59,7 +59,7 @@ internal fun LoginScreen(
                 .fillMaxSize()
                 .background(color = colors.WHITE)
         ) {
-            Spacer(modifier = Modifier.height(220.dp))
+            Spacer(modifier = Modifier.padding(top = 220.dp))
             Image(
                 painter = painterResource(id = R.drawable.mind_way_logo),
                 contentDescription = "MindWay Main logo",
