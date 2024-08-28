@@ -1,5 +1,6 @@
 package com.chobo.presentation.viewModel.book
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.order.OrderRequestBodyModel
@@ -15,17 +16,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookAddBookViewModel @Inject constructor(
-    private val orderUploadUseCase: OrderUploadUseCase
+    private val orderUploadUseCase: OrderUploadUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    companion object {
+        const val TITLE = "title"
+        const val WRITE = "write"
+        const val LINK = "link"
+    }
+
+    internal var titleTextState = savedStateHandle.getStateFlow(key = TITLE, initialValue = "")
+
+    internal var writeTextState = savedStateHandle.getStateFlow(key = WRITE, initialValue = "")
+
+    internal var linkTextState = savedStateHandle.getStateFlow(key = LINK, initialValue = "")
+
     private val _orderUploadUiState = MutableStateFlow<OrderUploadUiState>(OrderUploadUiState.Loading)
     val orderUploadUiState: StateFlow<OrderUploadUiState> = _orderUploadUiState.asStateFlow()
 
-    fun checkButtonOnClick(
+    internal fun checkButtonOnClick(
         titleTextState: String,
         writeTextState: String,
         linkTextState: String,
-    ) =
-        viewModelScope.launch {
+    ) = viewModelScope.launch {
             orderUploadUseCase(
                 body = OrderRequestBodyModel(
                     title = titleTextState,
@@ -44,4 +57,10 @@ class BookAddBookViewModel @Inject constructor(
                     _orderUploadUiState.value = OrderUploadUiState.Fail
                 }
         }
+
+    internal fun onTitleChanged(title: String) { savedStateHandle[TITLE] = title }
+
+    internal fun onWriteChanged(write: String) { savedStateHandle[WRITE] = write }
+
+    internal fun onLinkChanged(link: String) { savedStateHandle[LINK] = link }
 }
