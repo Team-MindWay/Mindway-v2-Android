@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
@@ -41,12 +43,13 @@ internal fun MyBookEditRoute(
     myViewModel: MyViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     navigateToBack: () -> Unit,
 ) {
-    val (titleTextState, updateTitleTextState) = remember { mutableStateOf("") }
-    val (writeTextState, updateWriteTextState) = remember { mutableStateOf("") }
-    val (linkTextState, updateLinkTextState) = remember { mutableStateOf("") }
-    val (titleTextStateIsEmpty, updateTitleTextStateIsEmpty) = remember { mutableStateOf(false) }
-    val (writeTextStateIsEmpty, updateWriteTextStateIsEmpty) = remember { mutableStateOf(false) }
-    val (linkTextStateIsEmpty, updateLinkTextStateIsEmpty) = remember { mutableStateOf(false) }
+    val titleTextState by myViewModel.titleTextState.collectAsStateWithLifecycle()
+    val writeTextState by myViewModel.writeTextState.collectAsStateWithLifecycle()
+    val linkTextState by myViewModel.linkTextState.collectAsStateWithLifecycle()
+
+    val titleTextStateIsEmpty by myViewModel.titleTextStateIsEmpty.collectAsStateWithLifecycle()
+    val writeTextStateIsEmpty by myViewModel.writeTextStateIsEmpty.collectAsStateWithLifecycle()
+    val linkTextStateIsEmpty by myViewModel.linkTextStateIsEmpty.collectAsStateWithLifecycle()
 
     MyBookEditScreen(
         modifier = modifier,
@@ -56,27 +59,11 @@ internal fun MyBookEditRoute(
         titleTextStateIsEmpty = titleTextStateIsEmpty,
         writeTextStateIsEmpty = writeTextStateIsEmpty,
         linkTextStateIsEmpty = linkTextStateIsEmpty,
-        updateTitleTextState = { textState ->
-            updateTitleTextState(textState)
-            updateTitleTextStateIsEmpty(false)
-        },
-        updateWriteTextState = { textState ->
-            updateWriteTextState(textState)
-            updateWriteTextStateIsEmpty(false)
-        },
-        updateLinkTextState = { textState ->
-            updateLinkTextState(textState)
-            updateLinkTextStateIsEmpty(false)
-        },
+        updateTitleTextState = myViewModel::onTitleChange,
+        updateWriteTextState = myViewModel::onWriteChange,
+        updateLinkTextState = myViewModel::onLinkChange,
         checkOnClick = {
-            updateTitleTextStateIsEmpty(titleTextState.isEmpty())
-            updateWriteTextStateIsEmpty(writeTextState.isEmpty())
-            updateLinkTextStateIsEmpty(linkTextState.isEmpty())
-            if (
-                titleTextState.isNotEmpty()
-                && writeTextState.isNotEmpty()
-                && linkTextState.isNotEmpty()
-            ) {
+            if (myViewModel.validateAndSetErrorStates()) {
                 myViewModel.orderModifyById(
                     body = MyBookListModel(
                         id = myViewModel.myBookItem.id,
@@ -93,9 +80,9 @@ internal fun MyBookEditRoute(
 
     LaunchedEffect(Unit) {
         myViewModel.myBookItem.let { book ->
-            updateTitleTextState(book.title)
-            updateWriteTextState(book.author)
-            updateLinkTextState(book.bookUrl)
+            myViewModel.onTitleChange(book.title)
+            myViewModel.onWriteChange(book.author)
+            myViewModel.onLinkChange(book.bookUrl)
         }
     }
 }
