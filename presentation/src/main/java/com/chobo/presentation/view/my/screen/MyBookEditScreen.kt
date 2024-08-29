@@ -121,9 +121,7 @@ internal fun MyBookEditScreen(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
             ) {
                 MindWayTextFieldNoneLimit(
                     title = stringResource(R.string.title),
@@ -153,9 +151,7 @@ internal fun MyBookEditScreen(
                 MindWayButton(
                     text = stringResource(id = R.string.apply),
                     onClick = checkOnClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                    modifier = Modifier.padding(16.dp),
                 )
             }
         }

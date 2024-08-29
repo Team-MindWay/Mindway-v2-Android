@@ -30,6 +30,7 @@ fun MindWayButton(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
+                .fillMaxWidth()
                 .background(
                     color = buttonColor,
                     shape = RoundedCornerShape(size = 8.dp)

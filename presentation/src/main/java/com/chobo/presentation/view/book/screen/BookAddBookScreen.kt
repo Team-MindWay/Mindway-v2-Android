@@ -153,9 +153,7 @@ internal fun BookAddBookScreen(
                 MindWayButton(
                     text = stringResource(id = R.string.apply),
                     onClick = checkButtonOnClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                    modifier = Modifier.padding(16.dp),
                 )
             }
         }
