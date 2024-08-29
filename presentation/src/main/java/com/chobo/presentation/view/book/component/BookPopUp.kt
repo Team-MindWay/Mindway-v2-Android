@@ -59,7 +59,10 @@ fun BookPopUp(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    backgroundColor = Color.BLACK.toLong()
+)
 @Composable
 fun BookPopUpPreview() {
     BookPopUp(onDismiss = { })
