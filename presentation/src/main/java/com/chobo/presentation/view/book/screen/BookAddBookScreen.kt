@@ -154,8 +154,8 @@ internal fun BookAddBookScreen(
                     text = stringResource(id = R.string.apply),
                     onClick = checkButtonOnClick,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                        .padding(16.dp)
+                        .fillMaxWidth(),
                 )
             }
         }
