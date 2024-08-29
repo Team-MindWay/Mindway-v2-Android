@@ -150,7 +150,7 @@ internal fun BookScreen(
                             selectedTabIndex = pagerState.currentPage,
                             contentColor = colors.MAIN,
                             backgroundColor = colors.WHITE,
-                            modifier = Modifier.width(166.dp),
+                            modifier = Modifier.width(150.dp),
                         ) {
                             persistentListOf(
                                 stringResource(R.string.novel),
@@ -197,9 +197,7 @@ internal fun BookScreen(
                                                             shape = RoundedCornerShape(8.dp)
                                                         )
                                                         .shimmerEffect(
-                                                            shape = RoundedCornerShape(
-                                                                8.dp
-                                                            )
+                                                            shape = RoundedCornerShape(8.dp)
                                                         )
                                                 )
                                             }
@@ -299,9 +297,7 @@ internal fun BookScreen(
                                                             shape = RoundedCornerShape(8.dp)
                                                         )
                                                         .shimmerEffect(
-                                                            shape = RoundedCornerShape(
-                                                                8.dp
-                                                            )
+                                                            shape = RoundedCornerShape(8.dp)
                                                         )
                                                 )
                                             }

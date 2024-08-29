@@ -52,8 +52,7 @@ fun MindWayButton(
 @Composable
 fun MindWayButtonPreview() {
     MindWayButton(
-        modifier = Modifier
-            .padding(10.dp),
+        modifier = Modifier.padding(10.dp),
         text = "이것은 택스트 입니다",
     ) {}
 }
