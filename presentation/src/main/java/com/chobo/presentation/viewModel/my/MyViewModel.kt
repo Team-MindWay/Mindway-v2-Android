@@ -1,5 +1,6 @@
 package com.chobo.presentation.viewModel.my
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.my.MyBookListModel
@@ -31,7 +32,29 @@ class MyViewModel @Inject constructor(
     private val getMyBookListUseCase: GetMyBookListUseCase,
     private val orderDeleteByIdUseCase: OrderDeleteByIdUseCase,
     private val orderModifyByIdUseCase: OrderModifyByIdUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    companion object {
+        const val TITLE = "title"
+        const val WRITE = "write"
+        const val LINK = "link"
+    }
+
+    internal var titleTextState = savedStateHandle.getStateFlow(key = TITLE, initialValue = "")
+
+    internal var writeTextState = savedStateHandle.getStateFlow(key = WRITE, initialValue = "")
+
+    internal var linkTextState = savedStateHandle.getStateFlow(key = LINK, initialValue = "")
+
+    private val _titleTextStateIsEmpty = MutableStateFlow(false)
+    val titleTextStateIsEmpty: StateFlow<Boolean> = _titleTextStateIsEmpty.asStateFlow()
+
+    private val _writeTextStateIsEmpty = MutableStateFlow(false)
+    val writeTextStateIsEmpty: StateFlow<Boolean> = _writeTextStateIsEmpty.asStateFlow()
+
+    private val _linkTextStateIsEmpty = MutableStateFlow(false)
+    val linkTextStateIsEmpty: StateFlow<Boolean> = _linkTextStateIsEmpty.asStateFlow()
+
     private val _getMyBookListUiState = MutableStateFlow<GetMyBookListUiState>(GetMyBookListUiState.Loading)
     val getMyBookListUiState: StateFlow<GetMyBookListUiState> = _getMyBookListUiState.asStateFlow()
 
@@ -125,7 +148,12 @@ class MyViewModel @Inject constructor(
                     }
 
                     is Result.Success -> {
+                        savedStateHandle[TITLE] = ""
+                        savedStateHandle[WRITE] = ""
+                        savedStateHandle[LINK] = ""
+
                         _isCommunicationSuccess.value = true
+
                         showToast()
                         getMyBookList()
                     }
@@ -142,5 +170,32 @@ class MyViewModel @Inject constructor(
     fun logout() = viewModelScope.launch {
         logoutUseCase()
         deleteTokenUseCase()
+    }
+
+    internal fun onTitleChange(title: String) {
+        savedStateHandle[TITLE] = title
+        _titleTextStateIsEmpty.value = title.isEmpty()
+    }
+
+    internal fun onWriteChange(write: String) {
+        savedStateHandle[WRITE] = write
+        _writeTextStateIsEmpty.value = write.isEmpty()
+    }
+
+    internal fun onLinkChange(link: String) {
+        savedStateHandle[LINK] = link
+        _linkTextStateIsEmpty.value = link.isEmpty()
+    }
+
+    internal fun validateAndSetErrorStates(): Boolean {
+        val isTitleEmpty = titleTextState.value.isEmpty()
+        val isWriteEmpty = writeTextState.value.isEmpty()
+        val isLinkEmpty = linkTextState.value.isEmpty()
+
+        _titleTextStateIsEmpty.value = isTitleEmpty
+        _writeTextStateIsEmpty.value = isWriteEmpty
+        _linkTextStateIsEmpty.value = isLinkEmpty
+
+        return !isTitleEmpty && !isWriteEmpty && !isLinkEmpty
     }
 }
