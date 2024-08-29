@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,15 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.BOOKS
-import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.EVENT
-import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.HOME
-import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.MY
+import com.chobo.presentation.view.component.bottom_navigation_bar.MindWayNavBarItemType.*
 import com.chobo.presentation.view.component.icon.BookIcon
 import com.chobo.presentation.view.component.icon.HeartIcon
 import com.chobo.presentation.view.component.icon.HomeIcon
 import com.chobo.presentation.view.component.icon.ProfileIcon
 import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.padding.paddingHorizontal
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -44,7 +41,11 @@ fun MindWayNavBar(
             modifier = modifier
                 .fillMaxWidth()
                 .background(colors.WHITE)
-                .padding(start = 28.dp, end = 28.dp, top = 8.dp, bottom = 20.dp),
+                .paddingHorizontal(
+                    horizontal = 28.dp,
+                    top = 8.dp,
+                    bottom = 20.dp
+                ),
         ) {
             MindWayNavBarItemType.values().forEach { item ->
                 Column(

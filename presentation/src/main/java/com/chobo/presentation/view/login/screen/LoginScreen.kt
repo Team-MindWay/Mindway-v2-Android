@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.modifier.padding.paddingHorizontal
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.login.LoginViewModel
@@ -69,9 +70,8 @@ internal fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = 24.dp,
-                        end = 24.dp,
+                    .paddingHorizontal(
+                        horizontal = 24.dp,
                         bottom = 140.dp
                     ),
             ) {
