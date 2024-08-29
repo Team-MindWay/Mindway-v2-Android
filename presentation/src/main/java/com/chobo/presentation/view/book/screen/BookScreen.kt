@@ -53,7 +53,7 @@ import com.chobo.presentation.view.book.component.BookTabRowItem
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.PlusIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.shimmer.shimmerEffect
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.book.BookAddBookViewModel

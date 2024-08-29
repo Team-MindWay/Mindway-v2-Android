@@ -29,7 +29,7 @@ import com.chobo.presentation.view.component.icon.BookIcon
 import com.chobo.presentation.view.component.icon.HeartIcon
 import com.chobo.presentation.view.component.icon.HomeIcon
 import com.chobo.presentation.view.component.icon.ProfileIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable

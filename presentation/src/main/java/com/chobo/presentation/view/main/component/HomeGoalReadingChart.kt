@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.domain.model.goal.response.GetWeekendGoalModel
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.util.getTodayDayOfWeek
 import okhttp3.internal.immutableListOf

@@ -1,4 +1,4 @@
-package com.chobo.presentation.view.component.multipleEventsCutterManager
+package com.chobo.presentation.view.component.modifier.multipleEventsCutterManager
 
 internal interface MultipleEventsCutter {
     fun processEvent(event: () -> Unit)

@@ -28,7 +28,7 @@ import com.chobo.presentation.R
 import com.chobo.presentation.view.book.component.BookPopUp
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
