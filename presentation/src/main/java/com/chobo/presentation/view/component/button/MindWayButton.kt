@@ -29,12 +29,13 @@ fun MindWayButton(
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier
+            modifier = Modifier
                 .background(
                     color = buttonColor,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
                 .clickableSingle(onClick = onClick)
+                .then(modifier)
         ) {
             Text(
                 text = text,
@@ -51,6 +52,7 @@ fun MindWayButton(
 @Composable
 fun MindWayButtonPreview() {
     MindWayButton(
+        modifier = Modifier.padding(10.dp),
         text = "이것은 택스트 입니다",
     ) {}
 }
