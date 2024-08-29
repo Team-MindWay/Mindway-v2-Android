@@ -48,24 +48,28 @@ class BookAddBookViewModel @Inject constructor(
         writeTextState: String,
         linkTextState: String,
     ) = viewModelScope.launch {
-            orderUploadUseCase(
-                body = OrderRequestBodyModel(
-                    title = titleTextState,
-                    author = writeTextState,
-                    book_url = linkTextState
-                )
+        orderUploadUseCase(
+            body = OrderRequestBodyModel(
+                title = titleTextState,
+                author = writeTextState,
+                book_url = linkTextState
             )
-                .onSuccess {
-                    it.catch {
-                        _orderUploadUiState.value = OrderUploadUiState.Fail
-                    }.collect {
-                        _orderUploadUiState.value = OrderUploadUiState.Success
-                    }
-                }
-                .onFailure {
+        )
+            .onSuccess {
+                it.catch {
                     _orderUploadUiState.value = OrderUploadUiState.Fail
+                }.collect {
+                    savedStateHandle[TITLE] = ""
+                    savedStateHandle[WRITE] = ""
+                    savedStateHandle[LINK] = ""
+
+                    _orderUploadUiState.value = OrderUploadUiState.Success
                 }
-        }
+            }
+            .onFailure {
+                _orderUploadUiState.value = OrderUploadUiState.Fail
+            }
+    }
 
     internal fun onTitleChanged(title: String) {
         savedStateHandle[TITLE] = title

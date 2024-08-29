@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chobo.domain.model.book.request.BookRequestBodyModel
 import com.chobo.domain.usecase.book.BookUploadUseCase
+import com.chobo.presentation.viewModel.util.Result
 import com.chobo.presentation.viewModel.util.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +34,6 @@ class HomeAddBookViewModel @Inject constructor(
 
     private val _contentTextStateIsEmpty = MutableStateFlow(false)
     val contentTextStateIsEmpty: StateFlow<Boolean> = _contentTextStateIsEmpty.asStateFlow()
-
     internal fun clearState() {
         onTitleChanged("")
         onContentChanged("")
@@ -61,7 +61,15 @@ class HomeAddBookViewModel @Inject constructor(
                     )
                 )
                     .asResult()
-                    .collectLatest { }
+                    .collectLatest { result ->
+                        when(result) {
+                            is Result.Success -> {
+                                savedStateHandle[TITLE] = ""
+                                savedStateHandle[CONTENT] = ""
+                            }
+                            else -> { }
+                        }
+                    }
             }
     }
 

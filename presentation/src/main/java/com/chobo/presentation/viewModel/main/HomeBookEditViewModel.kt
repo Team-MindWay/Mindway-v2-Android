@@ -57,6 +57,7 @@ class HomeBookEditViewModel @Inject constructor(
                         onTitleChange(result.data.title)
                         onContentChange(result.data.plot)
                     }
+
                     is Result.Fail -> {}
                 }
             }
@@ -72,7 +73,15 @@ class HomeBookEditViewModel @Inject constructor(
                 bookId = id
             )
                 .asResult()
-                .collectLatest { }
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            savedStateHandle[TITLE] = ""
+                            savedStateHandle[CONTENT] = ""
+                        }
+                        else -> {}
+                    }
+                }
         }
     }
 

@@ -148,7 +148,12 @@ class MyViewModel @Inject constructor(
                     }
 
                     is Result.Success -> {
+                        savedStateHandle[TITLE] = ""
+                        savedStateHandle[WRITE] = ""
+                        savedStateHandle[LINK] = ""
+
                         _isCommunicationSuccess.value = true
+
                         showToast()
                         getMyBookList()
                     }
