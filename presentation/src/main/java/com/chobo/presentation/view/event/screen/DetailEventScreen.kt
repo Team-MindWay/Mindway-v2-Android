@@ -124,7 +124,7 @@ internal fun DetailEventScreen(
 @Composable
 fun DetailEventScreenPre() {
     DetailEventScreen(
-        getDetailEventUiState = GetDetailEventUiState.Loading,
+        getDetailEventUiState = GetDetailEventUiState.Fail,
         navigateToBack = {},
     )
 }

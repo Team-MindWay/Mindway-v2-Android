@@ -130,9 +130,7 @@ internal fun ViewDetailScreen(
                             horizontalAlignment = Alignment.Start,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(
-                                    vertical = 28.dp,
-                                )
+                                .padding(vertical = 28.dp,)
                         ) {
                             ViewDetailTextCard(
                                 title = stringResource(R.string.title),
