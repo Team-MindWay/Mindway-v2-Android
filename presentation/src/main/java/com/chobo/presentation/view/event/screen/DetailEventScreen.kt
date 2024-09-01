@@ -29,7 +29,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -124,7 +124,7 @@ internal fun DetailEventScreen(
 @Composable
 fun DetailEventScreenPre() {
     DetailEventScreen(
-        getDetailEventUiState = GetDetailEventUiState.Loading,
+        getDetailEventUiState = GetDetailEventUiState.Fail,
         navigateToBack = {},
     )
 }

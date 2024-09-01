@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chobo.presentation.view.component.modifier.padding.paddingVertical
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Composable
@@ -67,9 +68,8 @@ fun MindWayRightTextField(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(
-                                        top = 16.dp,
-                                        bottom = 16.dp,
+                                    .paddingVertical(
+                                        vertical = 16.dp,
                                         start = 16.dp,
                                         end = 34.dp
                                     )

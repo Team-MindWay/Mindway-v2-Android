@@ -51,9 +51,7 @@ fun BookPopUp(
             MindWayButton(
                 text = stringResource(R.string.check),
                 onClick = onDismiss,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
+                modifier = Modifier.padding(10.dp),
             )
         }
     }

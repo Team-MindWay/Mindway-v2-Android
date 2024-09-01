@@ -33,7 +33,7 @@ fun MindWayTopAppBar(
             modifier = modifier
                 .fillMaxWidth()
                 .height(59.dp)
-                .padding(top = 20.dp,)
+                .padding(top = 20.dp)
         ) {
             startIcon()
             Text(

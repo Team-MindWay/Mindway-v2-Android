@@ -29,7 +29,7 @@ import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -121,9 +121,7 @@ internal fun MyBookEditScreen(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(
-                        vertical = 28.dp
-                    )
+                    .padding(vertical = 28.dp)
             ) {
                 MindWayTextFieldNoneLimit(
                     title = stringResource(R.string.title),
@@ -153,9 +151,7 @@ internal fun MyBookEditScreen(
                 MindWayButton(
                     text = stringResource(id = R.string.apply),
                     onClick = checkOnClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
+                    modifier = Modifier.padding(16.dp),
                 )
             }
         }
