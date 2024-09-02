@@ -54,6 +54,7 @@ internal fun HomeEditBookRoute(
         checkButtonOnClick = {
             if (homeBookEditViewModel.validateFields()) {
                 homeBookEditViewModel.checkButtonOnClick(id)
+                homeBookEditViewModel.resetTextState()
                 navigateToBack()
             }
         },
