@@ -40,4 +40,7 @@ object Versions {
     const val PREFERENCES = "1.0.0"
 
     const val SWIPE_REFRESH = "0.27.0"
+
+    const val MOSHI = "1.15.0"
+    const val MOSHI_CONVERTER = "2.9.0"
 }

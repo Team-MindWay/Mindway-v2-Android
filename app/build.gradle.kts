@@ -102,6 +102,10 @@ dependencies {
     androidTestImplementation(Dependency.Test.ESPRESSO)
     androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
+
+    implementation(Dependency.Moshi.MOSHI)
+    implementation(Dependency.Moshi.MOSHI_CONVERTER)
+    ksp(Dependency.Moshi.MOSHI_CODEGEN)
 }
 
 fun getApiKey(propertyKey: String): String {

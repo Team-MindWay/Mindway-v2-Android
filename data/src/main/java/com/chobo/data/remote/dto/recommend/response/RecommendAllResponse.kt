@@ -2,6 +2,7 @@ package com.chobo.data.remote.dto.recommend.response
 
 import com.chobo.domain.model.recommend.response.RecommendResponseAllModel
 
+
 data class RecommendAllResponse(
     val title: String,
     val content: String,

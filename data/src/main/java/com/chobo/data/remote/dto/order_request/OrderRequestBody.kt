@@ -1,11 +1,14 @@
 package com.chobo.data.remote.dto.order_request
 
 import com.chobo.domain.model.order.OrderRequestBodyModel
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class OrderRequestBody(
-    val title: String,
-    val author: String,
-    val book_url: String,
+    @Json(name = "title") val title: String,
+    @Json(name = "author") val author: String,
+    @Json(name = "book_url") val book_url: String,
 )
 
 fun OrderRequestBody.toModel() = OrderRequestBodyModel(

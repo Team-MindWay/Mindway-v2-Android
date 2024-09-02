@@ -1,10 +1,13 @@
 package com.chobo.data.remote.dto.book.request
 
 import com.chobo.domain.model.book.request.BookRequestBodyModel
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class BookRequestBody(
-    val title: String,
-    val plot: String
+    @Json(name = "title") val title: String,
+    @Json(name = "plot") val plot: String
 )
 
 fun BookRequestBodyModel.toDto() = BookRequestBody(
