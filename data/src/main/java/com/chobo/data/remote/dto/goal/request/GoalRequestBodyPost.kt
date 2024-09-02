@@ -1,9 +1,12 @@
 package com.chobo.data.remote.dto.goal.request
 
 import com.chobo.domain.model.goal.request.PostGoalRequestModel
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class GoalRequestBodyPost(
-    val goal_count: Int
+    @Json(name = "goal_count") val goal_count: Int
 )
 
 fun PostGoalRequestModel.toDto() = GoalRequestBodyPost(
