@@ -60,6 +60,10 @@ dependencies {
     implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
 
     implementation(Dependency.DataStore.PREFERENCES)
+
+    implementation(Dependency.Moshi.MOSHI)
+    implementation(Dependency.Moshi.MOSHI_CONVERTER)
+    ksp(Dependency.Moshi.MOSHI_CODEGEN)
 }
 
 fun getApiKey(propertyKey: String): String {
