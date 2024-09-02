@@ -69,6 +69,7 @@ internal fun BookAddBookRoute(
                     writeTextState,
                     linkTextState
                 )
+                bookAddBookViewModel.resetTextState()
                 navigateToBack()
             }
         },
