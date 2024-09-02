@@ -60,6 +60,7 @@ internal fun HomeAddBookRoute(
         checkButtonOnClick = {
             if (homeAddBookViewModel.validateFields()) {
                 homeAddBookViewModel.submitBook()
+                homeAddBookViewModel.resetTextState()
                 navigateToBack()
             }
         },
