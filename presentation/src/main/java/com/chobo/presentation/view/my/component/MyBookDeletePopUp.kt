@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
+import com.chobo.presentation.view.component.modifier.padding.paddingHorizontal
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Stable
@@ -40,10 +41,9 @@ fun MyBookDeletePopUp(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .padding(
-                    start = 24.dp,
+                .paddingHorizontal(
+                    horizontal = 24.dp,
                     top = 24.dp,
-                    end = 24.dp,
                     bottom = 20.dp
                 )
         ) {
