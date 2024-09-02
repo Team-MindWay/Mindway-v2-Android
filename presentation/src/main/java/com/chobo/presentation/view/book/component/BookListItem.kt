@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.book.component
 
+import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -59,7 +60,10 @@ fun BookListItem(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    backgroundColor = Color.BLACK.toLong()
+)
 @Composable
 fun BookListItemPreview() {
     BookListItem(

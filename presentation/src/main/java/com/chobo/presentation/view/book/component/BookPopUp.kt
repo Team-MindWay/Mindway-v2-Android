@@ -1,5 +1,6 @@
 package com.chobo.presentation.view.book.component
 
+import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,7 +25,7 @@ fun BookPopUp(
 ) {
     MindWayAndroidTheme { colors, typography ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
+            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
             modifier = modifier
                 .shadow(
@@ -57,7 +58,10 @@ fun BookPopUp(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    backgroundColor = Color.BLACK.toLong()
+)
 @Composable
 fun BookPopUpPreview() {
     BookPopUp(onDismiss = { })
