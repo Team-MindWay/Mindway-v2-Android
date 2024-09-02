@@ -78,7 +78,7 @@ internal fun MyRoute(
     )
 
     LaunchedEffect(Unit) {
-        myViewModel.apply {
+        with(myViewModel) {
             getMyInformation()
             getMyBookList()
         }
