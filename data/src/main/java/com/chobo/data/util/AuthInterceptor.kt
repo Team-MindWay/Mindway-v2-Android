@@ -1,6 +1,5 @@
 package com.chobo.data.util
 
-import android.util.Log
 import com.chobo.data.BuildConfig
 import com.chobo.data.local.datasource.LocalAuthDataSource
 import com.chobo.domain.exception.NeedLoginException
