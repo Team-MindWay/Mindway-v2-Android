@@ -73,15 +73,7 @@ class HomeBookEditViewModel @Inject constructor(
                 bookId = id
             )
                 .asResult()
-                .collectLatest { result ->
-                    when (result) {
-                        is Result.Success -> {
-                            savedStateHandle[TITLE] = ""
-                            savedStateHandle[CONTENT] = ""
-                        }
-                        else -> {}
-                    }
-                }
+                .collectLatest { }
         }
     }
 
@@ -93,5 +85,10 @@ class HomeBookEditViewModel @Inject constructor(
     internal fun onContentChange(content: String) {
         savedStateHandle[CONTENT] = content
         _contentTextStateIsEmpty.value = content.isEmpty()
+    }
+
+    internal fun resetTextState() {
+        onTitleChange("")
+        onContentChange("")
     }
 }
