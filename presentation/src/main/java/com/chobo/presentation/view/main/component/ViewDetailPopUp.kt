@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.button.MindWayButton
+import com.chobo.presentation.view.component.modifier.padding.paddingHorizontal
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Stable
@@ -32,10 +33,9 @@ fun ViewDetailPopUp(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .padding(
-                    start = 24.dp,
+                .paddingHorizontal(
+                    horizontal = 24.dp,
                     top = 28.dp,
-                    end = 24.dp,
                     bottom = 24.dp
                 )
         ) {
@@ -45,7 +45,6 @@ fun ViewDetailPopUp(
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
-                    modifier = Modifier.height(24.dp),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
@@ -53,14 +52,12 @@ fun ViewDetailPopUp(
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.MAIN,
-                    modifier = Modifier.height(24.dp),
                 )
                 Text(
                     text = stringResource(R.string.pr),
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
-                    modifier = Modifier.height(24.dp),
                 )
             }
             Row(
@@ -73,14 +70,14 @@ fun ViewDetailPopUp(
                     buttonColor = colors.GRAY600,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 12.dp),
+                        .padding(12.dp),
                 )
                 MindWayButton(
                     text = stringResource(R.string.check),
                     onClick = checkOnclick,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 12.dp),
+                        .padding(12.dp),
                 )
             }
         }

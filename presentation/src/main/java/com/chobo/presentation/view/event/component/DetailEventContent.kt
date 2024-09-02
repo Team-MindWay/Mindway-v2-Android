@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -38,14 +38,14 @@ fun DetailEventContent(
                 color = colors.Black,
                 fontWeight = FontWeight.SemiBold
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.padding(top = 10.dp))
             Text(
                 text = content,
                 style = typography.bodySmall,
                 color = colors.Black,
                 fontWeight = FontWeight.Normal
             )
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.padding(14.dp))
             Text(
                 text = stringResource(
                     R.string.wave,

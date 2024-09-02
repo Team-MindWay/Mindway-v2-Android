@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -107,14 +106,14 @@ fun MyBookDeletePopUp(
                     buttonColor = colors.GRAY600,
                     modifier = Modifier
                         .weight(1f)
-                        .height(48.dp),
+                        .padding(12.dp),
                 )
                 MindWayButton(
                     text = stringResource(R.string.check),
                     onClick = checkOnclick,
                     modifier = Modifier
                         .weight(1f)
-                        .height(48.dp),
+                        .padding(12.dp),
                 )
             }
         }

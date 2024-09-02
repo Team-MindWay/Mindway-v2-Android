@@ -40,12 +40,12 @@ fun EventContent(
         if (isLoading) {
             LazyColumn(
                 modifier = Modifier
+                    .fillMaxSize()
                     .background(
                         color = colors.WHITE,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .padding(horizontal = 24.dp)
-                    .fillMaxSize()
             ) {
                 items(10) {
                     Box(

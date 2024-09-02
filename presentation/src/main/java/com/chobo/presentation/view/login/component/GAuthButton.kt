@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.view.theme.color.MindWayColor
 
@@ -42,6 +42,7 @@ fun MindWayGAuthButton(
                     shape = RoundedCornerShape(size = 8.dp)
                 )
                 .clickableSingle(onClick = onClick)
+                .then(modifier)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_mindway_gauth),
@@ -60,5 +61,5 @@ fun MindWayGAuthButton(
 @Preview
 @Composable
 fun MindWayGAuthButtonPreview() {
-    MindWayGAuthButton {}
+    MindWayGAuthButton{}
 }

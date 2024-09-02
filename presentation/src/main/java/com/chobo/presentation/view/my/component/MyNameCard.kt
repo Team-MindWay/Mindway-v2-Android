@@ -12,7 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.OptionIcon
-import com.chobo.presentation.view.component.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.modifier.padding.paddingHorizontal
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 
 @Stable
@@ -28,10 +29,9 @@ fun MyNameCard(
             verticalAlignment = Alignment.Top,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(
+                .paddingHorizontal(
+                    horizontal = 24.dp,
                     top = 60.dp,
-                    start = 24.dp,
-                    end = 24.dp,
                     bottom = 40.dp
                 )
         ) {

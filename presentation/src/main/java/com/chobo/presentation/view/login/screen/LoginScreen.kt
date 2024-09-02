@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chobo.presentation.BuildConfig
 import com.chobo.presentation.R
+import com.chobo.presentation.view.component.modifier.padding.paddingHorizontal
 import com.chobo.presentation.view.login.component.MindWayGAuthButton
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.login.LoginViewModel
@@ -69,15 +69,14 @@ internal fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = 24.dp,
-                        end = 24.dp,
+                    .paddingHorizontal(
+                        horizontal = 24.dp,
                         bottom = 140.dp
                     ),
             ) {
                 MindWayGAuthButton(
                     onClick = toggleIsClickLoginButton,
-                    modifier = Modifier.height(48.dp),
+                    modifier = Modifier.padding(vertical = 16.dp),
                 )
             }
         }
