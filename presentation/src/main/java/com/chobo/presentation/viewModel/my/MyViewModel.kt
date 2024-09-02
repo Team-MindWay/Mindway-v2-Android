@@ -148,10 +148,6 @@ class MyViewModel @Inject constructor(
                     }
 
                     is Result.Success -> {
-                        savedStateHandle[TITLE] = ""
-                        savedStateHandle[WRITE] = ""
-                        savedStateHandle[LINK] = ""
-
                         _isCommunicationSuccess.value = true
 
                         showToast()
@@ -197,5 +193,11 @@ class MyViewModel @Inject constructor(
         _linkTextStateIsEmpty.value = isLinkEmpty
 
         return !isTitleEmpty && !isWriteEmpty && !isLinkEmpty
+    }
+
+    internal fun resetTextState() {
+        onTitleChange("")
+        onWriteChange("")
+        onLinkChange("")
     }
 }
