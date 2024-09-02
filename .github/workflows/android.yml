@@ -31,7 +31,7 @@ jobs:
         with:
           title: 🎉 MindWay Android CI success 🎉
           webhook: ${{ secrets.DISCORD_WEBHOOK_BOT }}
-          color: 00FF00
+          color: 65280
 
       - name: MindWay Android CI failure Discord Notification
         uses: sarisia/actions-status-discord@v1
@@ -39,4 +39,4 @@ jobs:
         with:
           title: ❌ MindWay Android CI failed ❌
           webhook: ${{ secrets.DISCORD_WEBHOOK_BOT }}
-          color: FF0000
+          color: 16711680
