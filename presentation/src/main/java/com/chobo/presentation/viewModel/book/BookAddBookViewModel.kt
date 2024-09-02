@@ -59,10 +59,6 @@ class BookAddBookViewModel @Inject constructor(
                 it.catch {
                     _orderUploadUiState.value = OrderUploadUiState.Fail
                 }.collect {
-                    savedStateHandle[TITLE] = ""
-                    savedStateHandle[WRITE] = ""
-                    savedStateHandle[LINK] = ""
-
                     _orderUploadUiState.value = OrderUploadUiState.Success
                 }
             }
@@ -96,5 +92,11 @@ class BookAddBookViewModel @Inject constructor(
         _linkTextStateIsEmpty.value = isLinkEmpty
 
         return !isTitleEmpty && !isWriteEmpty && !isLinkEmpty
+    }
+
+    internal fun resetTextState() {
+        onTitleChanged("")
+        onWriteChanged("")
+        onLinkChanged("")
     }
 }
