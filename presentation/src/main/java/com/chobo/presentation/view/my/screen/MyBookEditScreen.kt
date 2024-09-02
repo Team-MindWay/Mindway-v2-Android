@@ -32,6 +32,7 @@ import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.component.textField.MindWayTextFieldNoneLimit
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
+import com.chobo.presentation.view.main.navigation.homeEditBookRoute
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.my.MyViewModel
 
@@ -70,6 +71,7 @@ internal fun MyBookEditRoute(
                         bookUrl = linkTextState,
                     )
                 )
+                myViewModel.resetTextState()
                 navigateToBack()
             }
         },
