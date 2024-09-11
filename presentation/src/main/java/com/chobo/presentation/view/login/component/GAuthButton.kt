@@ -38,7 +38,7 @@ fun MindWayGAuthButton(
                 )
                 .border(
                     width = 1.dp,
-                    colors.MAIN,
+                    color = colors.MAIN,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
                 .clickableSingle(onClick = onClick)
@@ -61,5 +61,5 @@ fun MindWayGAuthButton(
 @Preview
 @Composable
 fun MindWayGAuthButtonPreview() {
-    MindWayGAuthButton{}
+    MindWayGAuthButton(modifier = Modifier.padding(12.dp)){}
 }
