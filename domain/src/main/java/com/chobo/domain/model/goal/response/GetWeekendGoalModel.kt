@@ -1,8 +1,5 @@
 package com.chobo.domain.model.goal.response
 
-import androidx.compose.runtime.Immutable
-
-@Immutable
 data class GetWeekendGoalModel(
     val mon: Int,
     val tue: Int,
