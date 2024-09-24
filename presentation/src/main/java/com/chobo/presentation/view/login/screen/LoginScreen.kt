@@ -74,10 +74,7 @@ internal fun LoginScreen(
                         bottom = 140.dp
                     ),
             ) {
-                MindWayGAuthButton(
-                    onClick = toggleIsClickLoginButton,
-                    modifier = Modifier.padding(vertical = 16.dp),
-                )
+                MindWayGAuthButton(onClick = toggleIsClickLoginButton)
             }
         }
     }

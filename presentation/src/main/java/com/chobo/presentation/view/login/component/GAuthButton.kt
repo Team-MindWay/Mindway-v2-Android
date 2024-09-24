@@ -42,7 +42,7 @@ fun MindWayGAuthButton(
                     shape = RoundedCornerShape(size = 8.dp)
                 )
                 .clickableSingle(onClick = onClick)
-                .then(modifier)
+                .padding(vertical = 16.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_mindway_gauth),
