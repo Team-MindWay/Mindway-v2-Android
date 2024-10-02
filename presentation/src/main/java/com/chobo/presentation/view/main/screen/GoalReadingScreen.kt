@@ -52,6 +52,7 @@ import com.chobo.presentation.viewModel.goal.GoalReadingViewModel
 import com.chobo.presentation.viewModel.goal.uistate.GetBookListUiState
 import com.chobo.presentation.viewModel.main.uistate.GetWeekendGoalUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.CoroutineScope
@@ -186,6 +187,13 @@ internal fun GoalReadingScreen(
                     state = swipeRefreshState,
                     onRefresh = {
                         dataInit()
+                    },
+                    indicator = { state, refreshTigger ->
+                        SwipeRefreshIndicator(
+                            state = state,
+                            refreshTriggerDistance = refreshTigger,
+                            contentColor = colors.MAIN
+                        )
                     }
                 ) {
                     Box(modifier = Modifier.fillMaxSize()) {
