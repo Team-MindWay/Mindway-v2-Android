@@ -44,8 +44,8 @@ object NetworkModule {
             .addInterceptor(
                 ChuckInterceptor(context)
                     .showNotification(true)
-                    .maxContentLength(250000L)
-                    .retainDataFor(ChuckInterceptor.Period.ONE_WEEK)
+                    .maxContentLength(250)
+                    .retainDataFor(ChuckInterceptor.Period.ONE_HOUR)
             )
             .build()
     }
