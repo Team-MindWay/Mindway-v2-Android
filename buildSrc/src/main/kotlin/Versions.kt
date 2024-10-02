@@ -43,4 +43,6 @@ object Versions {
 
     const val MOSHI = "1.15.0"
     const val MOSHI_CONVERTER = "2.9.0"
+
+    const val CHUCK = "1.1.0"
 }

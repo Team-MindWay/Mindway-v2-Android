@@ -80,4 +80,9 @@ object Dependency {
         const val MOSHI_CONVERTER = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
         const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}"
     }
+
+    object Chuck {
+        const val DEBUG_CHUCK = "com.readystatesoftware.chuck:library:${Versions.CHUCK}"
+        const val RELEASE_CHUCK = "com.readystatesoftware.chuck:library-no-op:${Versions.CHUCK}"
+    }
 }
