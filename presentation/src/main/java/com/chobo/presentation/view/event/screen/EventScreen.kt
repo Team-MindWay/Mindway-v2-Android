@@ -29,6 +29,7 @@ import com.chobo.presentation.view.theme.MindWayAndroidTheme
 import com.chobo.presentation.viewModel.event.EventViewModel
 import com.chobo.presentation.viewModel.event.uistate.GetEventListUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
@@ -87,6 +88,13 @@ internal fun EventScreen(
                     1 -> getEventNowList()
                     2 -> getEventPastList()
                 }
+            },
+            indicator = { state, refreshTrigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = refreshTrigger,
+                    contentColor = colors.MAIN
+                )
             }
         ) {
             Box(
@@ -184,7 +192,7 @@ fun EventScreenPre() {
         getEventPastList = { },
         getEventNowList = { },
         getEventNowListUiState = GetEventListUiState.Loading,
-        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false),
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true),
         getEventPastListUiState = GetEventListUiState.Loading,
         setSwipeRefreshLoading = { }
     )
