@@ -33,7 +33,7 @@ android {
                     getApiKey("BASE_URL")
                 )
             }
-            // TODO: 본서버 
+            // TODO: 본서버
         }
     }
 
@@ -106,6 +106,9 @@ dependencies {
     implementation(Dependency.Moshi.MOSHI)
     implementation(Dependency.Moshi.MOSHI_CONVERTER)
     ksp(Dependency.Moshi.MOSHI_CODEGEN)
+
+    debugImplementation("com.readystatesoftware.chuck:library:1.1.0")
+    releaseImplementation("com.readystatesoftware.chuck:library-no-op:1.1.0")
 }
 
 fun getApiKey(propertyKey: String): String {
