@@ -61,6 +61,7 @@ import com.chobo.presentation.viewModel.book.BookScreenViewModel
 import com.chobo.presentation.viewModel.book.uistate.GetRecommendBookUiState
 import com.chobo.presentation.viewModel.book.uistate.OrderUploadUiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.collections.immutable.persistentListOf
@@ -131,6 +132,13 @@ internal fun BookScreen(
                 } else {
                     getNovelRecommendBook()
                 }
+            },
+            indicator = { state, refreshTrigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = refreshTrigger,
+                    contentColor = colors.MAIN
+                )
             }
         ) {
             Box(modifier = modifier.background(color = colors.WHITE)) {
