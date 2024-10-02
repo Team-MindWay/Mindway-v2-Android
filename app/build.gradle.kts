@@ -107,8 +107,8 @@ dependencies {
     implementation(Dependency.Moshi.MOSHI_CONVERTER)
     ksp(Dependency.Moshi.MOSHI_CODEGEN)
 
-    debugImplementation("com.readystatesoftware.chuck:library:1.1.0")
-    releaseImplementation("com.readystatesoftware.chuck:library-no-op:1.1.0")
+    debugImplementation(Dependency.Chuck.DEBUG_CHUCK)
+    releaseImplementation(Dependency.Chuck.RELEASE_CHUCK)
 }
 
 fun getApiKey(propertyKey: String): String {
