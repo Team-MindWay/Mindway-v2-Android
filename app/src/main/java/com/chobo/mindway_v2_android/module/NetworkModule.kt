@@ -1,14 +1,17 @@
 package com.chobo.mindway_v2_android.module
 
+import android.content.Context
 import android.util.Log
 import com.chobo.data.remote.api.*
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
+import com.readystatesoftware.chuck.ChuckInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,8 +31,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkhttpClient(
+        @ApplicationContext context: Context,
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -38,6 +41,12 @@ object NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(authInterceptor)
+            .addInterceptor(
+                ChuckInterceptor(context)
+                    .showNotification(true)
+                    .maxContentLength(250)
+                    .retainDataFor(ChuckInterceptor.Period.ONE_HOUR)
+            )
             .build()
     }
 
