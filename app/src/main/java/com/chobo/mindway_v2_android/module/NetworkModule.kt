@@ -13,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,10 +43,14 @@ object NetworkModule {
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(authInterceptor)
             .addInterceptor(
-                ChuckInterceptor(context)
-                    .showNotification(true)
-                    .maxContentLength(250)
-                    .retainDataFor(ChuckInterceptor.Period.ONE_HOUR)
+                if (BuildConfig.DEBUG) {
+                    ChuckInterceptor(context)
+                        .showNotification(true)
+                        .maxContentLength(250000)
+                        .retainDataFor(ChuckInterceptor.Period.ONE_DAY)
+                } else {
+                    Interceptor { chain -> chain.proceed(chain.request()) }
+                }
             )
             .build()
     }
