@@ -23,12 +23,10 @@ class EventViewModel @Inject constructor(
     private val _swipeRefreshLoading = MutableStateFlow(false)
     val swipeRefreshLoading = _swipeRefreshLoading.asStateFlow()
 
-    private val _getNowEventListUiState =
-        MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
+    private val _getNowEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getNowEventListUiState = _getNowEventListUiState.asStateFlow()
 
-    private val _getEventListUiState =
-        MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
+    private val _getEventListUiState = MutableStateFlow<GetEventListUiState>(GetEventListUiState.Loading)
     val getPastEventListUiState = _getEventListUiState.asStateFlow()
 
     fun getEventList(type: EventRequestListStatusType) = viewModelScope.launch {
@@ -50,7 +48,6 @@ class EventViewModel @Inject constructor(
                             GetEventListUiState.Success(result.data.toImmutableList())
                         _swipeRefreshLoading.value = false
                     }
-
                     is Result.Fail -> {
                         targetData.value = GetEventListUiState.Fail
                         _swipeRefreshLoading.value = false
