@@ -88,7 +88,7 @@ internal fun HomeScreen(
                     HomeErrorNoticeCard(text = "데이터를 불러오는 중..")
                 }
                 is NoticeGetUiState.Fail -> {
-                    HomeErrorNoticeCard(text = "통신이 원활하지 않습니다..")
+                    HomeErrorNoticeCard(text = "공지가 없습니다.")
                 }
             }
             when (getWeekendGoalUIState) {
