@@ -42,7 +42,7 @@ internal fun EventScreenRoute(
 ) {
     val getEventNowListUiState by eventViewModel.getNowEventListUiState.collectAsStateWithLifecycle()
     val getEventPastListUiState by eventViewModel.getPastEventListUiState.collectAsStateWithLifecycle()
-    val (swipeRefreshLoading, setSwipeRefreshLoading) = remember { mutableStateOf(false) }
+    val swipeRefreshLoading by eventViewModel.swipeRefreshLoading.collectAsStateWithLifecycle()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = swipeRefreshLoading)
 
     EventScreen(
@@ -51,15 +51,9 @@ internal fun EventScreenRoute(
         getEventNowListUiState = getEventNowListUiState,
         getEventPastListUiState = getEventPastListUiState,
         swipeRefreshState = swipeRefreshState,
-        setSwipeRefreshLoading = { setSwipeRefreshLoading(true) },
         getEventNowList = { eventViewModel.getEventList(NOW) },
         getEventPastList = { eventViewModel.getEventList(PAST) },
     )
-
-    LaunchedEffect(swipeRefreshLoading) {
-        delay(1000)
-        setSwipeRefreshLoading(false)
-    }
 
     LaunchedEffect(Unit) {
         eventViewModel.getEventList(NOW)
@@ -74,7 +68,6 @@ internal fun EventScreen(
     getEventNowListUiState: GetEventListUiState,
     getEventPastListUiState: GetEventListUiState,
     swipeRefreshState: SwipeRefreshState,
-    setSwipeRefreshLoading: () -> Unit,
     navigateToDetailEvent: (Long) -> Unit,
     getEventNowList: () -> Unit,
     getEventPastList: () -> Unit,
@@ -83,10 +76,10 @@ internal fun EventScreen(
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
-                setSwipeRefreshLoading()
-                when (pagerState.currentPage) {
-                    1 -> getEventNowList()
-                    2 -> getEventPastList()
+                if (pagerState.currentPage ==1) {
+                    getEventNowList()
+                } else {
+                    getEventPastList()
                 }
             },
             indicator = { state, refreshTrigger ->
@@ -194,6 +187,5 @@ fun EventScreenPre() {
         getEventNowListUiState = GetEventListUiState.Loading,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true),
         getEventPastListUiState = GetEventListUiState.Loading,
-        setSwipeRefreshLoading = { }
     )
 }
