@@ -38,6 +38,13 @@ android {
                 ProjectProperties.Files.PROGUARD_FILES
             )
         }
+        debug {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile(ProjectProperties.Files.DEFAULT_PROGUARD_FILES),
+                ProjectProperties.Files.PROGUARD_FILES
+            )
+        }
     }
     compileOptions {
         sourceCompatibility = ProjectProperties.Versions.JAVA_VERSION
