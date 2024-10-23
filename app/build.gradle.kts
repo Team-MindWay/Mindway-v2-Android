@@ -32,7 +32,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile(ProjectProperties.Files.DEFAULT_PROGUARD_FILES),
                 ProjectProperties.Files.PROGUARD_FILES
