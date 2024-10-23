@@ -35,7 +35,7 @@ object Versions {
 
     const val GOOGLE_SERVICE_PLUGIN = "4.3.15"
 
-    const val GAUTH = "v1.0.7"
+    const val GAUTH = "v1.1.3"
 
     const val PREFERENCES = "1.0.0"
 
