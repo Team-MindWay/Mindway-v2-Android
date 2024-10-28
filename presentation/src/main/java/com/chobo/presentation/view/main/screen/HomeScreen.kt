@@ -84,11 +84,23 @@ internal fun HomeScreen(
                             .fillMaxWidth(),
                     )
                 }
+
                 is NoticeGetUiState.Loading -> {
-                    HomeErrorNoticeCard(text = "데이터를 불러오는 중..")
+                    HomeErrorNoticeCard(
+                        text = "데이터를 불러오는 중..",
+                        modifier = Modifier
+                            .height(100.dp)
+                            .fillMaxWidth(),
+                    )
                 }
+
                 is NoticeGetUiState.Fail -> {
-                    HomeErrorNoticeCard(text = "공지가 없습니다.")
+                    HomeErrorNoticeCard(
+                        text = "공지가 없습니다.",
+                        modifier = Modifier
+                            .height(100.dp)
+                            .fillMaxWidth(),
+                    )
                 }
             }
             when (getWeekendGoalUIState) {
@@ -96,6 +108,16 @@ internal fun HomeScreen(
                     HomeGoalReadingChart(
                         getWeekendGoalModel = getWeekendGoalUIState.data,
                         isHasData = true,
+                        onClick = navigateToGoalReading,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(211.dp),
+                    )
+                }
+
+                is GetWeekendGoalUiState.Loading -> {
+                    HomeGoalReadingChart(
+                        isLoading = true,
                         onClick = navigateToGoalReading,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -124,6 +146,15 @@ internal fun HomeScreen(
                     )
                 }
 
+                is GetRankUiState.Loading -> {
+                    HomeReadersOfTheMonthChart(
+                        isLoading = true,
+                        modifier = Modifier
+                            .height(239.dp)
+                            .fillMaxWidth(),
+                    )
+                }
+
                 else -> {
                     HomeReadersOfTheMonthChart(
                         isHasData = false,
@@ -143,5 +174,6 @@ fun HomeScreenPreview() {
     HomeScreen(
         getWeekendGoalUIState = GetWeekendGoalUiState.Loading,
         noticeGetUiState = NoticeGetUiState.Loading,
-        getRankUIState = GetRankUiState.Loading) {}
+        getRankUIState = GetRankUiState.Loading
+    ) {}
 }
