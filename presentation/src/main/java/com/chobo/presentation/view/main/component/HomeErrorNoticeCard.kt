@@ -26,7 +26,6 @@ fun HomeErrorNoticeCard(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
-                .fillMaxWidth()
                 .shadow(
                     elevation = 20.dp,
                     spotColor = colors.CardShadow,
@@ -36,9 +35,10 @@ fun HomeErrorNoticeCard(
                     color = colors.WHITE,
                     shape = RoundedCornerShape(size = 8.dp)
                 )
-                .padding(horizontal = 12.dp)) {
+                .padding(horizontal = 12.dp),
+        ) {
             Text(
-                modifier = modifier.padding(vertical = 36.5.dp),
+                modifier = Modifier.padding(vertical = 36.5.dp),
                 text = text,
                 style = typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,

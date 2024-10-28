@@ -25,6 +25,7 @@ import com.chobo.domain.model.goal.response.GetWeekendGoalModel
 import com.chobo.presentation.view.component.icon.ChevronRightIcon
 import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
+import com.chobo.presentation.view.theme.color.MindWayColor
 import com.chobo.presentation.viewModel.util.getTodayDayOfWeek
 import okhttp3.internal.immutableListOf
 
@@ -32,7 +33,8 @@ import okhttp3.internal.immutableListOf
 @Composable
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean,
+    isHasData: Boolean = false,
+    isLoading: Boolean = false,
     getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0, 0, 0, 0, 0, 0, 0, 0, 0),
     onClick: () -> Unit,
 ) {
@@ -50,7 +52,7 @@ fun HomeGoalReadingChart(
     val currentDate = remember { getTodayDayOfWeek() }
 
     MindWayAndroidTheme { colors, typography ->
-        if (isHasData) {
+        if (isHasData || !isLoading) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
@@ -81,7 +83,10 @@ fun HomeGoalReadingChart(
                             fontWeight = FontWeight.SemiBold,
                             color = colors.Black,
                         )
-                        ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
+                        ChevronRightIcon(
+                            modifier = Modifier.clickableSingle(onClick = onClick),
+                            tint = MindWayColor.GRAY400,
+                        )
                     }
                     GoalReadingIndicator(
                         numBooksRead = getWeekendGoalModel.now_count,
@@ -141,7 +146,8 @@ fun HomeGoalReadingChart(
                     ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                 }
                 Text(
-                    text = "아직 목표 독서량을 설정하지 않았습니다.",
+                    text = if (!isLoading) "아직 목표 독서량을 설정하지 않았습니다."
+                    else "로딩중 ..",
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
@@ -162,6 +168,7 @@ fun HomeGoalReadingChartPreview() {
             .height(211.dp),
         isHasData = true,
         onClick = { },
+        isLoading = false,
         getWeekendGoalModel = GetWeekendGoalModel(
             mon = 2,
             tue = 4,

@@ -169,8 +169,7 @@ internal fun GoalReadingScreen(
                     midText = stringResource(R.string.goal_reading),
                     endIcon = {
                         when (getWeekendGoalUiState) {
-                            is GetWeekendGoalUiState.Empty,
-                            is GetWeekendGoalUiState.Fail -> {
+                            is GetWeekendGoalUiState.Empty -> {
                                 PlusIcon(
                                     modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                     tint = MindWayColor.Black
@@ -201,7 +200,7 @@ internal fun GoalReadingScreen(
                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
-                                .padding(top = 12.dp,)
+                                .padding(top = 12.dp)
                                 .fillMaxSize()
                         ) {
                             item {
@@ -214,27 +213,6 @@ internal fun GoalReadingScreen(
                                                 .fillMaxWidth()
                                                 .height(180.dp),
                                         )
-                                        Column(
-                                            verticalArrangement = Arrangement.spacedBy(
-                                                8.dp,
-                                                Alignment.CenterVertically
-                                            ),
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            modifier = modifier
-                                                .shadow(
-                                                    elevation = 20.dp,
-                                                    spotColor = colors.CardShadow,
-                                                    ambientColor = colors.CardShadow
-                                                )
-                                                .background(
-                                                    color = colors.WHITE,
-                                                    shape = RoundedCornerShape(size = 8.dp)
-                                                )
-                                                .clickableSingle(onClick = navigateToHomeAddBook)
-                                                .padding(16.dp)
-                                        ) {
-                                            PlusIcon(modifier = Modifier.fillMaxSize())
-                                        }
                                     }
 
                                     else -> {
@@ -245,6 +223,27 @@ internal fun GoalReadingScreen(
                                                 .height(180.dp),
                                         )
                                     }
+                                }
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(
+                                        8.dp,
+                                        Alignment.CenterVertically
+                                    ),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = modifier
+                                        .shadow(
+                                            elevation = 20.dp,
+                                            spotColor = colors.CardShadow,
+                                            ambientColor = colors.CardShadow
+                                        )
+                                        .background(
+                                            color = colors.WHITE,
+                                            shape = RoundedCornerShape(size = 8.dp)
+                                        )
+                                        .clickableSingle(onClick = navigateToHomeAddBook)
+                                        .padding(16.dp)
+                                ) {
+                                    PlusIcon(modifier = Modifier.fillMaxSize())
                                 }
                             }
                             when (getBookListUiState) {
