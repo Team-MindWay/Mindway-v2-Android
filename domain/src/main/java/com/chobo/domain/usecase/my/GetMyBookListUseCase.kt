@@ -9,6 +9,6 @@ import javax.inject.Inject
 class GetMyBookListUseCase @Inject constructor(
     private val myRepository: MyRepository
 ) {
-    suspend operator fun invoke(): Flow<List<MyBookListModel>> =
+     operator fun invoke(): Flow<List<MyBookListModel>> =
         myRepository.myBookListGet()
 }
