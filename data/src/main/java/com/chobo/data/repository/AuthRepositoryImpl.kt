@@ -16,7 +16,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val localAuthDataSource: LocalAuthDataSource,
     private val remoteAuthDataSource: RemoteAuthDataSource
 ) : AuthRepository {
-    override suspend fun gAuthLogin(body: GAuthLoginRequestModel): Flow<GAuthLoginResponseModel> =
+    override fun gAuthLogin(body: GAuthLoginRequestModel): Flow<GAuthLoginResponseModel> =
         remoteAuthDataSource.GuauthLogin(body = body.toDto()).map { it.toLoginModel() }
 
     override suspend fun gAuthAccess(refreshToken: String): Flow<GAuthLoginResponseModel> =
@@ -36,7 +36,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout(): Flow<Unit> =
+    override fun logout(): Flow<Unit> =
         remoteAuthDataSource.GuathLogout()
 
     override suspend fun deleteLoginData() {
