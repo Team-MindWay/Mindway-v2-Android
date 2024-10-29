@@ -5,9 +5,9 @@ import com.chobo.data.remote.dto.auth.response.GAuthLoginResponse
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteAuthDataSource {
-    suspend fun GuauthLogin(body: GAuthLoginRequestBody) : Flow<GAuthLoginResponse>
+    fun GuauthLogin(body: GAuthLoginRequestBody) : Flow<GAuthLoginResponse>
 
-    suspend fun GuathLogout() : Flow<Unit>
+    fun GuathLogout() : Flow<Unit>
 
     suspend fun GuathAccess(refreshToken: String): Flow<GAuthLoginResponse>
 }
