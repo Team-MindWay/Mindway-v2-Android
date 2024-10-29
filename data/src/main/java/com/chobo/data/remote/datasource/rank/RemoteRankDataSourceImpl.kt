@@ -9,6 +9,6 @@ import javax.inject.Inject
 class RemoteRankDataSourceImpl @Inject constructor(
     private val rankService: RankApi
 ) : RemoteRankDataSource {
-    override suspend fun rankGet(): Flow<List<RankResponse>> =
+    override  fun rankGet(): Flow<List<RankResponse>> =
         performApiRequest { rankService.rankGet() }
 }
