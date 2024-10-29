@@ -29,11 +29,12 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun HomeReadersOfTheMonthChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean,
+    isHasData: Boolean = false,
+    isLoading: Boolean = true,
     bookKingOfTheMonthData: ImmutableList<RankModel> = persistentListOf()
 ) {
     MindWayAndroidTheme { colors, typography ->
-        if (isHasData) {
+        if (isHasData || !isLoading) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
@@ -167,7 +168,8 @@ fun HomeReadersOfTheMonthChart(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = "아직 이달의 독서왕이 없습니다.",
+                    text = if(!isLoading) "아직 이달의 독서왕이 없습니다."
+                    else "로딩중 ..",
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,

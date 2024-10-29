@@ -1,19 +1,23 @@
 package com.chobo.mindway_v2_android.module
 
-import android.content.Context
 import android.util.Log
-import com.chobo.data.remote.api.*
+import com.chobo.data.remote.api.AuthAPI
+import com.chobo.data.remote.api.BookAPI
+import com.chobo.data.remote.api.EventAPI
+import com.chobo.data.remote.api.GoalAPI
+import com.chobo.data.remote.api.MyAPI
+import com.chobo.data.remote.api.NoticeAPI
+import com.chobo.data.remote.api.OrderAPI
+import com.chobo.data.remote.api.RankApi
+import com.chobo.data.remote.api.RecommendAPI
 import com.chobo.data.util.AuthInterceptor
 import com.chobo.mindway_v2_android.BuildConfig
-import com.readystatesoftware.chuck.ChuckInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,11 +36,11 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkhttpClient(
-        @ApplicationContext context: Context,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         authInterceptor: AuthInterceptor,
     ): OkHttpClient {
-        return OkHttpClient.Builder()
+        return OkHttpClient
+            .Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -48,7 +52,10 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideMoshiInstance(): Moshi {
-        return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        return Moshi
+            .Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
     }
 
     @Provides

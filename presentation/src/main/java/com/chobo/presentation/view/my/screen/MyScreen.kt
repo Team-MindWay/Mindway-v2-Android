@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,6 +39,7 @@ import com.chobo.domain.model.my.MyBookListModel
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.customToast.MindWayToast
 import com.chobo.presentation.view.component.icon.BookImage
+import com.chobo.presentation.view.component.shimmer.shimmerEffect
 import com.chobo.presentation.view.my.component.MyBookDeletePopUp
 import com.chobo.presentation.view.my.component.MyBookListItem
 import com.chobo.presentation.view.my.component.MyNameCard
@@ -118,11 +121,7 @@ fun MyScreen(
                     }
                 }
                 MyNameCard(
-                    name = when (myNameUiState) {
-                        is GetMyInformationUiState.Success -> myNameUiState.data.name
-                        is GetMyInformationUiState.Fail -> "사용자를 찾을 수 없습니다.."
-                        is GetMyInformationUiState.Loading -> "로딩중.."
-                    },
+                    uiState = myNameUiState,
                     onClick = showSheet,
                 )
 
@@ -164,7 +163,10 @@ fun MyScreen(
                     is GetMyBookListUiState.Fail -> {
                         Column(
                             modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            verticalArrangement = Arrangement.spacedBy(
+                                20.dp,
+                                Alignment.CenterVertically
+                            ),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             BookImage()
@@ -177,7 +179,33 @@ fun MyScreen(
                         }
                     }
 
-                    is GetMyBookListUiState.Loading -> Unit
+                    is GetMyBookListUiState.Loading ->
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            modifier = Modifier
+                                .background(
+                                    color = colors.WHITE,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .padding(horizontal = 24.dp)
+                                .fillMaxSize()
+                        ) {
+                            repeat(10) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(92.dp)
+                                        .background(
+                                            color = colors.WHITE,
+                                            shape = RoundedCornerShape(8.dp)
+                                        )
+                                        .shimmerEffect(
+                                            shape = RoundedCornerShape(8.dp)
+                                        )
+                                )
+                            }
+                        }
+
                     is GetMyBookListUiState.Success -> {
                         LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),

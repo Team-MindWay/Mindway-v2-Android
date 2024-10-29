@@ -185,7 +185,7 @@ internal fun BookScreen(
                             0 -> {
                                 when (novelDataList) {
                                     is GetRecommendBookUiState.Loading -> {
-                                        LazyColumn(
+                                        Column(
                                             modifier = Modifier
                                                 .background(
                                                     color = colors.WHITE,
@@ -194,7 +194,7 @@ internal fun BookScreen(
                                                 .padding(horizontal = 24.dp)
                                                 .fillMaxSize()
                                         ) {
-                                            items(10) {
+                                            repeat(10) {
                                                 Box(
                                                     modifier = Modifier
                                                         .fillMaxWidth()

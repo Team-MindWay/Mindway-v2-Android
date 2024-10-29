@@ -25,7 +25,8 @@ import okhttp3.internal.immutableListOf
 @Composable
 fun GoalReadingChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean,
+    isHasData: Boolean = false,
+    isLoading: Boolean = false,
     getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0, 0, 0, 0, 0, 0, 0, 0, 0),
 ) {
     val dateList = immutableListOf(
@@ -90,7 +91,8 @@ fun GoalReadingChart(
                 }
             } else {
                 Text(
-                    text = stringResource(R.string.goal_reading_error),
+                    text = if (isLoading) stringResource(R.string.goal_reading_error)
+                    else "로딩중 ..",
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
@@ -105,19 +107,18 @@ fun GoalReadingChart(
 fun GoalReadingChartPreview() {
     GoalReadingChart(
         modifier = Modifier
-            .width(312.dp)
-            .height(180.dp),
+            .width(312.dp),
         isHasData = true,
         getWeekendGoalModel = GetWeekendGoalModel(
-            mon = 32,
-            tue = 43,
-            wed = 56,
+            mon = 3,
+            tue = 4,
+            wed = 5,
             thu = 1,
-            fri = 24,
-            sat = 34,
-            sun = 45,
-            now_count = 23,
-            goal_value = 30
+            fri = 4,
+            sat = 2,
+            sun = 1,
+            now_count = 56,
+            goal_value = 89
         )
     )
 }
