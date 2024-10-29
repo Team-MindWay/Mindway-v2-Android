@@ -13,7 +13,7 @@ import javax.inject.Inject
 class RecommendRepositoryImpl @Inject constructor(
     private val remoteRecommendDataSource: RemoteRecommendDataSource
 ) : RecommendRepository {
-    override suspend fun postRecommendBook(
+    override  fun postRecommendBook(
         body: RecommendRequestAllModel,
         type: String
     ): Flow<Unit> =
@@ -22,10 +22,10 @@ class RecommendRepositoryImpl @Inject constructor(
             type = type
         )
 
-    override suspend fun getRecommendBookList(type: String): Flow<List<RecommendListResponseAllModel>> =
+    override  fun getRecommendBookList(type: String): Flow<List<RecommendListResponseAllModel>> =
         remoteRecommendDataSource.getRecommendBookList(type = type).map { list -> list.map { it.toModel() } }
 
-    override suspend fun patchRecommendBook(
+    override  fun patchRecommendBook(
         body: RecommendRequestAllModel,
         id: Long
     ): Flow<Unit> =
@@ -34,6 +34,6 @@ class RecommendRepositoryImpl @Inject constructor(
             id = id
         )
 
-    override suspend fun deleteRecommendBook(id: Long): Flow<Unit> =
+    override  fun deleteRecommendBook(id: Long): Flow<Unit> =
         remoteRecommendDataSource.deleteRecommendBook(id = id)
 }

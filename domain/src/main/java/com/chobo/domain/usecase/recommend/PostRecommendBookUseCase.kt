@@ -7,7 +7,7 @@ import javax.inject.Inject
 class PostRecommendBookUseCase @Inject constructor(
     private val recommendRepository: RecommendRepository
 ) {
-    suspend operator fun invoke(body: RecommendRequestAllModel, type: String) = runCatching {
+      operator fun invoke(body: RecommendRequestAllModel, type: String) = runCatching {
         recommendRepository.postRecommendBook(
             body = body,
             type = type
