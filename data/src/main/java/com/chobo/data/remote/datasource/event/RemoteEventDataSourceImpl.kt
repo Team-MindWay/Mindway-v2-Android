@@ -10,9 +10,9 @@ import javax.inject.Inject
 class RemoteEventDataSourceImpl @Inject constructor(
     private val eventService: EventAPI
 ): RemoteEventDataSource {
-    override suspend fun getEventList(status: String): Flow<List<GetEventListResponse>> =
+    override  fun getEventList(status: String): Flow<List<GetEventListResponse>> =
         performApiRequest { eventService.getEventList(status = status) }
 
-    override suspend fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponse> =
+    override  fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponse> =
         performApiRequest { eventService.getDetailEvent(eventId = eventId) }
 }

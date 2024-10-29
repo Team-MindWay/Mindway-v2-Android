@@ -5,6 +5,6 @@ import com.chobo.domain.model.event.response.GetEventListResponseModel
 import kotlinx.coroutines.flow.Flow
 
 interface EventRepository {
-    suspend fun getEventList(status: String): Flow<List<GetEventListResponseModel>>
-    suspend fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponseModel>
+     fun getEventList(status: String): Flow<List<GetEventListResponseModel>>
+     fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponseModel>
 }
