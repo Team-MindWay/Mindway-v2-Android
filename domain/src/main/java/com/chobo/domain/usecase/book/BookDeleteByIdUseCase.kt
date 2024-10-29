@@ -7,6 +7,6 @@ import javax.inject.Inject
 class BookDeleteByIdUseCase @Inject constructor(
     private val bookRepository: BookRepository,
 ) {
-    suspend operator fun invoke(bookId: Long): Flow<Unit> =
+     operator fun invoke(bookId: Long): Flow<Unit> =
         bookRepository.bookDeleteById(bookId = bookId)
 }
