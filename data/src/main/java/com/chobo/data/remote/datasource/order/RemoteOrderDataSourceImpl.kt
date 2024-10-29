@@ -10,10 +10,10 @@ import javax.inject.Inject
 class RemoteOrderDataSourceImpl @Inject constructor(
     private val orderService: OrderAPI,
 ) : RemoteOrderDataSource {
-    override  fun orderUpload(body: OrderRequestBody): Flow<Unit> =
+    override fun orderUpload(body: OrderRequestBody): Flow<Unit> =
         performApiRequest { orderService.orderUpload(body = body) }
 
-    override  fun orderModifyById(
+    override fun orderModifyById(
         body: MyBookListResponse,
         orderId: Long
     ): Flow<Unit> =
@@ -22,6 +22,6 @@ class RemoteOrderDataSourceImpl @Inject constructor(
             orderId = orderId
         ) }
 
-    override  fun orderDeleteById(orderId: Long): Flow<Unit> =
+    override fun orderDeleteById(orderId: Long): Flow<Unit> =
         performApiRequest { orderService.orderDeleteById(orderId = orderId) }
 }

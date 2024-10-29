@@ -10,16 +10,16 @@ import javax.inject.Inject
 class RemoteBookDataSourceImpl @Inject constructor(
     private val bookService: BookAPI
 ) : RemoteBookDataSource {
-    override  fun bookUpload(body: BookRequestBody): Flow<Unit> =
+    override fun bookUpload(body: BookRequestBody): Flow<Unit> =
         performApiRequest { bookService.bookUpload(body = body) }
 
-    override  fun bookListGet(): Flow<List<BookListResponse>> =
+    override fun bookListGet(): Flow<List<BookListResponse>> =
         performApiRequest { bookService.bookListGet() }
 
-    override  fun bookGetById(bookId: Long): Flow<BookRequestBody> =
+    override fun bookGetById(bookId: Long): Flow<BookRequestBody> =
         performApiRequest { bookService.bookGetById(bookId = bookId) }
 
-    override  fun bookModify(
+    override fun bookModify(
         body: BookRequestBody,
         bookId: Long
     ): Flow<Unit> =
@@ -28,6 +28,6 @@ class RemoteBookDataSourceImpl @Inject constructor(
             bookId = bookId
         ) }
 
-    override  fun bookDeleteById(bookId: Long): Flow<Unit> =
+    override fun bookDeleteById(bookId: Long): Flow<Unit> =
         performApiRequest { bookService.bookDeleteById(bookId = bookId) }
 }

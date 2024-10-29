@@ -9,6 +9,6 @@ import javax.inject.Inject
 class OrderModifyByIdUseCase @Inject constructor(
     private val orderRepository: OrderRepository,
 ) {
-     operator fun invoke(body: MyBookListModel, orderId: Long): Flow<Unit> =
+    operator fun invoke(body: MyBookListModel, orderId: Long): Flow<Unit> =
         orderRepository.orderModifyById(body = body, orderId = orderId)
 }

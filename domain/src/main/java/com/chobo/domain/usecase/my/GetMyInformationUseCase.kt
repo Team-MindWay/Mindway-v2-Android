@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetMyInformationUseCase @Inject constructor(
     private val myRepository: MyRepository
 ) {
-     operator fun invoke(): Flow<MyDataModel> =
+    operator fun invoke(): Flow<MyDataModel> =
         myRepository.myInformationGet()
 }

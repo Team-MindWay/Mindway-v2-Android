@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetEventListUseCase @Inject constructor(
     private val eventRepository: EventRepository
 ) {
-     operator fun invoke(status: String): Flow<List<GetEventListResponseModel>> =
+    operator fun invoke(status: String): Flow<List<GetEventListResponseModel>> =
         eventRepository.getEventList(status = status)
 }

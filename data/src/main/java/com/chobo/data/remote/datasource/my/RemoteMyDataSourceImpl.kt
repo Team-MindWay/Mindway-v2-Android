@@ -10,9 +10,9 @@ import javax.inject.Inject
 class RemoteMyDataSourceImpl @Inject constructor(
     private val myService: MyAPI,
 ) : RemoteMyDataSource {
-    override  fun getMyInformation(): Flow<MyDataResponse> =
+    override fun getMyInformation(): Flow<MyDataResponse> =
         performApiRequest { myService.myInformationGet() }
 
-    override  fun getMyBookList(): Flow<List<MyBookListResponse>> =
+    override fun getMyBookList(): Flow<List<MyBookListResponse>> =
         performApiRequest { myService.myBookListGet() }
 }

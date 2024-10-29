@@ -6,7 +6,7 @@ import javax.inject.Inject
 class DeleteRecommendBookUseCase @Inject constructor(
     private val recommendRepository: RecommendRepository
 ) {
-     operator fun invoke(id: Long) = runCatching {
+    operator fun invoke(id: Long) = runCatching {
         recommendRepository.deleteRecommendBook(id = id)
     }
 }

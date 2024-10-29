@@ -13,9 +13,9 @@ import javax.inject.Inject
 class GoalRepositoryImpl @Inject constructor(
     private val remoteGoalDataSource: RemoteGoalDataSource
 ) : GoalRepository {
-    override  fun postGoalRequest(body: PostGoalRequestModel): Flow<Unit> =
+    override fun postGoalRequest(body: PostGoalRequestModel): Flow<Unit> =
         remoteGoalDataSource.postGoalRequest(body = body.toDto())
 
-    override  fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel> =
+    override fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel> =
         remoteGoalDataSource.getWeekendGoalResponse().map { it.toModel() }
 }

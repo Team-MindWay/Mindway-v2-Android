@@ -7,6 +7,6 @@ import javax.inject.Inject
 class OrderDeleteByIdUseCase @Inject constructor(
     private val orderRepository: OrderRepository,
 ) {
-     operator fun invoke(orderId: Long): Flow<Unit> =
+    operator fun invoke(orderId: Long): Flow<Unit> =
         orderRepository.orderDeleteById(orderId = orderId)
 }

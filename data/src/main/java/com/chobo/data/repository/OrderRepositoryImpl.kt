@@ -12,10 +12,10 @@ import javax.inject.Inject
 class OrderRepositoryImpl @Inject constructor(
     private val remoteNoticeDataSource: RemoteOrderDataSource
 ) : OrderRepository {
-    override  fun orderUpload(body: OrderRequestBodyModel): Flow<Unit> =
+    override fun orderUpload(body: OrderRequestBodyModel): Flow<Unit> =
         remoteNoticeDataSource.orderUpload(body = body.toDto())
 
-    override  fun orderModifyById(
+    override fun orderModifyById(
         body: MyBookListModel,
         orderId: Long
     ): Flow<Unit> =
@@ -24,6 +24,6 @@ class OrderRepositoryImpl @Inject constructor(
             orderId = orderId
         )
 
-    override  fun orderDeleteById(orderId: Long): Flow<Unit> =
+    override fun orderDeleteById(orderId: Long): Flow<Unit> =
         remoteNoticeDataSource.orderDeleteById(orderId = orderId)
 }

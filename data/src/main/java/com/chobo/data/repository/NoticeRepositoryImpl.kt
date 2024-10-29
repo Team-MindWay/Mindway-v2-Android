@@ -11,6 +11,6 @@ import javax.inject.Inject
 class NoticeRepositoryImpl @Inject constructor(
     private val noticeDataSource: RemoteNoticeDataSource
 ) : NoticeRepository {
-    override  fun noticeGet(): Flow<NoticeAllModel> =
+    override fun noticeGet(): Flow<NoticeAllModel> =
         noticeDataSource.bookGet().map { it.toModel() }
 }

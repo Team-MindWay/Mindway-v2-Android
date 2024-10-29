@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetBookByIdUseCase @Inject constructor(
     private val bookRepository: BookRepository,
 ) {
-bbb     operator fun invoke(bookId: Long): Flow<BookRequestBodyModel> =
+    operator fun invoke(bookId: Long): Flow<BookRequestBodyModel> =
         bookRepository.bookGetById(bookId = bookId)
 }

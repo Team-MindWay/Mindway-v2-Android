@@ -12,10 +12,10 @@ import javax.inject.Inject
 class MyRepositoryImpl @Inject constructor(
     private val myDataSource: RemoteMyDataSource,
 ) : MyRepository {
-    override  fun myInformationGet(): Flow<MyDataModel> =
+    override fun myInformationGet(): Flow<MyDataModel> =
         myDataSource.getMyInformation().map { it.toModel() }
 
 
-    override  fun myBookListGet(): Flow<List<MyBookListModel>> =
+    override fun myBookListGet(): Flow<List<MyBookListModel>> =
         myDataSource.getMyBookList().map { list -> list.map { it.toModel() } }
 }

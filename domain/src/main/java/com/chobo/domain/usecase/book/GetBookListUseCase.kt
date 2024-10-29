@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetBookListUseCase @Inject constructor(
     private val bookRepository: BookRepository,
 ) {
-     operator fun invoke(): Flow<List<BookListResponseModel>> =
+    operator fun invoke(): Flow<List<BookListResponseModel>> =
         bookRepository.bookListGet()
 }

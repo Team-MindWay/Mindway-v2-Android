@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetWeekendGoalUseCase @Inject constructor(
     private val goalRepository: GoalRepository
 ) {
-     operator fun invoke(): Flow<GetWeekendGoalModel> =
+    operator fun invoke(): Flow<GetWeekendGoalModel> =
         goalRepository.getWeekendGoalResponse()
 }
