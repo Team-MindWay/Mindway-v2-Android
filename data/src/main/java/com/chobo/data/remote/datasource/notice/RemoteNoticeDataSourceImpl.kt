@@ -9,6 +9,6 @@ import javax.inject.Inject
 class RemoteNoticeDataSourceImpl @Inject constructor(
     private val noticeService: NoticeAPI
 ) : RemoteNoticeDataSource {
-    override suspend fun bookGet(): Flow<NoticeAll> =
+    override  fun bookGet(): Flow<NoticeAll> =
         performApiRequest { noticeService.noticeGet() }
 }
