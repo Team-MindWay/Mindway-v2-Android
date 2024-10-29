@@ -5,7 +5,7 @@ import com.chobo.domain.model.goal.response.GetWeekendGoalModel
 import kotlinx.coroutines.flow.Flow
 
 interface GoalRepository {
-    suspend fun postGoalRequest(body: PostGoalRequestModel): Flow<Unit>
+     fun postGoalRequest(body: PostGoalRequestModel): Flow<Unit>
 
-    suspend fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel>
+     fun getWeekendGoalResponse(): Flow<GetWeekendGoalModel>
 }

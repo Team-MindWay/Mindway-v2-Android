@@ -8,6 +8,6 @@ import javax.inject.Inject
 class PostGoalRequestUseCase @Inject constructor(
     private val goalRepository: GoalRepository
 ) {
-    suspend operator fun invoke(body: PostGoalRequestModel) :Flow<Unit> =
+     operator fun invoke(body: PostGoalRequestModel) :Flow<Unit> =
         goalRepository.postGoalRequest(body = body)
 }

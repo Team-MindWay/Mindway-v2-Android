@@ -10,9 +10,9 @@ import javax.inject.Inject
 class RemoteGoalDataSourceImpl @Inject constructor(
     private val goalService: GoalAPI
 ) : RemoteGoalDataSource {
-    override suspend fun postGoalRequest(body: GoalRequestBodyPost): Flow<Unit> =
+    override  fun postGoalRequest(body: GoalRequestBodyPost): Flow<Unit> =
         performApiRequest { goalService.postGoal(body = body) }
 
-    override suspend fun getWeekendGoalResponse(): Flow<GoalWeekendResponse> =
+    override  fun getWeekendGoalResponse(): Flow<GoalWeekendResponse> =
         performApiRequest { goalService.getWeekendGoal() }
 }
