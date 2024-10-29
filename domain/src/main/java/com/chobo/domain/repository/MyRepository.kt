@@ -5,7 +5,7 @@ import com.chobo.domain.model.my.MyDataModel
 import kotlinx.coroutines.flow.Flow
 
 interface MyRepository {
-    suspend fun myInformationGet(): Flow<MyDataModel>
+     fun myInformationGet(): Flow<MyDataModel>
 
-    suspend fun myBookListGet(): Flow<List<MyBookListModel>>
+     fun myBookListGet(): Flow<List<MyBookListModel>>
 }
