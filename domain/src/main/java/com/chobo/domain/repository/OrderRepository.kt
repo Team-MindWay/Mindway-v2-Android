@@ -5,7 +5,7 @@ import com.chobo.domain.model.order.OrderRequestBodyModel
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
-    suspend fun orderUpload(body: OrderRequestBodyModel): Flow<Unit>
-    suspend fun orderModifyById(body: MyBookListModel, orderId: Long): Flow<Unit>
-    suspend fun orderDeleteById(orderId: Long): Flow<Unit>
+     fun orderUpload(body: OrderRequestBodyModel): Flow<Unit>
+     fun orderModifyById(body: MyBookListModel, orderId: Long): Flow<Unit>
+     fun orderDeleteById(orderId: Long): Flow<Unit>
 }

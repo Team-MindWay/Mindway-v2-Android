@@ -5,7 +5,7 @@ import com.chobo.data.remote.dto.order_request.OrderRequestBody
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteOrderDataSource {
-    suspend fun orderUpload(body: OrderRequestBody): Flow<Unit>
-    suspend fun orderModifyById(body: MyBookListResponse, orderId: Long): Flow<Unit>
-    suspend fun orderDeleteById(orderId: Long): Flow<Unit>
+     fun orderUpload(body: OrderRequestBody): Flow<Unit>
+     fun orderModifyById(body: MyBookListResponse, orderId: Long): Flow<Unit>
+     fun orderDeleteById(orderId: Long): Flow<Unit>
 }
