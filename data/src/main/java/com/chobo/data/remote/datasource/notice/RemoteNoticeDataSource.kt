@@ -4,5 +4,5 @@ import com.chobo.data.remote.dto.notice.NoticeAll
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteNoticeDataSource {
-    suspend fun bookGet(): Flow<NoticeAll>
+      fun bookGet(): Flow<NoticeAll>
 }

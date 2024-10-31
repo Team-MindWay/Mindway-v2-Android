@@ -10,10 +10,10 @@ import javax.inject.Inject
 class RemoteAuthDataSourceImpl @Inject constructor(
     private val authService: AuthAPI
 ) : RemoteAuthDataSource {
-    override suspend fun GuauthLogin(body: GAuthLoginRequestBody): Flow<GAuthLoginResponse> =
+    override fun GuauthLogin(body: GAuthLoginRequestBody): Flow<GAuthLoginResponse> =
         performApiRequest { authService.gAuthLogin(body = body) }
 
-    override suspend fun GuathLogout(): Flow<Unit> =
+    override fun GuathLogout(): Flow<Unit> =
         performApiRequest { authService.gAuthLogout() }
 
     override suspend fun GuathAccess(refreshToken: String): Flow<GAuthLoginResponse> =

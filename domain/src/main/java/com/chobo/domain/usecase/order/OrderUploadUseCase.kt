@@ -7,7 +7,7 @@ import javax.inject.Inject
 class OrderUploadUseCase @Inject constructor(
     private val orderRepository: OrderRepository
 ) {
-    suspend operator fun invoke(body: OrderRequestBodyModel) = runCatching {
+    operator fun invoke(body: OrderRequestBodyModel) = runCatching {
         orderRepository.orderUpload(body = body)
     }
 }

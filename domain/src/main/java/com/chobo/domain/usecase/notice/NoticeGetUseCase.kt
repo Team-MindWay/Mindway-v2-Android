@@ -8,6 +8,6 @@ import javax.inject.Inject
 class NoticeGetUseCase @Inject constructor(
     private val noticeRepository: NoticeRepository
 ) {
-    suspend operator fun invoke(): Flow<NoticeAllModel> =
+    operator fun invoke(): Flow<NoticeAllModel> =
         noticeRepository.noticeGet()
 }

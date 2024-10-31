@@ -5,5 +5,5 @@ import com.chobo.domain.model.rank.RankModel
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteRankDataSource {
-    suspend fun rankGet(): Flow<List<RankResponse>>
+     fun rankGet(): Flow<List<RankResponse>>
 }

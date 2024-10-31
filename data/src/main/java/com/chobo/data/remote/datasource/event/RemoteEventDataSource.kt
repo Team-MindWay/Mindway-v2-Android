@@ -5,6 +5,6 @@ import com.chobo.data.remote.dto.event.response.GetEventListResponse
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteEventDataSource {
-    suspend fun getEventList(status: String): Flow<List<GetEventListResponse>>
-    suspend fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponse>
+     fun getEventList(status: String): Flow<List<GetEventListResponse>>
+     fun getDetailEvent(eventId: Long): Flow<GetDetailEventResponse>
 }

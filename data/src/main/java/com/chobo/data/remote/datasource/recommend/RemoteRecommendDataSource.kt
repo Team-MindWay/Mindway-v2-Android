@@ -5,9 +5,8 @@ import com.chobo.data.remote.dto.recommend.response.GetRecommendBookListResponse
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteRecommendDataSource {
-
-    suspend fun postRecommendBook(body: RecommendAllRequest, type: String): Flow<Unit>
-    suspend fun getRecommendBookList(type: String): Flow<List<GetRecommendBookListResponse>>
-    suspend fun patchRecommendBook(body: RecommendAllRequest, id: Long): Flow<Unit>
-    suspend fun deleteRecommendBook(id: Long): Flow<Unit>
+     fun postRecommendBook(body: RecommendAllRequest, type: String): Flow<Unit>
+     fun getRecommendBookList(type: String): Flow<List<GetRecommendBookListResponse>>
+     fun patchRecommendBook(body: RecommendAllRequest, id: Long): Flow<Unit>
+     fun deleteRecommendBook(id: Long): Flow<Unit>
 }

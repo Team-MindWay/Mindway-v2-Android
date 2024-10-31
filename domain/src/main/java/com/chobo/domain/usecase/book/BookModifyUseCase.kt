@@ -8,7 +8,7 @@ import javax.inject.Inject
 class BookModifyUseCase @Inject constructor(
     private val bookRepository: BookRepository,
 ) {
-    suspend operator fun invoke(bookId: Long, bookRequestBodyModel: BookRequestBodyModel): Flow<Unit> =
+    operator fun invoke(bookId: Long, bookRequestBodyModel: BookRequestBodyModel): Flow<Unit> =
         bookRepository.bookModify(
             bookId = bookId,
             body = bookRequestBodyModel

@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetRecommendBookUseCase @Inject constructor(
     private val recommendRepository: RecommendRepository
 ) {
-    suspend operator fun invoke(type: String) : Flow<List<RecommendListResponseAllModel>> =
+    operator fun invoke(type: String) : Flow<List<RecommendListResponseAllModel>> =
         recommendRepository.getRecommendBookList(type = type)
 }

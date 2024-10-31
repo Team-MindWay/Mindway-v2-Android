@@ -5,9 +5,9 @@ import com.chobo.domain.model.book.response.BookListResponseModel
 import kotlinx.coroutines.flow.Flow
 
 interface BookRepository {
-    suspend fun bookUpload(body: BookRequestBodyModel): Flow<Unit>
-    suspend fun bookListGet(): Flow<List<BookListResponseModel>>
-    suspend fun bookGetById(bookId: Long): Flow<BookRequestBodyModel>
-    suspend fun bookModify(bookId: Long, body: BookRequestBodyModel): Flow<Unit>
-    suspend fun bookDeleteById(bookId: Long): Flow<Unit>
+     fun bookUpload(body: BookRequestBodyModel): Flow<Unit>
+     fun bookListGet(): Flow<List<BookListResponseModel>>
+     fun bookGetById(bookId: Long): Flow<BookRequestBodyModel>
+     fun bookModify(bookId: Long, body: BookRequestBodyModel): Flow<Unit>
+     fun bookDeleteById(bookId: Long): Flow<Unit>
 }

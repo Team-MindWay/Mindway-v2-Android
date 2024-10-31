@@ -6,6 +6,6 @@ import com.chobo.domain.model.my.MyBookListModel
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteMyDataSource {
-    suspend fun getMyInformation(): Flow<MyDataResponse>
-    suspend fun getMyBookList(): Flow<List<MyBookListResponse>>
+     fun getMyInformation(): Flow<MyDataResponse>
+     fun getMyBookList(): Flow<List<MyBookListResponse>>
 }

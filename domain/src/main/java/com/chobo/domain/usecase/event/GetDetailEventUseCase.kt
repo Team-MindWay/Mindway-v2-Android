@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetDetailEventUseCase @Inject constructor(
     private val eventRepository: EventRepository
 ) {
-    suspend operator fun invoke(eventId: Long): Flow<GetDetailEventResponseModel> =
+    operator fun invoke(eventId: Long): Flow<GetDetailEventResponseModel> =
         eventRepository.getDetailEvent(eventId = eventId)
 }

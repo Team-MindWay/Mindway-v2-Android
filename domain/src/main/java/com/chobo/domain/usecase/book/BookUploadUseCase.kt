@@ -8,6 +8,6 @@ import javax.inject.Inject
 class BookUploadUseCase @Inject constructor(
     private val bookRepository: BookRepository,
 ) {
-    suspend operator fun invoke(body: BookRequestBodyModel): Flow<Unit> =
+    operator fun invoke(body: BookRequestBodyModel): Flow<Unit> =
         bookRepository.bookUpload(body = body)
 }
