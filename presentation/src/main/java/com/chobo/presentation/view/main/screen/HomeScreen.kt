@@ -153,22 +153,33 @@ internal fun HomeScreen(
                         isHasData = true,
                         bookKingOfTheMonthData = getRankUIState.data,
                         modifier = Modifier
-                            .height(239.dp)
                             .fillMaxWidth(),
                     )
                 }
 
                 is GetRankUiState.Loading -> {
                     HomeReadersOfTheMonthChart(
-                        isLoading = true,
+                        errorText = "로딩중 ..",
+                        isHasData = false,
                         modifier = Modifier
                             .height(239.dp)
                             .fillMaxWidth(),
                     )
                 }
 
-                else -> {
+                is GetRankUiState.Empty -> {
                     HomeReadersOfTheMonthChart(
+                        errorText = "아직 이달의 독서왕이 없습니다",
+                        isHasData = false,
+                        modifier = Modifier
+                            .height(239.dp)
+                            .fillMaxWidth(),
+                    )
+                }
+
+                is GetRankUiState.Fail -> {
+                    HomeReadersOfTheMonthChart(
+                        errorText = "통신 상태가 원활하지 않습니다",
                         isHasData = false,
                         modifier = Modifier
                             .height(239.dp)
