@@ -110,14 +110,14 @@ internal fun HomeScreen(
                         isHasData = true,
                         onClick = navigateToGoalReading,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(211.dp),
+                            .fillMaxWidth(),
                     )
                 }
 
                 is GetWeekendGoalUiState.Loading -> {
                     HomeGoalReadingChart(
-                        isLoading = true,
+                        errorText = "로딩중 ..",
+                        isHasData = false,
                         onClick = navigateToGoalReading,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -125,8 +125,20 @@ internal fun HomeScreen(
                     )
                 }
 
-                else -> {
+                is GetWeekendGoalUiState.Empty -> {
                     HomeGoalReadingChart(
+                        errorText = "목표 도서량을 입력해주세요",
+                        isHasData = false,
+                        onClick = navigateToGoalReading,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(211.dp),
+                    )
+                }
+
+                is GetWeekendGoalUiState.Fail -> {
+                    HomeGoalReadingChart(
+                        errorText = "통신 상태가 원활하지 않습니다",
                         isHasData = false,
                         onClick = navigateToGoalReading,
                         modifier = Modifier

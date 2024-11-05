@@ -33,8 +33,8 @@ import okhttp3.internal.immutableListOf
 @Composable
 fun HomeGoalReadingChart(
     modifier: Modifier = Modifier,
-    isHasData: Boolean = false,
-    isLoading: Boolean = false,
+    errorText: String = "",
+    isHasData: Boolean,
     getWeekendGoalModel: GetWeekendGoalModel = GetWeekendGoalModel(0, 0, 0, 0, 0, 0, 0, 0, 0),
     onClick: () -> Unit,
 ) {
@@ -52,7 +52,7 @@ fun HomeGoalReadingChart(
     val currentDate = remember { getTodayDayOfWeek() }
 
     MindWayAndroidTheme { colors, typography ->
-        if (isHasData || !isLoading) {
+        if (isHasData) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
@@ -146,8 +146,7 @@ fun HomeGoalReadingChart(
                     ChevronRightIcon(modifier = Modifier.clickableSingle(onClick = onClick))
                 }
                 Text(
-                    text = if (!isLoading) "아직 목표 독서량을 설정하지 않았습니다."
-                    else "로딩중 ..",
+                    text = errorText,
                     style = typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY400,
@@ -166,9 +165,9 @@ fun HomeGoalReadingChartPreview() {
         modifier = Modifier
             .width(312.dp)
             .height(211.dp),
+        errorText = "",
         isHasData = true,
         onClick = { },
-        isLoading = false,
         getWeekendGoalModel = GetWeekendGoalModel(
             mon = 2,
             tue = 4,
