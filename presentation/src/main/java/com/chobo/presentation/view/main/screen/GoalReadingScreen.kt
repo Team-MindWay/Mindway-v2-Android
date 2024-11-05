@@ -187,10 +187,10 @@ internal fun GoalReadingScreen(
                     onRefresh = {
                         dataInit()
                     },
-                    indicator = { state, refreshTigger ->
+                    indicator = { state, refreshTrigger ->
                         SwipeRefreshIndicator(
                             state = state,
-                            refreshTriggerDistance = refreshTigger,
+                            refreshTriggerDistance = refreshTrigger,
                             contentColor = colors.MAIN
                         )
                     }
@@ -210,13 +210,30 @@ internal fun GoalReadingScreen(
                                             isHasData = true,
                                             getWeekendGoalModel = getWeekendGoalUiState.data,
                                             modifier = Modifier
+                                                .fillMaxWidth(),
+                                        )
+                                    }
+                                    is GetWeekendGoalUiState.Empty -> {
+                                        GoalReadingChart(
+                                            errorText = stringResource(R.string.goal_reading_error),
+                                            isHasData = false,
+                                            modifier = Modifier
                                                 .fillMaxWidth()
                                                 .height(180.dp),
                                         )
                                     }
-
-                                    else -> {
+                                    is GetWeekendGoalUiState.Loading -> {
                                         GoalReadingChart(
+                                            errorText = "로딩중 ..",
+                                            isHasData = false,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp),
+                                        )
+                                    }
+                                    is GetWeekendGoalUiState.Fail -> {
+                                        GoalReadingChart(
+                                            errorText = "통신이 원활하지 않습니다",
                                             isHasData = false,
                                             modifier = Modifier
                                                 .fillMaxWidth()
