@@ -102,7 +102,7 @@ internal fun EventScreen(
                             GetEventListUiState.Empty -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
-                                    eventDataListIsEmpty = false,
+                                    eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -110,7 +110,7 @@ internal fun EventScreen(
                             is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
-                                    eventDataListIsEmpty = false,
+                                    eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -128,7 +128,7 @@ internal fun EventScreen(
                                 EventContent(
                                     content = stringResource(R.string.is_no_ongoing_event),
                                     eventDataList = getEventNowListUiState.data,
-                                    eventDataListIsEmpty = true,
+                                    eventDataListIsEmpty = false,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -139,7 +139,7 @@ internal fun EventScreen(
                             GetEventListUiState.Empty -> {
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
-                                    eventDataListIsEmpty = false,
+                                    eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent
                                 )
                             }
@@ -147,7 +147,7 @@ internal fun EventScreen(
                             is GetEventListUiState.Fail -> {
                                 EventContent(
                                     content = stringResource(R.string.is_on_error),
-                                    eventDataListIsEmpty = false,
+                                    eventDataListIsEmpty = true,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
@@ -165,7 +165,7 @@ internal fun EventScreen(
                                 EventContent(
                                     content = stringResource(R.string.is_no_past_event),
                                     eventDataList = getEventPastListUiState.data,
-                                    eventDataListIsEmpty = true,
+                                    eventDataListIsEmpty = false,
                                     navigateToDetailEvent = navigateToDetailEvent,
                                 )
                             }
