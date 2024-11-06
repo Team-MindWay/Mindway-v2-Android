@@ -94,7 +94,25 @@ internal fun DetailEventScreen(
                         }
                     }
 
-                    is GetDetailEventUiState.Loading -> Unit
+                    is GetDetailEventUiState.Loading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                BookImage()
+                                Text(
+                                    text = "로딩중 ..",
+                                    style = typography.bodyMedium,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY500,
+                                )
+                            }
+                        }
+                    }
                     is GetDetailEventUiState.Success -> {
                         getDetailEventUiState.data.apply {
                             Image(
