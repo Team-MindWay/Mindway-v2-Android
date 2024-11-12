@@ -25,11 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.chobo.presentation.R
 import com.chobo.presentation.view.component.icon.BookImage
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.shimmer.shimmerEffect
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.event.component.DetailEventContent
 import com.chobo.presentation.view.theme.MindWayAndroidTheme
@@ -94,18 +96,52 @@ internal fun DetailEventScreen(
                         }
                     }
 
-                    is GetDetailEventUiState.Loading -> Unit
+                    is GetDetailEventUiState.Loading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                BookImage()
+                                Text(
+                                    text = "로딩중 ..",
+                                    style = typography.bodyMedium,
+                                    fontWeight = FontWeight.Normal,
+                                    color = colors.GRAY500,
+                                )
+                            }
+                        }
+                    }
                     is GetDetailEventUiState.Success -> {
+                        val painter = rememberAsyncImagePainter(model = getDetailEventUiState.data.img_url)
+
+                        Box(
+                            modifier = Modifier
+                                .padding(vertical = 20.dp)
+                                .fillMaxWidth()
+                                .height(264.dp)
+                                .clip(shape = RoundedCornerShape(8.dp))
+                        ) {
+                            if (painter.state is AsyncImagePainter.State.Loading) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .shimmerEffect(RoundedCornerShape(8.dp))
+                                        .background(colors.GRAY300, RoundedCornerShape(8.dp))
+                                )
+                            } else {
+                                Image(
+                                    painter = painter,
+                                    contentDescription = "Event Image",
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        }
+
                         getDetailEventUiState.data.apply {
-                            Image(
-                                painter = rememberAsyncImagePainter(model = img_url),
-                                contentDescription = "Event Image",
-                                modifier = Modifier
-                                    .padding(vertical = 20.dp)
-                                    .fillMaxWidth()
-                                    .height(264.dp)
-                                    .clip(shape = RoundedCornerShape(8.dp))
-                            )
                             DetailEventContent(
                                 title = title,
                                 content = content,

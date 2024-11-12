@@ -61,7 +61,7 @@ fun EventContent(
                     )
                 }
             }
-        } else if (eventDataListIsEmpty) {
+        } else if (!eventDataListIsEmpty) {
             LazyColumn(
                 modifier = modifier
                     .background(color = colors.WHITE)

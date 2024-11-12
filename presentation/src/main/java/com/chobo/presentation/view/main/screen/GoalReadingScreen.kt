@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,6 +43,7 @@ import com.chobo.presentation.view.component.bottom_sheet.MindWayBottomSheetDial
 import com.chobo.presentation.view.component.icon.ChevronLeftIcon
 import com.chobo.presentation.view.component.icon.PlusIcon
 import com.chobo.presentation.view.component.modifier.multipleEventsCutterManager.clickableSingle
+import com.chobo.presentation.view.component.shimmer.shimmerEffect
 import com.chobo.presentation.view.component.topBar.MindWayTopAppBar
 import com.chobo.presentation.view.main.component.GoalReadingBottomSheet
 import com.chobo.presentation.view.main.component.GoalReadingChart
@@ -169,7 +171,8 @@ internal fun GoalReadingScreen(
                     midText = stringResource(R.string.goal_reading),
                     endIcon = {
                         when (getWeekendGoalUiState) {
-                            is GetWeekendGoalUiState.Empty -> {
+                            is GetWeekendGoalUiState.Empty,
+                            is GetWeekendGoalUiState.Fail -> {
                                 PlusIcon(
                                     modifier = Modifier.clickableSingle(onClick = { coroutineScope.launch { sheetState.show() } }),
                                     tint = MindWayColor.Black
@@ -213,6 +216,7 @@ internal fun GoalReadingScreen(
                                                 .fillMaxWidth(),
                                         )
                                     }
+
                                     is GetWeekendGoalUiState.Empty -> {
                                         GoalReadingChart(
                                             errorText = stringResource(R.string.goal_reading_error),
@@ -222,6 +226,7 @@ internal fun GoalReadingScreen(
                                                 .height(180.dp),
                                         )
                                     }
+
                                     is GetWeekendGoalUiState.Loading -> {
                                         GoalReadingChart(
                                             errorText = "로딩중 ..",
@@ -231,6 +236,7 @@ internal fun GoalReadingScreen(
                                                 .height(180.dp),
                                         )
                                     }
+
                                     is GetWeekendGoalUiState.Fail -> {
                                         GoalReadingChart(
                                             errorText = "통신이 원활하지 않습니다",
@@ -270,6 +276,22 @@ internal fun GoalReadingScreen(
                                             data = item,
                                             onClick = navigateToHomeViewDetail,
                                             modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
+
+                                is GetBookListUiState.Loading -> {
+                                    items(5) {
+                                        Spacer(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(110.dp)
+                                                .background(
+                                                    color = colors.WHITE,
+                                                    shape = RoundedCornerShape(8.dp)
+                                                )
+                                                .shimmerEffect(shape = RoundedCornerShape(8.dp))
+                                                .padding(vertical = 16.dp)
                                         )
                                     }
                                 }
