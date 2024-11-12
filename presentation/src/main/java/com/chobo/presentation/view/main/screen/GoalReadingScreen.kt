@@ -296,13 +296,7 @@ internal fun GoalReadingScreen(
                                     }
                                 }
 
-                                is GetBookListUiState.Empty -> {
-
-                                }
-
-                                is GetBookListUiState.Fail -> {
-
-                                }
+                                else -> Unit
                             }
                         }
                     }
