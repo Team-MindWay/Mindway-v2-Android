@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chobo.presentation.view.component.icon.EditIcon
@@ -48,20 +49,26 @@ fun MyBookListItem(
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.Start,
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = title,
                     style = typography.bodyMedium,
                     fontWeight = FontWeight.Normal,
                     color = colors.Black,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = writer,
                     style = typography.labelLarge,
                     fontWeight = FontWeight.Normal,
                     color = colors.GRAY500,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.Start),
                 verticalAlignment = Alignment.Top,
@@ -77,7 +84,7 @@ fun MyBookListItem(
 @Composable
 fun MyBookListItemPreview() {
     MyBookListItem(
-        title = "제목",
+        title = "제asdfasdfasdfasdfaddsdfasdfasdfa목",
         writer = "저자",
         editOnclick = { },
         trashCanOnclick = { })
